@@ -1,0 +1,173 @@
+evidence_layer,metric,estimate,ci_low,ci_high,unit,independent_units
+external trial coverage,endpoint-capable source trials,10.0,,,trials,10
+external trial coverage,source-sized participants per simulated portfolio,1044.0,,,participants,10
+known-truth stochastic response,binary treatment-effect response slope,0.9944767366481668,0.937390138833418,1.0515633344629158,recovered change per unit truth,4
+coefficient-wiring identity,continuous treatment-effect response slope maximum identity residual,2.220446049250313e-16,,,absolute slope residual from one,6
+known-truth stochastic response,binary prognostic-coupling response slope,0.967532576949236,0.9416795735037552,0.9933855803947168,recovered change per unit truth,4
+coefficient-wiring identity,continuous prognostic-coupling response slope maximum identity residual,2.220446049250313e-16,,,absolute slope residual from one,6
+paired linkage control,dependence divergence per fully disrupted linkage,0.1614233175161391,0.1287365777917045,0.1941100572405737,mean absolute Spearman difference,10
+paired linkage control,analysis perturbation per fully disrupted linkage,0.2458795581914832,0.1646295692206086,0.3271295471623579,intact treatment-effect standard errors,10
+endpoint marginal fidelity,absolute generated-source event-fraction difference,0.0286631486146876,0.0151281843355595,0.0421981128938156,absolute difference,4
+endpoint marginal fidelity,absolute generated-source standardized outcome-mean difference,0.0886863678082948,0.0603126497280351,0.1170600858885545,absolute difference,6
+endpoint marginal fidelity,absolute generated-source outcome-SD ratio deviation,0.0646498334805454,0.0478463751629416,0.0814532917981493,absolute ratio difference,10
+analysis consequence,generated minus observed adjusted/unadjusted SE ratio,-0.0230237576792163,-0.0565135571101876,0.010466041751755,paired ratio difference,10
+analysis consequence,observed SE ratios inside generated 95% trial interval,10.0,,,of 10 trials,10
+known-truth recovery,median nominal treatment-effect coverage,0.96,,,proportion,10
+estimator triangulation,maximum Statsmodels-SciPy treatment coefficient difference,2.629008122312371e-13,,,absolute coefficient difference,10
+longitudinal recovery (Zenodo),minimum arm or randomized-contrast coverage,0.89,,,proportion,2
+longitudinal linkage,ZENODO-17562062 adjacent-correlation response slope,0.2990402198357902,0.2761296988437821,0.3219507408277984,correlation per full linkage retention,100
+longitudinal linkage,ZENODO-18849529 adjacent-correlation response slope,0.0412293638246054,0.029322400669733,0.0531363269794778,correlation per full linkage retention,100
+informative observation,ZENODO-17562062 dropout-mechanism response slope,1.0436482225898351,1.0036938842043146,1.0836025609753557,recovered change per unit configured coefficient,100
+informative observation,ZENODO-18849529 dropout-mechanism response slope,0.999339596952262,0.984651316802654,1.01402787710187,recovered change per unit configured coefficient,100
+informative observation,configured-probability mean-residual intervals containing zero,8.0,,,of 8 trial-by-dose cells,8
+informative observation,configured-probability predictor-score intervals containing zero,8.0,,,of 8 trial-by-dose cells,8
+informative observation,ZENODO-17562062 intervention estimated-IPCW absolute-error reduction,-0.0224021184981315,-0.0449197085716304,0.0001154715753673,treatment-by-time coefficient,100
+informative observation,ZENODO-18849529 peng_0375 estimated-IPCW absolute-error reduction,0.094884543897758,0.0842419923410846,0.1055270954544314,treatment-by-time coefficient,100
+informative observation,ZENODO-18849529 peng_05 estimated-IPCW absolute-error reduction,0.1349499401588502,0.1256984459230054,0.144201434394695,treatment-by-time coefficient,100
+treatment heterogeneity,binary HTE response slope at 1x source size,1.0862674341315466,0.740732639996978,1.4318022282661151,recovered change per unit analysis truth,4
+treatment heterogeneity,binary HTE response slope at 4x source size,0.993217860264422,0.8989474702402873,1.0874882502885566,recovered change per unit analysis truth,4
+treatment heterogeneity,continuous HTE response slope at 1x source size,0.9868745538233072,0.9210576702718568,1.0526914373747576,recovered change per unit analysis truth,6
+treatment heterogeneity,continuous HTE response slope at 4x source size,1.0003496157731473,0.9829757480361674,1.0177234835101272,recovered change per unit analysis truth,6
+treatment heterogeneity,HC3 fourfold-to-source standard-error ratio,0.4654443264956512,0.4516359873341853,0.4796748424449402,paired standard-error ratio,10
+treatment heterogeneity,classical fourfold-to-source standard-error ratio,0.4849586918643143,0.4786218245712169,0.4913794581461932,paired standard-error ratio,10
+treatment heterogeneity,fourfold-to-source empirical estimator-SD ratio,0.4982943243178164,0.4717674971412763,0.5263127179212893,repeated-world standard-deviation ratio,10
+competing risks,primary cause response slope at 1x source size,1.06877555294967,0.9925309089651656,1.145020196934175,response per unit cause-specific coefficient,10
+competing risks,primary cause response slope at 4x source size,1.017474944822871,0.9948157284675696,1.0401341611781725,response per unit cause-specific coefficient,10
+competing risks,competing cause response slope at 1x source size,1.0036965335381662,0.9155044234423866,1.091888643633946,response per unit cause-specific coefficient,10
+competing risks,competing cause response slope at 4x source size,1.0241555567068246,0.9844915831811384,1.0638195302325106,response per unit cause-specific coefficient,10
+competing risks,primary event-probability response to competing cause at 1x source size,-0.0386103308839919,-0.04783672982857,-0.0293839319394139,response per unit cause-specific coefficient,10
+competing risks,primary event-probability response to competing cause at 4x source size,-0.0407300301768137,-0.0448960476498232,-0.0365640127038043,response per unit cause-specific coefficient,10
+competing risks,any-event probability response to competing cause at 1x source size,0.076253497320815,0.0674647103755577,0.0850422842660723,response per unit cause-specific coefficient,10
+competing risks,any-event probability response to competing cause at 4x source size,0.0797106200406312,0.076666846863162,0.0827543932181003,response per unit cause-specific coefficient,10
+competing risks,primary cause fourfold-to-source standard-error ratio,0.4806401850791948,0.4729712873946748,0.4884334285607286,paired standard-error ratio,10
+competing risks,primary cause fourfold-to-source empirical estimator-SD ratio,0.4682035994705866,0.4528239075919398,0.4841056465480566,repeated-world standard-deviation ratio,10
+competing risks,competing cause fourfold-to-source standard-error ratio,0.4713859633701548,0.4623545054266744,0.4805938383953927,paired standard-error ratio,10
+competing risks,competing cause fourfold-to-source empirical estimator-SD ratio,0.481371412359002,0.4588705795611335,0.5049755790796553,repeated-world standard-deviation ratio,10
+confounding and overlap,assignment-coefficient response at 1x source size,1.0794215124228557,1.0315509576197044,1.127292067226007,response per unit assignment strength,10
+confounding and overlap,assignment-coefficient response at 4x source size,1.01144185304736,1.000661192429693,1.0222225136650265,response per unit assignment strength,10
+confounding and overlap,naive exposure-bias response at 1x source size,0.4113645716937647,0.3548123435777557,0.4679167998097737,response per unit assignment strength,10
+confounding and overlap,naive exposure-bias response at 4x source size,0.3824658801595873,0.3405001465298047,0.4244316137893699,response per unit assignment strength,10
+confounding and overlap,adjusted exposure-bias response at 1x source size,-0.0062362514481046,-0.0379550211768018,0.0254825182805924,response per unit assignment strength,10
+confounding and overlap,adjusted exposure-bias response at 4x source size,-0.0010614706614758,-0.0134588193126978,0.0113358779897461,response per unit assignment strength,10
+confounding and overlap,baseline-score imbalance response at 1x source size,0.6390446268758398,0.5693400674046248,0.7087491863470549,response per unit assignment strength,10
+confounding and overlap,baseline-score imbalance response at 4x source size,0.63273599049221,0.5646635587054557,0.7008084222789642,response per unit assignment strength,10
+confounding and overlap,extreme-propensity response at 1x source size,0.1313633153538044,0.1121514661953867,0.1505751645122222,fraction per absolute assignment-strength unit,10
+confounding and overlap,extreme-propensity response at 4x source size,0.1299209318873195,0.1113100019818187,0.1485318617928203,fraction per absolute assignment-strength unit,10
+confounding and overlap,effective-sample-loss response at 1x source size,0.2404331480307638,0.2163228408700818,0.2645434551914458,fraction per absolute assignment-strength unit,10
+confounding and overlap,effective-sample-loss response at 4x source size,0.2882611090229766,0.2667694382271517,0.3097527798188015,fraction per absolute assignment-strength unit,10
+confounding and overlap,"oracle IPW absolute risk-difference bias at strongest dose, 1x",0.0236523356287902,0.0108870674817739,0.0364176037758065,risk difference,10
+confounding and overlap,"oracle IPW absolute risk-difference bias at strongest dose, 4x",0.0099432965765218,0.0055115543535894,0.0143750387994542,risk difference,10
+confounding and overlap,"estimated IPW absolute risk-difference bias at strongest dose, 1x",0.0202815719961852,0.0081431443086098,0.0324199996837607,risk difference,10
+confounding and overlap,"estimated IPW absolute risk-difference bias at strongest dose, 4x",0.0107476332502806,0.0055975723468953,0.0158976941536659,risk difference,10
+confounding and overlap,adjusted fourfold-to-source standard-error ratio,0.4720088090769705,0.4612336711017303,0.483035671082046,paired standard-error ratio,10
+confounding and overlap,adjusted fourfold-to-source empirical estimator-SD ratio,0.4438858104979206,0.4198705479281726,0.4692746698563451,repeated-world standard-deviation ratio,10
+recurrent-event external reference,eligible overdispersed ImmPort studies,15.0,,,of 15 studies,15
+recurrent-event external reference,equal-study gamma-frailty variance median,0.4506238232985514,0.3692153964312767,1.1623079601380486,variance,15
+native recurrent-event recovery,gamma-frailty recovered-versus-configured response slope,0.9637472558345245,0.9469562765951363,0.9805382350739127,recovered variance per configured variance,15
+native recurrent-event realization,direct Poisson-gamma moment response slope,1.0130127736350991,0.9857979690027654,1.0402275782674328,realized variance per configured variance,15
+native recurrent-event recovery,nominal interval coverage at frailty variance 0,0.9886666666666667,0.9800705146520254,0.997262818681308,proportion,15
+native recurrent-event recovery,null frailty rejection rate,0.011333333333333334,0.0027371813186921404,0.019929485347974528,proportion,15
+native recurrent-event recovery,nominal interval coverage at frailty variance 0.4,0.9493333333333335,0.9293153242461089,0.9693513424205581,proportion,15
+native recurrent-event recovery,nominal interval coverage at frailty variance 0.8,0.9386666666666668,0.9171304666814148,0.9602028666519187,proportion,15
+native recurrent-event recovery,nominal interval coverage at frailty variance 1.4,0.952,0.9376199480426589,0.966380051957341,proportion,15
+cross-domain linkage,association divergence,0.5183912769908638,0.3486117633652545,0.6881707906164731,response per fully broken subject linkage,8
+cross-domain linkage,safety analysis perturbation,0.6160115626480265,0.3896435179550121,0.8423796073410408,response per fully broken subject linkage,8
+source-scale survival,Kaplan-Meier mean absolute error,0.001339144744297,,,survival probability,1000
+source-scale survival,restricted mean survival absolute error,0.8369706709643197,,,days over 1095 days,1000
+source-scale survival,mean risk-set absolute error,4.177999999999997,,,participants per arm-time cell,1000
+source-scale survival,source-dose Cox bias,-0.0004956572753515,-0.0095364137774139,0.0085450992267107,log hazard ratio,1000
+source-scale survival,source-dose Cox interval coverage,0.962,0.9482730796686496,0.9721909954906974,proportion,1000
+source-scale ordinal,arm-by-category mean absolute error,0.0044334675525308,,,probability,1000
+source-scale ordinal,cumulative-probability mean absolute error,0.0035783265956043,,,probability,1000
+source-scale ordinal,arm-by-safety-risk mean absolute error,0.0003304473023429,,,probability,1000
+source-scale ordinal,source-dose proportional-odds bias,-0.0029301207483732,-0.0089867196826668,0.0031264781859202,log odds ratio,1000
+source-scale ordinal,source-dose proportional-odds interval coverage,0.947,0.9313253831625082,0.9592534947514054,proportion,1000
+source-scale longitudinal,six-minute-walk source-to-repeated-trial-median mean absolute difference,7.996717477789228,,,metres,6
+source-scale longitudinal,six-minute-walk source-to-repeated-trial-median maximum absolute difference,15.069774486410154,,,metres,6
+source-scale longitudinal,minimum displayed source predictive rank,0.415,,,proportion,6
+source-scale longitudinal,source arm-visit means within repeated-trial 95% predictive intervals,36,,,of 36 cells,200
+source-scale longitudinal,source follow-up counts within repeated-trial 95% predictive intervals,36,,,of 36 cells,200
+source-scale longitudinal,maximum absolute standardized treatment-effect bias,0.016458294123862446,,,source standard deviations,200
+source-scale longitudinal,minimum treatment-effect interval coverage,0.94,0.8980683070423372,0.965347805745668,proportion,200
+source-scale longitudinal,complete-linkage mean absolute correlation error,0.08883146169015,0.0867775466335718,0.0908853767467282,correlation coefficient,200
+source-scale longitudinal,source-resampling mean absolute correlation error,0.07084558604231059,0.051261260703298415,0.0963410076427342,correlation coefficient,2000
+source-scale longitudinal,material correlation sign agreement,0.9916853932584269,,,proportion,200
+joint structure column-wise,median standardized Wasserstein distance,0.12218729872745,0.0872257874058552,0.1372116423756051,source standard deviations,10
+joint structure whole-subject,median standardized Wasserstein distance,0.120926305534309,0.0910588010836976,0.1365032264407881,source standard deviations,10
+joint structure column-wise,median absolute Spearman-correlation error,0.1201126859064017,0.1023395981044383,0.14047220218074,correlation coefficient,10
+joint structure whole-subject,median absolute Spearman-correlation error,0.0839796596949814,0.0566210136766591,0.1058069424449068,correlation coefficient,10
+joint structure column-wise,median absolute adjusted-treatment bias,0.1073594039614377,0.0599143167873522,0.1911434166769889,source standard errors,10
+joint structure whole-subject,median absolute adjusted-treatment bias,0.0447768356136391,0.0234089054501671,0.1119487647797529,source standard errors,10
+source-specific effect recovery,PATENCY coefficient change per multiplier,-0.1150322782213137,-0.116242064601074,-0.1138224918415535,log hazard ratio,1000
+source-specific effect recovery,PATENCY configured coefficient change per multiplier,-0.1140663382886729,,,log hazard ratio,1000
+source-specific effect recovery,HeadSOAR coefficient change per multiplier,-0.0834069822299147,-0.0836887355701085,-0.0831252288897208,log odds ratio,1000
+source-specific effect recovery,HeadSOAR configured coefficient change per multiplier,-0.0832052777243645,,,log odds ratio,1000
+source-specific effect recovery,PATENCY ordered dose-response trials,1000.0,,,of 1000 paired worlds,1000
+source-specific effect recovery,HeadSOAR ordered dose-response trials,1000.0,,,of 1000 paired worlds,1000
+clustered ordinal recovery,coefficient change per multiplier,-0.4685360929738427,-0.4774317513697255,-0.4596404345779598,log odds ratio,200
+clustered ordinal recovery,configured coefficient change per multiplier,-0.468,,,log odds ratio,200
+clustered ordinal recovery,source-dose bias,-0.001299637336458,-0.0198973012222976,0.0172980265493815,log odds ratio,200
+clustered ordinal recovery,source-dose robust interval coverage,0.955,0.9167032959981803,0.976147456998507,proportion,200
+structural control,PATENCY intact survival-curve error,0.00461050954600497,0.004494977563259513,0.004726041528750427,absolute survival-probability error,1000
+structural control,PATENCY broken-linkage survival-curve error,0.0321292147684283,0.03207297191408992,0.032185457622766686,absolute survival-probability error,1000
+structural control,PATENCY paired survival-curve error increase,0.027518705222423334,0.027406343156565028,0.02763106728828164,absolute survival-probability error,1000
+structural control,HeadSOAR intact category-probability error,0.010492591556735743,0.010354437054570733,0.010630746058900754,absolute category-probability error,1000
+structural control,HeadSOAR broken-linkage category-probability error,0.015329926357402638,0.015144962254390108,0.015514890460415168,absolute category-probability error,1000
+structural control,HeadSOAR paired category-probability error increase,0.004837334800666894,0.00462502682208159,0.005049642779252198,absolute category-probability error,1000
+release characterisation,independent trial count,100.0,,,trials,100
+release characterisation,matched context view count,500.0,,,views,100
+release characterisation,synthetic participant count,610190.0,,,participants,100
+worked trial,365-day treated-minus-control event-risk difference,-0.0165205359244551,-0.0269917058098408,-0.0060493660390693,probability difference,1
+design individual randomization,trials below their randomization 95th-percentile maximum baseline imbalance,22.0,,,of 24 trials,24
+design pragmatic,median exposure received,0.798683,0.727934,0.914071,proportion of prescribed exposure,24
+design pragmatic,median intercurrent-event fraction,0.5245,0.303446,0.706608,proportion,24
+design pragmatic,median per-protocol fraction,0.1057705824958833,0.0101233204491073,0.4095343954551068,proportion,24
+design covariate structure,median age-BMI rank correlation,0.2435715230419608,0.1985347176744379,0.267593101918686,correlation coefficient,12
+design covariate structure,median absolute adjusted-unadjusted risk-difference shift,0.0008785426048524003,0.0003461829864842003,0.001069418058383901,probability difference,4
+design endpoint ascertainment,median validation fraction,0.5970424436102724,0.2965116279069767,0.6066239316239316,proportion,16
+design endpoint ascertainment,median sensitivity,0.8706293706293706,0.75,0.99375,proportion,16
+design endpoint ascertainment,median specificity,0.9277012232717786,0.8642957416939635,0.9961190168175936,proportion,16
+design endpoint ascertainment,median absolute corrected-observed risk-difference shift,0.0060297,0.0020773,0.00739052,probability difference,4
+design cluster parallel,median arm-residualized event intraclass correlation,0.01135408267750235,0.0018796450337031,0.016884433458858,correlation coefficient,12
+design cluster parallel,median event variance-inflation factor,1.9512037612132458,1.1995477547534503,2.764686378810217,ratio,12
+design stepped wedge,median arm-residualized event intraclass correlation,0.0285495379027326,0.0198697592364255,0.041520095517212,correlation coefficient,8
+design stepped wedge,median event variance-inflation factor,5.5423742291925455,4.5672627876322505,7.06625994782294,ratio,8
+design cluster parallel,median cluster-aware to participant-independent interval-width ratio,1.4485269841834807,1.0947384758208178,1.531548647233471,ratio,4
+design cluster response,zero-heterogeneity mean event design effect,0.990839,0.980697,1.000981,variance ratio,1000
+design cluster response,low mean event design effect,1.199747,1.187163,1.212330,variance ratio,1000
+design cluster response,source-anchored mean event design effect,1.883479,1.858934,1.908024,variance ratio,1000
+design cluster response,moderate mean event design effect,2.451277,2.413528,2.489026,variance ratio,1000
+design cluster response,strong mean event design effect,3.668663,3.597793,3.739533,variance ratio,1000
+design cluster inference,source-anchored cluster-aware interval coverage,0.957,0.942581,0.967921,proportion,1000
+design cluster inference,source-anchored participant-independent interval coverage,0.866,0.843480,0.885719,proportion,1000
+design cluster inference,strong-stress cluster-aware interval coverage,0.957,0.942581,0.967921,proportion,1000
+design cluster inference,strong-stress participant-independent interval coverage,0.701,0.671899,0.728562,proportion,1000
+design cluster inference,source-anchored risk-difference bias,-0.000248,-0.000627,0.000132,probability difference,1000
+design stepped wedge,median absolute period-adjustment shift without secular trend,0.00655684691148275,0.0028714378794463015,0.0105397675470165,probability difference,4
+design stepped wedge,median absolute period-adjustment shift with secular trend,0.02747468577988319,0.01714173797775244,0.044213258315866893,probability difference,4
+design stepped wedge,mean treatment-adjusted log baseline-rate slope without secular trend,-0.026181906516344625,-0.06629263272744902,0.013928819694759773,log rate ratio per rollout period,4
+design stepped wedge,mean treatment-adjusted log baseline-rate slope with secular trend,0.17003585060125423,0.10170689279986136,0.2383648084026471,log rate ratio per rollout period,4
+design stepped-wedge inference,source-anchored period-adjusted treatment-effect bias,-0.0006963533285508554,-0.0015029368831491213,0.00011023022604741048,probability difference,1000
+design stepped-wedge inference,source-anchored period-omitting treatment-effect bias,0.021055291034136642,0.020528811776618927,0.021581770291654357,probability difference,1000
+design stepped-wedge inference,source-anchored period-adjusted interval coverage,0.957,0.9425808795196348,0.9679213037652625,proportion,1000
+design stepped-wedge inference,source-anchored period-omitting interval coverage,0.33,0.3015560715349146,0.3597455795215379,proportion,1000
+design stepped-wedge inference,strong-stress period-adjusted interval coverage,0.956,0.9414482108495923,0.9670617854115815,proportion,1000
+design stepped-wedge inference,strong-stress period-omitting interval coverage,0.0,0.0,0.003826758485555125,proportion,1000
+design group sequential,median monitoring-adjusted to fixed-analysis interval-width ratio,1.10734,1.04216,1.41421,ratio,4
+design group sequential,independently reproduced stopping decisions,4.0,,,of 4 trials,4
+assumption mechanism response,adjacent tier comparisons with positive paired mechanism change,14.0,,,of 14 comparisons,14
+assumption mechanism response,adjacent tier comparisons with paired interval above zero,14.0,,,of 14 comparisons,14
+assumption analysis response,adjacent tier comparisons with positive same-estimand analysis-gap change,13.0,,,of 14 comparisons,14
+assumption analysis response,completed matched analyses,88.0,,,of 88 analyses,88
+assumption clustered censoring,A2-to-A3 prognostic-censoring signal change,0.2057265831524478,0.1956657674618161,0.2157873988430795,log hazard ratio,4
+design group sequential response,null rejection probability,0.049736,0.049137,0.050342,proportion,500000
+design group sequential response,rejection probability at half-boundary signal,0.169794,,,proportion,500000
+design group sequential response,early-stop probability at half-boundary signal,0.08299,,,proportion,500000
+design group sequential response,rejection probability at twice-boundary signal,0.98126,,,proportion,500000
+design group sequential response,early-stop probability at twice-boundary signal,0.895144,,,proportion,500000
+design group sequential inference,null repeated-interval coverage,0.950264,0.949658,0.950863,proportion,500000
+design group sequential inference,null ordinary-interval coverage,0.942684,0.942036,0.943325,proportion,500000
+design group sequential inference,boundary-signal repeated-interval coverage,0.975866,0.975439,0.976286,proportion,500000
+design group sequential inference,boundary-signal ordinary-interval coverage,0.945752,0.945122,0.946375,proportion,500000
+design group sequential inference,boundary-signal realized-estimate bias,0.177828,0.174462,0.181195,standardized treatment-signal units,500000
+design group sequential inference,twice-boundary mean information fraction,0.639892,,,proportion of fixed-horizon information,500000

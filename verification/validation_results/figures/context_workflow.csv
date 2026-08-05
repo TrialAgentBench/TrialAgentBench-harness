@@ -1,0 +1,6 @@
+context_id,recovery_path,route_count,successful_route_count,maximum_absolute_difference,maximum_tolerance_ratio
+C1,direct_analysis_ready,100,100,5.08482145278e-14,1
+C2,direct_analysis_ready,164,164,5.08482145278e-14,1
+C3,reconstruct_raw_domains,100,100,3.28626015289e-14,1
+C4,reconstruct_raw_domains,164,164,3.28626015289e-14,1
+C5,repair_then_reconstruct_raw_domains,164,164,3.28626015289e-14,1

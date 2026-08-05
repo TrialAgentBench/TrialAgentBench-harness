@@ -1,0 +1,84 @@
+[project]
+name = "trialagentbench-validation"
+version = "0.1.0"
+description = "Independent validation and public-evidence replay for TrialAgentBench"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = "CC-BY-NC-4.0"
+license-files = ["LICENSE"]
+dependencies = [
+  "lifelines>=0.30,<1",
+  "matplotlib==3.10.8",
+  "numpy>=2.0,<2.4",
+  "openpyxl>=3.1,<4",
+  "pandas>=2.2,<3",
+  "pyarrow>=18,<24",
+  "pydantic>=2.12,<3",
+  "scipy>=1.14,<2",
+  "statsmodels>=0.14,<0.15",
+]
+
+[project.scripts]
+trialagentbench-validate = "trialagentbench_validation.cli:main"
+
+[project.urls]
+Homepage = "https://huggingface.co/datasets/TrialAgentBench/TrialAgentBench/"
+Repository = "https://github.com/TrialAgentBench/TrialAgentBench-harness"
+Harness = "https://github.com/TrialAgentBench/TrialAgentBench-harness/tree/main/harness"
+Data = "https://huggingface.co/datasets/TrialAgentBench/TrialAgentBench/"
+
+[project.optional-dependencies]
+grader-controls = [
+  "trial-agent-bench>=0.1.0,<0.2",
+]
+dev = [
+  "build>=1.2",
+  "hatchling>=1.27",
+  "mypy>=1.10",
+  "pandas-stubs>=2.2",
+  "pytest>=8",
+  "ruff>=0.6",
+  "scipy-stubs>=1.14,<1.17",
+]
+
+[tool.uv.sources]
+trial-agent-bench = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/trialagentbench_validation"]
+
+[tool.hatch.build.targets.wheel.force-include]
+validation_results = "trialagentbench_validation/validation_results"
+
+[tool.hatch.build.targets.sdist.force-include]
+validation_results = "validation_results"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 119
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "UP042", "UP047"]
+
+[tool.mypy]
+python_version = "3.11"
+disallow_untyped_defs = true
+warn_unused_configs = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["lifelines", "lifelines.*", "pyarrow", "pyarrow.*", "statsmodels", "statsmodels.*"]
+ignore_missing_imports = true
+disable_error_code = ["import-untyped"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-q", "-p", "no:cacheprovider"]
+markers = [
+  "slow: distribution-build and installed-artifact checks",
+]

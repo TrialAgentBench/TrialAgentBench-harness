@@ -1,0 +1,13 @@
+world_id,row_count,column_count,declared_adjustment_covariate_count,complete_case_rate,minimum_treatment_count,treatment_counts
+portfolio-world-01,13805,123,7,0.9566823614632379,2489,"{""control"":4893,""regimen_a"":3407,""regimen_b"":2489,""regimen_c"":3016}"
+portfolio-world-02,13805,123,7,0.9568996740311482,2605,"{""control"":4364,""regimen_a"":3065,""regimen_c"":2605,""regimen_g"":3771}"
+portfolio-world-03,13805,123,7,0.9567547989858747,2515,"{""control"":4604,""regimen_a"":2515,""regimen_c"":2762,""regimen_g"":3924}"
+portfolio-world-04,13805,123,7,0.9565374864179645,2559,"{""control"":4937,""regimen_a"":3398,""regimen_b"":2559,""regimen_c"":2911}"
+portfolio-world-05,13805,123,7,0.9563201738500543,2526,"{""control"":4938,""regimen_a"":3328,""regimen_b"":2526,""regimen_c"":3013}"
+portfolio-world-06,13805,123,7,0.9565374864179645,2464,"{""control"":4643,""regimen_b"":2464,""regimen_c"":2783,""regimen_g"":3915}"
+portfolio-world-07,13805,123,7,0.9565374864179645,2607,"{""control"":4930,""regimen_a"":3273,""regimen_b"":2607,""regimen_c"":2995}"
+portfolio-world-08,13805,123,7,0.9563201738500543,2550,"{""control"":4952,""regimen_a"":3381,""regimen_b"":2550,""regimen_c"":2922}"
+portfolio-world-09,13805,123,7,0.9564650488953278,2592,"{""control"":4928,""regimen_a"":3335,""regimen_b"":2592,""regimen_c"":2950}"
+portfolio-world-10,13805,123,7,0.9567547989858747,2572,"{""control"":4914,""regimen_a"":3261,""regimen_b"":2572,""regimen_c"":3058}"
+portfolio-world-11,13805,123,7,0.9566823614632379,2559,"{""control"":4975,""regimen_a"":3362,""regimen_b"":2559,""regimen_c"":2909}"
+portfolio-world-12,13805,123,7,0.9566823614632379,2487,"{""control"":4974,""regimen_a"":3398,""regimen_b"":2487,""regimen_c"":2946}"

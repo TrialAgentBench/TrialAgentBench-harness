@@ -1,0 +1,8 @@
+{
+  "experiment_count": 10,
+  "peak_parent_rss_mebibytes": 1399.7578125,
+  "peak_worker_rss_mebibytes": 562.5390625,
+  "wall_time_seconds": 23.41911228792742,
+  "worker_count": 12,
+  "world_result_count": 8000
+}

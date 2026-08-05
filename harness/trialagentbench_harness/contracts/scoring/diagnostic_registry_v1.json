@@ -1,0 +1,174 @@
+{
+  "schema_id": "trialagentbench.diagnostic_registry/v1",
+  "version": "2026-08-02",
+  "assumption_tier_operating_definitions": {
+    "A1": {
+      "label": "assumption-compatible",
+      "operative_definition": "The injected data-generating condition does not invalidate the default method for the declared estimand, design, and observation process.",
+      "participant_evidence_requirement": "The public design declaration or diagnostic must support the assumption-compatible classification.",
+      "release_evidence_requirement": "The route contract must state why the default remains supported, and the released reference result must be independently reproducible.",
+      "scoring_constraint": "The tier is descriptive and cannot add an estimator to the accepted method register."
+    },
+    "A2": {
+      "label": "detectable departure, default-defensible",
+      "operative_definition": "A participant-visible departure is detectable, but its declared consequence remains below the series-specific materiality criterion and the default method remains supported.",
+      "participant_evidence_requirement": "The departure must be reproducible from participant-visible evidence rather than a hidden generating parameter or a single p-value.",
+      "release_evidence_requirement": "The route contract must identify the materiality criterion and support continued use of the default; the released reference result must be independently reproducible.",
+      "scoring_constraint": "The default method may remain accepted; the A2 label alone cannot require an alternative estimator."
+    },
+    "A3": {
+      "label": "consequentially stressed",
+      "operative_definition": "The injected departure makes the default method materially misleading for the declared question, while at least one prespecified alternative remains identified from participant-visible evidence.",
+      "participant_evidence_requirement": "The relevant diagnostic or design feature and its declared practical consequence must be recoverable from the released participant surface.",
+      "release_evidence_requirement": "The route contract must show that the default crosses the declared consequence criterion and why each accepted alternative remains supported; released reference results must be independently reproducible.",
+      "scoring_constraint": "Only accepted method routes may receive primary credit; the A3 label cannot itself select a method."
+    },
+    "A4": {
+      "label": "broken default; alternative response required",
+      "operative_definition": "The injected condition invalidates the prespecified default analysis. Identification is classified separately and determines whether the defensible response is an alternative point estimate, identified set, sensitivity result, qualified limitation, or abstention.",
+      "participant_evidence_requirement": "The structural defect, design obligation, or diagnostic failure must be recoverable from the participant surface.",
+      "release_evidence_requirement": "The route contract must explain why the default is invalid and support each accepted alternative, bounded conclusion, or non-estimability response; released reference results must be independently reproducible.",
+      "scoring_constraint": "Credit follows the accepted route set and its route-specific reference results; the A4 label cannot independently create or remove a credit-eligible route."
+    }
+  },
+  "diagnostic_keys": {
+    "randomization_integrity": {
+      "public_key": "randomization_integrity_public",
+      "diagnostic_scale": "design-declaration",
+      "threshold": "no empirical severity threshold; the participant-visible protocol and assignment records declare randomized allocation",
+      "interpretation": "Summarizes chance baseline imbalance across prespecified prognostic variables and checks allocation against the randomization records.",
+      "participant_operation": "Verify the randomized unit, allocation groups, and assignment declaration from the protocol and randomization records; treat baseline standardized differences as descriptive only.",
+      "primary_credit_policy": "design_modifier"
+    },
+    "censoring_ignorability": {
+      "public_key": "censoring_followup_public",
+      "diagnostic_scale": "prognostic-censoring-log-hazard",
+      "threshold": "simultaneous lower absolute prognostic censoring log-HR: log(1.25) stressed, log(1.75) fragile, log(3.00) broken",
+      "interpretation": "Estimates whether measured baseline prognosis predicts observed follow-up.",
+      "participant_operation": "On the reconstructed primary endpoint rows, set censoring_status = 1 exactly when CNSR=1 and AVAL < max(AVAL among rows with CNSR=1), otherwise set censoring_status = 0; use AVAL as follow-up time. Select numeric baseline covariates shared by the participant and reference-population tables and standardize each with the participant population standard deviation (ddof=0). Within each randomized group, fit statsmodels.duration.hazard_regression.PHReg separately for every standardized covariate with status=censoring_status and ties='breslow'. For p covariates and g groups, use the standard-normal quantile at 1 - 0.05/(2*p*g) and report the largest max(0, |coefficient| - quantile * standard_error). If no candidate model is estimable, report diagnostic_estimable=0 and lower_abs_prognostic_censoring_log_hr=0, and state that this zero lower bound is not evidence of independent censoring.",
+      "primary_credit_policy": "always",
+      "nonidentified_evidence_class": "factual_premise",
+      "severity_thresholds": {
+        "metric_name": "lower_abs_prognostic_censoring_log_hr",
+        "metric_unit": "log_hazard_ratio",
+        "decision_metric_names": {
+          "stressed": "lower_abs_prognostic_censoring_log_hr",
+          "fragile": "lower_abs_prognostic_censoring_log_hr",
+          "broken": "lower_abs_prognostic_censoring_log_hr"
+        },
+        "confidence_level": 0.95,
+        "multiplicity_adjustment": "bonferroni",
+        "stressed": 0.22314355131420976,
+        "fragile": 0.5596157879354227,
+        "broken": 1.0986122886681098
+      }
+    },
+    "proportional_hazards": {
+      "public_key": "proportional_hazards_public",
+      "diagnostic_scale": "time-varying-log-hazard-range",
+      "threshold": "lower 95% confidence bound for the absolute scaled-Schoenfeld rank-slope range, classified at midpoints between the declared holding/mild, mild/fragile, and fragile/broken generating schedules (0.090602, 0.402499, 0.882617); the separate primary-method change threshold is log(1.25)",
+      "interpretation": "Measures time variation in the treatment log hazard ratio over prespecified follow-up intervals.",
+      "participant_operation": "Fit the Cox model used for the declared treatment contrast with lifelines CoxPHFitter(penalizer=0.0) and compute its scaled Schoenfeld treatment residuals. For an unadjusted contrast this is the treatment-only model. For covariate-standardized analysis, include the prespecified flexible baseline-covariate terms and treatment-by-BMI terms before assessing the treatment residual. Order event times by a stable ascending mergesort, convert their zero-based order to [0,1] by dividing by n_events-1, and regress the residuals by ordinary least squares on an intercept and rank_time-0.5. Estimate residual variance as SSE/(n_events-2). Classify every departure boundary using max(0, |slope| - standard-normal quantile at 0.975 * standard_error), the lower 95% confidence bound.",
+      "primary_credit_policy": "method_dependent",
+      "severity_thresholds": {
+        "metric_name": "simultaneous_lower_abs_time_varying_log_hazard_range",
+        "metric_unit": "log_hazard_ratio",
+        "decision_metric_names": {
+          "stressed": "simultaneous_lower_abs_time_varying_log_hazard_range",
+          "fragile": "simultaneous_lower_abs_time_varying_log_hazard_range",
+          "broken": "simultaneous_lower_abs_time_varying_log_hazard_range"
+        },
+        "confidence_level": 0.95,
+        "multiplicity_adjustment": "none",
+        "stressed": 0.09060233512029495,
+        "fragile": 0.40249857212657514,
+        "broken": 0.8826172714134936
+      },
+      "primary_method_change_threshold": 0.22314355131420976
+    },
+    "model_form": {
+      "public_key": "model_form_public",
+      "diagnostic_scale": "log-hazard",
+      "threshold": "simultaneous lower absolute omitted quadratic BMI or quadratic treatment-by-BMI log-hazard contribution",
+      "interpretation": "Tests whether the prespecified linear BMI main effect and treatment interaction omit clinically relevant curvature.",
+      "participant_operation": "Select the continuous covariates shared by the participant and reference-population tables and standardize each with the participant population standard deviation (ddof=0). Using statsmodels.duration.hazard_regression.PHReg with status equal to the endpoint event and ties='breslow', fit the declared linear model with treatment, all standardized continuous-covariate main effects, and the prespecified treatment-by-BMI interaction. Fit a nested model adding squared BMI, then a hierarchical model adding treatment-by-squared-BMI. Treat the squared-BMI main effect and quadratic treatment interaction as two candidates. Use the standard-normal quantile at 1 - 0.05/4 and report the largest max(0, |coefficient| - quantile * standard_error).",
+      "primary_credit_policy": "always",
+      "severity_thresholds": {
+        "metric_name": "simultaneous_lower_abs_omitted_model_term_log_hazard",
+        "metric_unit": "log_hazard_ratio",
+        "decision_metric_names": {
+          "stressed": "simultaneous_lower_abs_omitted_model_term_log_hazard",
+          "fragile": "simultaneous_lower_abs_omitted_model_term_log_hazard",
+          "broken": "simultaneous_lower_abs_omitted_model_term_log_hazard"
+        },
+        "confidence_level": 0.95,
+        "multiplicity_adjustment": "bonferroni",
+        "stressed": 0.05578588782855244,
+        "fragile": 0.13990394698385566,
+        "broken": 0.27465307216702745
+      }
+    },
+  "endpoint_ascertainment": {
+    "public_key": "endpoint_ascertainment_public",
+    "diagnostic_scale": "validation-discordance-probability",
+    "threshold": "validated observed-versus-adjudicated endpoint discordance: 0.025 stressed and 0.10 fragile; any wholly unsupported prognostic stratum is broken",
+      "interpretation": "Estimates arm- and prognostic-stratum-specific sensitivity and specificity; unsupported validation cells require sensitivity bounds.",
+      "participant_operation": "Join the released endpoint-validation records to randomized allocation and the declared baseline prognostic variable by USUBJID. Derive lower_risk versus higher_risk for every participant using the pooled-median cutpoint declared in ascertainment_model.json, and verify any released VALSTRAT labels against that derivation. Compare OBSEVNT with ADJEVNT among VALIDFL=1 records and tabulate validation support by allocation group and derived stratum. Use the joint validation likelihood only when every arm-stratum cell has support. Report both validation_discordance_fraction and unsupported_validation_stratum_fraction. If a stratum has no validation records, report the declared bounded-deviation analysis or qualify non-identification.",
+    "primary_credit_policy": "method_dependent",
+    "nonidentified_evidence_class": "empirical_diagnostic",
+    "severity_thresholds": {
+      "metric_name": "validation_discordance_fraction",
+      "metric_unit": "proportion",
+      "decision_metric_names": {
+        "stressed": "validation_discordance_fraction",
+        "fragile": "validation_discordance_fraction",
+        "broken": "unsupported_validation_stratum_fraction"
+      },
+      "confidence_level": 0.95,
+      "multiplicity_adjustment": "none",
+      "stressed": 0.025,
+      "fragile": 0.1,
+      "broken": 0.1
+    },
+    "primary_method_change_threshold": 0.1
+  },
+    "cluster_structure": {
+      "public_key": "cluster_structure_public",
+      "diagnostic_scale": "cluster-information-loss-fraction",
+      "threshold": "no empirical severity threshold; the participant-visible randomization unit requires cluster-aware inference",
+      "interpretation": "Estimates outcome intracluster correlation and the variance inflation induced by unequal cluster sizes.",
+      "participant_operation": "Verify the cluster randomization unit and cluster membership from the protocol and assignment records; use cluster-aware inference irrespective of the descriptive outcome ICC.",
+      "primary_credit_policy": "design_modifier"
+    },
+    "secular_trend": {
+      "public_key": "secular_trend_public",
+      "diagnostic_scale": "period-log-hazard-range",
+      "threshold": "lower 95% absolute treatment-adjusted secular log-hazard range over the released stepped-wedge periods",
+      "interpretation": "Estimates calendar-period outcome change after adjustment for current intervention exposure.",
+      "participant_operation": "Use the common participant RFSTDTC and the unique finite intervention-start days before the endpoint horizon as period starts. Split each participant's primary endpoint follow-up over those periods. Fit statsmodels.genmod.generalized_linear_model.GLM with a Poisson family, log person-time offset, and design columns ordered as intercept, period_index/(n_periods-1), time-varying intervention status, participant-population-standardized shared baseline covariates (ddof=0), and cluster indicators excluding the lexicographically first reference cluster. Report max(0, |normalized-period coefficient| - standard-normal quantile at 0.975 * model-based standard_error) as the lower 95% absolute treatment-adjusted secular log-hazard range.",
+      "primary_credit_policy": "always",
+      "severity_thresholds": {
+        "metric_name": "lower_abs_treatment_adjusted_secular_log_hazard_range",
+        "metric_unit": "log_hazard_ratio",
+        "decision_metric_names": {
+          "stressed": "lower_abs_treatment_adjusted_secular_log_hazard_range",
+          "fragile": "lower_abs_treatment_adjusted_secular_log_hazard_range",
+          "broken": "lower_abs_treatment_adjusted_secular_log_hazard_range"
+        },
+        "confidence_level": 0.95,
+        "multiplicity_adjustment": "none",
+        "stressed": 0.09531017980432493,
+        "fragile": 0.5596157879354227,
+        "broken": 1.0986122886681098
+      }
+    },
+    "sequential_design_adjustment": {
+      "public_key": "sequential_design_adjustment_public",
+      "diagnostic_scale": "design-declaration",
+      "threshold": "no empirical severity threshold; a complete participant-visible group-sequential plan declares looks, information fractions, boundaries, and alpha control",
+      "interpretation": "Reconstructs look-specific information, efficacy-boundary crossing, and the repeated confidence interval from the monitoring plan.",
+      "participant_operation": "Verify the participant-visible interim looks, information fractions, stopping boundaries, and alpha-spending rule; use the declared sequentially adjusted estimator and uncertainty.",
+      "primary_credit_policy": "design_modifier"
+    }
+  }
+}

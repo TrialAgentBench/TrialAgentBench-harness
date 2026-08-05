@@ -1,0 +1,608 @@
+{
+  "analysis_constraints": [
+    "Design profiles are categorical study formats, not an ordinal difficulty scale.",
+    "Assumption-tier comparisons are interpreted only within a matched evaluation series.",
+    "Context effects use the declared matched contrasts; every base trial has all five context views.",
+    "A pooled score cannot replace evaluation-series results or noncompensatory failure indicators.",
+    "Parameter draws and context views do not increase the independent base-trial denominator."
+  ],
+  "checksum": "fca53ba46786e90f04381698df80eed49bb30f0de924f14a69df07517253ba8a",
+  "compute_envelope": {
+    "decoding_replicates": 2,
+    "factorial_assignments_per_model": 1200,
+    "factorial_cells_per_item": 6,
+    "factorial_context_allocation": [
+      20,
+      20,
+      20,
+      20,
+      20
+    ],
+    "factorial_item_count": 100,
+    "factorial_sampling_unit": "one_context_view_per_base_trial",
+    "factorial_selection_method": "stratified_regime_cell_omission_v1",
+    "participant_context_count": 5,
+    "participant_item_count": 500,
+    "primary_assignments_per_model": 500
+  },
+  "contrasts": [
+    {
+      "changed_factors": [
+        "analysis_specification"
+      ],
+      "contrast_id": "C1-C2",
+      "contrast_kind": "context",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "data",
+        "assistance",
+        "interface",
+        "evaluation_target"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Locked-SAP specification effect with analysis-ready data.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "C1",
+      "pairing_fields": [
+        "base_trial_id",
+        "decoding_seed",
+        "procedure_assistance",
+        "response_interface"
+      ],
+      "subtrahend": "C2"
+    },
+    {
+      "changed_factors": [
+        "data_preparation"
+      ],
+      "contrast_id": "C3-C1",
+      "contrast_kind": "context",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "locked_sap",
+        "assistance",
+        "interface",
+        "evaluation_target"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Raw-data reconstruction effect under a locked SAP.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "C3",
+      "pairing_fields": [
+        "base_trial_id",
+        "decoding_seed",
+        "procedure_assistance",
+        "response_interface"
+      ],
+      "subtrahend": "C1"
+    },
+    {
+      "changed_factors": [
+        "analysis_specification"
+      ],
+      "contrast_id": "C3-C4",
+      "contrast_kind": "context",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "raw_data",
+        "assistance",
+        "interface",
+        "evaluation_target"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Locked-SAP specification effect with raw data.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "C3",
+      "pairing_fields": [
+        "base_trial_id",
+        "decoding_seed",
+        "procedure_assistance",
+        "response_interface"
+      ],
+      "subtrahend": "C4"
+    },
+    {
+      "changed_factors": [
+        "data_preparation"
+      ],
+      "contrast_id": "C4-C2",
+      "contrast_kind": "context",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "protocol",
+        "assistance",
+        "interface",
+        "evaluation_target"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Raw-data reconstruction effect under protocol-only analysis.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "C4",
+      "pairing_fields": [
+        "base_trial_id",
+        "decoding_seed",
+        "procedure_assistance",
+        "response_interface"
+      ],
+      "subtrahend": "C2"
+    },
+    {
+      "changed_factors": [
+        "declared_defect"
+      ],
+      "contrast_id": "C5-C4",
+      "contrast_kind": "context",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "protocol",
+        "assistance",
+        "interface",
+        "underlying_construction_state"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Incremental declared-duplication localisation and exact-repair effect.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "C5",
+      "pairing_fields": [
+        "base_trial_id",
+        "decoding_seed",
+        "procedure_assistance",
+        "response_interface"
+      ],
+      "subtrahend": "C4"
+    },
+    {
+      "changed_factors": [
+        "response_interface",
+        "checklist_content"
+      ],
+      "contrast_id": "I.interface_by_P1-P0",
+      "contrast_kind": "factor_interaction",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "difference_in_paired_differences",
+      "held_fixed": [
+        "base_trial",
+        "context",
+        "obligation_set",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "descriptive",
+      "interpretation": "Whether checklist-content assistance changes the response-interface effect.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "structured_minus_narrative_at_P1",
+      "pairing_fields": [
+        "base_trial_id",
+        "context_configuration",
+        "decoding_seed"
+      ],
+      "subtrahend": "structured_minus_narrative_at_P0"
+    },
+    {
+      "changed_factors": [
+        "response_interface",
+        "procedural_ordering"
+      ],
+      "contrast_id": "I.interface_by_P2-P1",
+      "contrast_kind": "factor_interaction",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "difference_in_paired_differences",
+      "held_fixed": [
+        "base_trial",
+        "context",
+        "obligation_set",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "descriptive",
+      "interpretation": "Whether SOP ordering changes the response-interface effect.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "structured_minus_narrative_at_P2",
+      "pairing_fields": [
+        "base_trial_id",
+        "context_configuration",
+        "decoding_seed"
+      ],
+      "subtrahend": "structured_minus_narrative_at_P1"
+    },
+    {
+      "changed_factors": [
+        "normalization_path"
+      ],
+      "contrast_id": "N1-N0",
+      "contrast_kind": "normalization_measurement",
+      "denominator_policy": "all_sampled_reports",
+      "effect_measure": "field_disagreement_probability",
+      "held_fixed": [
+        "narrative_report",
+        "output_contract",
+        "evaluation_reference_blinding"
+      ],
+      "independent_unit": "narrative_report",
+      "inferential_status": "qualification",
+      "interpretation": "Score-relevant normalization error against the masked-human reference.",
+      "metrics": [],
+      "minuend": "automated_importer",
+      "pairing_fields": [
+        "narrative_report_id"
+      ],
+      "subtrahend": "manual_masked"
+    },
+    {
+      "changed_factors": [
+        "response_interface",
+        "normalization_path"
+      ],
+      "contrast_id": "O1-O0",
+      "contrast_kind": "operational_pipeline",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "context",
+        "assistance",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "descriptive",
+      "interpretation": "Operational pipeline difference; it combines elicitation and normalization effects.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "structured:direct_structured",
+      "pairing_fields": [
+        "base_trial_id",
+        "context_configuration",
+        "procedure_assistance",
+        "decoding_seed"
+      ],
+      "subtrahend": "narrative:automated_importer"
+    },
+    {
+      "changed_factors": [
+        "checklist_content"
+      ],
+      "contrast_id": "P1-P0",
+      "contrast_kind": "procedure_assistance",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "context",
+        "obligation_set",
+        "interface",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Effect of exposing the item-independent completeness obligations without ordering.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "unordered_checklist",
+      "pairing_fields": [
+        "base_trial_id",
+        "context_configuration",
+        "response_interface",
+        "decoding_seed"
+      ],
+      "subtrahend": "output_contract_only"
+    },
+    {
+      "changed_factors": [
+        "checklist_content",
+        "procedural_ordering"
+      ],
+      "contrast_id": "P2-P0",
+      "contrast_kind": "procedure_assistance",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "context",
+        "interface",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Total assistance effect; this does not isolate checklist content from ordering.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "ordered_sop",
+      "pairing_fields": [
+        "base_trial_id",
+        "context_configuration",
+        "response_interface",
+        "decoding_seed"
+      ],
+      "subtrahend": "output_contract_only"
+    },
+    {
+      "changed_factors": [
+        "procedural_ordering"
+      ],
+      "contrast_id": "P2-P1",
+      "contrast_kind": "procedure_assistance",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "context",
+        "obligation_set",
+        "interface",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Incremental effect of ordering an otherwise identical obligation set as an SOP.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "ordered_sop",
+      "pairing_fields": [
+        "base_trial_id",
+        "context_configuration",
+        "response_interface",
+        "decoding_seed"
+      ],
+      "subtrahend": "unordered_checklist"
+    },
+    {
+      "changed_factors": [
+        "response_interface"
+      ],
+      "contrast_id": "R1-R0",
+      "contrast_kind": "response_elicitation",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "context",
+        "assistance",
+        "evaluation_target",
+        "decoding_seed",
+        "human_reference"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "interval_estimate",
+      "interpretation": "Agent response-elicitation effect using masked-human narrative normalization.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "structured:direct_structured",
+      "pairing_fields": [
+        "base_trial_id",
+        "context_configuration",
+        "procedure_assistance",
+        "decoding_seed"
+      ],
+      "subtrahend": "narrative:manual_masked"
+    },
+    {
+      "changed_factors": [
+        "prompt_condition"
+      ],
+      "contrast_id": "targeted_vs_neutral",
+      "contrast_kind": "prompt_condition",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "analysis_specification",
+        "procedure_assistance",
+        "response_interface",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "descriptive",
+      "interpretation": "Effect of a capability-specific prompt relative to neutral instructions within the same task and decoding replicate.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "targeted_capability_prompt",
+      "pairing_fields": [
+        "base_trial_id",
+        "decoding_seed",
+        "analysis_specification",
+        "procedure_assistance",
+        "response_interface"
+      ],
+      "subtrahend": "neutral"
+    },
+    {
+      "changed_factors": [
+        "prompt_condition"
+      ],
+      "contrast_id": "targeted_vs_placebo_deliberation",
+      "contrast_kind": "prompt_condition",
+      "denominator_policy": "all_scheduled_pairs_noncompletion_is_failure",
+      "effect_measure": "mean_paired_difference",
+      "held_fixed": [
+        "base_trial",
+        "analysis_specification",
+        "procedure_assistance",
+        "response_interface",
+        "evaluation_target",
+        "decoding_seed"
+      ],
+      "independent_unit": "base_trial",
+      "inferential_status": "descriptive",
+      "interpretation": "Capability-specific prompt effect relative to an equally salient deliberation prompt that does not identify the relevant capability.",
+      "metrics": [
+        "usable_primary",
+        "route_match",
+        "primary_analysis_conforms",
+        "planning_usable_with_primary",
+        "planning_achieved_power",
+        "planning_power_shortfall",
+        "planning_underpowered"
+      ],
+      "minuend": "targeted_capability_prompt",
+      "pairing_fields": [
+        "base_trial_id",
+        "decoding_seed",
+        "analysis_specification",
+        "procedure_assistance",
+        "response_interface"
+      ],
+      "subtrahend": "placebo_deliberation"
+    }
+  ],
+  "design_id": "trialeval_canonical_experiment_v1",
+  "frozen_before_model_outputs": true,
+  "normalizer_qualification": {
+    "acceptable_error_probability": 0.03,
+    "error_event": "any_score_relevant_field_disagrees_with_masked_human_reference",
+    "exact_minimum_sample_size": 103,
+    "inclusion_strata": [
+      "evaluation_series_id",
+      "assumption_tier",
+      "context_configuration"
+    ],
+    "independent_unit": "one_narrative_report_per_base_trial",
+    "maximum_accepted_errors": 5,
+    "minimum_reports_per_stratum": 1,
+    "realized_power": 0.9098583774969341,
+    "realized_type_i_error": 0.04794887337319649,
+    "retained_sample_size": 103,
+    "secondary_bootstrap_replicates": 2000,
+    "secondary_bootstrap_seed": 47441,
+    "secondary_confidence_level": 0.95,
+    "secondary_uncertainty_method": "stratified_cluster_bootstrap_with_weighted_hoeffding_envelope",
+    "secondary_uncertainty_rationale": "The exact binomial error-count rule alone determines qualification. Secondary field, subgroup, and score-perturbation estimates use a deterministic 95% stratified base-trial bootstrap and retain a weighted bounded-outcome concentration envelope; 2,000 replicates keep percentile Monte Carlo error small relative to the descriptive intervals without materially increasing release-analysis cost.",
+    "type_i_error": 0.05,
+    "type_ii_error": 0.1,
+    "unacceptable_error_probability": 0.1
+  },
+  "precision": {
+    "achieved_worst_case_half_width": 0.1959963984540054,
+    "base_trial_replicates_per_regime_cell": 4,
+    "confidence_level": 0.95,
+    "endpoint_lower_bound": 0.0,
+    "endpoint_upper_bound": 1.0,
+    "method": "worst_case_bounded_mean_normal_planning",
+    "minimum_independent_base_trials": 97,
+    "paired_difference_lower_bound": -1.0,
+    "paired_difference_upper_bound": 1.0,
+    "rationale": "The 0.20 target caps the planned worst-case 95% margin at 20 percentage points for bounded capability contrasts; it is a precision limit, not a minimum-detectable-effect or power claim. Planning uses the maximum possible variance of a paired [0,1] endpoint difference; final inference uses crossed base-trial and decoding-seed resampling.",
+    "regime_cell_count": 25,
+    "retained_independent_base_trials": 100,
+    "target_half_width": 0.2
+  },
+  "schema_id": "trialagentbench.trialeval_experiment_protocol/v1"
+}

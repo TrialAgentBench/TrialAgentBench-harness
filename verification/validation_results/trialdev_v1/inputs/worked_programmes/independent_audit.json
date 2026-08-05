@@ -1,0 +1,24 @@
+{
+  "schema_id": "trialagentbench.validation.trialdev_worked_programmes/v1",
+  "source_identity": "661efc9100dd684f893c54aa1d648ddb81f1e06d1367113a80e496396ad5fbc3",
+  "package_sha256": "e193998e04e378be524518b2473cbd0e6b0a94345831e162dd78874f0177df6c",
+  "state_action_graph_sha256": "d57ec6996602add122382cc1eb6b208eac89014ecebccda6bbab8e68d09607c3",
+  "programme_count": 2,
+  "checkpoint_count": 8,
+  "evidence_artifact_count": 17,
+  "reconstructed_supported_set_count": 8,
+  "terminal_dispositions": {
+    "single_asset_development": "success",
+    "bounded_portfolio_reallocation": "success"
+  },
+  "graph_node_counts": {
+    "single_asset_development": 4,
+    "bounded_portfolio_reallocation": 43
+  },
+  "graph_edge_counts": {
+    "single_asset_development": 9,
+    "bounded_portfolio_reallocation": 121
+  },
+  "findings": [],
+  "status": "pass"
+}

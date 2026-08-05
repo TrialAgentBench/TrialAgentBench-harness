@@ -1,0 +1,22 @@
+title = "TrialAgentBench secret scanning"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Verification results contain checksum-bound opaque identifiers."
+paths = [
+  '''verification/validation_results/''',
+  '''__pycache__/''',
+]
+
+[[allowlists]]
+description = "Contract tests use deterministic opaque identifiers and checksum field names."
+paths = [
+  '''harness/tests/analysis/test_trialeval_ablation_transcription\.py''',
+  '''harness/tests/contracts/test_trialeval_ablation_contract\.py''',
+  '''harness/tests/execution/test_trialeval_data_integrity\.py''',
+  '''harness/tests/release/test_trialeval_runtime_surface_validation\.py''',
+  '''harness/tests/verification/trialeval/test_public_analysis_reconstruction\.py''',
+  '''verification/tests/trialeval/test_integrity\.py''',
+]

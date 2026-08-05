@@ -1,0 +1,10 @@
+{
+  "schema_id": "trialagentbench.validation.trialdev_policy_value_audit/v1",
+  "source_identity": "661efc9100dd684f893c54aa1d648ddb81f1e06d1367113a80e496396ad5fbc3",
+  "world_count": 7200,
+  "candidate_record_count": 21600,
+  "cell_count": 18,
+  "reconstructed_numeric_count": 72792,
+  "findings": [],
+  "status": "pass"
+}

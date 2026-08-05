@@ -1,0 +1,103 @@
+{
+  "schema_id": "trialagentbench.cdisc_reference_evidence/v1",
+  "source_repository": "cdisc-org/sdtm-adam-pilot-project",
+  "source_commit": "667511d4b183871d74392ba691c935c38d431d39",
+  "pairs": [
+    {
+      "layer": "SDTM",
+      "dataset": "DM",
+      "rows": 306,
+      "columns": 25,
+      "compared_cells": 7650,
+      "mismatched_cells": 0,
+      "xpt_sha256": "7327baea97fd532d02385248da0c7240402e770099507e2c3a88e2ac706c02a6",
+      "dataset_json_sha256": "785e2ccbdfec91c8a5c667b74b9f01ae99952fb8679d9c56053437916c404cf2"
+    },
+    {
+      "layer": "SDTM",
+      "dataset": "DS",
+      "rows": 596,
+      "columns": 13,
+      "compared_cells": 7748,
+      "mismatched_cells": 0,
+      "xpt_sha256": "0dea6d298cf248c953c556ff61d0ade5bb133044761a37709a136e2d9ef580e8",
+      "dataset_json_sha256": "0e7f3806997c1ccb81d326753e4b72c6d96fb9626c35be9450af2753b432806a"
+    },
+    {
+      "layer": "SDTM",
+      "dataset": "AE",
+      "rows": 1191,
+      "columns": 35,
+      "compared_cells": 41685,
+      "mismatched_cells": 0,
+      "xpt_sha256": "05cf23dadadf1b6a11f4474c76724f870de389ba6a4312c825b30e299cb1e4d9",
+      "dataset_json_sha256": "350063d64f52dcc3deae9e18250530668070dab7352483a6cfdc6569f17dfe8b"
+    },
+    {
+      "layer": "SDTM",
+      "dataset": "EX",
+      "rows": 591,
+      "columns": 17,
+      "compared_cells": 10047,
+      "mismatched_cells": 0,
+      "xpt_sha256": "37daacb3fdafba7b7ac7e254b51c43c4576f9ee45c87264da6b85e589ad7b8dc",
+      "dataset_json_sha256": "70dbe260bae3d9a44b1beeeb07f7d9cbc96379f0509050a7ef475329f3a20f93"
+    },
+    {
+      "layer": "SDTM",
+      "dataset": "SV",
+      "rows": 3559,
+      "columns": 8,
+      "compared_cells": 28472,
+      "mismatched_cells": 0,
+      "xpt_sha256": "ea831a4aceede71d26b6cc2d2a5bb04378dc91fcfeafae2aee6edc4fcb40fb52",
+      "dataset_json_sha256": "2ad1d75fea14392e1b3dc28c40b3f11865a79dad020ee5d3eb5fdaace89f0766"
+    },
+    {
+      "layer": "ADaM",
+      "dataset": "ADSL",
+      "rows": 254,
+      "columns": 48,
+      "compared_cells": 12192,
+      "mismatched_cells": 0,
+      "xpt_sha256": "c5139f873a93ef6add77bc4297beb6460a398bbdd036874382a9f39dfc92091d",
+      "dataset_json_sha256": "5f8815fc77b65674ce9af5f8b67b08ab7dc5e0c87d439f7d3c2add062a91affa"
+    },
+    {
+      "layer": "ADaM",
+      "dataset": "ADAE",
+      "rows": 1191,
+      "columns": 55,
+      "compared_cells": 65505,
+      "mismatched_cells": 0,
+      "xpt_sha256": "b8678e70946473a753bb01d002917f478bf51b59bdd0dc19587b97128059b6a0",
+      "dataset_json_sha256": "9bd195ecfde55486cd39f59e485dcc39cfb4b1d62b08befc150a30af4ad15fd3"
+    },
+    {
+      "layer": "ADaM",
+      "dataset": "ADTTE",
+      "rows": 254,
+      "columns": 26,
+      "compared_cells": 6604,
+      "mismatched_cells": 0,
+      "xpt_sha256": "68513fc4126744b6b2c7328eb70eb7b9683865d12c58b36539325f3c0c0ab93d",
+      "dataset_json_sha256": "40d0213aecde81db8f84980669c1af77c711f888a78da36e46c90bc1030ff85b"
+    }
+  ],
+  "rows_compared": 7942,
+  "cells_compared": 179903,
+  "mismatched_cells": 0,
+  "key_violations": 0,
+  "subject_reference_violations": 0,
+  "define_xml_datasets_required": 8,
+  "define_xml_datasets_present": 8,
+  "sdtm_active_n": 84,
+  "sdtm_reference_n": 86,
+  "adam_active_n": 84,
+  "adam_reference_n": 86,
+  "sdtm_adverse_event_discontinuation_risk_difference": 0.3831672203765227,
+  "adam_adverse_event_discontinuation_risk_difference": 0.3831672203765227,
+  "analysis_absolute_difference": 0.0,
+  "negative_controls_detected": 5,
+  "negative_controls_total": 5
+}

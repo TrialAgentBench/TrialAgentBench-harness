@@ -1,0 +1,32 @@
+{
+  "response_branch": "estimable",
+  "primary_resolution_evidence_class": "empirical_diagnosis",
+  "ranked_drug_ids": [
+    "candidate_a"
+  ],
+  "candidate_utility_estimates": [
+    {
+      "evidence_id": "utility_candidate_a",
+      "candidate_drug_id": "candidate_a",
+      "objective_id": "benefit_risk",
+      "estimator_id": "entropy_balanced_standardized_aalen_johansen",
+      "utility_unit": "dimensionless_declared_net_benefit",
+      "estimate": 0.20,
+      "lower": 0.08,
+      "upper": 0.32,
+      "confidence_level": 0.95,
+      "analysis_covariate_ids": [
+        "AGE"
+      ],
+      "diagnostic_evidence_ids": []
+    }
+  ],
+  "supporting_evidence_ids": [
+    "utility_candidate_a"
+  ],
+  "candidate_drug_id": "candidate_a",
+  "decision_action": "nominate_for_early_study",
+  "decision_rationale": "The adjusted estimate satisfies the released nomination policy.",
+  "claimed_subgroup_variables": [],
+  "diagnostic_artifacts": []
+}

@@ -1,0 +1,28 @@
+{
+  "schema_id": "trialagentbench.evaluation_specification/v1",
+  "submission_schema": "agent_output_schema.json",
+  "suites": {
+    "trialdev": {
+      "capability_stages": [
+        "completion",
+        "evidence",
+        "policy_action",
+        "route"
+      ],
+      "evaluation_rule": "evidence-linked action membership in the policy-derived acceptable set",
+      "purpose": "Integrate sequential evidence and choose an action under a declared public policy."
+    },
+    "trialeval": {
+      "capability_stages": [
+        "completion",
+        "reconstruction",
+        "estimand",
+        "method_route",
+        "numeric_result",
+        "uncertainty"
+      ],
+      "evaluation_rule": "validated structured primary analysis and evidence-supported, independently verified route-specific reference result",
+      "purpose": "Execute an estimand-compatible analysis from participant-visible evidence."
+    }
+  }
+}

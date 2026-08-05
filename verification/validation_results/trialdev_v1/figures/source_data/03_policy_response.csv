@@ -1,0 +1,4 @@
+experiment_id,axis,primary_metric,world_count,reference_mean,reference_lower,reference_upper,intervention_mean,intervention_lower,intervention_upper,paired_difference,paired_bootstrap_lower,paired_bootstrap_upper,expected_direction
+resource_response,resources,late_promotion_supported,400,0.0,0.0,0.0095122943342965,0.9875,0.9710762638040326,0.9946492492200284,0.9875,0.975,0.9975,increase
+stopping_response,stopping,stopping_supported,400,0.0,0.0,0.0095122943342965,1.0,0.9904877056657034,1.0,1.0,1.0,1.0,increase
+reallocation_response,reallocation,promotion_supported,400,0.0,0.0,0.0095122943342965,1.0,0.9904877056657034,1.0,1.0,1.0,1.0,increase

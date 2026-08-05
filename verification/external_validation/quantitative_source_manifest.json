@@ -1,0 +1,27 @@
+{
+  "schema_id": "trialagentbench.external_sources/v1",
+  "sources": [
+    {
+      "source_id": "aact_20260701",
+      "source_type": "aact",
+      "canonical_url": "https://aact.ctti-clinicaltrials.org/static/exported_files/monthly/2026-07-01",
+      "snapshot_identity": "20260701_export_ctgov.zip",
+      "sha256": "05d87a3c75373e3fcc80ad422dec139b46fdf6c233bfb51af89aec54a1b35cfd",
+      "retrieved_at": "2026-07-24",
+      "license_status": "acquisition_only",
+      "redistribution_rationale": "Raw snapshot is not redistributed; users reacquire the source and verify its checksum.",
+      "role": "secondary_validation"
+    },
+    {
+      "source_id": "rct_bench_125",
+      "source_type": "rct_bench",
+      "canonical_url": "https://github.com/bingkaiwang/rct_bench-main.git",
+      "snapshot_identity": "ef11941dc4749c135c71a1171c7ace70d7b7ca1c",
+      "sha256": "b8ab639a50a6a24ad315992985d58400a810c37ff796ed35ee993a06b00698f4",
+      "retrieved_at": "2026-07-24",
+      "license_status": "acquisition_only",
+      "redistribution_rationale": "The pinned repository has no top-level redistribution license; raw files are not redistributed.",
+      "role": "fit"
+    }
+  ]
+}

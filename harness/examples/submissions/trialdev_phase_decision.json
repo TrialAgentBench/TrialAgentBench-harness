@@ -1,0 +1,8 @@
+{
+  "decision_action": "advance_to_confirmation",
+  "supporting_evidence_ids": [
+    "primary_effect"
+  ],
+  "candidate_drug_id": "candidate_a",
+  "decision_rationale": "The submitted effect and safety evidence support continuation under the released policy."
+}

@@ -1,0 +1,9 @@
+construct_id,construct,validation_domain,external_trials,synthetic_trials,relative_distance,interval_low,interval_high,comparison
+age_mean,Age mean,Marginal distributions,29,75,0.33649221737988777,0.25279360175237053,0.7704063406282169,Within external heterogeneity
+age_sd,Age SD,Marginal distributions,29,75,0.19569185825886515,0.1906548247140126,0.8264474527516175,Within external heterogeneity
+bmi_mean,BMI mean,Marginal distributions,29,75,0.2618004809584744,0.2514674189694789,0.9399471403892129,Within external heterogeneity
+bmi_sd,BMI SD,Marginal distributions,29,75,0.32343782745232486,0.27624417567214216,0.7003586517664347,Within external heterogeneity
+age_bmi_spearman,Age-BMI rank correlation,Joint structure,29,75,0.4155046285101835,0.24432504226723614,1.0373565569209875,Within external heterogeneity
+maximum_scaled_baseline_smd,Randomized-arm balance,Joint structure,29,75,0.24841336001811834,0.20233766238375478,0.7757421797493518,Within external heterogeneity
+adjustment_shift_in_unadjusted_se,Adjustment-induced estimate shift,Analysis impact,10,75,0.2589502476817631,0.2206233528352817,1.573910222464722,Within external heterogeneity
+adjusted_to_unadjusted_se_ratio,Adjusted/unadjusted SE ratio,Analysis impact,10,75,0.7187517239859348,0.5742238665054267,1.741825126400621,Within external heterogeneity

@@ -1,0 +1,61 @@
+trial_id,method,metric,estimate
+RCTBENCH-024,Column-wise,Marginal distance (source SD),0.1286211750888231
+RCTBENCH-024,Whole-subject,Marginal distance (source SD),0.12783552095205436
+RCTBENCH-044,Column-wise,Marginal distance (source SD),0.08722578740585521
+RCTBENCH-044,Whole-subject,Marginal distance (source SD),0.09105880108369763
+RCTBENCH-053,Column-wise,Marginal distance (source SD),0.12468808350000986
+RCTBENCH-053,Whole-subject,Marginal distance (source SD),0.1234148258377434
+RCTBENCH-055,Column-wise,Marginal distance (source SD),0.15515159396228242
+RCTBENCH-055,Whole-subject,Marginal distance (source SD),0.15153150895932405
+RCTBENCH-064,Column-wise,Marginal distance (source SD),0.07643282137754268
+RCTBENCH-064,Whole-subject,Marginal distance (source SD),0.07422492091956906
+RCTBENCH-075,Column-wise,Marginal distance (source SD),0.13721164237560518
+RCTBENCH-075,Whole-subject,Marginal distance (source SD),0.1440532763894274
+RCTBENCH-078,Column-wise,Marginal distance (source SD),0.09628890100783102
+RCTBENCH-078,Whole-subject,Marginal distance (source SD),0.09602937042939354
+RCTBENCH-082,Column-wise,Marginal distance (source SD),0.06857868114029567
+RCTBENCH-082,Whole-subject,Marginal distance (source SD),0.06843736537232957
+RCTBENCH-100,Column-wise,Marginal distance (source SD),0.11968651395489024
+RCTBENCH-100,Whole-subject,Marginal distance (source SD),0.11843778523087474
+RCTBENCH-119,Column-wise,Marginal distance (source SD),0.13861325904806324
+RCTBENCH-119,Whole-subject,Marginal distance (source SD),0.13650322644078813
+RCTBENCH-024,Column-wise,Spearman correlation error,0.12292260205211382
+RCTBENCH-024,Whole-subject,Spearman correlation error,0.10981344845612784
+RCTBENCH-044,Column-wise,Spearman correlation error,0.08535329517010529
+RCTBENCH-044,Whole-subject,Spearman correlation error,0.059430595608844256
+RCTBENCH-053,Column-wise,Spearman correlation error,0.13269199088150194
+RCTBENCH-053,Whole-subject,Spearman correlation error,0.0922013892362708
+RCTBENCH-055,Column-wise,Spearman correlation error,0.12057391592323308
+RCTBENCH-055,Whole-subject,Spearman correlation error,0.10581917415480914
+RCTBENCH-064,Column-wise,Spearman correlation error,0.0906476744106507
+RCTBENCH-064,Whole-subject,Spearman correlation error,0.04599562286377774
+RCTBENCH-075,Column-wise,Spearman correlation error,0.281422044208773
+RCTBENCH-075,Whole-subject,Spearman correlation error,0.10579471073500452
+RCTBENCH-078,Column-wise,Spearman correlation error,0.1580218023093662
+RCTBENCH-078,Whole-subject,Spearman correlation error,0.06694071899683379
+RCTBENCH-082,Column-wise,Spearman correlation error,0.11403152179822595
+RCTBENCH-082,Whole-subject,Spearman correlation error,0.04630130835648441
+RCTBENCH-100,Column-wise,Spearman correlation error,0.1196514558895705
+RCTBENCH-100,Whole-subject,Spearman correlation error,0.07838021263495443
+RCTBENCH-119,Column-wise,Spearman correlation error,0.10785372950004157
+RCTBENCH-119,Whole-subject,Spearman correlation error,0.08957910675500849
+RCTBENCH-024,Column-wise,Treatment bias (source SE),0.2140543317141197
+RCTBENCH-024,Whole-subject,Treatment bias (source SE),0.02135733019733859
+RCTBENCH-044,Column-wise,Treatment bias (source SE),0.01811203313062549
+RCTBENCH-044,Whole-subject,Treatment bias (source SE),0.023408905450167154
+RCTBENCH-053,Column-wise,Treatment bias (source SE),0.12049956798403641
+RCTBENCH-053,Whole-subject,Treatment bias (source SE),0.012135660211746661
+RCTBENCH-055,Column-wise,Treatment bias (source SE),0.09394916293715008
+RCTBENCH-055,Whole-subject,Treatment bias (source SE),0.06450107303911275
+RCTBENCH-064,Column-wise,Treatment bias (source SE),0.05991431678735223
+RCTBENCH-064,Whole-subject,Treatment bias (source SE),0.037267811144102714
+RCTBENCH-075,Column-wise,Treatment bias (source SE),0.2682506956279142
+RCTBENCH-075,Whole-subject,Treatment bias (source SE),0.11194876477975295
+RCTBENCH-078,Column-wise,Treatment bias (source SE),0.05124162140041582
+RCTBENCH-078,Whole-subject,Treatment bias (source SE),0.034131671161956055
+RCTBENCH-082,Column-wise,Treatment bias (source SE),0.094219239938839
+RCTBENCH-082,Whole-subject,Treatment bias (source SE),0.05228586008317566
+RCTBENCH-100,Column-wise,Treatment bias (source SE),0.19106055218650253
+RCTBENCH-100,Whole-subject,Treatment bias (source SE),0.12591265962515616
+RCTBENCH-119,Column-wise,Treatment bias (source SE),0.12132493160003924
+RCTBENCH-119,Whole-subject,Treatment bias (source SE),0.1326927486676275

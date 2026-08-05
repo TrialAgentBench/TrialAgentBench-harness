@@ -1,0 +1,499 @@
+{
+  "schema_id": "trialagentbench.validation.trialdev_scientific_package/v1",
+  "source_identity": "661efc9100dd684f893c54aa1d648ddb81f1e06d1367113a80e496396ad5fbc3",
+  "world_count_per_arm": 400,
+  "matched_experiment_count": 10,
+  "released_world_count": 12,
+  "participant_view_count": 96,
+  "randomized_episode_count": 108,
+  "grader_control_count": 810,
+  "observational_replay_count": 12,
+  "display_count": 10,
+  "artifacts": [
+    {
+      "relative_path": "METHODS.md",
+      "sha256": "a352c471cb78b4695e44320f9ca88275ad053af490f080fb5621678b6cfc0ffe",
+      "size_bytes": 2400
+    },
+    {
+      "relative_path": "README.md",
+      "sha256": "4dc7fc82194e0a991e905f951db730d6910b872fa208fa7682fd8e927da80a10",
+      "size_bytes": 505
+    },
+    {
+      "relative_path": "REPORT.md",
+      "sha256": "69511ec246528839b537180e3278e6b0f2ed71a71c9b0d7cd4cf6c14130a2498",
+      "size_bytes": 10082
+    },
+    {
+      "relative_path": "REPRODUCE.md",
+      "sha256": "17fdadc64a6d15f9ffe28f2e13fbda74b9b1d2f5b86f28aa663c2dcc03cb6e6b",
+      "size_bytes": 566
+    },
+    {
+      "relative_path": "SOURCES.md",
+      "sha256": "84436e0ed345b18f8bce7624c2d562ade6e6840672ec72b9c3644c86b8a8f691",
+      "size_bytes": 2444
+    },
+    {
+      "relative_path": "figures/01_state_action.pdf",
+      "sha256": "1e08f4f04f5f0daa832b5d430fe3ad6de0d9e71865bd455de2f35bab4477ab98",
+      "size_bytes": 25580
+    },
+    {
+      "relative_path": "figures/01_state_action.svg",
+      "sha256": "5b7df2ddffb33aa35045697cf7f3e22f266f97caa6cfa6cb2d1866b63eb0d262",
+      "size_bytes": 11471
+    },
+    {
+      "relative_path": "figures/02_identification_uncertainty.pdf",
+      "sha256": "a7ae802b40cd345cc35cbe102e7732a00a128a2f9aa947a4f53d91f1482aa85f",
+      "size_bytes": 24956
+    },
+    {
+      "relative_path": "figures/02_identification_uncertainty.svg",
+      "sha256": "94cbe26dd4933dcb52dfb1ac2d71dd9d9f64d019dba4d55144b4faf98f2ae183",
+      "size_bytes": 91840
+    },
+    {
+      "relative_path": "figures/03_policy_response.pdf",
+      "sha256": "19bc67f2f6b7cbcfd53ce84663d3c23a378e98fed34724c88ff931c6dd42ed2a",
+      "size_bytes": 18126
+    },
+    {
+      "relative_path": "figures/03_policy_response.svg",
+      "sha256": "aaaa62f51614480aa6cc27260865a81eb6efc4bc731673cef8e4650f35846033",
+      "size_bytes": 20448
+    },
+    {
+      "relative_path": "figures/04_mechanism_response.pdf",
+      "sha256": "aa2e5f3af2d5e2e92a8b29143ccabf6abc2eaecd43541265f92a8ae9ab52bd18",
+      "size_bytes": 19425
+    },
+    {
+      "relative_path": "figures/04_mechanism_response.svg",
+      "sha256": "47905f43383cefa9d45cc420a8e4da3c6b3707ea1b2688d4c8b406dfca095873",
+      "size_bytes": 23595
+    },
+    {
+      "relative_path": "figures/05_clinical_realism.pdf",
+      "sha256": "dccbdeccb7e7cfc66c1d033fddb292271f1bb258e8746aa1ee56b5a0221708eb",
+      "size_bytes": 23314
+    },
+    {
+      "relative_path": "figures/05_clinical_realism.svg",
+      "sha256": "3ff05507d7be5d493cdf36ef9fdf88c8ec4aad0992670307c82d13743e883847",
+      "size_bytes": 72000
+    },
+    {
+      "relative_path": "figures/06_operating_characteristics.pdf",
+      "sha256": "f31755e2542209866188755a96d8fb7a25dd77f9fe9bbcd2b8ffd667382f2dc1",
+      "size_bytes": 19223
+    },
+    {
+      "relative_path": "figures/06_operating_characteristics.svg",
+      "sha256": "9b7af4ef5db4fa7b827565a35bcb86f252acb21f4122a0d59feda1da476e45f4",
+      "size_bytes": 22996
+    },
+    {
+      "relative_path": "figures/07_grader_controls.pdf",
+      "sha256": "204840cef004b22bcc8d31365facf4535aeddc5173109847aa1cc4f9b477d586",
+      "size_bytes": 18002
+    },
+    {
+      "relative_path": "figures/07_grader_controls.svg",
+      "sha256": "02d29b929f1e34c71fb9d9e7fcd01435230a53927a18a2beda9e539cb281bfe5",
+      "size_bytes": 14244
+    },
+    {
+      "relative_path": "figures/08_decision_difficulty.pdf",
+      "sha256": "b6297e20e817d76878b62661e497763ad5df8337cebf4c75198cc728f0e0e21d",
+      "size_bytes": 22079
+    },
+    {
+      "relative_path": "figures/08_decision_difficulty.svg",
+      "sha256": "a18ae1eddeb5dbd9f80427599bdbb59adfd4309d411a722eb5bec5620888a6b0",
+      "size_bytes": 30265
+    },
+    {
+      "relative_path": "figures/09_policy_value.pdf",
+      "sha256": "d64963c28fc0b15c7368fd6a24179b7464b905d44cc0ba323ae38e08f544f8b5",
+      "size_bytes": 22387
+    },
+    {
+      "relative_path": "figures/09_policy_value.svg",
+      "sha256": "d527d1a575017a045da8b4150e9be2edf2fa495ca1623003dece9fa4fd081e9c",
+      "size_bytes": 39914
+    },
+    {
+      "relative_path": "figures/10_portfolio_routes.pdf",
+      "sha256": "9c5bd461c111c1ee5c3c872b0eb4b80f8d960871099295e1d8ca98cbff17799e",
+      "size_bytes": 28000
+    },
+    {
+      "relative_path": "figures/10_portfolio_routes.svg",
+      "sha256": "34c333fded669642b563a0377c943ff4050a043fe4808e2a90195a754d2808cb",
+      "size_bytes": 64409
+    },
+    {
+      "relative_path": "figures/source_data/01_state_action.csv",
+      "sha256": "0412c1601df590fd7b7c2129fa1bac1e32470540471f8245f22f3d799004dc6f",
+      "size_bytes": 38705
+    },
+    {
+      "relative_path": "figures/source_data/02_identification_uncertainty.csv",
+      "sha256": "e67a9341a2ce2328b34ba4381a6c9448377822aa6a05f9350faf3e9331f31faf",
+      "size_bytes": 82725
+    },
+    {
+      "relative_path": "figures/source_data/03_policy_response.csv",
+      "sha256": "6ac9def87bb9f7587d4ffcd9e451d6ba4076f2ab5e4a6924c8824a7f71cc60ae",
+      "size_bytes": 649
+    },
+    {
+      "relative_path": "figures/source_data/04_mechanism_response.csv",
+      "sha256": "4791c3803eeddc2624bf4d86396d7312eb068bdd83b76bd8ed27ce041832db96",
+      "size_bytes": 948
+    },
+    {
+      "relative_path": "figures/source_data/05_clinical_realism.csv",
+      "sha256": "e5d8263a6f244ea39811142452580ce562f6aa384838f48285ed0276a97a3cb1",
+      "size_bytes": 58816
+    },
+    {
+      "relative_path": "figures/source_data/06_operating_characteristics.csv",
+      "sha256": "2b54e6321d93946d331321f019770453fdd0d9f5732c51353f50291cad6bcdbc",
+      "size_bytes": 2206
+    },
+    {
+      "relative_path": "figures/source_data/07_grader_controls.csv",
+      "sha256": "f1700f0d911b0b69a4c95e03f079b672bce1342ae3dedb42b1ff58cbac3cd106",
+      "size_bytes": 657
+    },
+    {
+      "relative_path": "figures/source_data/08_decision_difficulty.csv",
+      "sha256": "d2bc77594be8f08c014af753f7998a3bcb38f02435354b51a62bea62ef8c7ec3",
+      "size_bytes": 3793
+    },
+    {
+      "relative_path": "figures/source_data/09_policy_value.csv",
+      "sha256": "19c4fd1e32a4def1f7dcb56e8c7bfc12a451e2f171145d51edf49f9ec984f824",
+      "size_bytes": 7124
+    },
+    {
+      "relative_path": "figures/source_data/10_portfolio_routes.csv",
+      "sha256": "78aebb59f4b7cff53801870d5b04bc2175862b520eba7885c8bd828d584ddabc",
+      "size_bytes": 8949
+    },
+    {
+      "relative_path": "inputs/operating_characteristics/experiment_manifest.json",
+      "sha256": "b8f111670ede609f36009c64655ce15269bbab4926884ad8f61f75bb96aacd25",
+      "size_bytes": 12306
+    },
+    {
+      "relative_path": "inputs/operating_characteristics/performance.json",
+      "sha256": "10715c72592e4bf0785202dc0f15deeee3f6f611994bfe32031a8956cc1938b9",
+      "size_bytes": 212
+    },
+    {
+      "relative_path": "inputs/operating_characteristics/summary_results.csv",
+      "sha256": "bf2a2df2569eaa3ae5f5ec15aae5b245076c11f529781bc9a1dbe2c73453765b",
+      "size_bytes": 2326
+    },
+    {
+      "relative_path": "inputs/operating_characteristics/world_results.csv",
+      "sha256": "cfc787465851c0d57643e05e90a2c78249b2b8b2f30fe1c31e9c24e59bdbd58b",
+      "size_bytes": 3866163
+    },
+    {
+      "relative_path": "inputs/policy_value/policy_value_candidates.csv",
+      "sha256": "3875ce25b9c8f355ecc7606467728d5921b30c5d4ab99943c41d218ecd51e370",
+      "size_bytes": 3304548
+    },
+    {
+      "relative_path": "inputs/policy_value/policy_value_cells.csv",
+      "sha256": "ee155ee8a6ab8e2a95b7abb37d0cf9740301fadf0f66904c21350124324739e5",
+      "size_bytes": 7894
+    },
+    {
+      "relative_path": "inputs/policy_value/policy_value_report.json",
+      "sha256": "deaad963451e6057d1c127703f28986c6595edc61e5a2fb1aef0774090a96397",
+      "size_bytes": 27388
+    },
+    {
+      "relative_path": "inputs/policy_value/policy_value_worlds.csv",
+      "sha256": "34bfd53789e6456701356b51b6727395316851b9df15882d7dff299e08230886",
+      "size_bytes": 2082922
+    },
+    {
+      "relative_path": "inputs/sources/SOURCE_MANIFEST.tsv",
+      "sha256": "2e5a193b2ca3dd05e2acdc22c07bb4ea394717ad8c73cb25aa578bc36807706c",
+      "size_bytes": 3413
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/confirmation-B-efficacy.csv",
+      "sha256": "a1bb23a185000237bc7213eff8f950ff6e777b341028256f32065e41c4c07267",
+      "size_bytes": 81
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/confirmation-B-safety.csv",
+      "sha256": "a46ccb22d12094ca92916e7d21e43d3d6c547645011c741a383625ff32f29175",
+      "size_bytes": 79
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/joint_early_study_review-A-safety.csv",
+      "sha256": "553eb5bfcb4e2ed8f7ffcd2c638b256cb14228528d9f913b2fe53b0cf6f44ac6",
+      "size_bytes": 79
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/joint_early_study_review-B-safety.csv",
+      "sha256": "a46ccb22d12094ca92916e7d21e43d3d6c547645011c741a383625ff32f29175",
+      "size_bytes": 79
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/observational_review-A-utility.csv",
+      "sha256": "fee3db73e58d7a3fc782b2d7e4057a687760fffb531e7201f13133adcbb35bc6",
+      "size_bytes": 80
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/observational_review-B-utility.csv",
+      "sha256": "9dda215c6196eed4ab61235759e7d4b0b8e4274e2a8901418ba7b81b66ce871a",
+      "size_bytes": 80
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/observational_review-C-utility.csv",
+      "sha256": "74218ecc6336a4fdf4b98576797da5942c0da703b5b2dc7cf4ee0c901af1743b",
+      "size_bytes": 80
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/promoted_reserve_proof_of_concept_review-B-efficacy.csv",
+      "sha256": "a1bb23a185000237bc7213eff8f950ff6e777b341028256f32065e41c4c07267",
+      "size_bytes": 81
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/portfolio_reserve_promotion/promoted_reserve_proof_of_concept_review-B-safety.csv",
+      "sha256": "a46ccb22d12094ca92916e7d21e43d3d6c547645011c741a383625ff32f29175",
+      "size_bytes": 79
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/confirmation-A-efficacy.csv",
+      "sha256": "77a6d046125c2a52849469d39e51485a6c9767bb6d8583935f36d1803c17148e",
+      "size_bytes": 81
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/confirmation-A-safety.csv",
+      "sha256": "1cd921dac0313d116886a180974a0f6d2ad9d00689f1959ba9d0066932b93812",
+      "size_bytes": 79
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/early_safety_study-A-safety.csv",
+      "sha256": "1cd921dac0313d116886a180974a0f6d2ad9d00689f1959ba9d0066932b93812",
+      "size_bytes": 79
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/observational_review-A-utility.csv",
+      "sha256": "fee3db73e58d7a3fc782b2d7e4057a687760fffb531e7201f13133adcbb35bc6",
+      "size_bytes": 80
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/observational_review-B-utility.csv",
+      "sha256": "ba49a61a9c4261437be82d8f87c5ae4e100d3496cd47a5d224fbccad4df03b09",
+      "size_bytes": 80
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/observational_review-C-utility.csv",
+      "sha256": "74218ecc6336a4fdf4b98576797da5942c0da703b5b2dc7cf4ee0c901af1743b",
+      "size_bytes": 80
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/proof_of_concept-A-efficacy.csv",
+      "sha256": "77a6d046125c2a52849469d39e51485a6c9767bb6d8583935f36d1803c17148e",
+      "size_bytes": 81
+    },
+    {
+      "relative_path": "inputs/worked_programmes/evidence/single_asset_irreversible_chain/proof_of_concept-A-safety.csv",
+      "sha256": "1cd921dac0313d116886a180974a0f6d2ad9d00689f1959ba9d0066932b93812",
+      "size_bytes": 79
+    },
+    {
+      "relative_path": "inputs/worked_programmes/independent_audit.json",
+      "sha256": "6f3eefd4fd5f106102b2c81a2e9c03343f780de3ed4bae834ba672466acfe394",
+      "size_bytes": 854
+    },
+    {
+      "relative_path": "inputs/worked_programmes/state_action_graph.json",
+      "sha256": "d57ec6996602add122382cc1eb6b208eac89014ecebccda6bbab8e68d09607c3",
+      "size_bytes": 83446
+    },
+    {
+      "relative_path": "inputs/worked_programmes/worked_programmes.json",
+      "sha256": "e193998e04e378be524518b2473cbd0e6b0a94345831e162dd78874f0177df6c",
+      "size_bytes": 318524
+    },
+    {
+      "relative_path": "results/capability_metrics.csv",
+      "sha256": "feb927bab82cf6077cd3188780b85663e6eac588d631dcf97b3a1333ddcee3ba",
+      "size_bytes": 500
+    },
+    {
+      "relative_path": "results/decision_boundary_cells.csv",
+      "sha256": "5e4bd0f07fd96000634a35f70cca80a4f1e26cf50c955919b9550c55c6697c73",
+      "size_bytes": 1741
+    },
+    {
+      "relative_path": "results/grader_controls.csv",
+      "sha256": "05388c6d30b52ba5d2185f139c4ef7cc496168e4f89aebddfe7789f81f7d9207",
+      "size_bytes": 128048
+    },
+    {
+      "relative_path": "results/observational_realism.csv",
+      "sha256": "f28706749a0e36a1ba0b7468b2024b1021cd8ebf78d6f4eab670779e723330ce",
+      "size_bytes": 1737
+    },
+    {
+      "relative_path": "results/observational_replay.csv",
+      "sha256": "d1ec9ce9c47a546e213152e72c55ef3a6401d1ff291e6e6f97a9ad5a3157cf89",
+      "size_bytes": 6099
+    },
+    {
+      "relative_path": "results/operating_characteristics.csv",
+      "sha256": "bf2a2df2569eaa3ae5f5ec15aae5b245076c11f529781bc9a1dbe2c73453765b",
+      "size_bytes": 2326
+    },
+    {
+      "relative_path": "results/policy_value_cells.csv",
+      "sha256": "b2f01a94e3a3c71d76f5531cd5e0a5cb2291ffaddc6c456e614b0568a8faf87d",
+      "size_bytes": 7894
+    },
+    {
+      "relative_path": "results/portfolio_routes.csv",
+      "sha256": "aa4407b1940c538bd2b833b1edd810cd88d917163ba3203dce9bac0509217e1b",
+      "size_bytes": 4554
+    },
+    {
+      "relative_path": "results/randomized_episode_realism.csv",
+      "sha256": "9d8187481d0423683323be7546a95a24b21d11f7d802d35de07bbe5d5ae94e8a",
+      "size_bytes": 24409
+    },
+    {
+      "relative_path": "results/released_view_difficulty.csv",
+      "sha256": "9763fd11ea12ebf937540505ca287903b5ce52f91c4567c9ac1d723a3ca06742",
+      "size_bytes": 8178
+    },
+    {
+      "relative_path": "results/shortcut_strategies.csv",
+      "sha256": "a0ad7ea3d36d0c844efe0327694e364fdaf2d2b0bd24413a00336011e0ea0b1a",
+      "size_bytes": 466
+    },
+    {
+      "relative_path": "results/sources.csv",
+      "sha256": "d0f40b614343f2b77f98f4ec44eb34db16bf4af03fe2b40a82d506b6c163cc02",
+      "size_bytes": 3417
+    },
+    {
+      "relative_path": "results/state_action_graph.csv",
+      "sha256": "0412c1601df590fd7b7c2129fa1bac1e32470540471f8245f22f3d799004dc6f",
+      "size_bytes": 38705
+    },
+    {
+      "relative_path": "results/worked_checkpoints.csv",
+      "sha256": "62171e02a8f714634f837ed01e8f41352e2e3399704c36d3bfa5a3bd3737ef3e",
+      "size_bytes": 2999
+    },
+    {
+      "relative_path": "verification/decision_boundary_report.json",
+      "sha256": "1696c24b762dc365b93a80319f3200144fe2d8b58526bf7e38c181f39804cefb",
+      "size_bytes": 11436
+    },
+    {
+      "relative_path": "verification/grader_controls.json",
+      "sha256": "631e16435d1da5311e1782d49e36fdbbf9769e366c493b6a9ccaa0b2d58c8b12",
+      "size_bytes": 475466
+    },
+    {
+      "relative_path": "verification/independent_policy_value_audit.json",
+      "sha256": "0845bcb5b1a939101c364991449376721328a36123d59d3b6e5fc85020ee915e",
+      "size_bytes": 324
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_01.json",
+      "sha256": "b5b23d1483308b3df3bfc75564103106a4b9d194dd291dc63a4a662670170c56",
+      "size_bytes": 49873
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_02.json",
+      "sha256": "2187675536364c5f274eaad8a1f727d55d8e010062a225b8290007a29a874115",
+      "size_bytes": 49473
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_03.json",
+      "sha256": "2d770f60f8921bec9a52f1b7b38ab60c0a27d44d6924a3cebef5ea5d7ce22bfe",
+      "size_bytes": 49499
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_04.json",
+      "sha256": "3bf7faff3663b303f8fc6f9a704052ebb60201008421c3f02126f3b18cdb66f6",
+      "size_bytes": 49445
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_05.json",
+      "sha256": "c7867b953e72d7a91e93a22f450077be53e9601d2ac31a46bfb875f56a759b55",
+      "size_bytes": 48774
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_06.json",
+      "sha256": "47c984e0a67960f98acfc707cfa26d99212d596898de1a1c0b5643a56dccf070",
+      "size_bytes": 45636
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_07.json",
+      "sha256": "3355382492ca033182da07bb0f00721a2fa416ac0172f37d0c39c86e5fa9ed12",
+      "size_bytes": 49721
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_08.json",
+      "sha256": "de64afc62b3bf6f1af2e5a6c16bacd6fd95e0312a983f3041f51a32d2e14ad46",
+      "size_bytes": 49900
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_09.json",
+      "sha256": "180cdd71a8c2f50f52e90b09aea320322fe363f76fdb47197b5f51c1adc70c4e",
+      "size_bytes": 49586
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_10.json",
+      "sha256": "89bcc6b5db2b51a5218ec72b2ee4ae31051de0d50e445a4c27653afa326da575",
+      "size_bytes": 49766
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_11.json",
+      "sha256": "8c62be3595fcdffd03eed624e481737b06599ffd7b9043cf6982cb70051aa68d",
+      "size_bytes": 7374
+    },
+    {
+      "relative_path": "verification/observational_replays/observational_replay_world_12.json",
+      "sha256": "9f03a2f04d0fbcf9582026ba3a3f3d1d645c92b4e794436cb901afb14a3c3059",
+      "size_bytes": 49494
+    },
+    {
+      "relative_path": "verification/portfolio_difficulty.json",
+      "sha256": "11a3dbd6d4f320e3e713cac8c836e609565281ccbf285d61167d554963c4f10b",
+      "size_bytes": 43400
+    },
+    {
+      "relative_path": "verification/portfolio_release_audit.json",
+      "sha256": "a51dd43f62e66b539e032236906c94e5a21715ee8fe9f83989dfb6b7856880dd",
+      "size_bytes": 80819
+    },
+    {
+      "relative_path": "verification/portfolio_routes.json",
+      "sha256": "aa1040a9287cc58ca8e48b18371d958d06362cc8d7eb948c7b9ef1c0d9f471be",
+      "size_bytes": 15046
+    },
+    {
+      "relative_path": "verification/worked_programmes.json",
+      "sha256": "6f3eefd4fd5f106102b2c81a2e9c03343f780de3ed4bae834ba672466acfe394",
+      "size_bytes": 854
+    }
+  ]
+}

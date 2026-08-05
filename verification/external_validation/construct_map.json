@@ -1,0 +1,152 @@
+{
+  "schema_id": "trialagentbench.external_construct_map/v1",
+  "constructs": [
+    {
+      "construct_id": "rct_enrollment",
+      "kind": "enrollment",
+      "source_id": "rct_bench_125",
+      "population": "randomized participants in individually randomized RCTs",
+      "unit": "participants",
+      "transformation": "log1p",
+      "minimum_studies": 20,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Publication-level randomized sample size; crossover period rows are not counted as independent participants."
+    },
+    {
+      "construct_id": "rct_arm_count",
+      "kind": "arm_count",
+      "source_id": "rct_bench_125",
+      "population": "individually randomized RCTs",
+      "unit": "arms",
+      "transformation": "identity",
+      "minimum_studies": 20,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Randomized intervention arms represented in the source metadata."
+    },
+    {
+      "construct_id": "rct_baseline_covariate_count",
+      "kind": "baseline_covariate_count",
+      "source_id": "rct_bench_125",
+      "population": "released participant-level RCT tables",
+      "unit": "variables",
+      "transformation": "log1p",
+      "minimum_studies": 20,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Variables explicitly assigned the Baseline covariate role in the source data dictionary."
+    },
+    {
+      "construct_id": "rct_baseline_missing_fraction",
+      "kind": "baseline_missing_fraction",
+      "source_id": "rct_bench_125",
+      "population": "released participant-level baseline fields",
+      "unit": "fraction",
+      "transformation": "identity",
+      "minimum_studies": 20,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Variable-cell missingness across source-defined baseline covariates; repeated-measures rows retain source dependence."
+    },
+    {
+      "construct_id": "rct_primary_outcome_missing_fraction",
+      "kind": "primary_outcome_missing_fraction",
+      "source_id": "rct_bench_125",
+      "population": "released participant-level primary outcome fields",
+      "unit": "fraction",
+      "transformation": "identity",
+      "minimum_studies": 20,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Variable-cell missingness across source-defined primary outcomes; not a participant attrition estimand."
+    },
+    {
+      "construct_id": "rct_primary_event_fraction",
+      "kind": "event_fraction",
+      "source_id": "rct_bench_125",
+      "population": "randomized participants in RCT Bench time-to-event trials with one source-defined primary event indicator",
+      "unit": "fraction",
+      "transformation": "identity",
+      "minimum_studies": 2,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Crude primary-event incidence, not a hazard, fixed-horizon risk, or censoring-adjusted estimand. Source variables must be binary and explicitly named as event indicators; the frozen corpus provides too few independent held-out trials for inferential concordance."
+    },
+    {
+      "construct_id": "rct_primary_follow_up_days",
+      "kind": "follow_up_time",
+      "source_id": "rct_bench_125",
+      "population": "randomized participants in RCT Bench time-to-event trials whose primary duration variable names an explicit day, week, month, or year unit",
+      "unit": "days",
+      "transformation": "log1p",
+      "minimum_studies": 2,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Median observed event-or-censoring duration normalized to days. Unitless source duration variables are excluded; the frozen corpus provides too few compatible independent trials for inferential concordance."
+    },
+    {
+      "construct_id": "rct_age_mean",
+      "kind": "age_mean",
+      "source_id": "rct_bench_125",
+      "population": "randomized participants in RCT Bench trials with exactly one source-defined baseline age variable",
+      "unit": "years",
+      "transformation": "identity",
+      "minimum_studies": 5,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Per-study arithmetic mean from one baseline variable matching the frozen RCT Bench age naming contract; studies with ambiguous, invariant, missing, or out-of-range age fields are excluded.",
+      "construction_parameter": "baseline.age.location_years"
+    },
+    {
+      "construct_id": "rct_age_sd",
+      "kind": "age_sd",
+      "source_id": "rct_bench_125",
+      "population": "randomized participants in RCT Bench trials with exactly one source-defined baseline age variable",
+      "unit": "years",
+      "transformation": "identity",
+      "minimum_studies": 5,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Per-study sample standard deviation from the same baseline age field used for rct_age_mean.",
+      "construction_parameter": "baseline.age.scale_years"
+    },
+    {
+      "construct_id": "rct_bmi_mean",
+      "kind": "bmi_mean",
+      "source_id": "rct_bench_125",
+      "population": "randomized participants in RCT Bench trials with exactly one source-defined baseline BMI variable",
+      "unit": "kg/m2",
+      "transformation": "identity",
+      "minimum_studies": 5,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Per-study arithmetic mean from one baseline variable matching the frozen RCT Bench BMI naming contract; studies with ambiguous, invariant, missing, or out-of-range BMI fields are excluded.",
+      "construction_parameter": "baseline.bmi.location_kg_m2"
+    },
+    {
+      "construct_id": "rct_bmi_sd",
+      "kind": "bmi_sd",
+      "source_id": "rct_bench_125",
+      "population": "randomized participants in RCT Bench trials with exactly one source-defined baseline BMI variable",
+      "unit": "kg/m2",
+      "transformation": "identity",
+      "minimum_studies": 5,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Per-study sample standard deviation from the same baseline BMI field used for rct_bmi_mean.",
+      "construction_parameter": "baseline.bmi.scale_kg_m2"
+    },
+    {
+      "construct_id": "aact_enrollment",
+      "kind": "enrollment",
+      "source_id": "aact_20260701",
+      "population": "completed randomized parallel phase 2 and phase 3 interventional studies with 2-4 arms and 20-10000 participants",
+      "unit": "participants",
+      "transformation": "log1p",
+      "minimum_studies": 100,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Aggregate registered enrollment only; no participant-level dependence or analysis-population claim."
+    },
+    {
+      "construct_id": "aact_arm_count",
+      "kind": "arm_count",
+      "source_id": "aact_20260701",
+      "population": "completed randomized parallel phase 2 and phase 3 interventional studies with 2-4 arms and 20-10000 participants",
+      "unit": "arms",
+      "transformation": "identity",
+      "minimum_studies": 100,
+      "minimum_synthetic_trials": 20,
+      "compatibility_limits": "Aggregate registered arm count only."
+    }
+  ]
+}

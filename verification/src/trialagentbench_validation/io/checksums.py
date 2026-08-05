@@ -1,0 +1,117 @@
+"""Checksum utilities for audit and provenance (SHA-256).
+
+The harness uses checksums to make derived bundles reproducible and auditable.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+
+from pydantic import BaseModel
+from pydantic.types import JsonValue
+
+
+def sha256_bytes(payload: bytes) -> str:
+    """Return the SHA-256 digest of an in-memory payload."""
+
+    return hashlib.sha256(payload).hexdigest()
+
+
+def sha256_model(model: BaseModel) -> str:
+    """Return the canonical SHA-256 digest of a Pydantic model."""
+
+    payload = model.model_dump(mode="json", exclude_none=True)
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    return sha256_bytes(encoded)
+
+
+def canonical_payload_sha256(payload: JsonValue) -> str:
+    """Hash one JSON payload using the harness canonical encoding."""
+
+    encoded = json.dumps(
+        payload,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def sha256_file(path: Path, *, chunk_size: int = 65536) -> str:
+    """Compute SHA-256 over a file's bytes.
+
+    Parameters
+    ----------
+    path:
+        File to hash.
+    chunk_size:
+        Read size for streaming hashing.
+
+    Returns
+    -------
+    str
+        Lowercase hex digest.
+    """
+    h = hashlib.sha256()
+    with Path(path).open("rb") as f:
+        for chunk in iter(lambda: f.read(chunk_size), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def sha256_dir_files(root: Path) -> dict[str, str]:
+    """Compute SHA-256 for every file under `root` (relative-path keyed).
+
+    Notes
+    -----
+    - Ordering is stable: paths are sorted lexicographically.
+    - Symlinks are ignored; only regular files are included.
+    """
+    root = Path(root)
+    if not root.is_dir():
+        raise NotADirectoryError(root)
+    out: dict[str, str] = {}
+    for p in sorted(root.rglob("*")):
+        if p.is_file() and not p.is_symlink():
+            rel = str(p.relative_to(root))
+            out[rel] = sha256_file(p)
+    return out
+
+
+def sha256_dir_digest(root: Path) -> str:
+    """Compute a single digest over a directory tree (path+hash manifest)."""
+    files = sha256_dir_files(root)
+    h = hashlib.sha256()
+    for rel in sorted(files):
+        h.update(rel.encode("utf-8"))
+        h.update(b"\n")
+        h.update(files[rel].encode("ascii"))
+        h.update(b"\n")
+    return h.hexdigest()
+
+
+def sha256_path(path: Path) -> str:
+    """Compute a deterministic SHA-256 digest for a file or directory."""
+
+    path = Path(path)
+    if path.is_symlink():
+        raise ValueError(f"Refusing to hash a symbolic link: {path}")
+    if path.is_file():
+        return sha256_file(path)
+    if path.is_dir():
+        return sha256_dir_digest(path)
+    raise FileNotFoundError(path)
+
+
+__all__ = [
+    "canonical_payload_sha256",
+    "sha256_bytes",
+    "sha256_file",
+    "sha256_dir_files",
+    "sha256_dir_digest",
+    "sha256_model",
+    "sha256_path",
+]

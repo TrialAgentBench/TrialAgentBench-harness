@@ -1,0 +1,18 @@
+{
+  "schema_id": "trialagentbench.external_validation_design/v1",
+  "profile_id": "trialagentbench-observable-profile-20260724",
+  "split_seed": 20260724,
+  "held_out_fraction": 0.25,
+  "bootstrap_seed": 1701,
+  "bootstrap_replicates": 2000,
+  "aact_inclusion": {
+    "overall_statuses": ["COMPLETED"],
+    "phases": ["PHASE2", "PHASE2/PHASE3", "PHASE3"],
+    "allocations": ["RANDOMIZED"],
+    "intervention_models": ["PARALLEL"],
+    "minimum_enrollment": 20,
+    "maximum_enrollment": 10000,
+    "minimum_arms": 2,
+    "maximum_arms": 4
+  }
+}

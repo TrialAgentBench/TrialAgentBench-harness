@@ -1,0 +1,792 @@
+{
+  "schema_id": "trialagentbench.simulation_validation_bundle/v1",
+  "verifier_lock_sha256": "e6d1a2e65349b10f33bb085f03c1bcd844afe22a335e7818aae5e7f3ce8db8d0",
+  "figures": [
+    {
+      "figure_id": "assumption.limits",
+      "title": "Supported A4 conclusions",
+      "scientific_question": "What result remains supported when an A4 condition makes the routine point analysis incompatible with the trial question?",
+      "independent_unit": "independently generated trial",
+      "estimand": "treated-minus-control event-risk difference at the prespecified horizon",
+      "comparator": "identified ranges for dependent censoring and incomplete endpoint-validation support; repeated intervals after group-sequential monitoring",
+      "uncertainty": "complete identified range for nonpoint conclusions; repeated 95% confidence interval for group-sequential point conclusions",
+      "interpretation": [
+        "Dependent censoring and incomplete validation support require ranges rather than point estimates.",
+        "Sequential monitoring requires the prespecified repeated interval at the realized analysis look."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/assumption_identification_results.csv",
+          "sha256": "8a2d62551fdbb5889c4743bfbf1f668f0cf09f1dfd9387ccdc015b151194d931",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/assumption_limits.pdf",
+          "sha256": "be3c4872d7b41a4bc1067c7fdda81516d4332a1fc275b218b9de5247b9951274",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/assumption_limits.svg",
+          "sha256": "5545d7868e9378c11a139d75b522f33dc556063288afad33f2a0467196070740",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "assumption.response",
+      "title": "Assumption response",
+      "scientific_question": "Are analysis-relevant mechanisms visible, and does the corresponding analysis result respond as each mechanism strengthens?",
+      "independent_unit": "independent TrialEval base trial; matched generated-trial replicate in the response experiment",
+      "estimand": "mechanism-specific diagnostic and analysis consequence on the declared estimand scale",
+      "comparator": "six A1-A3 series and two A1-A2 series",
+      "uncertainty": "95% intervals across independent trials or matched trial replicates",
+      "interpretation": [
+        "All 14 adjacent-tier comparisons increase the observed mechanism, with paired intervals above zero.",
+        "All 704 tier-specific analyses completed and independently reproduced the distributed references."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "figures/assumption_response.csv",
+          "sha256": "4ce970fb6f5709ef21136932f5fe0096984de0524ebd8e98a5c5d58e84d2dad5",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/assumption_response.pdf",
+          "sha256": "58f45742610c5c07c733512815de6968278d59b1432e65732b4608d789c306b3",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/assumption_response.svg",
+          "sha256": "5aac997089942f5180a0c448e7b9ee0a7fddfac84920ea7bf9e56b9677a89ac3",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "characterisation.programme",
+      "title": "TrialEval base-trial properties",
+      "scientific_question": "What range of trial properties is present across the release?",
+      "independent_unit": "100 independent trials; the five contexts are matched views",
+      "estimand": "participant count, age-BMI rank correlation, attendance, and declared follow-up",
+      "comparator": "all seven design profiles",
+      "uncertainty": "complete TrialEval base-trial census with profile medians",
+      "interpretation": [
+        "All 100 independent trials and seven design profiles contribute to the display.",
+        "Baseline dependence remains stable while attendance and follow-up vary across declared trial settings."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/programme_estimates.csv",
+          "sha256": "fe594973884ea77a959c91b6fa0eb0ca604a1ba0b742d10622ae013bc47ba993",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/programme_profiles.csv",
+          "sha256": "fc426603ea3edc2adafb465448dbb1cc3432a871c59010bbedaef282b865477b",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/trial_programme.pdf",
+          "sha256": "b7ba11c5fe8056ca61ffde0ea153716e3656777cd61a3a55f55caaa41ca33268",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/trial_programme.svg",
+          "sha256": "305206ecce96df5ccc995e4adf361a724ee8a1f73813983bba39ed3b783c5403",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "characterisation.worked_trial",
+      "title": "Worked TrialEval example",
+      "scientific_question": "Do treatment exposure, post-randomization events, follow-up, and the stated analysis form one coherent trial?",
+      "independent_unit": "participant for process distributions; trial for the treatment contrast",
+      "estimand": "exposure received, intercurrent events, analysis eligibility, event-free survival, and 365-day risk difference",
+      "comparator": "randomized arms within one generated trial",
+      "uncertainty": "complete participant census and Greenwood/delta-method interval for the treatment contrast",
+      "interpretation": [
+        "The participant and endpoint tables link one-to-one for all 7,691 participants.",
+        "The analysis records reproduce a 365-day risk difference of -0.0165 probability units."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/worked_trial_participants.csv",
+          "sha256": "7ab695f8e86f8a5b515d45613a9460ed31ad9df4c76e1b81fb7209a7be51e094",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/worked_trial.pdf",
+          "sha256": "a936910212e96b65da6d43243909fed2ed0cb5951103cfc1eeacb92c5a4c67d4",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/worked_trial.svg",
+          "sha256": "d280d246ef34ef553419840b5ceb58270e170dffd2cacc407ac4133db3cfbb78",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "context.workflow",
+      "title": "Context reconstruction and standards",
+      "scientific_question": "Does each information context preserve the trial and estimand while changing the declared analysis input or reconstruction task?",
+      "independent_unit": "matched base trial, analysis route, dataset cell, or corruption control",
+      "estimand": "matched identity, reconstruction parity, route recovery, C5 repair, and bounded standards workflow",
+      "comparator": "complete C1-C5 panels and official CDISC pilot datasets",
+      "uncertainty": "exact finite census and deterministic numerical comparison",
+      "interpretation": [
+        "All 100 five-context panels preserve one generation seed and one estimand.",
+        "All 692 analysis routes replay and all 100 C5 duplications repair exactly."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "figures/context_workflow.csv",
+          "sha256": "2568deb8e001549366d8331248ffe1f2a5dff7edb5cd7d147070ad2df7c88c78",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/context_workflow.pdf",
+          "sha256": "f8549ea5f15b44f48cba0a5d60ffd000e058d78808fa828583b376710988b8f9",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/context_workflow.svg",
+          "sha256": "25c07f0f1595ddbc94e2a79f2fc2012c7b9d623df3a4a3d37143452cd29f521e",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "design.analysis",
+      "title": "Trial-design consequences",
+      "scientific_question": "What changes when an analysis omits an encoded trial-design feature?",
+      "independent_unit": "randomized participant or cluster; independent repeated-trial path",
+      "estimand": "treatment effect, bias, and interval coverage",
+      "comparator": "prespecified analysis versus the same-estimand analysis omitting covariate adjustment, endpoint correction, cluster dependence, calendar period, or sequential monitoring",
+      "uncertainty": "method-compatible 95% intervals for release analyses; Wilson intervals across repeated cluster, stepped-wedge, and monitoring trials",
+      "interpretation": [
+        "At the benchmark stepped-wedge trend, period-adjusted coverage remains near 95% while period-omitting coverage falls to 33.0%.",
+        "Cluster-aware interval coverage remains between 95.2% and 95.8% while participant-independent coverage falls as cluster heterogeneity strengthens.",
+        "The repeated confidence interval retains at least 95.0% coverage across the tested signal range while expected information falls as the signal strengthens."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/design_comparisons.csv",
+          "sha256": "518cf2a6d2f4f391f261f854a46c2673d7eabebdb772b6b47bb4cb1afe2f5d64",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/clustered_design/cluster_response_summary.csv",
+          "sha256": "c64551ef2a0e248b93df378f1c4c15ae941c6defa720a165ae35a395506ba8d3",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/group_sequential/group_sequential_operating_characteristics.csv",
+          "sha256": "0ffdafb166694e0789b03fa0011e5c4921878fd4938a7668a7f8517679e35686",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/stepped_wedge/stepped_wedge_response_summary.csv",
+          "sha256": "812db4f15fc7f5ce13cfcc95d76d24b7259b0a92ad6be63824790a5c54377eae",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/design_consequences.pdf",
+          "sha256": "ba52de8725567bf71cac36b83eb3615f4c7045f3c65accad953d42dc451267d0",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/design_consequences.svg",
+          "sha256": "e25c0e5ae6b1c79c9f4bd732428fe21aeaff431205dcc4a71fbc6b1ed0507c09",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "design.properties",
+      "title": "Trial-design representation",
+      "scientific_question": "Are the declared trial designs visible in the released participant, endpoint, and protocol records?",
+      "independent_unit": "independent trial",
+      "estimand": "allocation, adherence, covariate dependence, endpoint ascertainment, clustering, rollout, and interim information",
+      "comparator": "complete census within each applicable design profile",
+      "uncertainty": "complete finite census plus 499 arm-count-preserving reassignments per individually randomized trial",
+      "interpretation": [
+        "Observed allocation balance is compared with a trial-specific randomization distribution.",
+        "Cluster dependence, treatment rollout, calendar trend, and monitoring-boundary decisions are computed from the released participant and endpoint records."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/design_properties.csv",
+          "sha256": "f469a725668b0addc356542d4f3f8e16950c17771affd74f8a5260fee64cdeb2",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/trial_designs.pdf",
+          "sha256": "fea23788e72c8d0e6aa6d5cb6e58ba3a87c3dd9ca50a3c381e80a2fc501fb552",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/trial_designs.svg",
+          "sha256": "f0cd71853f49eef38866a7aba8249764670c383daefa31026fc39c53ab3801d6",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "external.realism",
+      "title": "External trial distributions",
+      "scientific_question": "Are marginal, dependence, randomization, and adjustment-sensitive properties within the variation observed between external trials?",
+      "independent_unit": "external trial",
+      "estimand": "standardized distributional distance relative to external trial-split variation",
+      "comparator": "75 generated trials versus 29 baseline and 10 analysis-compatible external trials",
+      "uncertainty": "2,000-replicate trial bootstrap",
+      "interpretation": [
+        "All eight point discrepancies are below the external 95th-percentile split reference.",
+        "Uncertainty remains wider for dependence and analysis-impact constructs than for marginals."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "figures/generator_realism.csv",
+          "sha256": "7d524bb09546fa37acf6cfed35738311cd9abaff346fea2768bb30510499154d",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/generator_realism.pdf",
+          "sha256": "07f324c786b2dbe1853c8d5f4f3f94658608c59d4c8e319b26a2d82c6486d8c3",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/generator_realism.svg",
+          "sha256": "0b65cc2a713f3424d36fcff1487e7221ce128ac97f767969a27f8ed6a1ea161b",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "joint.structure",
+      "title": "Participant-linkage preservation",
+      "scientific_question": "Does keeping each participant's measurements together preserve correlations and adjusted treatment analyses?",
+      "independent_unit": "trial for portfolio summaries and generated-trial replicate within source",
+      "estimand": "standardized Wasserstein distance in source standard deviations, absolute Spearman-correlation error, and absolute adjusted-treatment bias in source standard errors",
+      "comparator": "linked-subject resampling versus a control that preserves each variable but samples the columns independently",
+      "uncertainty": "trial-level bootstrap intervals and complete trial-specific results",
+      "interpretation": [
+        "Median standardized Wasserstein distance was nearly unchanged: 0.121 source standard deviations with linked-subject resampling and 0.122 with independent columns.",
+        "Linked-subject resampling reduced absolute Spearman-correlation error by 30% and adjusted-treatment bias in source standard errors by 58%."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "figures/joint_structure.pdf",
+          "sha256": "3837b27d7883f671f289e94f95c57e85dc44a8680139b8a602e684b2c4671c09",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/joint_structure.svg",
+          "sha256": "0c0cfc271b67cc49ca2d9713dfa5041e406907b370cb12b653c16f767965881f",
+          "media_type": "image/svg+xml"
+        },
+        {
+          "relative_path": "figures/joint_structure_methods.csv",
+          "sha256": "115cf4d17577ae1e1ec6cf6a3e2c43f0c81861e15ee69be6105b721db356f42f",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/joint_structure_trials.csv",
+          "sha256": "0ada3d4df4d53483044d33b5b29849a25e50536de2f491e7b817cd5156a46272",
+          "media_type": "text/csv"
+        }
+      ]
+    },
+    {
+      "figure_id": "mechanism.response",
+      "title": "Mechanism response",
+      "scientific_question": "Do independently fitted analyses respond in the expected direction when analysis-relevant trial mechanisms are strengthened or disrupted?",
+      "independent_unit": "source trial or study for portfolio intervals; matched generated-trial replicate for dropout intervals",
+      "estimand": "mechanism-specific response slope, analysis-error reduction, or recovered frailty variance",
+      "comparator": "graded treatment heterogeneity, competing-event intensity, exposure assignment, informative dropout, recurrent-event heterogeneity, and cross-domain linkage disruption",
+      "uncertainty": "equal-source t intervals or Monte Carlo intervals over matched generated-trial replicates",
+      "interpretation": [
+        "Treatment heterogeneity, competing-event probabilities, confounding, recurrent-event frailty, and cross-domain linkage move in their prespecified directions.",
+        "Attendance weighting reduces treatment-trajectory error in the PENG settings but not in the skin-barrier setting, despite recovery of the configured dropout mechanism in both sources."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/operating_characteristics/competing_risks/competing_risk_response.csv",
+          "sha256": "42c681b77aaad9dcc2033ff61bc6c6aa7d719a58882db9bea5afef011d5517ae",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/confounding/confounding_dose_response.csv",
+          "sha256": "05873a705e8acf5d1b8bc7c8cd83e977fe9f4037240f56cf93a439c1f19b5868",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/cross_domain_linkage/linkage_response.csv",
+          "sha256": "4566d1b7f179f490f7e3d1d2d9b129961a582592a2fb4105114e61a371f189ae",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/cross_domain_linkage/portfolio_response.csv",
+          "sha256": "eccaf6451b8c27012a466af5302f05c0eadfcad9e41bcf94e60c5ba79da77d60",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/observation_process/paired_route_contrasts.csv",
+          "sha256": "791ef4069d662d2b081cdce674c5d8b62f9ebac3cad269b3c9268f51628f2364",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/recurrent_events/frailty_realization.csv",
+          "sha256": "6b41df0dfc2e14079e6a71b2c5671f9d16e2f859be3a83cb759368c0715c7219",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/treatment_heterogeneity/hte_dose_response.csv",
+          "sha256": "3e12404c6582d20df6c5fb353ec0fee952287909ad8268e9caea547475bee1c8",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/mechanism_response.csv",
+          "sha256": "0de4bf973b1cc7f864e35bbe6253fdfd06ca9ecb1fddf14d9c3301f734be4b9c",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/mechanism_response.pdf",
+          "sha256": "344b803fb1a9459815414b79131ed20ff680e9ea351db1a8316f03d9d74ee4e1",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/mechanism_response.svg",
+          "sha256": "7343a1f5d680f274dc8e6db2a45680812d50f68b750e1ba29a1a54666ae96ec7",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "negative.control",
+      "title": "Structural controls",
+      "scientific_question": "Does breaking analysis-relevant outcome linkage increase source-scale error beyond trial-to-trial sampling variation?",
+      "independent_unit": "matched generated trial",
+      "estimand": "paired change in mean absolute survival-curve or ordinal-category probability error",
+      "comparator": "intact data versus controls that permute event times or treatment-outcome links while preserving the observed values",
+      "uncertainty": "95% confidence interval for the paired mean change over 1,000 trials",
+      "interpretation": [
+        "Both targeted permutations increase source-scale probability error.",
+        "The paired contrasts isolate event-time and treatment-outcome linkage while retaining the values and sample size of each generated trial."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/operating_characteristics/outcome_replication/open_outcome_summary.json",
+          "sha256": "1f42f2f4e6f29c9f1f12f03dc3a926629e5b18385718faaa38820fea38655c9b",
+          "media_type": "application/json"
+        },
+        {
+          "relative_path": "figures/negative_control.csv",
+          "sha256": "90969735d54ed88b161a679e2c1ed3d854b6235d5dc343754ad8d9e25056eb5f",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/negative_control.pdf",
+          "sha256": "cc86761bb6535085fa8d104c9e5489d3586da0e6b1a1bd2fd6b871d726139d77",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/negative_control.svg",
+          "sha256": "d53e8878cf4ee9c4576a50327b72f244bb8e109f48532363e3e39c48c38c49f5",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "outcome.longitudinal",
+      "title": "Longitudinal outcomes",
+      "scientific_question": "Does simulation reproduce change over time and relationships among repeated clinical measurements?",
+      "independent_unit": "generated-trial replicate",
+      "estimand": "mean six-minute walk distance by randomized arm and visit",
+      "comparator": "source trial and repeated trials fitted to the source trial",
+      "uncertainty": "simulation intervals for displayed means, with companion analyses of retention, within-participant correlations, and treatment-by-time effects",
+      "interpretation": [
+        "All 36 source arm-visit means and all 36 follow-up counts lie within their repeated-trial 95% predictive intervals.",
+        "Across six outcomes, the largest absolute treatment-effect bias is 0.016 source standard deviations; complete-linkage correlation error is 0.089 correlation units."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/operating_characteristics/longitudinal/tereco_linkage_response.csv",
+          "sha256": "c974cf9f881a711bb84000bcca3276f1f1ce7dd33d47bde4183876dd71c0da68",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/longitudinal/tereco_treatment_recovery.csv",
+          "sha256": "60a6b73e5be91ef13f546e729e09d8250126ba8d3fd58ac7821a93f94cf4dc5f",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/outcome_longitudinal.csv",
+          "sha256": "73b4b6c538b2e4c9816ce4de8b770b88fe6234f21d61cb9528ad9710c2f19fbd",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/outcome_longitudinal.pdf",
+          "sha256": "b2e4d067f2059944276341d9ec7fd708065f1a26545fbcd24d42bca932260c47",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/outcome_longitudinal.svg",
+          "sha256": "5787b231e54e1350670c5b41ad50bf26a42f6fcff5866531c9ab3a4003d0a7d1",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "outcome.ordinal",
+      "title": "Ordinal outcomes",
+      "scientific_question": "Does simulation reproduce the complete ordered outcome distribution used in the trial analysis?",
+      "independent_unit": "generated-trial replicate",
+      "estimand": "arm-specific modified Rankin Scale category probability",
+      "comparator": "observed trial and simulations fitted to the source trial",
+      "uncertainty": "simulation intervals across 1,000 source-size trials",
+      "interpretation": [
+        "Mean absolute error was 0.00443 across all seven categories and 0.00358 across cumulative category probabilities.",
+        "Proportional-odds bias at the source effect was -0.00293, with 0.947 coverage of the generating effect."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/operating_characteristics/outcome_replication/headsoar_safety_predictive.csv",
+          "sha256": "e537440b90b1b693f674d87e97f287f7baab3c2b77529d5ab5955242ecd45efe",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/outcome_ordinal.csv",
+          "sha256": "f050fb17a313ceb37580a75b0a266e57932676267ea681f9da2d495ff84b3ac4",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/outcome_ordinal.pdf",
+          "sha256": "e8c6c72937cdcd276cd8b1e972c3a22bcf14e3329f5485c8f018173f49462f80",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/outcome_ordinal.svg",
+          "sha256": "279b7b1bf6614b2503750acf482836efa3c8698407f7a6ea4315dfdb04f220ba",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "outcome.survival",
+      "title": "Survival",
+      "scientific_question": "Does simulation reproduce when events occur and how the number at risk changes, rather than only the final event proportion?",
+      "independent_unit": "generated-trial replicate",
+      "estimand": "arm-specific Kaplan-Meier survival probability through 1,095 days",
+      "comparator": "observed trial and simulations fitted to the source trial",
+      "uncertainty": "95% simulation envelope across replicates",
+      "interpretation": [
+        "Across 1,000 source-size trials, mean survival-probability error was 0.00134 and restricted mean survival differed by 0.84 days.",
+        "Risk sets differed by 4.18 participants per arm-time cell; source-effect Cox bias was -0.00050 with 0.962 coverage."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/operating_characteristics/outcome_replication/patency_rmst_predictive.csv",
+          "sha256": "2a53101042e54f901a481945458b84cbc48691b74f86d453b37c28cafa6963ba",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/outcome_survival.csv",
+          "sha256": "d62ef71f83f05c46116036580726dd5d023221ddc755792e4f178c8e70aee0c0",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/outcome_survival.pdf",
+          "sha256": "edc6c2316c04aacfd1a95fcc40fd0638e7f4a694031a120aa7bfb3e828ab3acc",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/outcome_survival.svg",
+          "sha256": "5041d7ca00837762048cdeb1ba387e21221b8e1f50db38ceefbaff32fd1d33c9",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "figure_id": "parameter.recovery",
+      "title": "Effect recovery",
+      "scientific_question": "Do independent analyses follow known changes in the generating treatment effect, including no effect?",
+      "independent_unit": "generated-trial replicate with the source-trial sample size",
+      "estimand": "independently estimated Cox log hazard ratio and proportional-odds log odds ratio",
+      "comparator": "four generating effect settings spanning the null and stronger effects",
+      "uncertainty": "Monte Carlo intervals for mean estimates plus bias, RMSE, model-interval coverage, power, and estimability",
+      "interpretation": [
+        "Estimated effects changed in the configured direction in all 1,000 paired survival and ordinal trial replicates.",
+        "The paired response slopes were -0.1150 versus -0.1141 configured for survival and -0.08341 versus -0.08321 for the ordinal outcome."
+      ],
+      "artifacts": [
+        {
+          "relative_path": "data/operating_characteristics/outcome_replication/headsoar_proportional_odds_dose_recovery.csv",
+          "sha256": "9264d35c237aef47177fb06f55749b63bc946c154032c4c8b8e7523c2f7e6477",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "data/operating_characteristics/outcome_replication/patency_cox_dose_recovery.csv",
+          "sha256": "21dfa44d91987435b4ee0f8b277d331e9d78e2ab6058f84868d279fcca38fcf1",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/parameter_recovery.csv",
+          "sha256": "b7317e7f85f8ffb148366e5e3c01f64bdfba799ab00d2a5c4da0c26fe7893c23",
+          "media_type": "text/csv"
+        },
+        {
+          "relative_path": "figures/parameter_recovery.pdf",
+          "sha256": "98f56dbdc3c3fdd2973b395245eef10fc88b30059955d65f709666c7db6f3caa",
+          "media_type": "application/pdf"
+        },
+        {
+          "relative_path": "figures/parameter_recovery.svg",
+          "sha256": "b7b437adc5f842b5d8df1ed5ddb96cbc3a8b92e0efe3d281fac0bb45d814a9a3",
+          "media_type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "supporting_data": [
+    {
+      "relative_path": "data/assumption_bridges.csv",
+      "sha256": "59191c3ace4f7ca6bc56951566589f94fe052711e5db15b11aa0a4c5ac1ed0b3",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/assumption_characterisation.json",
+      "sha256": "431fc45935155ceb13fabb471b1f609136b14efacd4913e242de04c4f7357c51",
+      "media_type": "application/json"
+    },
+    {
+      "relative_path": "data/assumption_response/assumption_bridges.csv",
+      "sha256": "d45c1a6895e1ac20711101808a27b564f06c9577a71b32e162acac14da6f64a1",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/assumption_response/assumption_characterisation.json",
+      "sha256": "e4593ec07a35336d321c0bfd2e3c1aaba9a5ef1d9de2eca33bbdbf3d799ed4c2",
+      "media_type": "application/json"
+    },
+    {
+      "relative_path": "data/assumption_response/assumption_paired_contrasts.csv",
+      "sha256": "42ec01c7da04da7477a0c2ef62a623755b2c506e5ed075a343cd9e38bd367c50",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/assumption_response/assumption_series_identities.csv",
+      "sha256": "301e2a350065f96dad4ad9c74a9745c4bfaa22fc4b8346157eb0ba14d873d005",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/assumption_response/assumption_summaries.csv",
+      "sha256": "66b317982a165407946f63e7cde7b65d5810b79f8f12f575010a9c6ee4956b6c",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/assumption_response/matched_assumption_design.json",
+      "sha256": "9781f8b3400a9fabb0c315f400f6f98dff678b1b33c47b21bc59e8ed86c699b3",
+      "media_type": "application/json"
+    },
+    {
+      "relative_path": "data/assumption_summaries.csv",
+      "sha256": "0d2b3f06aaa5f7857ea63fddfd73c991fe4a90c26c70bb2a44e3cafb0145349d",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/cdisc_reference_evidence.json",
+      "sha256": "e9f9f823b3ded6612c751852fc835e868ee9ed2749cff298132ed2964b8149be",
+      "media_type": "application/json"
+    },
+    {
+      "relative_path": "data/context_integrity.csv",
+      "sha256": "7857195eb2294caba67ffaf84e2c737774c5d0615398c95416957ef14ef6533e",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/context_invariance.csv",
+      "sha256": "baecb9f04b1ae0d49e6392c224c2b9b0a2b849d440d783db6c220de8e79d28a4",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/context_route_recovery.csv",
+      "sha256": "e6088dc502ac45e26a37c4530e0d9aa5244ca377b01c6976ffce24e8b9b39e88",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/design_characterisation.json",
+      "sha256": "6e2360233a6f29bc4eefdcafc96010e5f115727adff67988cf3e35737b8cac97",
+      "media_type": "application/json"
+    },
+    {
+      "relative_path": "data/operating_characteristics/clustered_design/cluster_response_worlds.csv",
+      "sha256": "2324c37164a647486bec705f0f73a7efadd52348c3021f0be1077bff707560b3",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/competing_risks/cause_specific_recovery.csv",
+      "sha256": "ed97ffb3917ed6389b3af72fc46495db73bee903828034ea9d4a34a6fe44654f",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/competing_risks/competing_risk_information_response.csv",
+      "sha256": "6977abf4cd2062ec66ab9269ecdcf95460d5dfdea61c24a202a381d861f050dd",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/confounding/confounding_failures.csv",
+      "sha256": "d4d0c86b8e05aeed66d3785767131379f20261ddbd879f741162c6cbde6dc6ba",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/confounding/confounding_information_response.csv",
+      "sha256": "3a80a7df855a5057bbcab852ee51871a7a7621bded03a7ef128440dbb97fa1b1",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/confounding/confounding_operating_characteristics.csv",
+      "sha256": "3c6d263417f9c8c7041e38338c7b8f66604a7e59eacf985e4e3dae28406c1121",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/confounding/overlap_response.csv",
+      "sha256": "f88c594959ee37bd69feac7dd9e7048deed09cfb374b78e438d5e05d86af941e",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/group_sequential/group_sequential_response.csv",
+      "sha256": "dab4fc88324bca946aab828d407a90037a51037d8c2d22d894567fb3e9ab769b",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/longitudinal/longitudinal_linkage_curve.csv",
+      "sha256": "30505f548ce2db684cd9a6e06af34147761ac93a5ffccb823d46c9823ae38899",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/longitudinal/longitudinal_source_anchored_recovery.csv",
+      "sha256": "fab9663640e84a9bceb26b2716b2fc1f78a17814969fbfcd3cefca8cd0e79f05",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/longitudinal/longitudinal_treatment_recovery.csv",
+      "sha256": "9d46c195b2bd48832519f8de8524846f249d35a88493bb8d49856799bfeea998",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/observation_process/dropout_recovery.csv",
+      "sha256": "5703dc1d6519eb7cfe0c3f64a16bdfe4854f504350a2c399089d86a8950e30c0",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/observation_process/dropout_response.csv",
+      "sha256": "7c3cd3e148ce0f1e59dd1172969f3ab9b800fe18c676264fa3e58d1023c13df6",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/observation_process/treatment_recovery.csv",
+      "sha256": "152d50a1346a95179279534b865896d518222af7c4479a5d24eb494c210b5778",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/observation_process/treatment_response.csv",
+      "sha256": "4200d79ff462f7d5c2af3573de71e01be706b94eb71425be155779f48b4908f4",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/recurrent_events/frailty_operating_characteristics.csv",
+      "sha256": "17074fbce2d990e65081a89e18a68874ce42dce97f9dd8afb59e0dae98171ba4",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/recurrent_events/frailty_realized_process.csv",
+      "sha256": "90eb094622e5f0e3fcbb3cf98fa89c60cf53404c7d42fb77874e45a0996f5e51",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/recurrent_events/frailty_response.csv",
+      "sha256": "feed7b867c2bc40b7aaee927b5e55d780a0a39eb0ff5fcb8c5b98729dfe0592d",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/stepped_wedge/stepped_wedge_response_worlds.csv",
+      "sha256": "d29342c412d1d8715e1598dc80904c73ba3926aa13fe350524fdb910949915f8",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/treatment_heterogeneity/hte_information_response.csv",
+      "sha256": "2160d88fcafee10c4e66dd0f8d7a847deea06cb3afb01f65cf1ae3825c05b17b",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/operating_characteristics/treatment_heterogeneity/hte_operating_characteristics.csv",
+      "sha256": "95210579e2d627b92541bda9aeb1b854a7e316ced6a03152b4e3b1a232cc901a",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/release_characterisation.json",
+      "sha256": "890a877bdbe17ef328d212e2e3dfced9d07804152d6bb438d60b1a82b9475a48",
+      "media_type": "application/json"
+    },
+    {
+      "relative_path": "data/worked_trial.csv",
+      "sha256": "c49c1d46bbf35abd8426d1327b18042f4b24e789d97af4fc28fc3d1b1a10e620",
+      "media_type": "text/csv"
+    },
+    {
+      "relative_path": "data/worked_trial_lineage.json",
+      "sha256": "8fc8c245a06dcaca3dbdb16cee707d551bc640fd2e477c89bf0b4e973c0300be",
+      "media_type": "application/json"
+    }
+  ],
+  "methods": {
+    "relative_path": "METHODS.md",
+    "sha256": "b705c875bf6156bcf59852a33c070b95f70bcd8e5301d921b5d991485e36acef",
+    "media_type": "text/markdown"
+  },
+  "report": {
+    "relative_path": "REPORT.md",
+    "sha256": "0cbbcd2b26ea01b89ae9a5783ade66bfd3bbe4958ae903fcfb40515db72bd87d",
+    "media_type": "text/markdown"
+  },
+  "chapters": [
+    {
+      "relative_path": "reports/mechanism-and-effect-recovery.md",
+      "sha256": "19ef534e83e8d15641a51b6ac0463c84c01a153505bb9c2114c4591ee15f9a6b",
+      "media_type": "text/markdown"
+    },
+    {
+      "relative_path": "reports/participant-linkage-preservation.md",
+      "sha256": "db46721495e04cf547544f3fc7260e53fcfb89b26cc4bffc3b7ce4cfc897bfd1",
+      "media_type": "text/markdown"
+    },
+    {
+      "relative_path": "reports/source-trial-anchoring.md",
+      "sha256": "7f90677f7c1cfb02ec8a57974e51fa19f9bc364141c0a1426083e31f2d2a19e8",
+      "media_type": "text/markdown"
+    },
+    {
+      "relative_path": "reports/trial-design-and-assumption-response.md",
+      "sha256": "95c5fac91148080f9d6df6eeafd26ae703602b05ba97e66693e990a119d654d7",
+      "media_type": "text/markdown"
+    },
+    {
+      "relative_path": "reports/trialeval-release-contents.md",
+      "sha256": "034489b28f06a911731dcd8e04e5691bbcbd67d68bfe18c29bc33c29b2d30b0f",
+      "media_type": "text/markdown"
+    }
+  ],
+  "results": {
+    "relative_path": "RESULTS.csv",
+    "sha256": "5f727db0cb75502223d55ba2ce001f3f66727f15f71521d61f0bb9e60ceb274f",
+    "media_type": "text/csv"
+  },
+  "sources": {
+    "relative_path": "SOURCES.md",
+    "sha256": "61b549d39bdee73f7e329ad8407ea8f741099ac6456d98dabe25efe1f77ad82d",
+    "media_type": "text/markdown"
+  },
+  "checksum": "62e5caa6600227265a53100e0acd3b8a38737e71d3503a3bf6711e698e33d87a"
+}

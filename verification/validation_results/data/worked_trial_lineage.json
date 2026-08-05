@@ -1,0 +1,22 @@
+{
+  "case_id": "TE-S03-A1_03",
+  "task_id": "TASK00834B8DFB180B621230A36EECE60DD7",
+  "participant_table_path": "items/TASK00834B8DFB180B621230A36EECE60DD7/data/ADSL.parquet",
+  "endpoint_table_path": "items/TASK00834B8DFB180B621230A36EECE60DD7/data/ADTTE.parquet",
+  "task_path": "items/TASK00834B8DFB180B621230A36EECE60DD7/task.json",
+  "protocol_path": "items/TASK00834B8DFB180B621230A36EECE60DD7/protocol_summary.json",
+  "analysis_plan_path": "items/TASK00834B8DFB180B621230A36EECE60DD7/analysis_plan.json",
+  "participant_rows": 7691,
+  "endpoint_rows": 7691,
+  "linked_rows": 7691,
+  "analysis_population": "ITT",
+  "estimand_id": "itt_treatment_policy",
+  "endpoint_id": "death",
+  "effect_scale": "risk_difference_tau",
+  "estimator_method": "observed:km",
+  "estimate": -0.016520535924455126,
+  "interval_low": -0.026991705809840873,
+  "interval_high": -0.00604936603906938,
+  "unit": "probability_difference",
+  "uncertainty_method": "km_delta_greenwood"
+}

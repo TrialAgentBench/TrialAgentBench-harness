@@ -1,0 +1,28 @@
+# Python build artefacts
+__pycache__/
+*.py[oc]
+/build/
+/trialdevbench_packages/*/build/
+/dist/
+/wheels/
+*.egg-info/
+
+# Virtual environments
+.venv/
+
+# Environment variables
+.env
+
+# Run outputs
+results/
+.cache/
+cache/
+
+# Large extras users may stage at the repo root
+*.zip
+*.log
+
+# Editor and OS noise
+.DS_Store
+.idea/
+.vscode/

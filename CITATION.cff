@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite the TrialAgentBench paper when using this benchmark."
+title: "TrialAgentBench: Evaluation Harness and Independent Verification"
+type: software
+version: 0.1.0
+authors:
+  - name: "Anonymous Authors"
+repository-code: "https://github.com/TrialAgentBench/TrialAgentBench-harness"
+url: "https://huggingface.co/datasets/TrialAgentBench/TrialAgentBench/"
+license: "CC-BY-NC-4.0"

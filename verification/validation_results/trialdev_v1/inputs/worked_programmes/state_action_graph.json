@@ -1,0 +1,2260 @@
+{
+  "edges": [
+    {
+      "action_id": "declare_success",
+      "edge_id": "0250997fbd33e1720590e3cd92ef8bcc02d24ab5525a9d1710bc846087d27f7c",
+      "reserve_asset_id": null,
+      "source_node_id": "cfb38487dd5320a958cd8c6813e741b6e7fc5616a41270a44fbea107c7575dd9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "05b40380eacf5d882e9acd9395efcaab068543454cbdee37830122ff3506096f",
+      "reserve_asset_id": null,
+      "source_node_id": "cd9cea1626a4497a323784093ce423bb13e0341f9b8dc944b2c86671dd320a7b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "stop_development",
+      "edge_id": "085b91d860c4fff1b1ca88ad131b70570af73f085e6f8692a90c771b6ab4b47b",
+      "reserve_asset_id": null,
+      "source_node_id": "ab6d017528d4690b1a11a4f441c80b6e6b27384217d0817b6ca51e87869ce378",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "0b2d48787a4a1c3858b967f29038034e5a358badf7c855cf6b3967d53e74bdcb",
+      "reserve_asset_id": null,
+      "source_node_id": "402bd2471b43d73edeb3649dffe9a39988b9a3534fe6f12241befe9bf5afa900",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "advance_to_confirmation",
+      "edge_id": "0c2f0b1125be7f5aaebff6d75461e369621c7c913a47e55dfea5a6eb4f2e7da7",
+      "reserve_asset_id": null,
+      "source_node_id": "ab6d017528d4690b1a11a4f441c80b6e6b27384217d0817b6ca51e87869ce378",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": "297338c010c126354b4ca3f68a206f435dfd6c60b4f595bdb388e55da54cc129",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "0ca4ec9bbfe1e511daa928fc8004932f937b497e2ed2a0e16b32f7e0c06ff204",
+      "reserve_asset_id": null,
+      "source_node_id": "a8fadb48c06f280491e4d4a83cd3afcdaf2fec144f41be0f02c23754759248dd",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "0d34c065079c640f1d196ee49daec2c4df2a4ddf5d504cb8dffbdee245fce63f",
+      "reserve_asset_id": null,
+      "source_node_id": "448012bc74f7501ab3477db432cf2d8f35e1b592da1ad0a564dbadb16758158a",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "0e412f59dd24c112a91fea3a946a3813a9b48b107ee9f06eb678755421160c32",
+      "reserve_asset_id": null,
+      "source_node_id": "0ea6accb625814132ca9db2437c7cc7b5ac72f45399f667d4a6273a93eff684f",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "0e6389e27e903010297c930a436239895af6989c6f346ca1784826ddf1ef49df",
+      "reserve_asset_id": null,
+      "source_node_id": "75d0cabe1adca7402efa136b412c8241ad3ef52ade159357c7c113520661c85b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "6e9f74c0ce47f8069ef29faf6531effc1341520f652bb9b1a43695961d9dde09",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "0ec85c50fb8a8cb81aefa30567ad60c031f5a69bc80ed16b40d5716537778577",
+      "reserve_asset_id": null,
+      "source_node_id": "dfadc80028ece0b1f66ea5fd7ca19504c6fdc5b6a4b1311ac737c24be3f02441",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "0f8187bdf187828d8623b8c84964ab2aafe6ea6f8f51bc96d6ef2c266c55a416",
+      "reserve_asset_id": null,
+      "source_node_id": "448012bc74f7501ab3477db432cf2d8f35e1b592da1ad0a564dbadb16758158a",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "select_lead_and_reserve",
+      "edge_id": "0fd869e61b94116e0ec86e48c19be429d530f7bc3cf3b943cc4a2d3daecfc1b6",
+      "reserve_asset_id": "A",
+      "source_node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": "C",
+      "target_node_id": "7c4c86ba4ea42fe1d6c3c76024838c743be0c2376a49f87149874426ed81d0a5",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "13b00c1821308adf31f0fe49bcf856caad50d6da2f3e1ce896fc08daa037cd03",
+      "reserve_asset_id": null,
+      "source_node_id": "679707ae4f4a8ef2d8f50f8db55df0d637e995bf7434c4cdbe080c2fd5120e62",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "142bbd94ada824d3f6b76e51a37927109af3fe97dbaff58315dc2db215f744f7",
+      "reserve_asset_id": null,
+      "source_node_id": "c86611dd84c5fa34fd7eb50be04bb1e47501db049ba2065752432b1c2eafac5e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "155241be123bea149c65b78a34cfa7d15f3686fdf3644cfce3e7e949aa897741",
+      "reserve_asset_id": null,
+      "source_node_id": "75d0cabe1adca7402efa136b412c8241ad3ef52ade159357c7c113520661c85b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "402bd2471b43d73edeb3649dffe9a39988b9a3534fe6f12241befe9bf5afa900",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "1b371f9750b5b8dd4f9aad27e219d66df17b906f0d5df90b305df44512e46832",
+      "reserve_asset_id": null,
+      "source_node_id": "0f1c2defe01090722a7433828c1c42ac1aaf76b2fc0dab87bb10ecbd5dd8b3dc",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "9dd8d5dfe3c08d0a279784987b8de7deb3a964679cfc2512bf56bcc19d403efe",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "1bb2a2d3e3a2b633eb21c6af35a3b0fd16b96318c2c1ba3d5adfcfb426594b85",
+      "reserve_asset_id": null,
+      "source_node_id": "9ef121d744b623d9912da2e7a5b1e15cd1a15bcd112b351f64901fe7d247d5c9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "679707ae4f4a8ef2d8f50f8db55df0d637e995bf7434c4cdbe080c2fd5120e62",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "1cf26d84c20f37c2915bcf07695ffd362965cd1ab13b35e2d74c03a2ee39afa0",
+      "reserve_asset_id": null,
+      "source_node_id": "2b141b0fb7c144a1c940c64e80a9952cb422447cbfa700a2156c1740a92bb5ca",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "1dc18a8b841b5a2d42e51eddac7ec07f934cc9ed2d20959cb73837f14b181fcb",
+      "reserve_asset_id": null,
+      "source_node_id": "b100e402d1ed0a66a92df360032303a6534ff7d657b9861d723729d767cb0945",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "withhold_selection",
+      "edge_id": "1f80595ae91e76b596209cfcab1d5c9193686fa9e9623b0c7edee7312a1656dc",
+      "reserve_asset_id": null,
+      "source_node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "withheld"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "21192d617907026d6e88073f8ab3ab16de51689259e99a36bdc5c70f969a2cba",
+      "reserve_asset_id": null,
+      "source_node_id": "73e4fbd9d41cd20c814e11e3a6a1dd258a2f6e06cd370510df644f4ec4e42957",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "238f7dbf49ae66733fc1288bfe3ab12388774c0588059a3ee821f6cd48966a37",
+      "reserve_asset_id": null,
+      "source_node_id": "a0cf91c393f2c4d7239edf1024eef4be8b7e645b7afedd1e2374be94feaf32e4",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "249fc179a997b826904d13397c83f1b9ae5a8d313b71b01ac1b586f16f97df6e",
+      "reserve_asset_id": null,
+      "source_node_id": "a8fadb48c06f280491e4d4a83cd3afcdaf2fec144f41be0f02c23754759248dd",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "cd9cea1626a4497a323784093ce423bb13e0341f9b8dc944b2c86671dd320a7b",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "288dda1262c49010934b8d912da1cd00edb244520f7a8d6e52845a21b6d1f8f1",
+      "reserve_asset_id": null,
+      "source_node_id": "25dda7af3db2c924702401e1819b8641f4be030e2b1bddf117b2221dbc541b2c",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "0ea6accb625814132ca9db2437c7cc7b5ac72f45399f667d4a6273a93eff684f",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "2902fe8df02adf6b78cde243e888a605720d006fcb5522a1df34f20402de859b",
+      "reserve_asset_id": null,
+      "source_node_id": "a6f442b385b8098d9b7602083cdba19139f5eba494eaeccbb0d317de0d33b9b7",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "448012bc74f7501ab3477db432cf2d8f35e1b592da1ad0a564dbadb16758158a",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "292698fa28df133e6d5e769c13e4e8372d9aa61dc65405cd24839bf91d5f1572",
+      "reserve_asset_id": null,
+      "source_node_id": "402bd2471b43d73edeb3649dffe9a39988b9a3534fe6f12241befe9bf5afa900",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "299d84efaf590a78b6d425adf37d136f1c3af118579bb93b007779600f36950a",
+      "reserve_asset_id": null,
+      "source_node_id": "7fa61805b1bb354c5a4277e2b06fd0632a33df4caa5fd401a5230504561dde4e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "25dda7af3db2c924702401e1819b8641f4be030e2b1bddf117b2221dbc541b2c",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "29ba2792be250078f0908a575d9686cd3d0d46cce8e92ee9511a5ddac579434e",
+      "reserve_asset_id": null,
+      "source_node_id": "7c4c86ba4ea42fe1d6c3c76024838c743be0c2376a49f87149874426ed81d0a5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "2b2d038e7ca6913dd5bbe6e2b6e2f783dcd4852e4ab459cdf6d5e3a7e1ac33fd",
+      "reserve_asset_id": null,
+      "source_node_id": "9dd8d5dfe3c08d0a279784987b8de7deb3a964679cfc2512bf56bcc19d403efe",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "2c13999557b5b20257464cb09eaa5c8741561b49f0f881b7728d9ca63e933c43",
+      "reserve_asset_id": null,
+      "source_node_id": "d5d699a2020b7252892f3f50776dbac29a316ae5b07dc87b3e0c879eca607ce5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "select_lead_and_reserve",
+      "edge_id": "2df36ef86788f225f3ed8ee07629f74b4e75e6b0e14c7299ba547ac8ea2be31e",
+      "reserve_asset_id": "B",
+      "source_node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": "C",
+      "target_node_id": "7dee40c8500014e1ea20e2d7051915e675f98686d3134b942d74486fd399d392",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "303427993ae27debed312dbd86803e26c829620fe9d522c9a659ca5ee54ad761",
+      "reserve_asset_id": null,
+      "source_node_id": "5899fb35a56ba2be2076425c2ebde2c3468ed7bcf2866d3226577fe9dc51128b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "327fe618d4f88ba716a090647305617627a8b3e4760ba4efb7f6c94c402dead3",
+      "reserve_asset_id": null,
+      "source_node_id": "b4cf6b996016e4ec8c20a755c4311f98dec7f3ad55140e07813573b9e84d6629",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "44527f57b7192e7fac65186931e5b315a60829bff85d4b27fc07511354055882",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "3a4adb3db38008756fe6adcc41fa250e39be105dc2b8825e232b6149c84476b0",
+      "reserve_asset_id": null,
+      "source_node_id": "33807183a6430a8f61a5c5b98792ffb4c23491b2291ec58cb8e921a90c60b9d5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "73e4fbd9d41cd20c814e11e3a6a1dd258a2f6e06cd370510df644f4ec4e42957",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "40264fa1c0fe215021f33af7ac6a1eea4f22725213e43265636d0ac64a6407ab",
+      "reserve_asset_id": null,
+      "source_node_id": "73e4fbd9d41cd20c814e11e3a6a1dd258a2f6e06cd370510df644f4ec4e42957",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "4033ca549f5d41cd6dd582357e87bcf4d6e943425c5d778d39f6d15ecae95b41",
+      "reserve_asset_id": null,
+      "source_node_id": "4cd2b573d2d19dc0f777ba36321a09df6b91b9ad153aae1822ed5ab6d86fbff1",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "41ad14bdd536d5b2c756a70f7d3280fe6e61eb989e7a8b9b3cb8d94bfbeca7b4",
+      "reserve_asset_id": null,
+      "source_node_id": "961adda61ee55f081d620706edff6656f6b06baa20ee843c077656bc016cc178",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "03b236f43eac340ffabbb085d7d9e0bfd7657ef1cee63e3ec8fd0a2b45a2c290",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "select_lead_and_reserve",
+      "edge_id": "4349ca8daaf3a20ef0a1b3f35da8a35fbe1aed0eb525e82990340e54c88f15fa",
+      "reserve_asset_id": "C",
+      "source_node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": "A",
+      "target_node_id": "a8fadb48c06f280491e4d4a83cd3afcdaf2fec144f41be0f02c23754759248dd",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_lead_to_proof_of_concept",
+      "edge_id": "48a7931ebec70753eb4365150161268df1425525cbe74e19c33c15ddabcc8eff",
+      "reserve_asset_id": null,
+      "source_node_id": "58df2a90ff4a93f81847370cb468753cb0a18fdb2d9a409824ca17eb01dea36a",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "b4cf6b996016e4ec8c20a755c4311f98dec7f3ad55140e07813573b9e84d6629",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "4949ed9e7bb948512b8e8f34f96da1e25edcaaaaa3f201b3437093569bd2d2e7",
+      "reserve_asset_id": null,
+      "source_node_id": "36a0cb380f1013c560e5067c5d91932bdc69117a4eed809aab35a3b3d816603d",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "49549ce1766850aba7db871dbd0c130800f1f2e450d5b3d2e5793e4fb90d7ccc",
+      "reserve_asset_id": null,
+      "source_node_id": "448012bc74f7501ab3477db432cf2d8f35e1b592da1ad0a564dbadb16758158a",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "51149746c71b30666d67adf441074f810bf2ff772704a6a5976d48dd1dc2e3cf",
+      "reserve_asset_id": null,
+      "source_node_id": "41936ecaf18036a9d9a2112b650a96d013c812445b43239fc67702ce6c9b2821",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "2b141b0fb7c144a1c940c64e80a9952cb422447cbfa700a2156c1740a92bb5ca",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "515cb8058549b9a5dc9cab58b771569ad56a6bd153cd53a015c677b5b12dbe02",
+      "reserve_asset_id": null,
+      "source_node_id": "58df2a90ff4a93f81847370cb468753cb0a18fdb2d9a409824ca17eb01dea36a",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "57820285db61a886a93fe0dac62970c52400aabfa652c68b8598272a73af3063",
+      "reserve_asset_id": null,
+      "source_node_id": "10b37d6ac223e526e7c7c6fc7233d9d191b93d91c8a633cfe0e85b1f5419bec9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "578b92816cb8bda809c0852c925a45fe933f591004eccde0b2a48843402c51ac",
+      "reserve_asset_id": null,
+      "source_node_id": "41936ecaf18036a9d9a2112b650a96d013c812445b43239fc67702ce6c9b2821",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "advance_to_proof_of_concept",
+      "edge_id": "5a83ae8e56454ae9a55c58053fed6cbdefd9898f0acc5aacedbb3bb58e7133cf",
+      "reserve_asset_id": null,
+      "source_node_id": "34cb899d5a6b7028854d78d7893caf9316dadca006c77b9bf05e08d192a1107d",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": "ab6d017528d4690b1a11a4f441c80b6e6b27384217d0817b6ca51e87869ce378",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_lead_to_proof_of_concept",
+      "edge_id": "5b3074bd536a47eb1e82ebfdef8a5415bbb5f70720269a63644ff77e4355b580",
+      "reserve_asset_id": null,
+      "source_node_id": "7dee40c8500014e1ea20e2d7051915e675f98686d3134b942d74486fd399d392",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "10b37d6ac223e526e7c7c6fc7233d9d191b93d91c8a633cfe0e85b1f5419bec9",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "5b4c96c202bfb2da6865701ffc413dfa524355f2ad2d85162b0a448244511202",
+      "reserve_asset_id": null,
+      "source_node_id": "10b37d6ac223e526e7c7c6fc7233d9d191b93d91c8a633cfe0e85b1f5419bec9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "9873cb8c8d52eab554ec34ec16b70ae4749c7026af047715fe83e8a70800792d",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "665956c67eced34f512dbd206ff10e0b79cfc8049f51f3f3501a712b9732bcc3",
+      "reserve_asset_id": null,
+      "source_node_id": "2b141b0fb7c144a1c940c64e80a9952cb422447cbfa700a2156c1740a92bb5ca",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "676f0cb4ace7596f551e05f0a301e5bd08cc9424e8cad38b585500ab54d6d1d9",
+      "reserve_asset_id": null,
+      "source_node_id": "a84b68066fc9a1f1030a5585ae5aa326e22064ad7b56e5ae7c35e32c8c8e4aee",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "6afeaccac16b501b977522a2aa9a61d9364d572b61dfbb535005549d19042cb2",
+      "reserve_asset_id": null,
+      "source_node_id": "f062c1176d1b61e672dbf9546c090b6af9bd4d6f73fcb04fb7dc3ce2bb0641cd",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "dfadc80028ece0b1f66ea5fd7ca19504c6fdc5b6a4b1311ac737c24be3f02441",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "6b866f30bed253bea55c065db09483e488d68ce3ae94646a1af44d148b964c25",
+      "reserve_asset_id": null,
+      "source_node_id": "297338c010c126354b4ca3f68a206f435dfd6c60b4f595bdb388e55da54cc129",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "6baaa249b3122e53eb8d41ee9887940ca656b06264410c74036460edfd1fde4f",
+      "reserve_asset_id": null,
+      "source_node_id": "44527f57b7192e7fac65186931e5b315a60829bff85d4b27fc07511354055882",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "36a0cb380f1013c560e5067c5d91932bdc69117a4eed809aab35a3b3d816603d",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "70c5a41be72d427dc855acbda6155570df2eb1c32490dcfc0c3b64b82f0c4e49",
+      "reserve_asset_id": null,
+      "source_node_id": "dfadc80028ece0b1f66ea5fd7ca19504c6fdc5b6a4b1311ac737c24be3f02441",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "723988d1f538d85ed81e6ca31031cac4e2d7402fcec1efd7aeb14b32b9d02423",
+      "reserve_asset_id": null,
+      "source_node_id": "6e9f74c0ce47f8069ef29faf6531effc1341520f652bb9b1a43695961d9dde09",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "72cf4bd15659ba36bb8c666e9aa12de8b7bf174d497089921e62d5f9552319d8",
+      "reserve_asset_id": null,
+      "source_node_id": "5d088ee515f58d2720723d75cb645f6fcde5a3dfffbc6f9f667c0e2eaaf9fd6e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "0f1c2defe01090722a7433828c1c42ac1aaf76b2fc0dab87bb10ecbd5dd8b3dc",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "7369958c9a3a46e8ed83ab925255f5d2f01054324010c147b857d29733f84f9e",
+      "reserve_asset_id": null,
+      "source_node_id": "7fa61805b1bb354c5a4277e2b06fd0632a33df4caa5fd401a5230504561dde4e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "75e0eabf92f396eba0a7bec624c8422b957abb0342b3688d8e8e0dfa538413d7",
+      "reserve_asset_id": null,
+      "source_node_id": "7dee40c8500014e1ea20e2d7051915e675f98686d3134b942d74486fd399d392",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "advance_lead_to_proof_of_concept",
+      "edge_id": "7b7e81bd14528de99b6d76a03d17a3c18602a15ca238dcf7276dde72c2df4d31",
+      "reserve_asset_id": null,
+      "source_node_id": "7c4c86ba4ea42fe1d6c3c76024838c743be0c2376a49f87149874426ed81d0a5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "7fa61805b1bb354c5a4277e2b06fd0632a33df4caa5fd401a5230504561dde4e",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "7c583767381489d1e3140692e94641470cdc7916e6238d88e8b929ce9f7f5833",
+      "reserve_asset_id": null,
+      "source_node_id": "679707ae4f4a8ef2d8f50f8db55df0d637e995bf7434c4cdbe080c2fd5120e62",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "7fa7f5c236d912b9269d192d6f2a88932d73fc42226250558341751ec115a38e",
+      "reserve_asset_id": null,
+      "source_node_id": "aa33c949ea37b9f91eb431470bfd12e6457c8e83f643dc73955da19569dab189",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "83792ae6bdf8ee641e5e2a939f752f8a9de94363dc5e190f94618e9890804df3",
+      "reserve_asset_id": null,
+      "source_node_id": "aa33c949ea37b9f91eb431470bfd12e6457c8e83f643dc73955da19569dab189",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "8673531a0c0a01258748ffee303ffc17d40e87c1da497f6ef20ac6b0be23643c",
+      "reserve_asset_id": null,
+      "source_node_id": "58df2a90ff4a93f81847370cb468753cb0a18fdb2d9a409824ca17eb01dea36a",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "f062c1176d1b61e672dbf9546c090b6af9bd4d6f73fcb04fb7dc3ce2bb0641cd",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "877da1e0fe91b441787e5472759733b25a68fb11191ab80a2fdfece83d0d5fbb",
+      "reserve_asset_id": null,
+      "source_node_id": "7c4c86ba4ea42fe1d6c3c76024838c743be0c2376a49f87149874426ed81d0a5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "b100e402d1ed0a66a92df360032303a6534ff7d657b9861d723729d767cb0945",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "8c71e7e13523060db125a76644f1b71d3d599f5adfbb43eb0f59fcc235bda457",
+      "reserve_asset_id": null,
+      "source_node_id": "5d088ee515f58d2720723d75cb645f6fcde5a3dfffbc6f9f667c0e2eaaf9fd6e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "cfb38487dd5320a958cd8c6813e741b6e7fc5616a41270a44fbea107c7575dd9",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "8eae32cd4103cf2af4d422b34e3b51fc8ff3a073f19961e90a850ff1cb79899a",
+      "reserve_asset_id": null,
+      "source_node_id": "dfadc80028ece0b1f66ea5fd7ca19504c6fdc5b6a4b1311ac737c24be3f02441",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "8f4490b82764d3854519be58afb0793f32b43f197310929acda354507b39c8f4",
+      "reserve_asset_id": null,
+      "source_node_id": "b4cf6b996016e4ec8c20a755c4311f98dec7f3ad55140e07813573b9e84d6629",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "aa33c949ea37b9f91eb431470bfd12e6457c8e83f643dc73955da19569dab189",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "9069c83a0e591eaf1cc4c2f46529f5e90d171098422475af9c4c417e0eb0c496",
+      "reserve_asset_id": null,
+      "source_node_id": "c86611dd84c5fa34fd7eb50be04bb1e47501db049ba2065752432b1c2eafac5e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "961adda61ee55f081d620706edff6656f6b06baa20ee843c077656bc016cc178",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "90bcc366ec20e6344ab0a3f98f5cb1b0ff8f3018bfc6542310063d65cf5942fd",
+      "reserve_asset_id": null,
+      "source_node_id": "03b236f43eac340ffabbb085d7d9e0bfd7657ef1cee63e3ec8fd0a2b45a2c290",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "9161ea102e44da16aa8a5c30a4856604381df1332f0b1bc8f9f5283d1dae3035",
+      "reserve_asset_id": null,
+      "source_node_id": "9873cb8c8d52eab554ec34ec16b70ae4749c7026af047715fe83e8a70800792d",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "937107929f8050a67cdde4017443c6808bbd4dc9b0bfc6e6c813155b9648b50a",
+      "reserve_asset_id": null,
+      "source_node_id": "402bd2471b43d73edeb3649dffe9a39988b9a3534fe6f12241befe9bf5afa900",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "93d5db77c768b8b3ccf58109ded32ba3ad252e010492abf6fb382358befe44d8",
+      "reserve_asset_id": null,
+      "source_node_id": "f062c1176d1b61e672dbf9546c090b6af9bd4d6f73fcb04fb7dc3ce2bb0641cd",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "withhold_nomination",
+      "edge_id": "9621ae5016da296c229d1b7d83912fec05841a858afe066117f378cd35142f2c",
+      "reserve_asset_id": null,
+      "source_node_id": "c8531a7e9ffdb633052691ec547093766fb760efaef4469b820a9248f5a346b2",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "withheld"
+    },
+    {
+      "action_id": "advance_lead_to_proof_of_concept",
+      "edge_id": "9703898d78b51defa181aa822b0d3dde192618beb35c09db9076a91a5fcb2798",
+      "reserve_asset_id": null,
+      "source_node_id": "c86611dd84c5fa34fd7eb50be04bb1e47501db049ba2065752432b1c2eafac5e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "41936ecaf18036a9d9a2112b650a96d013c812445b43239fc67702ce6c9b2821",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "998d6d475f2433e04f52817e34d1e4278d84bc3bf2227679bb6457b9b76702b5",
+      "reserve_asset_id": null,
+      "source_node_id": "0f1c2defe01090722a7433828c1c42ac1aaf76b2fc0dab87bb10ecbd5dd8b3dc",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "9dc8d637c004e0445fa3dd590c4a3e4bfbbf5090fb0f56ef684c3811439f2c66",
+      "reserve_asset_id": null,
+      "source_node_id": "aa33c949ea37b9f91eb431470bfd12e6457c8e83f643dc73955da19569dab189",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "9ef8929535f4ab4511ceba3db85b3e418f472990273ba8260105b640876c7649",
+      "reserve_asset_id": null,
+      "source_node_id": "10b37d6ac223e526e7c7c6fc7233d9d191b93d91c8a633cfe0e85b1f5419bec9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "d5d699a2020b7252892f3f50776dbac29a316ae5b07dc87b3e0c879eca607ce5",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "ab74883cc13111fad6fca84dae99890cdeebac50ead7671bf379d042011d85ca",
+      "reserve_asset_id": null,
+      "source_node_id": "297338c010c126354b4ca3f68a206f435dfd6c60b4f595bdb388e55da54cc129",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "abf744ff71c653f51789d8e4f8af7368f452fe083f9c33bd5da4e460861aef6f",
+      "reserve_asset_id": null,
+      "source_node_id": "23a86073fb0e8a5e6ab9d525203beef2798305c340f465b12ae2c6001bca42a5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "acbf8351cb28dbe1f7c5a4f69b95c424b33897e037030a48a27e0305260bad33",
+      "reserve_asset_id": null,
+      "source_node_id": "a0cf91c393f2c4d7239edf1024eef4be8b7e645b7afedd1e2374be94feaf32e4",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "adb10a1e466bc71f9586a20be6065a510d8b5251a1ae5222ed967f7717591e14",
+      "reserve_asset_id": null,
+      "source_node_id": "9dd8d5dfe3c08d0a279784987b8de7deb3a964679cfc2512bf56bcc19d403efe",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "b0bb88f37923b9ec3a7c4791769b82b3361dab22349200bef8e6efeb923b5d4e",
+      "reserve_asset_id": null,
+      "source_node_id": "7dee40c8500014e1ea20e2d7051915e675f98686d3134b942d74486fd399d392",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "a6f442b385b8098d9b7602083cdba19139f5eba494eaeccbb0d317de0d33b9b7",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "b148e7b884bf97fa1c4bbff57c8a78306b448750626bcbf55c5753bf0fa039d5",
+      "reserve_asset_id": null,
+      "source_node_id": "cfb38487dd5320a958cd8c6813e741b6e7fc5616a41270a44fbea107c7575dd9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "b2e9cb05b4c05a8b07f80a5dda930cd1c0d175657d6ad1313e2dce828b8a8f1a",
+      "reserve_asset_id": null,
+      "source_node_id": "36a0cb380f1013c560e5067c5d91932bdc69117a4eed809aab35a3b3d816603d",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "b4781d4b4987097a09e9d2778dcd1cd0a3d58a59d20d1a847afd07bf94f495e4",
+      "reserve_asset_id": null,
+      "source_node_id": "9ef121d744b623d9912da2e7a5b1e15cd1a15bcd112b351f64901fe7d247d5c9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "b4cdccafa008910269d769f475c7ba3c3fd19e7a86f0438c3f835c7b86a77e58",
+      "reserve_asset_id": null,
+      "source_node_id": "5899fb35a56ba2be2076425c2ebde2c3468ed7bcf2866d3226577fe9dc51128b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "b620aac20b860234345fc497d2dfe3bae6470a4fbf5fb45a89716d9f360e89c9",
+      "reserve_asset_id": null,
+      "source_node_id": "0ea6accb625814132ca9db2437c7cc7b5ac72f45399f667d4a6273a93eff684f",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "b7495e823f48f588442fa15ae1f3de557b54d867da074427a78c908a0a917a6a",
+      "reserve_asset_id": null,
+      "source_node_id": "a84b68066fc9a1f1030a5585ae5aa326e22064ad7b56e5ae7c35e32c8c8e4aee",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "ba1f17ef610ac13f8284f026bd9d937dd7ff13ed3034c808168a2994abc709be",
+      "reserve_asset_id": null,
+      "source_node_id": "b4cf6b996016e4ec8c20a755c4311f98dec7f3ad55140e07813573b9e84d6629",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "bb76305326232e2180dac4fcb7ff17dbee2997a66c3b2fbcc4821ca3819aff9a",
+      "reserve_asset_id": null,
+      "source_node_id": "0ea6accb625814132ca9db2437c7cc7b5ac72f45399f667d4a6273a93eff684f",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "bbe9136ecd22d5c0d4015d1280af0e500cba1359ca604d25847784b5bc8f4dab",
+      "reserve_asset_id": null,
+      "source_node_id": "03b236f43eac340ffabbb085d7d9e0bfd7657ef1cee63e3ec8fd0a2b45a2c290",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "advance_lead_to_proof_of_concept",
+      "edge_id": "bd86fd7be6549125a2e805f5b191014b85bc1c1ec3c859a063dcbaf82d96316a",
+      "reserve_asset_id": null,
+      "source_node_id": "a8fadb48c06f280491e4d4a83cd3afcdaf2fec144f41be0f02c23754759248dd",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "5d088ee515f58d2720723d75cb645f6fcde5a3dfffbc6f9f667c0e2eaaf9fd6e",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "select_lead_and_reserve",
+      "edge_id": "c40d0732b4956b0e794fec5a9ccd18bf83a6f2a4b3e6320fa8580831f6244d24",
+      "reserve_asset_id": "C",
+      "source_node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": "B",
+      "target_node_id": "58df2a90ff4a93f81847370cb468753cb0a18fdb2d9a409824ca17eb01dea36a",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "c5b0c3e1d3825532ff638e1f7dad71f37e0ccfb48d701e4aff26798416866556",
+      "reserve_asset_id": null,
+      "source_node_id": "23a86073fb0e8a5e6ab9d525203beef2798305c340f465b12ae2c6001bca42a5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "33807183a6430a8f61a5c5b98792ffb4c23491b2291ec58cb8e921a90c60b9d5",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "c5dee0efcebe9c56452e82c6d256f07492dad832adda9d011b51cb10bfddd09a",
+      "reserve_asset_id": null,
+      "source_node_id": "cfb38487dd5320a958cd8c6813e741b6e7fc5616a41270a44fbea107c7575dd9",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "c61ca82065d5ce18a71164a484cbcb6c7c8ffa52b56e77464a19705c0effad45",
+      "reserve_asset_id": null,
+      "source_node_id": "a6f442b385b8098d9b7602083cdba19139f5eba494eaeccbb0d317de0d33b9b7",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "ca03701dce291de810b6bc5c18fe17eab9e9495a139d75fb3ea204ec8f5a4d94",
+      "reserve_asset_id": null,
+      "source_node_id": "a0cf91c393f2c4d7239edf1024eef4be8b7e645b7afedd1e2374be94feaf32e4",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "cd5d78f2d928de8626f012effc3d3e9497b3f8f679a0450e47a418ac343fa412",
+      "reserve_asset_id": null,
+      "source_node_id": "5899fb35a56ba2be2076425c2ebde2c3468ed7bcf2866d3226577fe9dc51128b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "d07aaddd74f9344290d806ac2ce037850aa3380b3557e81d1a5e8a7d1344c2cb",
+      "reserve_asset_id": null,
+      "source_node_id": "36a0cb380f1013c560e5067c5d91932bdc69117a4eed809aab35a3b3d816603d",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "d5c364c656da3b9bae8d1f3bb260503426c179a83e156b055c8fc3386b9a3e0b",
+      "reserve_asset_id": null,
+      "source_node_id": "d5d699a2020b7252892f3f50776dbac29a316ae5b07dc87b3e0c879eca607ce5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "a6778841ea9d2c23af4cabd552994db60501fc90d430001253194e8fea77fd46",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "nominate_for_early_study",
+      "edge_id": "d7cf7b38c21f51756519e78ecac324fa99ca7ea74e096949a99196979bfd5295",
+      "reserve_asset_id": null,
+      "source_node_id": "c8531a7e9ffdb633052691ec547093766fb760efaef4469b820a9248f5a346b2",
+      "stream_id": "single_asset_development",
+      "target_asset_id": "A",
+      "target_node_id": "34cb899d5a6b7028854d78d7893caf9316dadca006c77b9bf05e08d192a1107d",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "advance_lead_to_proof_of_concept",
+      "edge_id": "d7e409fa75c430f7f03d79eca24e20d6165a075ef51cf2ea5b20584a751ace27",
+      "reserve_asset_id": null,
+      "source_node_id": "23a86073fb0e8a5e6ab9d525203beef2798305c340f465b12ae2c6001bca42a5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "75d0cabe1adca7402efa136b412c8241ad3ef52ade159357c7c113520661c85b",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "d81e7f1e09c285a15be165aaef9785efe6db4db0b1b604a4fb023c8e9d89fee9",
+      "reserve_asset_id": null,
+      "source_node_id": "2b141b0fb7c144a1c940c64e80a9952cb422447cbfa700a2156c1740a92bb5ca",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "d865fac8b5e33d8e2bec0418c4477fd8ba460e68f6479c7ecd3b04b132173d8f",
+      "reserve_asset_id": null,
+      "source_node_id": "73e4fbd9d41cd20c814e11e3a6a1dd258a2f6e06cd370510df644f4ec4e42957",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "d8a930c531f641b8e2bd821dd33af62283511b5ae8f24ff18cbbfa84b590d35c",
+      "reserve_asset_id": null,
+      "source_node_id": "03b236f43eac340ffabbb085d7d9e0bfd7657ef1cee63e3ec8fd0a2b45a2c290",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "d907e947521b0ce45696184d1cb0213a0272bee1f7de1c889a9bcdccbe5af3ae",
+      "reserve_asset_id": null,
+      "source_node_id": "9dd8d5dfe3c08d0a279784987b8de7deb3a964679cfc2512bf56bcc19d403efe",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "select_lead_and_reserve",
+      "edge_id": "da090c02958fcc3f8eaa460d0ccb24a2ba6c3d33993c8f51d76494e9f2312c93",
+      "reserve_asset_id": "B",
+      "source_node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": "A",
+      "target_node_id": "23a86073fb0e8a5e6ab9d525203beef2798305c340f465b12ae2c6001bca42a5",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "stop_development",
+      "edge_id": "dae5e550897ba102099f381941823933a9ca3d93acdcb828e74f5a82e0bc2ce0",
+      "reserve_asset_id": null,
+      "source_node_id": "34cb899d5a6b7028854d78d7893caf9316dadca006c77b9bf05e08d192a1107d",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "db9e32f969c2d93a6ae071feecc4f2a61fc9db9d02f9a7127a94b9da084f8e5f",
+      "reserve_asset_id": null,
+      "source_node_id": "a6778841ea9d2c23af4cabd552994db60501fc90d430001253194e8fea77fd46",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "dc0a3f63fd203e2cf5b73726600c00e9d07f48cf7dad2f671cfd4c716340f146",
+      "reserve_asset_id": null,
+      "source_node_id": "a6778841ea9d2c23af4cabd552994db60501fc90d430001253194e8fea77fd46",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "dc7697762a00bd96f94a469dba282ff09757f46b44103494206a17419f47fb37",
+      "reserve_asset_id": null,
+      "source_node_id": "679707ae4f4a8ef2d8f50f8db55df0d637e995bf7434c4cdbe080c2fd5120e62",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "ddd8be85bcecd4334b8d000dc5f6d949a170300f59dfca45b37925c0a3df86d3",
+      "reserve_asset_id": null,
+      "source_node_id": "25dda7af3db2c924702401e1819b8641f4be030e2b1bddf117b2221dbc541b2c",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "de44db497c3174c027887a3477f9ecc3f585425b24336eac6ddd724465d14848",
+      "reserve_asset_id": null,
+      "source_node_id": "4cd2b573d2d19dc0f777ba36321a09df6b91b9ad153aae1822ed5ab6d86fbff1",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "de8a5d6a9663a7ea7c1ed1d087483b599ff60141d50fcdf48ff22bfdb95a07fb",
+      "reserve_asset_id": null,
+      "source_node_id": "cd9cea1626a4497a323784093ce423bb13e0341f9b8dc944b2c86671dd320a7b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "a84b68066fc9a1f1030a5585ae5aa326e22064ad7b56e5ae7c35e32c8c8e4aee",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "e1cdcdfe40c701cf588f43326c3e42b354fc63220bce4d3004c6a65b6b022c6e",
+      "reserve_asset_id": null,
+      "source_node_id": "5d088ee515f58d2720723d75cb645f6fcde5a3dfffbc6f9f667c0e2eaaf9fd6e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "e276205e7a85e4d041db02d9433827a0ba289fdc0c964f5fd5defdd119828fe1",
+      "reserve_asset_id": null,
+      "source_node_id": "a6778841ea9d2c23af4cabd552994db60501fc90d430001253194e8fea77fd46",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "eb87733101258bd06df1df9f2050a6c49ab7c12e3b66ab8149c92bb8cc972a16",
+      "reserve_asset_id": null,
+      "source_node_id": "9873cb8c8d52eab554ec34ec16b70ae4749c7026af047715fe83e8a70800792d",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "ec2b28730f06b1f24236b2353398f2d2e118a67976964c98246b3c73329e3a75",
+      "reserve_asset_id": null,
+      "source_node_id": "44527f57b7192e7fac65186931e5b315a60829bff85d4b27fc07511354055882",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "ed8d4458ef2919ac86c4f673103100c916d08f445743b7cbca692cb0751c5384",
+      "reserve_asset_id": null,
+      "source_node_id": "75d0cabe1adca7402efa136b412c8241ad3ef52ade159357c7c113520661c85b",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "select_lead_and_reserve",
+      "edge_id": "ee2686aac22abf639ce6f812cdd68fc13d48c372fca958399709822f98e50119",
+      "reserve_asset_id": "A",
+      "source_node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": "B",
+      "target_node_id": "c86611dd84c5fa34fd7eb50be04bb1e47501db049ba2065752432b1c2eafac5e",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "eed54743833117f0e6b658281a4dd2b004e44d956217c30244cf1cad651f8211",
+      "reserve_asset_id": null,
+      "source_node_id": "a84b68066fc9a1f1030a5585ae5aa326e22064ad7b56e5ae7c35e32c8c8e4aee",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "ef039c4d3467c7fa41574bd74a55335d95402a746262e2dbe034cc83e5985dfa",
+      "reserve_asset_id": null,
+      "source_node_id": "7fa61805b1bb354c5a4277e2b06fd0632a33df4caa5fd401a5230504561dde4e",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "a0cf91c393f2c4d7239edf1024eef4be8b7e645b7afedd1e2374be94feaf32e4",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_failure",
+      "edge_id": "f04c24ee0cd7a9f0ff4789e8d6acb0e916ba9afe54267faef880d2f032b62d30",
+      "reserve_asset_id": null,
+      "source_node_id": "9873cb8c8d52eab554ec34ec16b70ae4749c7026af047715fe83e8a70800792d",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "failure"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "f221b6f814218a0ee7f6821374270aeeecd4c992b0add500e468e499b80f216d",
+      "reserve_asset_id": null,
+      "source_node_id": "33807183a6430a8f61a5c5b98792ffb4c23491b2291ec58cb8e921a90c60b9d5",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "declare_success",
+      "edge_id": "f29db41646476bb7f61aa66dfb2c321b8ea9c74f64090c69f7cdd020c4979a61",
+      "reserve_asset_id": null,
+      "source_node_id": "297338c010c126354b4ca3f68a206f435dfd6c60b4f595bdb388e55da54cc129",
+      "stream_id": "single_asset_development",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "success"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "f5bec315ff3c6496964fe13e04745fabd01d027c8c60f8057f7d00bc616cad2b",
+      "reserve_asset_id": null,
+      "source_node_id": "b100e402d1ed0a66a92df360032303a6534ff7d657b9861d723729d767cb0945",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "4cd2b573d2d19dc0f777ba36321a09df6b91b9ad153aae1822ed5ab6d86fbff1",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "promote_reserve_to_proof_of_concept",
+      "edge_id": "f75ef996bc5f651beb1805edbed18a005c7fb394c7f1566b07039a24d8392b1d",
+      "reserve_asset_id": null,
+      "source_node_id": "41936ecaf18036a9d9a2112b650a96d013c812445b43239fc67702ce6c9b2821",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "9ef121d744b623d9912da2e7a5b1e15cd1a15bcd112b351f64901fe7d247d5c9",
+      "terminal_disposition": "active"
+    },
+    {
+      "action_id": "declare_inconclusive",
+      "edge_id": "f8d3467d1f8ba2361828fab3cd7426007b6fc438f74c290bbdb4f82f5e2facf2",
+      "reserve_asset_id": null,
+      "source_node_id": "4cd2b573d2d19dc0f777ba36321a09df6b91b9ad153aae1822ed5ab6d86fbff1",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "inconclusive"
+    },
+    {
+      "action_id": "terminate_portfolio",
+      "edge_id": "fa026af7f656974929be6de7c8936a1e2477bdbd7711e888ae9ed46c59a99ecb",
+      "reserve_asset_id": null,
+      "source_node_id": "961adda61ee55f081d620706edff6656f6b06baa20ee843c077656bc016cc178",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": null,
+      "terminal_disposition": "stopped"
+    },
+    {
+      "action_id": "advance_active_to_confirmation",
+      "edge_id": "fc3e3bed7aa1d2908c2fdef6339f24656e66f9550aa1aea492185d112b84e195",
+      "reserve_asset_id": null,
+      "source_node_id": "6e9f74c0ce47f8069ef29faf6531effc1341520f652bb9b1a43695961d9dde09",
+      "stream_id": "bounded_portfolio_reallocation",
+      "target_asset_id": null,
+      "target_node_id": "5899fb35a56ba2be2076425c2ebde2c3468ed7bcf2866d3226577fe9dc51128b",
+      "terminal_disposition": "active"
+    }
+  ],
+  "nodes": [
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "B",
+      "node_id": "03b236f43eac340ffabbb085d7d9e0bfd7657ef1cee63e3ec8fd0a2b45a2c290",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "C",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "C",
+      "node_id": "0ea6accb625814132ca9db2437c7cc7b5ac72f45399f667d4a6273a93eff684f",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 10,
+      "retired_asset_ids": [
+        "B",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "A",
+      "node_id": "0f1c2defe01090722a7433828c1c42ac1aaf76b2fc0dab87bb10ecbd5dd8b3dc",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 6,
+      "retired_asset_ids": [
+        "B",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "lead_proof_of_concept_review",
+      "lead_asset_id": "C",
+      "node_id": "10b37d6ac223e526e7c7c6fc7233d9d191b93d91c8a633cfe0e85b1f5419bec9",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "joint_early_study_review",
+      "lead_asset_id": "A",
+      "node_id": "23a86073fb0e8a5e6ab9d525203beef2798305c340f465b12ae2c6001bca42a5",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 2,
+      "retired_asset_ids": [
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "C",
+      "node_id": "25dda7af3db2c924702401e1819b8641f4be030e2b1bddf117b2221dbc541b2c",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 6,
+      "retired_asset_ids": [
+        "B",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": null,
+      "node_id": "297338c010c126354b4ca3f68a206f435dfd6c60b4f595bdb388e55da54cc129",
+      "nominated_asset_id": "A",
+      "reserve_asset_id": null,
+      "resource_budget_units": null,
+      "resource_spent_units": 0,
+      "retired_asset_ids": [],
+      "stream_id": "single_asset_development",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "B",
+      "node_id": "2b141b0fb7c144a1c940c64e80a9952cb422447cbfa700a2156c1740a92bb5ca",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "C",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "A",
+      "node_id": "33807183a6430a8f61a5c5b98792ffb4c23491b2291ec58cb8e921a90c60b9d5",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "C",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A"
+      ],
+      "checkpoint_id": "early_safety_study",
+      "lead_asset_id": null,
+      "node_id": "34cb899d5a6b7028854d78d7893caf9316dadca006c77b9bf05e08d192a1107d",
+      "nominated_asset_id": "A",
+      "reserve_asset_id": null,
+      "resource_budget_units": null,
+      "resource_spent_units": 0,
+      "retired_asset_ids": [],
+      "stream_id": "single_asset_development",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "B",
+      "node_id": "36a0cb380f1013c560e5067c5d91932bdc69117a4eed809aab35a3b3d816603d",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 10,
+      "retired_asset_ids": [
+        "A",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "A",
+      "node_id": "402bd2471b43d73edeb3649dffe9a39988b9a3534fe6f12241befe9bf5afa900",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "C",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "lead_proof_of_concept_review",
+      "lead_asset_id": "B",
+      "node_id": "41936ecaf18036a9d9a2112b650a96d013c812445b43239fc67702ce6c9b2821",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "B",
+      "node_id": "44527f57b7192e7fac65186931e5b315a60829bff85d4b27fc07511354055882",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 6,
+      "retired_asset_ids": [
+        "A",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "C",
+      "node_id": "448012bc74f7501ab3477db432cf2d8f35e1b592da1ad0a564dbadb16758158a",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "A",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "C",
+      "node_id": "4cd2b573d2d19dc0f777ba36321a09df6b91b9ad153aae1822ed5ab6d86fbff1",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "B",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "A",
+      "node_id": "5899fb35a56ba2be2076425c2ebde2c3468ed7bcf2866d3226577fe9dc51128b",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 10,
+      "retired_asset_ids": [
+        "C",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "joint_early_study_review",
+      "lead_asset_id": "B",
+      "node_id": "58df2a90ff4a93f81847370cb468753cb0a18fdb2d9a409824ca17eb01dea36a",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 2,
+      "retired_asset_ids": [
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "lead_proof_of_concept_review",
+      "lead_asset_id": "A",
+      "node_id": "5d088ee515f58d2720723d75cb645f6fcde5a3dfffbc6f9f667c0e2eaaf9fd6e",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "B",
+      "node_id": "679707ae4f4a8ef2d8f50f8db55df0d637e995bf7434c4cdbe080c2fd5120e62",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 10,
+      "retired_asset_ids": [
+        "C",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "A",
+      "node_id": "6e9f74c0ce47f8069ef29faf6531effc1341520f652bb9b1a43695961d9dde09",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 6,
+      "retired_asset_ids": [
+        "C",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "A",
+      "node_id": "73e4fbd9d41cd20c814e11e3a6a1dd258a2f6e06cd370510df644f4ec4e42957",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "C",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "lead_proof_of_concept_review",
+      "lead_asset_id": "A",
+      "node_id": "75d0cabe1adca7402efa136b412c8241ad3ef52ade159357c7c113520661c85b",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "joint_early_study_review",
+      "lead_asset_id": "C",
+      "node_id": "7c4c86ba4ea42fe1d6c3c76024838c743be0c2376a49f87149874426ed81d0a5",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 2,
+      "retired_asset_ids": [
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "joint_early_study_review",
+      "lead_asset_id": "C",
+      "node_id": "7dee40c8500014e1ea20e2d7051915e675f98686d3134b942d74486fd399d392",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 2,
+      "retired_asset_ids": [
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "lead_proof_of_concept_review",
+      "lead_asset_id": "C",
+      "node_id": "7fa61805b1bb354c5a4277e2b06fd0632a33df4caa5fd401a5230504561dde4e",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "B",
+      "node_id": "961adda61ee55f081d620706edff6656f6b06baa20ee843c077656bc016cc178",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "C",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "C",
+      "node_id": "9873cb8c8d52eab554ec34ec16b70ae4749c7026af047715fe83e8a70800792d",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "A",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "A",
+      "node_id": "9dd8d5dfe3c08d0a279784987b8de7deb3a964679cfc2512bf56bcc19d403efe",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 10,
+      "retired_asset_ids": [
+        "B",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "B",
+      "node_id": "9ef121d744b623d9912da2e7a5b1e15cd1a15bcd112b351f64901fe7d247d5c9",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 6,
+      "retired_asset_ids": [
+        "C",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "C",
+      "node_id": "a0cf91c393f2c4d7239edf1024eef4be8b7e645b7afedd1e2374be94feaf32e4",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "B",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "C",
+      "node_id": "a6778841ea9d2c23af4cabd552994db60501fc90d430001253194e8fea77fd46",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 10,
+      "retired_asset_ids": [
+        "A",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "C",
+      "node_id": "a6f442b385b8098d9b7602083cdba19139f5eba494eaeccbb0d317de0d33b9b7",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "A",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "A",
+      "node_id": "a84b68066fc9a1f1030a5585ae5aa326e22064ad7b56e5ae7c35e32c8c8e4aee",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "B",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "joint_early_study_review",
+      "lead_asset_id": "A",
+      "node_id": "a8fadb48c06f280491e4d4a83cd3afcdaf2fec144f41be0f02c23754759248dd",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 2,
+      "retired_asset_ids": [
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "B",
+      "node_id": "aa33c949ea37b9f91eb431470bfd12e6457c8e83f643dc73955da19569dab189",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "A",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A"
+      ],
+      "checkpoint_id": "proof_of_concept",
+      "lead_asset_id": null,
+      "node_id": "ab6d017528d4690b1a11a4f441c80b6e6b27384217d0817b6ca51e87869ce378",
+      "nominated_asset_id": "A",
+      "reserve_asset_id": null,
+      "resource_budget_units": null,
+      "resource_spent_units": 0,
+      "retired_asset_ids": [],
+      "stream_id": "single_asset_development",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "C",
+      "node_id": "b100e402d1ed0a66a92df360032303a6534ff7d657b9861d723729d767cb0945",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "B",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "lead_proof_of_concept_review",
+      "lead_asset_id": "B",
+      "node_id": "b4cf6b996016e4ec8c20a755c4311f98dec7f3ad55140e07813573b9e84d6629",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": null,
+      "candidate_asset_ids": [
+        "A"
+      ],
+      "checkpoint_id": "observational_review",
+      "lead_asset_id": null,
+      "node_id": "c8531a7e9ffdb633052691ec547093766fb760efaef4469b820a9248f5a346b2",
+      "nominated_asset_id": null,
+      "reserve_asset_id": null,
+      "resource_budget_units": null,
+      "resource_spent_units": 0,
+      "retired_asset_ids": [],
+      "stream_id": "single_asset_development",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "joint_early_study_review",
+      "lead_asset_id": "B",
+      "node_id": "c86611dd84c5fa34fd7eb50be04bb1e47501db049ba2065752432b1c2eafac5e",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "A",
+      "resource_budget_units": 10,
+      "resource_spent_units": 2,
+      "retired_asset_ids": [
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "A",
+      "node_id": "cd9cea1626a4497a323784093ce423bb13e0341f9b8dc944b2c86671dd320a7b",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "B",
+        "A"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "A",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "A",
+      "node_id": "cfb38487dd5320a958cd8c6813e741b6e7fc5616a41270a44fbea107c7575dd9",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "B",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    },
+    {
+      "active_asset_id": "B",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "C",
+      "node_id": "d5d699a2020b7252892f3f50776dbac29a316ae5b07dc87b3e0c879eca607ce5",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "B",
+      "resource_budget_units": 10,
+      "resource_spent_units": 6,
+      "retired_asset_ids": [
+        "A",
+        "C"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "confirmation",
+      "lead_asset_id": "B",
+      "node_id": "dfadc80028ece0b1f66ea5fd7ca19504c6fdc5b6a4b1311ac737c24be3f02441",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 8,
+      "retired_asset_ids": [
+        "A",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": "C",
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "promoted_reserve_proof_of_concept_review",
+      "lead_asset_id": "B",
+      "node_id": "f062c1176d1b61e672dbf9546c090b6af9bd4d6f73fcb04fb7dc3ce2bb0641cd",
+      "nominated_asset_id": null,
+      "reserve_asset_id": "C",
+      "resource_budget_units": 10,
+      "resource_spent_units": 4,
+      "retired_asset_ids": [
+        "A",
+        "B"
+      ],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 1
+    },
+    {
+      "active_asset_id": null,
+      "candidate_asset_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "checkpoint_id": "observational_review",
+      "lead_asset_id": null,
+      "node_id": "f23b19f8e691dca4615f959aa63cf4181cd7ddb06c2025d79746e9cf51ff3409",
+      "nominated_asset_id": null,
+      "reserve_asset_id": null,
+      "resource_budget_units": 10,
+      "resource_spent_units": 0,
+      "retired_asset_ids": [],
+      "stream_id": "bounded_portfolio_reallocation",
+      "switch_count": 0
+    }
+  ],
+  "schema_id": "trialagentbench.trialdev_state_action_graph/v1",
+  "source_identity": "661efc9100dd684f893c54aa1d648ddb81f1e06d1367113a80e496396ad5fbc3"
+}

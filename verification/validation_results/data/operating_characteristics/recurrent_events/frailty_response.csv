@@ -1,0 +1,2 @@
+family,route,parameter,anchors,points_per_anchor,slope_mean,slope_ci_low,slope_ci_high,expected_slope
+recurrent_adverse_event,nb2_profile_likelihood,gamma_frailty_variance,15,4,0.9637472558345245,0.9469562765951363,0.9805382350739127,1.0

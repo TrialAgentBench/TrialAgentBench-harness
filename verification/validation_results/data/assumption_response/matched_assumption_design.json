@@ -1,0 +1,759 @@
+{
+  "schema_id": "trialagentbench.matched_assumption_design/v1",
+  "release_id": "matched-assumption-response-20260801",
+  "analysis_count": 88,
+  "identities": [
+    {
+      "series_id": "TE-S01",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASKACEB2207E9C1A421B25ABFE80B79C732",
+        "A2": "TASK21EB4675FABF5BB132192EF572F8DC6C",
+        "A3": "TASKC7F1E36B80FCB241205ABFE3D0F120FB"
+      },
+      "random_stream_id": "te-s01-world-0001",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:coxph_binary_breslow_risk_tau",
+      "participant_count": 3400,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "93f4c969aba9a8d27d5af00375f8271aebac222b1d7d8c71b8bea2b83b5d1f31"
+    },
+    {
+      "series_id": "TE-S01",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASKFAB816A63B3FC8C04494D33F0BE20B00",
+        "A2": "TASK20721C7612F9036C680049419BD01AB2",
+        "A3": "TASK5ADB5FCE68420F68F9CABF27F2F290FA"
+      },
+      "random_stream_id": "te-s01-world-0002",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:coxph_binary_breslow_risk_tau",
+      "participant_count": 3400,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "d006e74ffa5e245d1e79753d6f09aa654ddc47dcc48a603f807bd5fb82f28d1a"
+    },
+    {
+      "series_id": "TE-S01",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK8F90A5630F6DA144C8B9633B36A40AAA",
+        "A2": "TASK041C548AB8CB429B80E627C9CFA8644C",
+        "A3": "TASK82D7D7745F2520B1318985632315D639"
+      },
+      "random_stream_id": "te-s01-world-0003",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:coxph_binary_breslow_risk_tau",
+      "participant_count": 3400,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "40ec06c8c260becb16dd46d4ac0b644d85263cc35b5b457bc2b0416040994946"
+    },
+    {
+      "series_id": "TE-S01",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASKA06D7C05F4B7885733E3E8A86D4B66F0",
+        "A2": "TASK94F5584BA73D054E3BC79208767FA8EF",
+        "A3": "TASK50F035507E9D32F84061E5819DECD2F5"
+      },
+      "random_stream_id": "te-s01-world-0004",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:coxph_binary_breslow_risk_tau",
+      "participant_count": 3400,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "9a93202ae5c5a766bb15a4fb07748b5b6ee9c15a103ac976750f2a6e090f23d5"
+    },
+    {
+      "series_id": "TE-S02",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK7011B3F0C10E9D6AC2A06540EC6C3D7D",
+        "A2": "TASK0393A005A219D6C3A9A0E1B58B34B59F",
+        "A3": "TASKE8C3555923CD7E35E96BE85C2CB70E4B"
+      },
+      "random_stream_id": "te-s02-world-0001",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "rmst_difference_tau",
+      "default_method": "observed:km_rmst_tau",
+      "participant_count": 3200,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "7cbfb8a242d06948fbe4ace3933c87b1e60be3e44bb8af8aba88672bb94a9ecc"
+    },
+    {
+      "series_id": "TE-S02",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK4078167AF8996710752E840A3591BE92",
+        "A2": "TASKC5C043378FB017B0BF060C25DD579171",
+        "A3": "TASKFD3C2A85111CC55EF391F844110364EE"
+      },
+      "random_stream_id": "te-s02-world-0002",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "rmst_difference_tau",
+      "default_method": "observed:km_rmst_tau",
+      "participant_count": 3200,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "1edc5c6732b98345c95a03fbaea1c517ab89e3c460674794f5d20a167f801cd9"
+    },
+    {
+      "series_id": "TE-S02",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASKBB8EE237B40039068F13E501AA67C9A0",
+        "A2": "TASK67FC589F45459D00EA18F7F25125927E",
+        "A3": "TASKB12D79E0391360E5457FC7EA3834BC5C"
+      },
+      "random_stream_id": "te-s02-world-0003",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "rmst_difference_tau",
+      "default_method": "observed:km_rmst_tau",
+      "participant_count": 3200,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "830fdb2cacebe509b87118bff93e24ae3add6760a5a75cb8590a57894951e5df"
+    },
+    {
+      "series_id": "TE-S02",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASKBA5DB703246F227CCE562A0C650BCB35",
+        "A2": "TASKC007D3C7A1ECAC35D5BC4596B08266C3",
+        "A3": "TASK020C0B0BD3EE9B32DB9889C768AF4143"
+      },
+      "random_stream_id": "te-s02-world-0004",
+      "design_profile_id": "TE-DP01",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "rmst_difference_tau",
+      "default_method": "observed:km_rmst_tau",
+      "participant_count": 3200,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "845496e7a416510d0026caa7d4848df78c7548182b3936b2a18bf2695a6ff34f"
+    },
+    {
+      "series_id": "TE-S03",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASK953A9E4FC65FDD0F9D01697D73A71A9F",
+        "A2": "TASK525D036DD92AC3A34161048DDDED5E3A"
+      },
+      "random_stream_id": "te-s03-world-0001",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 8000,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "bc713fe8a6471cce56ab774ee8c87866973d854e0ed328cdf851bbfdd10cae6b"
+    },
+    {
+      "series_id": "TE-S03",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASKC0BE6062B276E0CB3DB03C32BC2BA8F5",
+        "A2": "TASK2DC99C4AC013171D161D1FBBDB5F6917"
+      },
+      "random_stream_id": "te-s03-world-0002",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 8000,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "aa677644b59210d75d88742393b11b06a877a51dbd87f751987cd4e3c3709816"
+    },
+    {
+      "series_id": "TE-S03",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASK00834B8DFB180B621230A36EECE60DD7",
+        "A2": "TASK9BE9C8EF87093A0CF1505BFFCDCF5F81"
+      },
+      "random_stream_id": "te-s03-world-0003",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 8000,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "668e45198e0dac444aa8f0e8539953ccaf3dfcfa535ac9f568c3793b860fbf50"
+    },
+    {
+      "series_id": "TE-S03",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASK1987BCFC3D643F9E36869B164320AB58",
+        "A2": "TASKCC006D947F3B56EC43A91B75B584207B"
+      },
+      "random_stream_id": "te-s03-world-0004",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 8000,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "a81af355d323722bb2fb91bb6827ff7829f71bfea7c9a732c651e9a5a905da73"
+    },
+    {
+      "series_id": "TE-S04",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK8B070B9AE84460103F8E8E37D09D4C92",
+        "A2": "TASKA8B915402E4487F4590A23C07F8BED71",
+        "A3": "TASKA6CE74EC982B9B20E660F88B190D06EB"
+      },
+      "random_stream_id": "te-s04-world-0001",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 6500,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "84b2d3f601e2171a198cf2f96ba3f2481d95f2fbd7de61c343785c9803ca4cf1"
+    },
+    {
+      "series_id": "TE-S04",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK651B70E134B0276C94C61434AE3B3B48",
+        "A2": "TASK68F6129F7BC881C3DBB806AA204F3DF2",
+        "A3": "TASK3F88BE834E1F5188958F16C08A949C9D"
+      },
+      "random_stream_id": "te-s04-world-0002",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 6500,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "f85f0956d1d58b5f597de0bda40c63de82a2d1c7abedb5478aa3371f262f3962"
+    },
+    {
+      "series_id": "TE-S04",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK2D5CEE56D1CD1448A71941B76F6D0752",
+        "A2": "TASK39DCEC65A26E5E2405341863EB669831",
+        "A3": "TASK28B866FADD7FEC7FF541EFC675D6F97A"
+      },
+      "random_stream_id": "te-s04-world-0003",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 6500,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "eda46a5b0c07ab5b2713382990218bd6ad2fe1a6bc14226ef345f0a63d273099"
+    },
+    {
+      "series_id": "TE-S04",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK901CD5C05E7ADA2D40B664DF48331097",
+        "A2": "TASK13BACEB080362CB89594C6B1FF774FBB",
+        "A3": "TASK248C6CAE6044E0F2271BA67BB54F4CD3"
+      },
+      "random_stream_id": "te-s04-world-0004",
+      "design_profile_id": "TE-DP02",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "itt_treatment_policy",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 6500,
+      "follow_up_horizon_days": 336.0,
+      "identity_sha256": "5ea97301dc5ba15402db2d2b3d288b7b97d20155b746fb3688f58df7d9fd4939"
+    },
+    {
+      "series_id": "TE-S05",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK986B8BD6CAA9CA471C110CCFAAD6A055",
+        "A2": "TASKBDFB72E2592C26AC21DD7FABE01C61FA",
+        "A3": "TASKE7874EF779F55CA733207A6D23F0D1E1"
+      },
+      "random_stream_id": "te-s05-world-0001",
+      "design_profile_id": "TE-DP03",
+      "population": "The pooled empirical covariate distribution of all randomized participants, represented by data/reference_population_covariates.parquet",
+      "endpoint_id": "e1",
+      "estimand_id": "primary_itt",
+      "effect_scale": "standardized_risk_difference_tau_reference",
+      "default_method": "observed:cox_linear_standardized_risk_tau_reference",
+      "participant_count": 5200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "5c47fb85cc36a7c18609b9a3aacdce147190f5aca1be26a7d0bb5962c4145e0e"
+    },
+    {
+      "series_id": "TE-S05",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK78DA7303CACDA47CBDA93C7EF881A03D",
+        "A2": "TASKB853A4C84980AC851E3A3BDB0015C3FA",
+        "A3": "TASK3CCB9DC39517C0BE4C8C481B11B50484"
+      },
+      "random_stream_id": "te-s05-world-0002",
+      "design_profile_id": "TE-DP03",
+      "population": "The pooled empirical covariate distribution of all randomized participants, represented by data/reference_population_covariates.parquet",
+      "endpoint_id": "e1",
+      "estimand_id": "primary_itt",
+      "effect_scale": "standardized_risk_difference_tau_reference",
+      "default_method": "observed:cox_linear_standardized_risk_tau_reference",
+      "participant_count": 5200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "b19a8785dea9aaa5b085837f2df80722fc6b5be3468fa70951e8baa68a559f77"
+    },
+    {
+      "series_id": "TE-S05",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK92724633E57B364B7D75390D2CAF7E6F",
+        "A2": "TASK5646A209F1AEBD08099FD96D665F0D2C",
+        "A3": "TASKF188BE7E46CC1F2251B7673837CFB29D"
+      },
+      "random_stream_id": "te-s05-world-0003",
+      "design_profile_id": "TE-DP03",
+      "population": "The pooled empirical covariate distribution of all randomized participants, represented by data/reference_population_covariates.parquet",
+      "endpoint_id": "e1",
+      "estimand_id": "primary_itt",
+      "effect_scale": "standardized_risk_difference_tau_reference",
+      "default_method": "observed:cox_linear_standardized_risk_tau_reference",
+      "participant_count": 5200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "d5d5ab41ef6eacb476f0180ea11b8c0029e348ce9d6bac458b1c24058b25f400"
+    },
+    {
+      "series_id": "TE-S05",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK24736C764CDBD097283047CA763664D6",
+        "A2": "TASK9B9B31303EB74A3A415CE772A627A574",
+        "A3": "TASKA4A282C702AD828D818DB8C89A78042A"
+      },
+      "random_stream_id": "te-s05-world-0004",
+      "design_profile_id": "TE-DP03",
+      "population": "The pooled empirical covariate distribution of all randomized participants, represented by data/reference_population_covariates.parquet",
+      "endpoint_id": "e1",
+      "estimand_id": "primary_itt",
+      "effect_scale": "standardized_risk_difference_tau_reference",
+      "default_method": "observed:cox_linear_standardized_risk_tau_reference",
+      "participant_count": 5200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "792798aab8e3d9952666069b7784e91a829a8ba15727ccc90f7af6a6985d7789"
+    },
+    {
+      "series_id": "TE-S06",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK9F27135042DFE91E6CCCC9BB5F08FB64",
+        "A2": "TASK80A933CA571777C5C50029EC005E280F",
+        "A3": "TASK36D10305640903DAE6667A9561CAF648"
+      },
+      "random_stream_id": "te-s06-world-0001",
+      "design_profile_id": "TE-DP04",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 4000,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "d5e05c6fcc57cf28fc16d7eeba89e2414d71817ed70f436c42a28f58db59f48e"
+    },
+    {
+      "series_id": "TE-S06",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK4A6C52546C5DFE20AFDD7BDC7092BC5B",
+        "A2": "TASK09DE5DBC3022A749FA426D8B9F510CBD",
+        "A3": "TASKECF66AC7884A56736EA67CC271C29C90"
+      },
+      "random_stream_id": "te-s06-world-0002",
+      "design_profile_id": "TE-DP04",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 4000,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "cfc1ec56ba9518aa022f0e80598674a356a3caec305ca7c092b741302f8c657b"
+    },
+    {
+      "series_id": "TE-S06",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK07573281D8BC14A252EF79FBE79BAF2B",
+        "A2": "TASK875C074DC7DBA30916A54A88BA79EC7E",
+        "A3": "TASK1A36F63AC60A8B8E2F24C53285EA2D3C"
+      },
+      "random_stream_id": "te-s06-world-0003",
+      "design_profile_id": "TE-DP04",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 4000,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "ad60dcf70446ed88c61af558932e08027557fe206d2a38bb5d79ef03369c935f"
+    },
+    {
+      "series_id": "TE-S06",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK8390A18B566E8AEC956BF47037A9E49D",
+        "A2": "TASK440D5315CD13BF763B418266C38FC25F",
+        "A3": "TASKDC1BF80551FFE40A6868D374768B8ED6"
+      },
+      "random_stream_id": "te-s06-world-0004",
+      "design_profile_id": "TE-DP04",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 4000,
+      "follow_up_horizon_days": 252.0,
+      "identity_sha256": "624454077939006646cb4a272d36a3fb0e2d629ed3fa21d2a66674f93c49a841"
+    },
+    {
+      "series_id": "TE-S07",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASKEB7890FA28579961DED053D32FA1E16F",
+        "A2": "TASK1AF7AF77276BF0F57B85FE4224256342",
+        "A3": "TASKCCB3BF7443B60A8BAC742D6660B913EE"
+      },
+      "random_stream_id": "te-s07-world-0001",
+      "design_profile_id": "TE-DP05",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:cluster_parallel_participant_weighted_km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "3e0406862d96c7bd9da79aa7c0668a615565e2d7a16c6fa8cd70bc179549e8cd"
+    },
+    {
+      "series_id": "TE-S07",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK17825A21F0BD029258D843944BD12520",
+        "A2": "TASK2DDA3F838DB319ABD7F82646CF50082F",
+        "A3": "TASKF62CFE56B89D3C5C9A3E67C5CE0E1575"
+      },
+      "random_stream_id": "te-s07-world-0002",
+      "design_profile_id": "TE-DP05",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:cluster_parallel_participant_weighted_km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "52eef18421726981804389c6660ee1683b4217a3a12c83b4920a7babda8513f7"
+    },
+    {
+      "series_id": "TE-S07",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASK1599B702FF781ECFE9395D6225BBD61B",
+        "A2": "TASK8E0105C6A8220E7E811F9205D935D249",
+        "A3": "TASKF0277A6CFE41494266EE5D53DAA28B22"
+      },
+      "random_stream_id": "te-s07-world-0003",
+      "design_profile_id": "TE-DP05",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:cluster_parallel_participant_weighted_km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "8b8c089649a485d571b156495d4a7df8cb08ac43011e4491466e297fbe6e26ad"
+    },
+    {
+      "series_id": "TE-S07",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "task_ids": {
+        "A1": "TASKD47689418BE0F191BB5C0D01B9889AE7",
+        "A2": "TASKF3C698C1446244588B7C3F04FB33BA64",
+        "A3": "TASK2D67E11CE7BA7A71C35DCF046DC01AE3"
+      },
+      "random_stream_id": "te-s07-world-0004",
+      "design_profile_id": "TE-DP05",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:cluster_parallel_participant_weighted_km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "4b1f27001279b8f82733e39dad977ddee25a8ed1b112a174f21f03642e172fe6"
+    },
+    {
+      "series_id": "TE-S08",
+      "replicate_index": 1,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASK8301AE26435413EBC89B489043FDF072",
+        "A2": "TASK46F876812AB85A8A6BC177AC3B65E87F"
+      },
+      "random_stream_id": "te-s08-world-0001",
+      "design_profile_id": "TE-DP06",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "1887c6ca3d4ff1a64692044f21366356376b1c2f3970b72e7d9c92407ba6004d"
+    },
+    {
+      "series_id": "TE-S08",
+      "replicate_index": 2,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASKF39F077302A57E9C8D7DD718EA05DC22",
+        "A2": "TASK3168FC55F2CB97E3D908F77366560478"
+      },
+      "random_stream_id": "te-s08-world-0002",
+      "design_profile_id": "TE-DP06",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "870a9907a1aaa05393c6e627d03356987b0aec026b113c60c867f2357df21a1d"
+    },
+    {
+      "series_id": "TE-S08",
+      "replicate_index": 3,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASK61050050A562D6B589751E74274E5ADF",
+        "A2": "TASK93D966A8B72DEC37A060C69EDABC5886"
+      },
+      "random_stream_id": "te-s08-world-0003",
+      "design_profile_id": "TE-DP06",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "170adf940fad4c5ed3e997eacab2e173184e79a9c5692d184412baf73def8b39"
+    },
+    {
+      "series_id": "TE-S08",
+      "replicate_index": 4,
+      "assumption_tiers": [
+        "A1",
+        "A2"
+      ],
+      "task_ids": {
+        "A1": "TASK0E51CAE723A787CE7FFF8434F88D94E9",
+        "A2": "TASK796994C121407094F031F1071D1228D1"
+      },
+      "random_stream_id": "te-s08-world-0004",
+      "design_profile_id": "TE-DP06",
+      "population": "ITT",
+      "endpoint_id": "death",
+      "estimand_id": "primary_itt",
+      "effect_scale": "risk_difference_tau",
+      "default_method": "observed:km",
+      "participant_count": 7200,
+      "follow_up_horizon_days": 308.0,
+      "identity_sha256": "27e7736d6e9de72c7a9bc28b65770971555b43ffae98efa7319d94dd87930b90"
+    }
+  ]
+}

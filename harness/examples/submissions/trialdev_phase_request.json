@@ -1,0 +1,18 @@
+{
+    "candidate_drug_ids": ["candidate_a"],
+    "target_sample_size": 400,
+    "endpoint_id": "primary_efficacy",
+    "follow_up_days": 365,
+    "enrollment_window_days": 180,
+    "site_count_budget": 20,
+    "allocation_ratio": "1:1",
+    "design_cell_id": "phase2_fixed_final",
+    "treatment_discontinuation_strategy": "treatment_policy",
+    "interim_policy": "fixed_final",
+    "site_strategy": "region_balanced",
+    "selection_objective": "benefit_risk",
+    "analysis_covariates": ["AGE"],
+    "stratification_variables": [],
+    "subgroup_variables": [],
+    "request_rationale": "The design targets the released efficacy and safety operating characteristics."
+}

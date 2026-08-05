@@ -1,0 +1,17 @@
+world_id,trial_id,cell_id,world_index,reason
+conf-eb616959d10b7f7c8cb9,RCTBENCH-024,assignment_+0.0__n_1,78,statsmodels_fit
+conf-7bdb1ae923989bf9e87d,RCTBENCH-024,assignment_+2.0__n_1,2,estimator_disagreement
+conf-c0fb5487b5f8945fb833,RCTBENCH-053,assignment_+1.0__n_1,29,estimator_disagreement
+conf-f15ee09009104d812cfd,RCTBENCH-053,assignment_+2.0__n_1,29,statsmodels_fit
+conf-af2efb956be570e030a2,RCTBENCH-053,assignment_+2.0__n_1,39,estimator_disagreement
+conf-2812bc5579cfa8bfb523,RCTBENCH-055,assignment_+0.0__n_1,34,statsmodels_fit
+conf-44c59863c3525213a131,RCTBENCH-055,assignment_+1.0__n_1,17,estimator_disagreement
+conf-d43fb130b07fb2152803,RCTBENCH-055,assignment_+1.0__n_1,34,estimator_disagreement
+conf-f7c9acf9268bc15ef51a,RCTBENCH-055,assignment_+2.0__n_1,31,statsmodels_fit
+conf-b3d00f82e8194b36e9f3,RCTBENCH-055,assignment_+2.0__n_1,34,statsmodels_fit
+conf-acfd189c58cd68925563,RCTBENCH-075,assignment_+1.0__n_1,15,estimator_disagreement
+conf-4b57e6143ab9be5f5e84,RCTBENCH-075,assignment_+2.0__n_1,15,estimator_disagreement
+conf-84ef7f9a6d43a9c27d60,RCTBENCH-075,assignment_+2.0__n_1,44,estimator_disagreement
+conf-03a23efb355287e8ff2d,RCTBENCH-119,assignment_+1.0__n_1,18,statsmodels_fit
+conf-102f32e9040812c4ea95,RCTBENCH-119,assignment_+2.0__n_1,5,estimator_disagreement
+conf-12a05f52c2db162df6f0,RCTBENCH-119,assignment_+2.0__n_1,9,statsmodels_fit

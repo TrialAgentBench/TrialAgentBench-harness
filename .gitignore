@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[oc]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments and builds
+.venv/
+.smoke-venv/
+/build/
+/dist/
+/harness/build/
+/harness/dist/
+/verification/build/
+/verification/dist/
+!/harness/trialagentbench_harness/tools/build/
+!/harness/trialagentbench_harness/tools/build/*.py
+
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Root-level run outputs
+/results/
+/cache/
+/logs/
+*.log
+
+# Editor and operating-system files
+.DS_Store
+.idea/
+.vscode/

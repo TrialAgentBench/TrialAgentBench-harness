@@ -1,0 +1,8 @@
+capability_id,passed_count,evaluated_count,failed_count,rate,interpretation
+action_admissibility,8,8,0,1.0,worked_example_reconstruction
+evidence_validity,8,8,0,1.0,worked_example_reconstruction
+identification_and_uncertainty,8,8,0,1.0,worked_example_reconstruction
+policy_compatibility,8,8,0,1.0,worked_example_reconstruction
+safety,8,8,0,1.0,worked_example_reconstruction
+temporal_coherence,8,8,0,1.0,worked_example_reconstruction
+workflow_execution,8,8,0,1.0,worked_example_reconstruction

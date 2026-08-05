@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite TrialAgentBench when using the benchmark or harness."
+title: "TrialAgentBench"
+type: software
+version: 0.1.0
+authors:
+  - name: "Anonymous Authors"
+repository-code: "https://github.com/TrialAgentBench/TrialAgentBench-harness"
+url: "https://huggingface.co/datasets/TrialAgentBench/TrialAgentBench/"
+license: "CC-BY-NC-4.0"

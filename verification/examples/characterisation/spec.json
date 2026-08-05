@@ -1,0 +1,48 @@
+{
+  "schema_id": "trialagentbench.trial_characterisation_spec/v1",
+  "trial_id": "example",
+  "programme_id": "example-programme",
+  "design_profile_id": "TE-DP01",
+  "design_family": "individual_randomized",
+  "participant_id_column": "participant_id",
+  "arm_column": "arm",
+  "cluster_id_column": null,
+  "continuous_variables": [
+    {
+      "variable_id": "age",
+      "column": "age",
+      "unit": "years",
+      "missingness": "complete_case"
+    },
+    {
+      "variable_id": "bmi",
+      "column": "bmi",
+      "unit": "kg/m2",
+      "missingness": "complete_case"
+    }
+  ],
+  "categorical_variables": [],
+  "dependence": [
+    {
+      "dependence_id": "age_bmi",
+      "left_column": "age",
+      "right_column": "bmi",
+      "missingness": "complete_case"
+    }
+  ],
+  "outcomes": [
+    {
+      "kind": "binary",
+      "outcome_id": "response",
+      "table": "participants",
+      "participant_id_column": "participant_id",
+      "value_column": "response",
+      "event_value": 1,
+      "unit": "proportion",
+      "missingness": "complete_case"
+    }
+  ],
+  "confidence_level": 0.95,
+  "bootstrap_replicates": 500,
+  "seed": 20260801
+}

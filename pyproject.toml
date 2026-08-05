@@ -1,0 +1,26 @@
+[project]
+name = "trialagentbench-workspace"
+version = "0.1.0"
+description = "TrialAgentBench harness and independent verification workspace"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "lifelines>=0.30,<1",
+    "matplotlib==3.10.8",
+    "numpy>=2.0,<2.4",
+    "openpyxl>=3.1,<4",
+    "pandas>=2.2,<3",
+    "pyarrow>=18,<24",
+    "pydantic>=2.12,<3",
+    "scipy>=1.14,<2",
+    "statsmodels>=0.14,<0.15",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["harness", "verification"]
+
+[tool.uv.sources]
+trial-agent-bench = { workspace = true }
+trialagentbench-validation = { workspace = true }

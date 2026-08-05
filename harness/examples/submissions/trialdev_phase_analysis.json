@@ -1,0 +1,26 @@
+{
+  "selected_winner_drug_id": "candidate_a",
+  "ranked_drug_ids": [
+    "candidate_a"
+  ],
+  "primary_effect": {
+    "evidence_id": "primary_effect",
+    "candidate_drug_id": "candidate_a",
+    "endpoint_id": "primary_efficacy",
+    "estimand_id": "treatment_policy_time_to_event",
+    "estimator_id": "rmst_difference",
+    "effect_scale_id": "days",
+    "orientation_id": "positive_values_favour_treatment",
+    "estimate": 14.0,
+    "lower": 3.0,
+    "upper": 25.0,
+    "confidence_level": 0.95,
+    "horizon_days": 365,
+    "analysis_population": "all_randomized_participants",
+    "diagnostic_evidence_ids": []
+  },
+  "claimed_subgroup_variables": [],
+  "diagnostic_artifacts": [],
+  "evidence_summary": "The primary effect estimate and interval were computed from the released endpoint table.",
+  "analysis_rationale": "The submitted estimator targets the declared treatment-policy estimand."
+}

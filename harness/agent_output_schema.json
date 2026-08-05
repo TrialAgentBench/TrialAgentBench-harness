@@ -1,0 +1,2527 @@
+{
+  "schema_id": "trialagentbench.public_submission_schemas/v1",
+  "trialdev_observational_review": {
+    "$defs": {
+      "TrialDevelopmentAnalysisDiagnosticV1": {
+        "additionalProperties": false,
+        "description": "One quantitative diagnostic reported for a phase analysis.",
+        "properties": {
+          "artifact_id": {
+            "minLength": 1,
+            "title": "Artifact Id",
+            "type": "string"
+          },
+          "endpoint_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Endpoint Id"
+          },
+          "metric_family": {
+            "enum": [
+              "balance",
+              "positivity",
+              "temporal",
+              "sensitivity",
+              "calibration",
+              "robustness"
+            ],
+            "title": "Metric Family",
+            "type": "string"
+          },
+          "primary_value": {
+            "title": "Primary Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "metric_family",
+          "primary_value"
+        ],
+        "title": "TrialDevelopmentAnalysisDiagnosticV1",
+        "type": "object"
+      },
+      "TrialDevelopmentCandidateUtilityEstimateV1": {
+        "additionalProperties": false,
+        "description": "One observational candidate utility reconstructed from public evidence.",
+        "properties": {
+          "analysis_covariate_ids": {
+            "description": "Baseline covariates used by the estimator. An empty set identifies an unadjusted descriptive analysis; it does not support a causal ranking.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Analysis Covariate Ids",
+            "type": "array"
+          },
+          "candidate_drug_id": {
+            "minLength": 1,
+            "title": "Candidate Drug Id",
+            "type": "string"
+          },
+          "confidence_level": {
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.5,
+            "title": "Confidence Level",
+            "type": "number"
+          },
+          "diagnostic_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Diagnostic Evidence Ids",
+            "type": "array"
+          },
+          "estimate": {
+            "title": "Estimate",
+            "type": "number"
+          },
+          "estimator_id": {
+            "minLength": 1,
+            "title": "Estimator Id",
+            "type": "string"
+          },
+          "evidence_id": {
+            "minLength": 1,
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "lower": {
+            "title": "Lower",
+            "type": "number"
+          },
+          "method_route_id": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional catalog identifier for the executed observational method. The estimator, utility scale, adjustment set, and uncertainty fields are authoritative.",
+            "title": "Method Route Id"
+          },
+          "objective_id": {
+            "minLength": 1,
+            "title": "Objective Id",
+            "type": "string"
+          },
+          "upper": {
+            "title": "Upper",
+            "type": "number"
+          },
+          "utility_unit": {
+            "const": "dimensionless_declared_net_benefit",
+            "default": "dimensionless_declared_net_benefit",
+            "title": "Utility Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "candidate_drug_id",
+          "objective_id",
+          "estimator_id",
+          "estimate",
+          "lower",
+          "upper",
+          "confidence_level"
+        ],
+        "title": "TrialDevelopmentCandidateUtilityEstimateV1",
+        "type": "object"
+      },
+      "TrialDevelopmentIdentificationEvidenceV1": {
+        "additionalProperties": false,
+        "description": "One public premise supporting an observational identification decision.",
+        "properties": {
+          "evidence_id": {
+            "minLength": 1,
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "evidence_kind": {
+            "enum": [
+              "factual_provenance",
+              "empirical_diagnostic",
+              "observed_failure"
+            ],
+            "title": "Evidence Kind",
+            "type": "string"
+          },
+          "interpretation": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "premise_id": {
+            "enum": [
+              "measured_conditional_exchangeability",
+              "practical_positivity",
+              "structural_positivity",
+              "method_estimability"
+            ],
+            "title": "Premise Id",
+            "type": "string"
+          },
+          "premise_state": {
+            "enum": [
+              "satisfied",
+              "failed",
+              "unresolved"
+            ],
+            "title": "Premise State",
+            "type": "string"
+          },
+          "public_artifact_path": {
+            "pattern": "^public/[A-Za-z0-9_.\\-/]+$",
+            "title": "Public Artifact Path",
+            "type": "string"
+          },
+          "source_record_id": {
+            "description": "Exact factor_id from observational_method_catalog.assignment_prognostic_factors for factual provenance, or exact method_route_id from observational_method_catalog.methods for an empirical method-support diagnostic.",
+            "minLength": 1,
+            "title": "Source Record Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "premise_id",
+          "premise_state",
+          "evidence_kind",
+          "public_artifact_path",
+          "source_record_id",
+          "interpretation"
+        ],
+        "title": "TrialDevelopmentIdentificationEvidenceV1",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Participant evidence and action at the observational-review checkpoint.",
+    "properties": {
+      "candidate_drug_id": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Nominated candidate; required only for nominate_for_early_study.",
+        "title": "Candidate Drug Id"
+      },
+      "candidate_utility_estimates": {
+        "description": "Exactly one utility estimate per ranked candidate in the estimable branch.",
+        "items": {
+          "$ref": "#/$defs/TrialDevelopmentCandidateUtilityEstimateV1"
+        },
+        "title": "Candidate Utility Estimates",
+        "type": "array"
+      },
+      "claimed_subgroup_variables": {
+        "description": "Variables used in executed subgroup-effect analyses, not adjustment or stratification variables.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Claimed Subgroup Variables",
+        "type": "array"
+      },
+      "decision_action": {
+        "enum": [
+          "nominate_for_early_study",
+          "withhold_nomination"
+        ],
+        "title": "Decision Action",
+        "type": "string"
+      },
+      "decision_rationale": {
+        "description": "Brief justification grounded in the observational evidence.",
+        "maxLength": 4000,
+        "minLength": 1,
+        "title": "Decision Rationale",
+        "type": "string"
+      },
+      "diagnostic_artifacts": {
+        "items": {
+          "$ref": "#/$defs/TrialDevelopmentAnalysisDiagnosticV1"
+        },
+        "title": "Diagnostic Artifacts",
+        "type": "array"
+      },
+      "identification_evidence": {
+        "items": {
+          "$ref": "#/$defs/TrialDevelopmentIdentificationEvidenceV1"
+        },
+        "title": "Identification Evidence",
+        "type": "array"
+      },
+      "primary_resolution_evidence_class": {
+        "enum": [
+          "empirical_diagnosis",
+          "design_or_provenance_reasoning",
+          "evidence_insufficient"
+        ],
+        "title": "Primary Resolution Evidence Class",
+        "type": "string"
+      },
+      "ranked_drug_ids": {
+        "description": "Complete permutation of every investigational candidate in candidate_drug_catalog.json for the estimable branch; empty for qualified non-nomination.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Ranked Drug Ids",
+        "type": "array"
+      },
+      "response_branch": {
+        "enum": [
+          "estimable",
+          "qualified_non_nomination"
+        ],
+        "title": "Response Branch",
+        "type": "string"
+      },
+      "supporting_evidence_ids": {
+        "description": "Submitted analysis evidence IDs that directly support the decision.",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "title": "Supporting Evidence Ids",
+        "type": "array"
+      }
+    },
+    "required": [
+      "response_branch",
+      "primary_resolution_evidence_class",
+      "supporting_evidence_ids",
+      "decision_action",
+      "decision_rationale"
+    ],
+    "title": "TrialDevelopmentObservationalReviewSubmissionV1",
+    "type": "object"
+  },
+  "trialdev_phase_analysis": {
+    "$defs": {
+      "TrialDevelopmentAnalysisDiagnosticV1": {
+        "additionalProperties": false,
+        "description": "One quantitative diagnostic reported for a phase analysis.",
+        "properties": {
+          "artifact_id": {
+            "minLength": 1,
+            "title": "Artifact Id",
+            "type": "string"
+          },
+          "endpoint_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Endpoint Id"
+          },
+          "metric_family": {
+            "enum": [
+              "balance",
+              "positivity",
+              "temporal",
+              "sensitivity",
+              "calibration",
+              "robustness"
+            ],
+            "title": "Metric Family",
+            "type": "string"
+          },
+          "primary_value": {
+            "title": "Primary Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "metric_family",
+          "primary_value"
+        ],
+        "title": "TrialDevelopmentAnalysisDiagnosticV1",
+        "type": "object"
+      },
+      "TrialDevelopmentCandidateUtilityEstimateV1": {
+        "additionalProperties": false,
+        "description": "One observational candidate utility reconstructed from public evidence.",
+        "properties": {
+          "analysis_covariate_ids": {
+            "description": "Baseline covariates used by the estimator. An empty set identifies an unadjusted descriptive analysis; it does not support a causal ranking.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Analysis Covariate Ids",
+            "type": "array"
+          },
+          "candidate_drug_id": {
+            "minLength": 1,
+            "title": "Candidate Drug Id",
+            "type": "string"
+          },
+          "confidence_level": {
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.5,
+            "title": "Confidence Level",
+            "type": "number"
+          },
+          "diagnostic_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Diagnostic Evidence Ids",
+            "type": "array"
+          },
+          "estimate": {
+            "title": "Estimate",
+            "type": "number"
+          },
+          "estimator_id": {
+            "minLength": 1,
+            "title": "Estimator Id",
+            "type": "string"
+          },
+          "evidence_id": {
+            "minLength": 1,
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "lower": {
+            "title": "Lower",
+            "type": "number"
+          },
+          "method_route_id": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional catalog identifier for the executed observational method. The estimator, utility scale, adjustment set, and uncertainty fields are authoritative.",
+            "title": "Method Route Id"
+          },
+          "objective_id": {
+            "minLength": 1,
+            "title": "Objective Id",
+            "type": "string"
+          },
+          "upper": {
+            "title": "Upper",
+            "type": "number"
+          },
+          "utility_unit": {
+            "const": "dimensionless_declared_net_benefit",
+            "default": "dimensionless_declared_net_benefit",
+            "title": "Utility Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "candidate_drug_id",
+          "objective_id",
+          "estimator_id",
+          "estimate",
+          "lower",
+          "upper",
+          "confidence_level"
+        ],
+        "title": "TrialDevelopmentCandidateUtilityEstimateV1",
+        "type": "object"
+      },
+      "TrialDevelopmentEffectEstimateV1": {
+        "additionalProperties": false,
+        "description": "One identified treatment-effect result used as decision evidence.",
+        "properties": {
+          "analysis_population": {
+            "minLength": 1,
+            "title": "Analysis Population",
+            "type": "string"
+          },
+          "candidate_drug_id": {
+            "minLength": 1,
+            "title": "Candidate Drug Id",
+            "type": "string"
+          },
+          "confidence_level": {
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Confidence Level",
+            "type": "number"
+          },
+          "diagnostic_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Diagnostic Evidence Ids",
+            "type": "array"
+          },
+          "effect_scale_id": {
+            "minLength": 1,
+            "title": "Effect Scale Id",
+            "type": "string"
+          },
+          "endpoint_id": {
+            "minLength": 1,
+            "title": "Endpoint Id",
+            "type": "string"
+          },
+          "estimand_id": {
+            "minLength": 1,
+            "title": "Estimand Id",
+            "type": "string"
+          },
+          "estimate": {
+            "title": "Estimate",
+            "type": "number"
+          },
+          "estimator_id": {
+            "minLength": 1,
+            "title": "Estimator Id",
+            "type": "string"
+          },
+          "evidence_id": {
+            "minLength": 1,
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "horizon_days": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Horizon Days"
+          },
+          "lower": {
+            "title": "Lower",
+            "type": "number"
+          },
+          "method_route_id": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional catalog identifier for the executed phase method. The estimator, estimand, scale, horizon, and population fields are authoritative.",
+            "title": "Method Route Id"
+          },
+          "orientation_id": {
+            "minLength": 1,
+            "title": "Orientation Id",
+            "type": "string"
+          },
+          "upper": {
+            "title": "Upper",
+            "type": "number"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "candidate_drug_id",
+          "endpoint_id",
+          "estimand_id",
+          "estimator_id",
+          "effect_scale_id",
+          "orientation_id",
+          "estimate",
+          "lower",
+          "upper",
+          "confidence_level",
+          "analysis_population"
+        ],
+        "title": "TrialDevelopmentEffectEstimateV1",
+        "type": "object"
+      },
+      "TrialDevelopmentSafetyEstimateV1": {
+        "additionalProperties": false,
+        "description": "One candidate-specific quantitative safety result used as evidence.",
+        "properties": {
+          "absolute_risk_scale_id": {
+            "const": "absolute_risk",
+            "title": "Absolute Risk Scale Id",
+            "type": "string"
+          },
+          "analysis_population": {
+            "minLength": 1,
+            "title": "Analysis Population",
+            "type": "string"
+          },
+          "candidate_drug_id": {
+            "minLength": 1,
+            "title": "Candidate Drug Id",
+            "type": "string"
+          },
+          "confidence_level": {
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Confidence Level",
+            "type": "number"
+          },
+          "discontinuation_control_lower": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Discontinuation Control Lower",
+            "type": "number"
+          },
+          "discontinuation_control_rate": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Discontinuation Control Rate",
+            "type": "number"
+          },
+          "discontinuation_control_upper": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Discontinuation Control Upper",
+            "type": "number"
+          },
+          "discontinuation_excess": {
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Discontinuation Excess",
+            "type": "number"
+          },
+          "discontinuation_excess_lower": {
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Discontinuation Excess Lower",
+            "type": "number"
+          },
+          "discontinuation_excess_upper": {
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Discontinuation Excess Upper",
+            "type": "number"
+          },
+          "discontinuation_treatment_lower": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Discontinuation Treatment Lower",
+            "type": "number"
+          },
+          "discontinuation_treatment_rate": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Discontinuation Treatment Rate",
+            "type": "number"
+          },
+          "discontinuation_treatment_upper": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Discontinuation Treatment Upper",
+            "type": "number"
+          },
+          "estimand_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "title": "Estimand Ids",
+            "type": "array"
+          },
+          "estimator_id": {
+            "minLength": 1,
+            "title": "Estimator Id",
+            "type": "string"
+          },
+          "evidence_id": {
+            "minLength": 1,
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "excess_risk_scale_id": {
+            "const": "risk_difference_treatment_minus_control",
+            "title": "Excess Risk Scale Id",
+            "type": "string"
+          },
+          "horizon_days": {
+            "minimum": 1,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "method_route_id": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional catalog identifier for the executed safety method. The submitted semantic method fields are authoritative.",
+            "title": "Method Route Id"
+          },
+          "orientation_id": {
+            "const": "absolute_risk_higher_is_worse_and_risk_difference_positive_is_treatment_harm",
+            "title": "Orientation Id",
+            "type": "string"
+          },
+          "serious_ae_control_lower": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Serious Ae Control Lower",
+            "type": "number"
+          },
+          "serious_ae_control_rate": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Serious Ae Control Rate",
+            "type": "number"
+          },
+          "serious_ae_control_upper": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Serious Ae Control Upper",
+            "type": "number"
+          },
+          "serious_ae_excess": {
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Serious Ae Excess",
+            "type": "number"
+          },
+          "serious_ae_excess_lower": {
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Serious Ae Excess Lower",
+            "type": "number"
+          },
+          "serious_ae_excess_upper": {
+            "maximum": 1.0,
+            "minimum": -1.0,
+            "title": "Serious Ae Excess Upper",
+            "type": "number"
+          },
+          "serious_ae_treatment_lower": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Serious Ae Treatment Lower",
+            "type": "number"
+          },
+          "serious_ae_treatment_rate": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Serious Ae Treatment Rate",
+            "type": "number"
+          },
+          "serious_ae_treatment_upper": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Serious Ae Treatment Upper",
+            "type": "number"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "candidate_drug_id",
+          "estimator_id",
+          "estimand_ids",
+          "absolute_risk_scale_id",
+          "excess_risk_scale_id",
+          "orientation_id",
+          "horizon_days",
+          "analysis_population",
+          "serious_ae_treatment_rate",
+          "serious_ae_treatment_lower",
+          "serious_ae_treatment_upper",
+          "serious_ae_control_rate",
+          "serious_ae_control_lower",
+          "serious_ae_control_upper",
+          "serious_ae_excess",
+          "serious_ae_excess_lower",
+          "serious_ae_excess_upper",
+          "discontinuation_treatment_rate",
+          "discontinuation_treatment_lower",
+          "discontinuation_treatment_upper",
+          "discontinuation_control_rate",
+          "discontinuation_control_lower",
+          "discontinuation_control_upper",
+          "discontinuation_excess",
+          "discontinuation_excess_lower",
+          "discontinuation_excess_upper",
+          "confidence_level"
+        ],
+        "title": "TrialDevelopmentSafetyEstimateV1",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Participant analysis report after receiving one materialized trial output.",
+    "properties": {
+      "analysis_rationale": {
+        "description": "Optional explanation retained outside deterministic scoring.",
+        "maxLength": 2000,
+        "type": "string"
+      },
+      "claimed_subgroup_variables": {
+        "description": "Variables for subgroup effect claims executed in this analysis; each must be declared in request.subgroup_variables. Adjustment and stratification variables are not subgroup claims.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Claimed Subgroup Variables",
+        "type": "array"
+      },
+      "diagnostic_artifacts": {
+        "items": {
+          "$ref": "#/$defs/TrialDevelopmentAnalysisDiagnosticV1"
+        },
+        "title": "Diagnostic Artifacts",
+        "type": "array"
+      },
+      "evidence_summary": {
+        "default": "",
+        "maxLength": 4000,
+        "title": "Evidence Summary",
+        "type": "string"
+      },
+      "primary_effect": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/TrialDevelopmentEffectEstimateV1"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "ranked_drug_ids": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Ranked Drug Ids",
+        "type": "array"
+      },
+      "safety_estimate": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/TrialDevelopmentSafetyEstimateV1"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "selected_winner_drug_id": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Selected Winner Drug Id"
+      }
+    },
+    "required": [],
+    "title": "TrialDevelopmentPhaseAnalysisSubmissionV1",
+    "type": "object"
+  },
+  "trialdev_phase_decision": {
+    "additionalProperties": false,
+    "description": "Participant advancement decision for one completed phase.",
+    "properties": {
+      "candidate_drug_id": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Candidate Drug Id"
+      },
+      "decision_action": {
+        "enum": [
+          "nominate_for_early_study",
+          "advance_to_proof_of_concept",
+          "stop_development",
+          "withhold_nomination",
+          "advance_to_confirmation",
+          "declare_success",
+          "declare_failure",
+          "declare_inconclusive"
+        ],
+        "title": "Decision Action",
+        "type": "string"
+      },
+      "decision_rationale": {
+        "default": "",
+        "maxLength": 4000,
+        "title": "Decision Rationale",
+        "type": "string"
+      },
+      "supporting_evidence_ids": {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "title": "Supporting Evidence Ids",
+        "type": "array"
+      }
+    },
+    "required": [
+      "decision_action",
+      "supporting_evidence_ids"
+    ],
+    "title": "TrialDevelopmentPhaseDecisionSubmissionV1",
+    "type": "object"
+  },
+  "trialdev_phase_request": {
+    "additionalProperties": false,
+    "description": "One governed trial-development request for deterministic materialization.",
+    "properties": {
+      "allocation_ratio": {
+        "anyOf": [
+          {
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Allocation Ratio"
+      },
+      "allocation_weights": {
+        "items": {
+          "type": "number"
+        },
+        "title": "Allocation Weights",
+        "type": "array"
+      },
+      "analysis_covariates": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Analysis Covariates",
+        "type": "array"
+      },
+      "candidate_drug_ids": {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "title": "Candidate Drug Ids",
+        "type": "array"
+      },
+      "design_cell_id": {
+        "anyOf": [
+          {
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Design Cell Id"
+      },
+      "endpoint_id": {
+        "anyOf": [
+          {
+            "minLength": 1,
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Endpoint Id"
+      },
+      "enrollment_window_days": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Enrollment Window Days"
+      },
+      "follow_up_days": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Follow Up Days"
+      },
+      "interim_policy": {
+        "anyOf": [
+          {
+            "const": "fixed_final",
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Interim Policy"
+      },
+      "request_rationale": {
+        "description": "Optional explanation retained outside deterministic scoring.",
+        "maxLength": 2000,
+        "type": "string"
+      },
+      "selection_objective": {
+        "anyOf": [
+          {
+            "enum": [
+              "pure_efficacy",
+              "benefit_risk",
+              "cost_effective_best",
+              "net_clinical_value_under_budget"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Selection Objective"
+      },
+      "site_count_budget": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Site Count Budget"
+      },
+      "site_strategy": {
+        "anyOf": [
+          {
+            "enum": [
+              "high_enrolling",
+              "region_balanced"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Site Strategy"
+      },
+      "stratification_variables": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Stratification Variables",
+        "type": "array"
+      },
+      "subgroup_variables": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Subgroup Variables",
+        "type": "array"
+      },
+      "target_sample_size": {
+        "anyOf": [
+          {
+            "minimum": 1,
+            "type": "integer"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Target Sample Size"
+      },
+      "treatment_discontinuation_strategy": {
+        "anyOf": [
+          {
+            "enum": [
+              "treatment_policy",
+              "composite_discontinuation",
+              "while_on_treatment"
+            ],
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Treatment Discontinuation Strategy"
+      }
+    },
+    "required": [
+      "candidate_drug_ids"
+    ],
+    "title": "TrialDevelopmentRequestV1",
+    "type": "object"
+  },
+  "trialeval": {
+    "$defs": {
+      "ConfidenceIntervalV1": {
+        "additionalProperties": false,
+        "description": "Two-sided confidence interval with lower bound no greater than upper.",
+        "properties": {
+          "confidence_level": {
+            "exclusiveMaximum": 1,
+            "exclusiveMinimum": 0,
+            "title": "Confidence Level",
+            "type": "number"
+          },
+          "lower": {
+            "title": "Lower",
+            "type": "number"
+          },
+          "upper": {
+            "title": "Upper",
+            "type": "number"
+          }
+        },
+        "required": [
+          "lower",
+          "upper",
+          "confidence_level"
+        ],
+        "title": "ConfidenceIntervalV1",
+        "type": "object"
+      },
+      "DataIntegrityRecordV1": {
+        "additionalProperties": false,
+        "description": "Observed C5 condition, exact repair, and analysis-input identity.",
+        "properties": {
+          "affected_domain": {
+            "minLength": 1,
+            "title": "Affected Domain",
+            "type": "string"
+          },
+          "analysis_input_data_checksum": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Analysis Input Data Checksum",
+            "type": "string"
+          },
+          "compound_key_fields": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Compound Key Fields",
+            "type": "array"
+          },
+          "condition_id": {
+            "const": "exact_transport_row_duplication_v1",
+            "title": "Condition Id",
+            "type": "string"
+          },
+          "observed_duplicate_group_count": {
+            "minimum": 1,
+            "title": "Observed Duplicate Group Count",
+            "type": "integer"
+          },
+          "observed_extra_row_count": {
+            "minimum": 1,
+            "title": "Observed Extra Row Count",
+            "type": "integer"
+          },
+          "post_repair_data_checksum": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Post Repair Data Checksum",
+            "type": "string"
+          },
+          "repair_action": {
+            "const": "remove_one_exact_duplicate_copy",
+            "title": "Repair Action",
+            "type": "string"
+          },
+          "repair_status": {
+            "enum": [
+              "repaired",
+              "unexpected_data_integrity_state"
+            ],
+            "title": "Repair Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "condition_id",
+          "affected_domain",
+          "compound_key_fields",
+          "observed_duplicate_group_count",
+          "observed_extra_row_count",
+          "repair_action",
+          "repair_status",
+          "post_repair_data_checksum",
+          "analysis_input_data_checksum"
+        ],
+        "title": "DataIntegrityRecordV1",
+        "type": "object"
+      },
+      "DiagnosticMeasureV1": {
+        "additionalProperties": false,
+        "description": "One explicitly rounded diagnostic quantity.",
+        "properties": {
+          "decimal_places": {
+            "maximum": 12,
+            "minimum": 0,
+            "title": "Decimal Places",
+            "type": "integer"
+          },
+          "metric_id": {
+            "description": "Participant-chosen scientific label for the reported quantity. Diagnostic credit is based on exact value, unit, diagnostic identity, and public-source replay.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Metric Id",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "metric_id",
+          "value",
+          "unit",
+          "decimal_places"
+        ],
+        "title": "DiagnosticMeasureV1",
+        "type": "object"
+      },
+      "DiagnosticSummaryResultV1": {
+        "additionalProperties": false,
+        "description": "A descriptive diagnostic whose finite measure identifiers are unique.",
+        "properties": {
+          "kind": {
+            "const": "diagnostic_summary",
+            "default": "diagnostic_summary",
+            "title": "Kind",
+            "type": "string"
+          },
+          "measures": {
+            "items": {
+              "$ref": "#/$defs/DiagnosticMeasureV1"
+            },
+            "minItems": 1,
+            "title": "Measures",
+            "type": "array"
+          }
+        },
+        "required": [
+          "measures"
+        ],
+        "title": "DiagnosticSummaryResultV1",
+        "type": "object"
+      },
+      "DiagnosticTestResultV1": {
+        "additionalProperties": false,
+        "description": "A diagnostic test statistic and its reported probability.",
+        "properties": {
+          "alternative": {
+            "default": "two_sided",
+            "enum": [
+              "two_sided",
+              "greater",
+              "less"
+            ],
+            "title": "Alternative",
+            "type": "string"
+          },
+          "kind": {
+            "const": "diagnostic_test",
+            "default": "diagnostic_test",
+            "title": "Kind",
+            "type": "string"
+          },
+          "p_value": {
+            "$ref": "#/$defs/ProbabilityMeasureV1"
+          },
+          "statistic": {
+            "$ref": "#/$defs/DiagnosticMeasureV1"
+          }
+        },
+        "required": [
+          "statistic",
+          "p_value"
+        ],
+        "title": "DiagnosticTestResultV1",
+        "type": "object"
+      },
+      "EstimandDeclarationV1": {
+        "additionalProperties": false,
+        "description": "Scientific question targeted by one submitted primary analysis.\n\nDeclare exactly one of ``horizon`` and\n``horizon_not_applicable_reason``. Intercurrent-event strategy identifiers\nmust be unique.",
+        "properties": {
+          "comparator_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Comparator Id",
+            "type": "string"
+          },
+          "endpoint_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Endpoint Id",
+            "type": "string"
+          },
+          "estimand_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Estimand Id",
+            "type": "string"
+          },
+          "horizon": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/TimeHorizonV1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "horizon_not_applicable_reason": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Horizon Not Applicable Reason"
+          },
+          "intercurrent_event_strategy_ids": {
+            "default": [],
+            "items": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+              "type": "string"
+            },
+            "title": "Intercurrent Event Strategy Ids",
+            "type": "array"
+          },
+          "population_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Population Id",
+            "type": "string"
+          },
+          "treatment_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Treatment Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "estimand_id",
+          "population_id",
+          "treatment_id",
+          "comparator_id",
+          "endpoint_id"
+        ],
+        "title": "EstimandDeclarationV1",
+        "type": "object"
+      },
+      "EstimatorDeclarationV1": {
+        "additionalProperties": false,
+        "description": "One complete analysis method selected from the public dictionary.",
+        "properties": {
+          "analysis_method_id": {
+            "description": "Exact method identifier from the participant method dictionary.",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Analysis Method Id",
+            "type": "string"
+          },
+          "implementation": {
+            "anyOf": [
+              {
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional audit note describing the implementation. It does not change method identity or credit.",
+            "title": "Implementation"
+          },
+          "qualifications": {
+            "default": [],
+            "description": "Optional audit-only assumptions or limitations. Additional qualifications do not alter the selected method; required item evidence must still be supplied as typed evidence records.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifications",
+            "type": "array"
+          }
+        },
+        "required": [
+          "analysis_method_id"
+        ],
+        "title": "EstimatorDeclarationV1",
+        "type": "object"
+      },
+      "EvidenceRecordV1": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "else": {
+              "properties": {
+                "diagnostic_id": {
+                  "type": "null"
+                },
+                "result": {
+                  "not": {
+                    "properties": {
+                      "kind": {
+                        "enum": [
+                          "diagnostic_test",
+                          "diagnostic_summary",
+                          "factual_premise"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind"
+                    ]
+                  }
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "evidence_type": {
+                  "enum": [
+                    "diagnostic",
+                    "validity"
+                  ]
+                }
+              },
+              "required": [
+                "evidence_type"
+              ]
+            },
+            "then": {
+              "properties": {
+                "diagnostic_id": {
+                  "not": {
+                    "type": "null"
+                  }
+                },
+                "estimator": {
+                  "type": "null"
+                },
+                "result": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "diagnostic_test",
+                        "diagnostic_summary",
+                        "factual_premise"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ]
+                },
+                "sensitivity_parameter": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "diagnostic_id"
+              ]
+            }
+          },
+          {
+            "else": {
+              "properties": {
+                "estimator": {
+                  "type": "null"
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "evidence_type": {
+                  "enum": [
+                    "sensitivity",
+                    "supporting_analysis"
+                  ]
+                }
+              },
+              "required": [
+                "evidence_type"
+              ]
+            },
+            "then": {
+              "properties": {
+                "estimator": {
+                  "not": {
+                    "type": "null"
+                  }
+                }
+              },
+              "required": [
+                "estimator"
+              ]
+            }
+          },
+          {
+            "else": {
+              "properties": {
+                "sensitivity_parameter": {
+                  "type": "null"
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "evidence_type": {
+                  "const": "sensitivity"
+                }
+              },
+              "required": [
+                "evidence_type"
+              ]
+            }
+          }
+        ],
+        "description": "One executed evidence record with fields determined by its evidence type.\n\nDiagnostic and validity records require ``diagnostic_id``, a diagnostic\nor factual-premise result, and no estimator. Sensitivity and supporting-analysis records\nrequire an estimator and a non-diagnostic result. Data-quality records use\na non-diagnostic result and no estimator. ``sensitivity_parameter`` is\npermitted only for sensitivity records.",
+        "properties": {
+          "diagnostic_id": {
+            "anyOf": [
+              {
+                "enum": [
+                  "censoring_followup_public",
+                  "proportional_hazards_public",
+                  "randomization_integrity_public",
+                  "model_form_public",
+                  "cluster_structure_public",
+                  "secular_trend_public",
+                  "endpoint_ascertainment_public",
+                  "sequential_design_adjustment_public"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required only for diagnostic and validity evidence; omit for every other evidence type.",
+            "title": "Diagnostic Id"
+          },
+          "estimator": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/EstimatorDeclarationV1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Required for sensitivity and supporting-analysis evidence; omit for diagnostic, validity, and data-quality evidence."
+          },
+          "evidence_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "evidence_type": {
+            "enum": [
+              "diagnostic",
+              "sensitivity",
+              "validity",
+              "supporting_analysis",
+              "data_quality"
+            ],
+            "title": "Evidence Type",
+            "type": "string"
+          },
+          "interpretation": {
+            "minLength": 1,
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "operation": {
+            "enum": [
+              "assessment",
+              "adjustment",
+              "estimation",
+              "sensitivity_analysis",
+              "data_validation",
+              "tradeoff_analysis"
+            ],
+            "title": "Operation",
+            "type": "string"
+          },
+          "principle": {
+            "enum": [
+              "confounding",
+              "proportional_hazards",
+              "censoring",
+              "missingness",
+              "uncertainty",
+              "sensitivity",
+              "data_quality",
+              "design_validity",
+              "safety",
+              "cost",
+              "objective_alignment"
+            ],
+            "title": "Principle",
+            "type": "string"
+          },
+          "result": {
+            "description": "Diagnostic and validity evidence require diagnostic_test, diagnostic_summary, or factual_premise; every other evidence type requires a non-diagnostic result shape.",
+            "discriminator": {
+              "mapping": {
+                "diagnostic_summary": "#/$defs/DiagnosticSummaryResultV1",
+                "diagnostic_test": "#/$defs/DiagnosticTestResultV1",
+                "factual_premise": "#/$defs/FactualPremiseResultV1",
+                "identified_interval": "#/$defs/IdentifiedIntervalV1",
+                "non_identification": "#/$defs/QualifiedNonIdentificationV1",
+                "scalar": "#/$defs/ScalarEstimateV1",
+                "statistical_test": "#/$defs/TestResultV1",
+                "vector": "#/$defs/VectorEstimateV1"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ScalarEstimateV1"
+              },
+              {
+                "$ref": "#/$defs/IdentifiedIntervalV1"
+              },
+              {
+                "$ref": "#/$defs/VectorEstimateV1"
+              },
+              {
+                "$ref": "#/$defs/TestResultV1"
+              },
+              {
+                "$ref": "#/$defs/QualifiedNonIdentificationV1"
+              },
+              {
+                "$ref": "#/$defs/DiagnosticTestResultV1"
+              },
+              {
+                "$ref": "#/$defs/DiagnosticSummaryResultV1"
+              },
+              {
+                "$ref": "#/$defs/FactualPremiseResultV1"
+              }
+            ],
+            "title": "Result"
+          },
+          "sensitivity_parameter": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/SensitivityParameterV1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional only for sensitivity evidence; omit for every other evidence type."
+          },
+          "source_artifacts": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Source Artifacts",
+            "type": "array"
+          },
+          "target": {
+            "minLength": 1,
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "evidence_type",
+          "principle",
+          "operation",
+          "target",
+          "result",
+          "interpretation",
+          "source_artifacts"
+        ],
+        "title": "EvidenceRecordV1",
+        "type": "object"
+      },
+      "FactualPremiseResultV1": {
+        "additionalProperties": false,
+        "description": "A conclusion about one premise that is directly stated in a public artifact.",
+        "properties": {
+          "conclusion": {
+            "enum": [
+              "supported",
+              "not_supported",
+              "unresolved"
+            ],
+            "title": "Conclusion",
+            "type": "string"
+          },
+          "kind": {
+            "const": "factual_premise",
+            "default": "factual_premise",
+            "title": "Kind",
+            "type": "string"
+          },
+          "premise_id": {
+            "enum": [
+              "randomized_assignment_declared",
+              "cluster_randomization_declared",
+              "group_sequential_plan_declared",
+              "unmeasured_prognostic_censoring_factor"
+            ],
+            "title": "Premise Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "premise_id",
+          "conclusion"
+        ],
+        "title": "FactualPremiseResultV1",
+        "type": "object"
+      },
+      "IdentifiedIntervalV1": {
+        "additionalProperties": false,
+        "description": "An ordered identified interval without a point claim.",
+        "properties": {
+          "effect_scale": {
+            "enum": [
+              "log_hr",
+              "hazard_ratio",
+              "time_varying_log_hr",
+              "piecewise_log_hr_vector",
+              "weighted_logrank_test",
+              "log_time_ratio",
+              "cif_difference_tau",
+              "rmst_difference_tau",
+              "standardized_risk_difference_tau_reference",
+              "standardized_risk_difference",
+              "risk_difference",
+              "risk_difference_tau",
+              "milestone_risk_difference_tau",
+              "risk_ratio",
+              "odds_ratio",
+              "rate_ratio",
+              "bounds_interval",
+              "survival_probability",
+              "diagnostic_summary",
+              "mean_difference",
+              "not_applicable"
+            ],
+            "title": "Effect Scale",
+            "type": "string"
+          },
+          "interpretation": {
+            "minLength": 1,
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "kind": {
+            "const": "identified_interval",
+            "default": "identified_interval",
+            "title": "Kind",
+            "type": "string"
+          },
+          "lower": {
+            "title": "Lower",
+            "type": "number"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "upper": {
+            "title": "Upper",
+            "type": "number"
+          }
+        },
+        "required": [
+          "lower",
+          "upper",
+          "effect_scale",
+          "unit",
+          "interpretation"
+        ],
+        "title": "IdentifiedIntervalV1",
+        "type": "object"
+      },
+      "PlanningResultV1": {
+        "additionalProperties": false,
+        "description": "Optional event-driven plan with unique sensitivity probabilities.",
+        "properties": {
+          "alpha_two_sided": {
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Alpha Two Sided",
+            "type": "number"
+          },
+          "estimand_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Estimand Id",
+            "type": "string"
+          },
+          "event_probability": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Event Probability",
+            "type": "number"
+          },
+          "followup_horizon_dy": {
+            "exclusiveMinimum": 0.0,
+            "title": "Followup Horizon Dy",
+            "type": "number"
+          },
+          "method_id": {
+            "const": "schoenfeld_logrank_v1",
+            "title": "Method Id",
+            "type": "string"
+          },
+          "multiplicity_adjustment": {
+            "const": "none",
+            "title": "Multiplicity Adjustment",
+            "type": "string"
+          },
+          "power": {
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Power",
+            "type": "number"
+          },
+          "required_events": {
+            "exclusiveMinimum": 0,
+            "title": "Required Events",
+            "type": "integer"
+          },
+          "sensitivity": {
+            "items": {
+              "$ref": "#/$defs/PlanningSensitivityResultV1"
+            },
+            "minItems": 2,
+            "title": "Sensitivity",
+            "type": "array"
+          },
+          "target_sample_size": {
+            "exclusiveMinimum": 0,
+            "title": "Target Sample Size",
+            "type": "integer"
+          },
+          "treated_allocation_fraction": {
+            "exclusiveMaximum": 1.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Treated Allocation Fraction",
+            "type": "number"
+          }
+        },
+        "required": [
+          "method_id",
+          "estimand_id",
+          "alpha_two_sided",
+          "power",
+          "treated_allocation_fraction",
+          "event_probability",
+          "followup_horizon_dy",
+          "multiplicity_adjustment",
+          "required_events",
+          "target_sample_size",
+          "sensitivity"
+        ],
+        "title": "PlanningResultV1",
+        "type": "object"
+      },
+      "PlanningSensitivityResultV1": {
+        "additionalProperties": false,
+        "description": "Sample size under one event-probability sensitivity assumption.",
+        "properties": {
+          "event_probability": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1.0,
+            "title": "Event Probability",
+            "type": "number"
+          },
+          "target_sample_size": {
+            "exclusiveMinimum": 0,
+            "title": "Target Sample Size",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "event_probability",
+          "target_sample_size"
+        ],
+        "title": "PlanningSensitivityResultV1",
+        "type": "object"
+      },
+      "PrimaryAnalysisV1": {
+        "additionalProperties": false,
+        "description": "The sole analysis submitted for primary deterministic credit.",
+        "properties": {
+          "declared_primary": {
+            "const": true,
+            "title": "Declared Primary",
+            "type": "boolean"
+          },
+          "estimand": {
+            "$ref": "#/$defs/EstimandDeclarationV1"
+          },
+          "estimator": {
+            "$ref": "#/$defs/EstimatorDeclarationV1"
+          },
+          "evidence_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "favorable_direction": {
+            "enum": [
+              "higher",
+              "lower",
+              "neither"
+            ],
+            "title": "Favorable Direction",
+            "type": "string"
+          },
+          "result": {
+            "discriminator": {
+              "mapping": {
+                "identified_interval": "#/$defs/IdentifiedIntervalV1",
+                "non_identification": "#/$defs/QualifiedNonIdentificationV1",
+                "scalar": "#/$defs/ScalarEstimateV1",
+                "statistical_test": "#/$defs/TestResultV1",
+                "vector": "#/$defs/VectorEstimateV1"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/ScalarEstimateV1"
+              },
+              {
+                "$ref": "#/$defs/IdentifiedIntervalV1"
+              },
+              {
+                "$ref": "#/$defs/VectorEstimateV1"
+              },
+              {
+                "$ref": "#/$defs/TestResultV1"
+              },
+              {
+                "$ref": "#/$defs/QualifiedNonIdentificationV1"
+              }
+            ],
+            "title": "Result"
+          },
+          "result_kind": {
+            "enum": [
+              "numeric_point",
+              "numeric_vector",
+              "statistical_test",
+              "sensitivity_set",
+              "identification_bound",
+              "limitation",
+              "abstention"
+            ],
+            "title": "Result Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "declared_primary",
+          "estimand",
+          "estimator",
+          "result_kind",
+          "result",
+          "favorable_direction"
+        ],
+        "title": "PrimaryAnalysisV1",
+        "type": "object"
+      },
+      "ProbabilityMeasureV1": {
+        "additionalProperties": false,
+        "description": "One explicitly rounded probability in the closed unit interval.",
+        "properties": {
+          "decimal_places": {
+            "maximum": 12,
+            "minimum": 0,
+            "title": "Decimal Places",
+            "type": "integer"
+          },
+          "metric_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Metric Id",
+            "type": "string"
+          },
+          "unit": {
+            "const": "probability",
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "metric_id",
+          "value",
+          "unit",
+          "decimal_places"
+        ],
+        "title": "ProbabilityMeasureV1",
+        "type": "object"
+      },
+      "QualifiedNonIdentificationV1": {
+        "additionalProperties": false,
+        "description": "A justified conclusion that the requested effect is not identified.",
+        "properties": {
+          "additional_assumption_required": {
+            "minLength": 1,
+            "title": "Additional Assumption Required",
+            "type": "string"
+          },
+          "conclusion_code": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Conclusion Code",
+            "type": "string"
+          },
+          "effect_scale": {
+            "enum": [
+              "log_hr",
+              "hazard_ratio",
+              "time_varying_log_hr",
+              "piecewise_log_hr_vector",
+              "weighted_logrank_test",
+              "log_time_ratio",
+              "cif_difference_tau",
+              "rmst_difference_tau",
+              "standardized_risk_difference_tau_reference",
+              "standardized_risk_difference",
+              "risk_difference",
+              "risk_difference_tau",
+              "milestone_risk_difference_tau",
+              "risk_ratio",
+              "odds_ratio",
+              "rate_ratio",
+              "bounds_interval",
+              "survival_probability",
+              "diagnostic_summary",
+              "mean_difference",
+              "not_applicable"
+            ],
+            "title": "Effect Scale",
+            "type": "string"
+          },
+          "identified_set": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/IdentifiedIntervalV1"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "kind": {
+            "const": "non_identification",
+            "default": "non_identification",
+            "title": "Kind",
+            "type": "string"
+          },
+          "reason": {
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conclusion_code",
+          "effect_scale",
+          "unit",
+          "reason",
+          "additional_assumption_required"
+        ],
+        "title": "QualifiedNonIdentificationV1",
+        "type": "object"
+      },
+      "ReconstructionSummaryV1": {
+        "additionalProperties": false,
+        "description": "Declared analysis-table reconstruction counts and executed checks.",
+        "properties": {
+          "checks_performed": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Checks Performed",
+            "type": "array"
+          },
+          "n_censored": {
+            "minimum": 0,
+            "title": "N Censored",
+            "type": "integer"
+          },
+          "n_events": {
+            "minimum": 0,
+            "title": "N Events",
+            "type": "integer"
+          },
+          "n_primary_population": {
+            "minimum": 0,
+            "title": "N Primary Population",
+            "type": "integer"
+          },
+          "n_subjects": {
+            "minimum": 0,
+            "title": "N Subjects",
+            "type": "integer"
+          },
+          "notes": {
+            "minLength": 1,
+            "title": "Notes",
+            "type": "string"
+          },
+          "source_artifacts": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Source Artifacts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "n_subjects",
+          "n_primary_population",
+          "n_events",
+          "n_censored",
+          "notes",
+          "source_artifacts"
+        ],
+        "title": "ReconstructionSummaryV1",
+        "type": "object"
+      },
+      "ScalarEstimateV1": {
+        "additionalProperties": false,
+        "description": "A point estimate contained by its interval on one declared scale.\n\nHazard-ratio estimates and interval limits must be strictly positive.",
+        "properties": {
+          "effect_scale": {
+            "enum": [
+              "log_hr",
+              "hazard_ratio",
+              "time_varying_log_hr",
+              "piecewise_log_hr_vector",
+              "weighted_logrank_test",
+              "log_time_ratio",
+              "cif_difference_tau",
+              "rmst_difference_tau",
+              "standardized_risk_difference_tau_reference",
+              "standardized_risk_difference",
+              "risk_difference",
+              "risk_difference_tau",
+              "milestone_risk_difference_tau",
+              "risk_ratio",
+              "odds_ratio",
+              "rate_ratio",
+              "bounds_interval",
+              "survival_probability",
+              "diagnostic_summary",
+              "mean_difference",
+              "not_applicable"
+            ],
+            "title": "Effect Scale",
+            "type": "string"
+          },
+          "interval": {
+            "$ref": "#/$defs/ConfidenceIntervalV1"
+          },
+          "kind": {
+            "const": "scalar",
+            "default": "scalar",
+            "title": "Kind",
+            "type": "string"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "value",
+          "effect_scale",
+          "unit",
+          "interval"
+        ],
+        "title": "ScalarEstimateV1",
+        "type": "object"
+      },
+      "SensitivityParameterV1": {
+        "additionalProperties": false,
+        "description": "A bounded probability-scale sensitivity-model parameter.",
+        "properties": {
+          "unit": {
+            "const": "probability",
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "value",
+          "unit"
+        ],
+        "title": "SensitivityParameterV1",
+        "type": "object"
+      },
+      "TestResultV1": {
+        "additionalProperties": false,
+        "description": "A statistical-test result with explicit direction and parameters.",
+        "properties": {
+          "alternative": {
+            "default": "two_sided",
+            "enum": [
+              "two_sided",
+              "greater",
+              "less"
+            ],
+            "title": "Alternative",
+            "type": "string"
+          },
+          "effect_scale": {
+            "const": "weighted_logrank_test",
+            "title": "Effect Scale",
+            "type": "string"
+          },
+          "gamma": {
+            "minimum": 0,
+            "title": "Gamma",
+            "type": "number"
+          },
+          "kind": {
+            "const": "statistical_test",
+            "default": "statistical_test",
+            "title": "Kind",
+            "type": "string"
+          },
+          "p_value": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "P Value",
+            "type": "number"
+          },
+          "reject_null": {
+            "title": "Reject Null",
+            "type": "boolean"
+          },
+          "rho": {
+            "minimum": 0,
+            "title": "Rho",
+            "type": "number"
+          },
+          "statistic": {
+            "title": "Statistic",
+            "type": "number"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statistic",
+          "p_value",
+          "reject_null",
+          "effect_scale",
+          "unit",
+          "rho",
+          "gamma"
+        ],
+        "title": "TestResultV1",
+        "type": "object"
+      },
+      "TimeHorizonV1": {
+        "additionalProperties": false,
+        "description": "Assessment horizon for a time-indexed estimand.",
+        "properties": {
+          "unit": {
+            "const": "days",
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "exclusiveMinimum": 0,
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "value",
+          "unit"
+        ],
+        "title": "TimeHorizonV1",
+        "type": "object"
+      },
+      "VectorEstimateV1": {
+        "additionalProperties": false,
+        "description": "A vector or curve whose point indices are strictly increasing.",
+        "properties": {
+          "effect_scale": {
+            "enum": [
+              "log_hr",
+              "hazard_ratio",
+              "time_varying_log_hr",
+              "piecewise_log_hr_vector",
+              "weighted_logrank_test",
+              "log_time_ratio",
+              "cif_difference_tau",
+              "rmst_difference_tau",
+              "standardized_risk_difference_tau_reference",
+              "standardized_risk_difference",
+              "risk_difference",
+              "risk_difference_tau",
+              "milestone_risk_difference_tau",
+              "risk_ratio",
+              "odds_ratio",
+              "rate_ratio",
+              "bounds_interval",
+              "survival_probability",
+              "diagnostic_summary",
+              "mean_difference",
+              "not_applicable"
+            ],
+            "title": "Effect Scale",
+            "type": "string"
+          },
+          "index_unit": {
+            "minLength": 1,
+            "title": "Index Unit",
+            "type": "string"
+          },
+          "kind": {
+            "const": "vector",
+            "default": "vector",
+            "title": "Kind",
+            "type": "string"
+          },
+          "points": {
+            "items": {
+              "$ref": "#/$defs/VectorPointV1"
+            },
+            "minItems": 2,
+            "title": "Points",
+            "type": "array"
+          },
+          "unit": {
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "points",
+          "index_unit",
+          "effect_scale",
+          "unit"
+        ],
+        "title": "VectorEstimateV1",
+        "type": "object"
+      },
+      "VectorPointV1": {
+        "additionalProperties": false,
+        "description": "One coordinate of a vector- or curve-valued estimate.",
+        "properties": {
+          "component_id": {
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$",
+            "title": "Component Id",
+            "type": "string"
+          },
+          "index": {
+            "title": "Index",
+            "type": "number"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "component_id",
+          "index",
+          "value"
+        ],
+        "title": "VectorPointV1",
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "description": "Canonical TrialEval submission with linked analysis references.\n\nEvidence and data-resolution identifiers must be unique, and every\nevidence record must be linked once from the primary analysis. A planning\nresult must target the primary estimand and is valid only for a scalar\nlog-hazard-ratio primary result.",
+    "properties": {
+      "data_integrity_record": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/DataIntegrityRecordV1"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "evidence": {
+        "default": [],
+        "items": {
+          "$ref": "#/$defs/EvidenceRecordV1"
+        },
+        "title": "Evidence",
+        "type": "array"
+      },
+      "limitations": {
+        "default": [],
+        "description": "Optional audit-only free-text limitations. A score-bearing non-identification conclusion belongs in primary_analysis.result as a typed qualified_non_identification result.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Limitations",
+        "type": "array"
+      },
+      "planning": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/PlanningResultV1"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "primary_analysis": {
+        "$ref": "#/$defs/PrimaryAnalysisV1"
+      },
+      "reconstruction": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/ReconstructionSummaryV1"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "schema_id": {
+        "const": "trialagentbench.trialeval_submission/v1",
+        "default": "trialagentbench.trialeval_submission/v1",
+        "title": "Schema Id",
+        "type": "string"
+      },
+      "task_id": {
+        "minLength": 1,
+        "title": "Task Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "task_id",
+      "primary_analysis"
+    ],
+    "title": "TrialEvalSubmissionV1",
+    "type": "object"
+  }
+}

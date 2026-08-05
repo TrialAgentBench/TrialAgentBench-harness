@@ -1,0 +1,31 @@
+panel,series,setting,dose,estimate,interval_low,interval_high,reference,unit,independent_units
+treatment_heterogeneity,"Binary, N","Binary, N",,1.08626743413155,0.740732639996978,1.43180222826612,1,recovered/configured slope,4
+treatment_heterogeneity,"Binary, 4N","Binary, 4N",,0.993217860264422,0.898947470240287,1.08748825028856,1,recovered/configured slope,4
+treatment_heterogeneity,"Continuous, N","Continuous, N",,0.986874553823307,0.921057670271857,1.05269143737476,1,recovered/configured slope,6
+treatment_heterogeneity,"Continuous, 4N","Continuous, 4N",,1.00034961577315,0.982975748036167,1.01772348351013,1,recovered/configured slope,6
+competing_events,"Primary event, N","Primary event, N",,-0.0386103308839919,-0.04783672982857,-0.0293839319394139,0,probability/coefficient unit,10
+competing_events,"Any event, N","Any event, N",,0.076253497320815,0.0674647103755577,0.0850422842660723,0,probability/coefficient unit,10
+competing_events,"Primary event, 4N","Primary event, 4N",,-0.0407300301768137,-0.0448960476498232,-0.0365640127038043,0,probability/coefficient unit,10
+competing_events,"Any event, 4N","Any event, 4N",,0.0797106200406312,0.076666846863162,0.0827543932181003,0,probability/coefficient unit,10
+confounding,"Unadjusted, N","Unadjusted, N",,0.411364571693765,0.354812343577756,0.467916799809774,0,coefficient/assignment unit,10
+confounding,"Adjusted, N","Adjusted, N",,-0.00623625144810469,-0.0379550211768019,0.0254825182805925,0,coefficient/assignment unit,10
+confounding,"Unadjusted, 4N","Unadjusted, 4N",,0.382465880159587,0.340500146529805,0.42443161378937,0,coefficient/assignment unit,10
+confounding,"Adjusted, 4N","Adjusted, 4N",,-0.00106147066147585,-0.0134588193126978,0.0113358779897461,0,coefficient/assignment unit,10
+dropout,Skin barrier,Skin barrier,0,0.0037385008240227,-0.0056500126452946,0.0131270142933402,0,outcome units,100
+dropout,Skin barrier,Skin barrier,0.5,0.0001482235048321,-0.0129206875023349,0.0132171345119992,0,outcome units,100
+dropout,Skin barrier,Skin barrier,1,-0.0224021184981315,-0.0449197085716304,0.0001154715753673,0,outcome units,100
+dropout,Skin barrier,Skin barrier,1.5,-0.037612887958556,-0.0998916303608177,0.0246658544437056,0,outcome units,100
+dropout,PENG 0.375,PENG 0.375,0,0.0261258410125024,0.0195766549676984,0.0326750270573064,0,outcome units,100
+dropout,PENG 0.50,PENG 0.50,0,0.0326993930343217,0.0249887146396155,0.0404100714290279,0,outcome units,100
+dropout,PENG 0.375,PENG 0.375,0.5,0.0428164745096591,0.0335502042583448,0.0520827447609734,0,outcome units,100
+dropout,PENG 0.50,PENG 0.50,0.5,0.0722992512067656,0.0652870012752576,0.0793115011382737,0,outcome units,100
+dropout,PENG 0.375,PENG 0.375,1,0.094884543897758,0.0842419923410846,0.105527095454431,0,outcome units,100
+dropout,PENG 0.50,PENG 0.50,1,0.13494994015885,0.125698445923005,0.144201434394695,0,outcome units,100
+dropout,PENG 0.375,PENG 0.375,1.5,0.156270704546981,0.143020366515667,0.169521042578296,0,outcome units,100
+dropout,PENG 0.50,PENG 0.50,1.5,0.223668307593308,0.208760897823832,0.238575717362784,0,outcome units,100
+recurrent_events,Generating-law recovery,0,0,-0.0053587725381776,-0.0132264531345662,0.0025089080582109,0,frailty variance,15
+recurrent_events,Generating-law recovery,0.4,0.4,0.405118722559937,0.394637023998535,0.41560042112134,0.4,frailty variance,15
+recurrent_events,Generating-law recovery,0.8,0.8,0.800366946757528,0.781514625203426,0.819219268311631,0.8,frailty variance,15
+recurrent_events,Generating-law recovery,1.4,1.4,1.41555347235479,1.38216651549492,1.44894042921467,1.4,frailty variance,15
+cross_domain_linkage,Association,Association,,0.518391276990864,0.348611763365255,0.688170790616473,0,standardized units/full disruption,8
+cross_domain_linkage,Safety analysis,Safety analysis,,0.616011562648026,0.389643517955012,0.842379607341041,0,standardized units/full disruption,8

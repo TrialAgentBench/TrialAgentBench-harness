@@ -1,0 +1,6 @@
+strategy_id,strategy_class,evaluated_view_count,supported_view_count,supported_view_rate,complete_statistical_submission,primary_grade_eligible
+evidence_and_policy,complete_analysis,96,96,1.0,True,True
+always_withhold,action_only,96,40,0.4166666666666667,False,False
+alphabetical_pair,action_only,96,30,0.3125,False,False
+adjusted_point_pair,point_estimate_only,96,72,0.75,False,False
+raw_observed_pair,point_estimate_only,96,32,0.3333333333333333,False,False

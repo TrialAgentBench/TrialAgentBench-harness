@@ -1,0 +1,10 @@
+index,control_id,responsibility,control_kind,expected_behavior_count,evaluated_count,expected_behavior_rate
+0,accepted_reference,accepted reference,positive,96,96,1.0
+1,efficacy_evidence_error,efficacy evidence,negative,88,88,1.0
+2,evidence_reference_error,analysis evidence binding,negative,96,96,1.0
+3,numeric_evidence_error,numeric evidence,negative,96,96,1.0
+4,pairwise_uncertainty_error,pairwise uncertainty,negative,80,80,1.0
+5,provenance_error,supporting evidence binding,negative,96,96,1.0
+6,scheduled_design_error,study design,negative,72,72,1.0
+7,stale_state,state custody,negative,96,96,1.0
+8,unsupported_action,action support,negative,90,90,1.0

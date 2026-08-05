@@ -1,0 +1,1301 @@
+{
+  "absolute_tolerance": 0.0001,
+  "methods": [
+    {
+      "action_match": true,
+      "bootstrap_replicates": 500,
+      "candidate_results": [
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 3.114397278014547e-06,
+          "efficacy_gain_standard_error_absolute_error": 1.0930612412939078e-07,
+          "expected_efficacy_gain": 0.05971576473500634,
+          "expected_efficacy_gain_interval": [
+            0.037503371896029314,
+            0.08192815757398336
+          ],
+          "expected_efficacy_gain_standard_error": 0.011333061736942898,
+          "expected_utility": 0.004392420329430179,
+          "expected_utility_interval": [
+            -0.01806853095379233,
+            0.026853371612652686
+          ],
+          "expected_utility_standard_error": 0.011459879600029201,
+          "maximum_interval_endpoint_absolute_error": 5.223939990563198e-06,
+          "objective_id": "benefit_risk",
+          "replayed_efficacy_gain": 0.05971887913228435,
+          "replayed_efficacy_gain_interval": [
+            0.03750627205724075,
+            0.08193148620732796
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011333171043067027,
+          "replayed_utility": 0.004397406868682598,
+          "replayed_utility_interval": [
+            -0.018063781815278054,
+            0.02685859555264325
+          ],
+          "replayed_utility_standard_error": 0.011460000725080485,
+          "utility_absolute_error": 4.986539252418987e-06,
+          "utility_standard_error_absolute_error": 1.2112505128406004e-07,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 2.2472051176003482e-06,
+          "efficacy_gain_standard_error_absolute_error": 4.271809879441424e-08,
+          "expected_efficacy_gain": -0.005659741052705947,
+          "expected_efficacy_gain_interval": [
+            -0.02741358216371249,
+            0.016094100058300597
+          ],
+          "expected_efficacy_gain_standard_error": 0.011099102474636306,
+          "expected_utility": -0.0644275051383697,
+          "expected_utility_interval": [
+            -0.08676565895522158,
+            -0.04208935132151782
+          ],
+          "expected_utility_standard_error": 0.01139722668021065,
+          "maximum_interval_endpoint_absolute_error": 2.661380934756985e-06,
+          "objective_id": "benefit_risk",
+          "replayed_efficacy_gain": -0.005661988257823547,
+          "replayed_efficacy_gain_interval": [
+            -0.027415913094765213,
+            0.01609193657911812
+          ],
+          "replayed_efficacy_gain_standard_error": 0.0110991451927351,
+          "replayed_utility": -0.06443010503355194,
+          "replayed_utility_interval": [
+            -0.08676832033615633,
+            -0.04209188973094755
+          ],
+          "replayed_utility_standard_error": 0.011397258051068991,
+          "utility_absolute_error": 2.5998951822397975e-06,
+          "utility_standard_error_absolute_error": 3.137085834159503e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 9.528569852590429e-07,
+          "efficacy_gain_standard_error_absolute_error": 7.554128456793707e-08,
+          "expected_efficacy_gain": 0.0038083867020540785,
+          "expected_efficacy_gain_interval": [
+            -0.019702763437818207,
+            0.027319536841926364
+          ],
+          "expected_efficacy_gain_standard_error": 0.011995705189138802,
+          "expected_utility": -0.07397848391437381,
+          "expected_utility_interval": [
+            -0.0986076392282569,
+            -0.049349328600490724
+          ],
+          "expected_utility_standard_error": 0.012566126473830503,
+          "maximum_interval_endpoint_absolute_error": 1.100915182357387e-06,
+          "objective_id": "benefit_risk",
+          "replayed_efficacy_gain": 0.0038093395590393375,
+          "replayed_efficacy_gain_interval": [
+            -0.01970166252263585,
+            0.027320341640714525
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011995629647854235,
+          "replayed_utility": -0.07397761832941598,
+          "replayed_utility_interval": [
+            -0.0986066695451092,
+            -0.04934856711372275
+          ],
+          "replayed_utility_standard_error": 0.012566073361533195,
+          "utility_absolute_error": 8.655849578348418e-07,
+          "utility_standard_error_absolute_error": 5.311229730846356e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 3.114397278014547e-06,
+          "efficacy_gain_standard_error_absolute_error": 1.0930612412939078e-07,
+          "expected_efficacy_gain": 0.05971576473500634,
+          "expected_efficacy_gain_interval": [
+            0.037503371896029314,
+            0.08192815757398336
+          ],
+          "expected_efficacy_gain_standard_error": 0.011333061736942898,
+          "expected_utility": 0.05971576473500634,
+          "expected_utility_interval": [
+            0.037503371896029314,
+            0.08192815757398336
+          ],
+          "expected_utility_standard_error": 0.011333061736942898,
+          "maximum_interval_endpoint_absolute_error": 3.328633344595877e-06,
+          "objective_id": "pure_efficacy",
+          "replayed_efficacy_gain": 0.05971887913228435,
+          "replayed_efficacy_gain_interval": [
+            0.03750627205724075,
+            0.08193148620732796
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011333171043067027,
+          "replayed_utility": 0.05971887913228435,
+          "replayed_utility_interval": [
+            0.03750627205724075,
+            0.08193148620732796
+          ],
+          "replayed_utility_standard_error": 0.011333171043067027,
+          "utility_absolute_error": 3.114397278014547e-06,
+          "utility_standard_error_absolute_error": 1.0930612412939078e-07,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 9.528569852590429e-07,
+          "efficacy_gain_standard_error_absolute_error": 7.554128456793707e-08,
+          "expected_efficacy_gain": 0.0038083867020540785,
+          "expected_efficacy_gain_interval": [
+            -0.019702763437818207,
+            0.027319536841926364
+          ],
+          "expected_efficacy_gain_standard_error": 0.011995705189138802,
+          "expected_utility": 0.0038083867020540785,
+          "expected_utility_interval": [
+            -0.019702763437818207,
+            0.027319536841926364
+          ],
+          "expected_utility_standard_error": 0.011995705189138802,
+          "maximum_interval_endpoint_absolute_error": 1.100915182357387e-06,
+          "objective_id": "pure_efficacy",
+          "replayed_efficacy_gain": 0.0038093395590393375,
+          "replayed_efficacy_gain_interval": [
+            -0.01970166252263585,
+            0.027320341640714525
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011995629647854235,
+          "replayed_utility": 0.0038093395590393375,
+          "replayed_utility_interval": [
+            -0.01970166252263585,
+            0.027320341640714525
+          ],
+          "replayed_utility_standard_error": 0.011995629647854235,
+          "utility_absolute_error": 9.528569852590429e-07,
+          "utility_standard_error_absolute_error": 7.554128456793707e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 2.2472051176003482e-06,
+          "efficacy_gain_standard_error_absolute_error": 4.271809879441424e-08,
+          "expected_efficacy_gain": -0.005659741052705947,
+          "expected_efficacy_gain_interval": [
+            -0.02741358216371249,
+            0.016094100058300597
+          ],
+          "expected_efficacy_gain_standard_error": 0.011099102474636306,
+          "expected_utility": -0.005659741052705947,
+          "expected_utility_interval": [
+            -0.02741358216371249,
+            0.016094100058300597
+          ],
+          "expected_utility_standard_error": 0.011099102474636306,
+          "maximum_interval_endpoint_absolute_error": 2.3309310527228067e-06,
+          "objective_id": "pure_efficacy",
+          "replayed_efficacy_gain": -0.005661988257823547,
+          "replayed_efficacy_gain_interval": [
+            -0.027415913094765213,
+            0.01609193657911812
+          ],
+          "replayed_efficacy_gain_standard_error": 0.0110991451927351,
+          "replayed_utility": -0.005661988257823547,
+          "replayed_utility_interval": [
+            -0.027415913094765213,
+            0.01609193657911812
+          ],
+          "replayed_utility_standard_error": 0.0110991451927351,
+          "utility_absolute_error": 2.2472051176003482e-06,
+          "utility_standard_error_absolute_error": 4.271809879441424e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 3.114397278014547e-06,
+          "efficacy_gain_standard_error_absolute_error": 1.0930612412939078e-07,
+          "expected_efficacy_gain": 0.05971576473500634,
+          "expected_efficacy_gain_interval": [
+            0.037503371896029314,
+            0.08192815757398336
+          ],
+          "expected_efficacy_gain_standard_error": 0.011333061736942898,
+          "expected_utility": -0.056026904344872924,
+          "expected_utility_interval": [
+            -0.07165564862168285,
+            -0.040398160068063
+          ],
+          "expected_utility_standard_error": 0.007973995644862595,
+          "maximum_interval_endpoint_absolute_error": 3.3586942242147533e-06,
+          "objective_id": "cost_effective_best",
+          "replayed_efficacy_gain": 0.05971887913228435,
+          "replayed_efficacy_gain_interval": [
+            0.03750627205724075,
+            0.08193148620732796
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011333171043067027,
+          "replayed_utility": -0.056023700271231554,
+          "replayed_utility_interval": [
+            -0.07165259916862432,
+            -0.04039480137383879
+          ],
+          "replayed_utility_standard_error": 0.00797407453436468,
+          "utility_absolute_error": 3.2040736413704862e-06,
+          "utility_standard_error_absolute_error": 7.888950208541357e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 2.2472051176003482e-06,
+          "efficacy_gain_standard_error_absolute_error": 4.271809879441424e-08,
+          "expected_efficacy_gain": -0.005659741052705947,
+          "expected_efficacy_gain_interval": [
+            -0.02741358216371249,
+            0.016094100058300597
+          ],
+          "expected_efficacy_gain_standard_error": 0.011099102474636306,
+          "expected_utility": -0.08884658139440421,
+          "expected_utility_interval": [
+            -0.10433323418107046,
+            -0.07335992860773796
+          ],
+          "expected_utility_standard_error": 0.007901498654476818,
+          "maximum_interval_endpoint_absolute_error": 2.3309310527228067e-06,
+          "objective_id": "cost_effective_best",
+          "replayed_efficacy_gain": -0.005661988257823547,
+          "replayed_efficacy_gain_interval": [
+            -0.027415913094765213,
+            0.01609193657911812
+          ],
+          "replayed_efficacy_gain_standard_error": 0.0110991451927351,
+          "replayed_utility": -0.08884837980725369,
+          "replayed_utility_interval": [
+            -0.10433507527172121,
+            -0.07336168434278616
+          ],
+          "replayed_utility_standard_error": 0.007901520429265339,
+          "utility_absolute_error": 1.7984128494741292e-06,
+          "utility_standard_error_absolute_error": 2.1774788520889654e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 9.528569852590429e-07,
+          "efficacy_gain_standard_error_absolute_error": 7.554128456793707e-08,
+          "expected_efficacy_gain": 0.0038083867020540785,
+          "expected_efficacy_gain_interval": [
+            -0.019702763437818207,
+            0.027319536841926364
+          ],
+          "expected_efficacy_gain_standard_error": 0.011995705189138802,
+          "expected_utility": -0.11263337624507022,
+          "expected_utility_interval": [
+            -0.1295463805305863,
+            -0.09572037195955413
+          ],
+          "expected_utility_standard_error": 0.008629242383494651,
+          "maximum_interval_endpoint_absolute_error": 1.100915182357387e-06,
+          "objective_id": "cost_effective_best",
+          "replayed_efficacy_gain": 0.0038093395590393375,
+          "replayed_efficacy_gain_interval": [
+            -0.01970166252263585,
+            0.027320341640714525
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011995629647854235,
+          "replayed_utility": -0.11263273879218536,
+          "replayed_utility_interval": [
+            -0.12954565897844242,
+            -0.0957198186059283
+          ],
+          "replayed_utility_standard_error": 0.008629199474920975,
+          "utility_absolute_error": 6.374528848662742e-07,
+          "utility_standard_error_absolute_error": 4.290857367680867e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 3.114397278014547e-06,
+          "efficacy_gain_standard_error_absolute_error": 1.0930612412939078e-07,
+          "expected_efficacy_gain": 0.05971576473500634,
+          "expected_efficacy_gain_interval": [
+            0.037503371896029314,
+            0.08192815757398336
+          ],
+          "expected_efficacy_gain_standard_error": 0.011333061736942898,
+          "expected_utility": -0.04835278027009357,
+          "expected_utility_interval": [
+            -0.07069378106611189,
+            -0.026011779474075254
+          ],
+          "expected_utility_standard_error": 0.011398679247292954,
+          "maximum_interval_endpoint_absolute_error": 4.564739546325525e-06,
+          "objective_id": "net_clinical_value_under_budget",
+          "replayed_efficacy_gain": 0.05971887913228435,
+          "replayed_efficacy_gain_interval": [
+            0.03750627205724075,
+            0.08193148620732796
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011333171043067027,
+          "replayed_utility": -0.04834844955368087,
+          "replayed_utility_interval": [
+            -0.07068968437283281,
+            -0.026007214734528928
+          ],
+          "replayed_utility_standard_error": 0.01139879864904496,
+          "utility_absolute_error": 4.330716412703772e-06,
+          "utility_standard_error_absolute_error": 1.1940175200647607e-07,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 2.2472051176003482e-06,
+          "efficacy_gain_standard_error_absolute_error": 4.271809879441424e-08,
+          "expected_efficacy_gain": -0.005659741052705947,
+          "expected_efficacy_gain_interval": [
+            -0.02741358216371249,
+            0.016094100058300597
+          ],
+          "expected_efficacy_gain_standard_error": 0.011099102474636306,
+          "expected_utility": -0.10106887794711059,
+          "expected_utility_interval": [
+            -0.12320732573573048,
+            -0.07893043015849069
+          ],
+          "expected_utility_standard_error": 0.011295333977177722,
+          "maximum_interval_endpoint_absolute_error": 2.5361703815535153e-06,
+          "objective_id": "net_clinical_value_under_budget",
+          "replayed_efficacy_gain": -0.005661988257823547,
+          "replayed_efficacy_gain_interval": [
+            -0.027415913094765213,
+            0.01609193657911812
+          ],
+          "replayed_efficacy_gain_standard_error": 0.0110991451927351,
+          "replayed_utility": -0.10107136345590674,
+          "replayed_utility_interval": [
+            -0.12320986190611204,
+            -0.07893286500570144
+          ],
+          "replayed_utility_standard_error": 0.011295359825400341,
+          "utility_absolute_error": 2.485508796154501e-06,
+          "utility_standard_error_absolute_error": 2.5848222619598293e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 9.528569852590429e-07,
+          "efficacy_gain_standard_error_absolute_error": 7.554128456793707e-08,
+          "expected_efficacy_gain": 0.0038083867020540785,
+          "expected_efficacy_gain_interval": [
+            -0.019702763437818207,
+            0.027319536841926364
+          ],
+          "expected_efficacy_gain_standard_error": 0.011995705189138802,
+          "expected_utility": -0.12661331823239572,
+          "expected_utility_interval": [
+            -0.150834114896636,
+            -0.10239252156815543
+          ],
+          "expected_utility_standard_error": 0.012357776395531168,
+          "maximum_interval_endpoint_absolute_error": 1.100915182357387e-06,
+          "objective_id": "net_clinical_value_under_budget",
+          "replayed_efficacy_gain": 0.0038093395590393375,
+          "replayed_efficacy_gain_interval": [
+            -0.01970166252263585,
+            0.027320341640714525
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011995629647854235,
+          "replayed_utility": -0.12661246327030384,
+          "replayed_utility_interval": [
+            -0.1508331556086974,
+            -0.10239177093191029
+          ],
+          "replayed_utility_standard_error": 0.012357723167080257,
+          "utility_absolute_error": 8.549620918729683e-07,
+          "utility_standard_error_absolute_error": 5.3228450910824954e-08,
+          "within_tolerance": true
+        }
+      ],
+      "confidence_level": 0.95,
+      "estimator_id": "multinomial_propensity_weighted_stratified_aalen_johansen",
+      "expected_acceptable_utility_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "expected_actions": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "expected_definitely_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "expected_non_estimability_reason": null,
+      "expected_pairwise_contrast_half_widths": {
+        "benefit_risk": {
+          "regimen_a|regimen_b": 0.02639228379613548,
+          "regimen_a|regimen_c": 0.02287669169424396,
+          "regimen_b|regimen_c": 0.02437421308999472
+        },
+        "cost_effective_best": {
+          "regimen_a|regimen_b": 0.01807113805177554,
+          "regimen_a|regimen_c": 0.015838692287668606,
+          "regimen_b|regimen_c": 0.016733985061875997
+        },
+        "net_clinical_value_under_budget": {
+          "regimen_a|regimen_b": 0.025868045701774,
+          "regimen_a|regimen_c": 0.022612636492620897,
+          "regimen_b|regimen_c": 0.023944353572688266
+        },
+        "pure_efficacy": {
+          "regimen_a|regimen_b": 0.025026227525907028,
+          "regimen_a|regimen_c": 0.02224399036406437,
+          "regimen_b|regimen_c": 0.023110661956992497
+        }
+      },
+      "expected_possibly_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "expected_rankings": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "maximum_efficacy_gain_absolute_error": 3.114397278014547e-06,
+      "maximum_interval_endpoint_absolute_error": 5.223939990563198e-06,
+      "maximum_pairwise_contrast_absolute_error": 4.90952219302232e-07,
+      "maximum_standard_error_absolute_error": 1.2112505128406004e-07,
+      "maximum_utility_absolute_error": 4.986539252418987e-06,
+      "method_route_id": "trialdev.observational.multinomial_propensity_weighted_stratified_aalen_johansen.v1",
+      "non_estimability_match": true,
+      "ranking_match": true,
+      "replayed_acceptable_utility_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "replayed_actions": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "replayed_definitely_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "replayed_non_estimability_reason": null,
+      "replayed_pairwise_contrast_half_widths": {
+        "benefit_risk": {
+          "regimen_a|regimen_b": 0.026392338525017066,
+          "regimen_a|regimen_c": 0.022876200742024656,
+          "regimen_b|regimen_c": 0.0243743063076938
+        },
+        "cost_effective_best": {
+          "regimen_a|regimen_b": 0.018071134024016413,
+          "regimen_a|regimen_c": 0.015838381424333286,
+          "regimen_b|regimen_c": 0.016734040015327658
+        },
+        "net_clinical_value_under_budget": {
+          "regimen_a|regimen_b": 0.025868054619541198,
+          "regimen_a|regimen_c": 0.022612192399452228,
+          "regimen_b|regimen_c": 0.0239444315595804
+        },
+        "pure_efficacy": {
+          "regimen_a|regimen_b": 0.025026087686005546,
+          "regimen_a|regimen_c": 0.022243624550389654,
+          "regimen_b|regimen_c": 0.023110627403612242
+        }
+      },
+      "replayed_possibly_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "replayed_rankings": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "result_form": "point_estimates",
+      "status": "pass",
+      "uncertainty_estimator_id": "refitted_nuisance_participant_nonparametric_bootstrap",
+      "uncertainty_policy_match": true
+    },
+    {
+      "action_match": true,
+      "bootstrap_replicates": 500,
+      "candidate_results": [
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 1.451231163018818e-08,
+          "efficacy_gain_standard_error_absolute_error": 4.7600401063482844e-08,
+          "expected_efficacy_gain": 0.06352000308658978,
+          "expected_efficacy_gain_interval": [
+            0.04055768009364169,
+            0.08648232607953787
+          ],
+          "expected_efficacy_gain_standard_error": 0.011715686193252516,
+          "expected_utility": 0.009484953520416464,
+          "expected_utility_interval": [
+            -0.013756606736182217,
+            0.032726513777015145
+          ],
+          "expected_utility_standard_error": 0.011858156802841864,
+          "maximum_interval_endpoint_absolute_error": 1.2275871717412623e-07,
+          "objective_id": "benefit_risk",
+          "replayed_efficacy_gain": 0.06351998857427815,
+          "replayed_efficacy_gain_interval": [
+            0.04055757228625832,
+            0.08648240486229798
+          ],
+          "replayed_efficacy_gain_standard_error": 0.01171573379365358,
+          "replayed_utility": 0.009484932476399657,
+          "replayed_utility_interval": [
+            -0.013756729494899391,
+            0.03272659444769871
+          ],
+          "replayed_utility_standard_error": 0.011858208699050757,
+          "utility_absolute_error": 2.104401680691481e-08,
+          "utility_standard_error_absolute_error": 5.1896208892732165e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 3.493944000787508e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.5701600460799048e-08,
+          "expected_efficacy_gain": -0.0037166419118145333,
+          "expected_efficacy_gain_interval": [
+            -0.02581648598254185,
+            0.018383202158912784
+          ],
+          "expected_efficacy_gain_standard_error": 0.011275637840821603,
+          "expected_utility": -0.061825273808641945,
+          "expected_utility_interval": [
+            -0.08446929085405863,
+            -0.03918125676322526
+          ],
+          "expected_utility_standard_error": 0.01155328221540284,
+          "maximum_interval_endpoint_absolute_error": 7.744529317843529e-08,
+          "objective_id": "benefit_risk",
+          "replayed_efficacy_gain": -0.0037166069723745254,
+          "replayed_efficacy_gain_interval": [
+            -0.025816481817673244,
+            0.018383267872924193
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011275653542422064,
+          "replayed_utility": -0.061825237356984954,
+          "replayed_utility_interval": [
+            -0.08446929539603783,
+            -0.03918117931793208
+          ],
+          "replayed_utility_standard_error": 0.011553303130907671,
+          "utility_absolute_error": 3.645165699145414e-08,
+          "utility_standard_error_absolute_error": 2.0915504831547915e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 5.8456087193015094e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.9075985995681277e-08,
+          "expected_efficacy_gain": 0.00515094596754101,
+          "expected_efficacy_gain_interval": [
+            -0.01860271130214704,
+            0.02890460323722906
+          ],
+          "expected_efficacy_gain_standard_error": 0.012119435590170981,
+          "expected_utility": -0.07220543762489443,
+          "expected_utility_interval": [
+            -0.097111685491048,
+            -0.04729918975874085
+          ],
+          "expected_utility_standard_error": 0.012707502822812505,
+          "maximum_interval_endpoint_absolute_error": 1.0876573455775862e-07,
+          "objective_id": "benefit_risk",
+          "replayed_efficacy_gain": 0.005151004423628203,
+          "replayed_efficacy_gain_interval": [
+            -0.018602690234305372,
+            0.028904699081561777
+          ],
+          "replayed_efficacy_gain_standard_error": 0.012119454666156977,
+          "replayed_utility": -0.07220537910960008,
+          "replayed_utility_interval": [
+            -0.09711167722619386,
+            -0.047299080993006296
+          ],
+          "replayed_utility_standard_error": 0.012707528461263317,
+          "utility_absolute_error": 5.851529434608427e-08,
+          "utility_standard_error_absolute_error": 2.5638450812034974e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 1.451231163018818e-08,
+          "efficacy_gain_standard_error_absolute_error": 4.7600401063482844e-08,
+          "expected_efficacy_gain": 0.06352000308658978,
+          "expected_efficacy_gain_interval": [
+            0.04055768009364169,
+            0.08648232607953787
+          ],
+          "expected_efficacy_gain_standard_error": 0.011715686193252516,
+          "expected_utility": 0.06352000308658978,
+          "expected_utility_interval": [
+            0.04055768009364169,
+            0.08648232607953787
+          ],
+          "expected_utility_standard_error": 0.011715686193252516,
+          "maximum_interval_endpoint_absolute_error": 1.0780738336768625e-07,
+          "objective_id": "pure_efficacy",
+          "replayed_efficacy_gain": 0.06351998857427815,
+          "replayed_efficacy_gain_interval": [
+            0.04055757228625832,
+            0.08648240486229798
+          ],
+          "replayed_efficacy_gain_standard_error": 0.01171573379365358,
+          "replayed_utility": 0.06351998857427815,
+          "replayed_utility_interval": [
+            0.04055757228625832,
+            0.08648240486229798
+          ],
+          "replayed_utility_standard_error": 0.01171573379365358,
+          "utility_absolute_error": 1.451231163018818e-08,
+          "utility_standard_error_absolute_error": 4.7600401063482844e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 5.8456087193015094e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.9075985995681277e-08,
+          "expected_efficacy_gain": 0.00515094596754101,
+          "expected_efficacy_gain_interval": [
+            -0.01860271130214704,
+            0.02890460323722906
+          ],
+          "expected_efficacy_gain_standard_error": 0.012119435590170981,
+          "expected_utility": 0.00515094596754101,
+          "expected_utility_interval": [
+            -0.01860271130214704,
+            0.02890460323722906
+          ],
+          "expected_utility_standard_error": 0.012119435590170981,
+          "maximum_interval_endpoint_absolute_error": 9.584433271689341e-08,
+          "objective_id": "pure_efficacy",
+          "replayed_efficacy_gain": 0.005151004423628203,
+          "replayed_efficacy_gain_interval": [
+            -0.018602690234305372,
+            0.028904699081561777
+          ],
+          "replayed_efficacy_gain_standard_error": 0.012119454666156977,
+          "replayed_utility": 0.005151004423628203,
+          "replayed_utility_interval": [
+            -0.018602690234305372,
+            0.028904699081561777
+          ],
+          "replayed_utility_standard_error": 0.012119454666156977,
+          "utility_absolute_error": 5.8456087193015094e-08,
+          "utility_standard_error_absolute_error": 1.9075985995681277e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 3.493944000787508e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.5701600460799048e-08,
+          "expected_efficacy_gain": -0.0037166419118145333,
+          "expected_efficacy_gain_interval": [
+            -0.02581648598254185,
+            0.018383202158912784
+          ],
+          "expected_efficacy_gain_standard_error": 0.011275637840821603,
+          "expected_utility": -0.0037166419118145333,
+          "expected_utility_interval": [
+            -0.02581648598254185,
+            0.018383202158912784
+          ],
+          "expected_utility_standard_error": 0.011275637840821603,
+          "maximum_interval_endpoint_absolute_error": 6.571401140950672e-08,
+          "objective_id": "pure_efficacy",
+          "replayed_efficacy_gain": -0.0037166069723745254,
+          "replayed_efficacy_gain_interval": [
+            -0.025816481817673244,
+            0.018383267872924193
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011275653542422064,
+          "replayed_utility": -0.0037166069723745254,
+          "replayed_utility_interval": [
+            -0.025816481817673244,
+            0.018383267872924193
+          ],
+          "replayed_utility_standard_error": 0.011275653542422064,
+          "utility_absolute_error": 3.493944000787508e-08,
+          "utility_standard_error_absolute_error": 1.5701600460799048e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 1.451231163018818e-08,
+          "efficacy_gain_standard_error_absolute_error": 4.7600401063482844e-08,
+          "expected_efficacy_gain": 0.06352000308658978,
+          "expected_efficacy_gain_interval": [
+            0.04055768009364169,
+            0.08648232607953787
+          ],
+          "expected_efficacy_gain_standard_error": 0.011715686193252516,
+          "expected_utility": -0.052449453547857544,
+          "expected_utility_interval": [
+            -0.06863441166536274,
+            -0.036264495430352345
+          ],
+          "expected_utility_standard_error": 0.008257783431313068,
+          "maximum_interval_endpoint_absolute_error": 1.0780738336768625e-07,
+          "objective_id": "cost_effective_best",
+          "replayed_efficacy_gain": 0.06351998857427815,
+          "replayed_efficacy_gain_interval": [
+            0.04055757228625832,
+            0.08648240486229798
+          ],
+          "replayed_efficacy_gain_standard_error": 0.01171573379365358,
+          "replayed_utility": -0.052449467898240294,
+          "replayed_utility_interval": [
+            -0.06863449723788478,
+            -0.03626443855859581
+          ],
+          "replayed_utility_standard_error": 0.008257819769806963,
+          "utility_absolute_error": 1.4350382750161206e-08,
+          "utility_standard_error_absolute_error": 3.63384938945055e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 3.493944000787508e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.5701600460799048e-08,
+          "expected_efficacy_gain": -0.0037166419118145333,
+          "expected_efficacy_gain_interval": [
+            -0.02581648598254185,
+            0.018383202158912784
+          ],
+          "expected_efficacy_gain_standard_error": 0.011275637840821603,
+          "expected_utility": -0.08694487516096155,
+          "expected_utility_interval": [
+            -0.10264987723472793,
+            -0.07123987308719518
+          ],
+          "expected_utility_standard_error": 0.008012903399065205,
+          "maximum_interval_endpoint_absolute_error": 6.571401140950672e-08,
+          "objective_id": "cost_effective_best",
+          "replayed_efficacy_gain": -0.0037166069723745254,
+          "replayed_efficacy_gain_interval": [
+            -0.025816481817673244,
+            0.018383267872924193
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011275653542422064,
+          "replayed_utility": -0.08694485025873366,
+          "replayed_utility_interval": [
+            -0.10264987985687109,
+            -0.07123982066059624
+          ],
+          "replayed_utility_standard_error": 0.008012917442369705,
+          "utility_absolute_error": 2.4902227890866158e-08,
+          "utility_standard_error_absolute_error": 1.404330450018032e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 5.8456087193015094e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.9075985995681277e-08,
+          "expected_efficacy_gain": 0.00515094596754101,
+          "expected_efficacy_gain_interval": [
+            -0.01860271130214704,
+            0.02890460323722906
+          ],
+          "expected_efficacy_gain_standard_error": 0.012119435590170981,
+          "expected_utility": -0.11132010479394777,
+          "expected_utility_interval": [
+            -0.12844784050047153,
+            -0.09419236908742402
+          ],
+          "expected_utility_standard_error": 0.008738801244117314,
+          "maximum_interval_endpoint_absolute_error": 9.584433271689341e-08,
+          "objective_id": "cost_effective_best",
+          "replayed_efficacy_gain": 0.005151004423628203,
+          "replayed_efficacy_gain_interval": [
+            -0.018602690234305372,
+            0.028904699081561777
+          ],
+          "replayed_efficacy_gain_standard_error": 0.012119454666156977,
+          "replayed_utility": -0.1113200638701469,
+          "replayed_utility_interval": [
+            -0.12844783158167844,
+            -0.09419229615861537
+          ],
+          "replayed_utility_standard_error": 0.008738817573502975,
+          "utility_absolute_error": 4.0923800875836136e-08,
+          "utility_standard_error_absolute_error": 1.632938566135944e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_a",
+          "efficacy_gain_absolute_error": 1.451231163018818e-08,
+          "efficacy_gain_standard_error_absolute_error": 4.7600401063482844e-08,
+          "expected_efficacy_gain": 0.06352000308658978,
+          "expected_efficacy_gain_interval": [
+            0.04055768009364169,
+            0.08648232607953787
+          ],
+          "expected_efficacy_gain_standard_error": 0.011715686193252516,
+          "expected_utility": -0.04343426081828741,
+          "expected_utility_interval": [
+            -0.06655980052816578,
+            -0.020308721108409047
+          ],
+          "expected_utility_standard_error": 0.011798961558625403,
+          "maximum_interval_endpoint_absolute_error": 1.1986770911964761e-07,
+          "objective_id": "net_clinical_value_under_budget",
+          "replayed_efficacy_gain": 0.06351998857427815,
+          "replayed_efficacy_gain_interval": [
+            0.04055757228625832,
+            0.08648240486229798
+          ],
+          "replayed_efficacy_gain_standard_error": 0.01171573379365358,
+          "replayed_utility": -0.04343427974458619,
+          "replayed_utility_interval": [
+            -0.0665599203958749,
+            -0.02030863909329748
+          ],
+          "replayed_utility_standard_error": 0.011799013060291321,
+          "utility_absolute_error": 1.892629877819907e-08,
+          "utility_standard_error_absolute_error": 5.1501665918052275e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_c",
+          "efficacy_gain_absolute_error": 3.493944000787508e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.5701600460799048e-08,
+          "expected_efficacy_gain": -0.0037166419118145333,
+          "expected_efficacy_gain_interval": [
+            -0.02581648598254185,
+            0.018383202158912784
+          ],
+          "expected_efficacy_gain_standard_error": 0.011275637840821603,
+          "expected_utility": -0.09848092368862155,
+          "expected_utility_interval": [
+            -0.12093636777258263,
+            -0.07602547960466047
+          ],
+          "expected_utility_standard_error": 0.011457069752856057,
+          "maximum_interval_endpoint_absolute_error": 7.530365439545328e-08,
+          "objective_id": "net_clinical_value_under_budget",
+          "replayed_efficacy_gain": -0.0037166069723745254,
+          "replayed_efficacy_gain_interval": [
+            -0.025816481817673244,
+            0.018383267872924193
+          ],
+          "replayed_efficacy_gain_standard_error": 0.011275653542422064,
+          "replayed_utility": -0.09848088805147279,
+          "replayed_utility_interval": [
+            -0.1209363718019395,
+            -0.07602540430100607
+          ],
+          "replayed_utility_standard_error": 0.011457089991241022,
+          "utility_absolute_error": 3.563714875975954e-08,
+          "utility_standard_error_absolute_error": 2.0238384964427203e-08,
+          "within_tolerance": true
+        },
+        {
+          "candidate_drug_id": "regimen_b",
+          "efficacy_gain_absolute_error": 5.8456087193015094e-08,
+          "efficacy_gain_standard_error_absolute_error": 1.9075985995681277e-08,
+          "expected_efficacy_gain": 0.00515094596754101,
+          "expected_efficacy_gain_interval": [
+            -0.01860271130214704,
+            0.02890460323722906
+          ],
+          "expected_efficacy_gain_standard_error": 0.012119435590170981,
+          "expected_utility": -0.12485655855961161,
+          "expected_utility_interval": [
+            -0.1493688815232677,
+            -0.10034423559595555
+          ],
+          "expected_utility_standard_error": 0.012506517036540541,
+          "maximum_interval_endpoint_absolute_error": 1.0592709263901323e-07,
+          "objective_id": "net_clinical_value_under_budget",
+          "replayed_efficacy_gain": 0.005151004423628203,
+          "replayed_efficacy_gain_interval": [
+            -0.018602690234305372,
+            0.028904699081561777
+          ],
+          "replayed_efficacy_gain_standard_error": 0.012119454666156977,
+          "replayed_utility": -0.12485650010028015,
+          "replayed_utility_interval": [
+            -0.1493688705316974,
+            -0.10034412966886291
+          ],
+          "replayed_utility_standard_error": 0.012506541255231063,
+          "utility_absolute_error": 5.845933145898208e-08,
+          "utility_standard_error_absolute_error": 2.4218690521798925e-08,
+          "within_tolerance": true
+        }
+      ],
+      "confidence_level": 0.95,
+      "estimator_id": "entropy_balanced_standardized_aalen_johansen",
+      "expected_acceptable_utility_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "expected_actions": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "expected_definitely_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "expected_non_estimability_reason": null,
+      "expected_pairwise_contrast_half_widths": {
+        "benefit_risk": {
+          "regimen_a|regimen_b": 0.02655290399328181,
+          "regimen_a|regimen_c": 0.02312355137838211,
+          "regimen_b|regimen_c": 0.024409796617445856
+        },
+        "cost_effective_best": {
+          "regimen_a|regimen_b": 0.018202766990604913,
+          "regimen_a|regimen_c": 0.01603797235269077,
+          "regimen_b|regimen_c": 0.0167788726525873
+        },
+        "net_clinical_value_under_budget": {
+          "regimen_a|regimen_b": 0.026037704195306592,
+          "regimen_a|regimen_c": 0.022899261447318877,
+          "regimen_b|regimen_c": 0.023998246646292576
+        },
+        "pure_efficacy": {
+          "regimen_a|regimen_b": 0.02521015032751678,
+          "regimen_a|regimen_c": 0.02260016586815411,
+          "regimen_b|regimen_c": 0.02322445478194845
+        }
+      },
+      "expected_possibly_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "expected_rankings": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "maximum_efficacy_gain_absolute_error": 5.8456087193015094e-08,
+      "maximum_interval_endpoint_absolute_error": 1.2275871717412623e-07,
+      "maximum_pairwise_contrast_absolute_error": 2.7822592927467804e-08,
+      "maximum_standard_error_absolute_error": 5.1896208892732165e-08,
+      "maximum_utility_absolute_error": 5.851529434608427e-08,
+      "method_route_id": "trialdev.observational.entropy_balanced_standardized_aalen_johansen.v1",
+      "non_estimability_match": true,
+      "ranking_match": true,
+      "replayed_acceptable_utility_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "replayed_actions": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "replayed_definitely_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a"
+        ],
+        "cost_effective_best": [
+          "regimen_a"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a"
+        ],
+        "pure_efficacy": [
+          "regimen_a"
+        ]
+      },
+      "replayed_non_estimability_reason": null,
+      "replayed_pairwise_contrast_half_widths": {
+        "benefit_risk": {
+          "regimen_a|regimen_b": 0.026552884595561144,
+          "regimen_a|regimen_c": 0.023123554030924167,
+          "regimen_b|regimen_c": 0.02440978452667788
+        },
+        "cost_effective_best": {
+          "regimen_a|regimen_b": 0.018202751291308484,
+          "regimen_a|regimen_c": 0.01603797124208548,
+          "regimen_b|regimen_c": 0.016778862739323788
+        },
+        "net_clinical_value_under_budget": {
+          "regimen_a|regimen_b": 0.02603768393293724,
+          "regimen_a|regimen_c": 0.022899262608684787,
+          "regimen_b|regimen_c": 0.023998233662328332
+        },
+        "pure_efficacy": {
+          "regimen_a|regimen_b": 0.025210122504923854,
+          "regimen_a|regimen_c": 0.022600159497716477,
+          "regimen_b|regimen_c": 0.023224440244148357
+        }
+      },
+      "replayed_possibly_qualified_sets": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "replayed_rankings": {
+        "benefit_risk": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "cost_effective_best": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "net_clinical_value_under_budget": [
+          "regimen_a",
+          "regimen_c",
+          "regimen_b"
+        ],
+        "pure_efficacy": [
+          "regimen_a",
+          "regimen_b",
+          "regimen_c"
+        ]
+      },
+      "result_form": "point_estimates",
+      "status": "pass",
+      "uncertainty_estimator_id": "refitted_nuisance_participant_nonparametric_bootstrap",
+      "uncertainty_policy_match": true
+    }
+  ],
+  "public_input_checksums_match": true,
+  "scenario_id": "portfolio-world-12",
+  "schema_id": "trialagentbench.trialdev_observational_replay/v1",
+  "status": "pass"
+}

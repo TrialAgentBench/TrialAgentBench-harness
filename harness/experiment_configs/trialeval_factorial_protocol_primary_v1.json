@@ -1,0 +1,43 @@
+{
+  "bootstrap_resamples": 10000,
+  "bootstrap_seed": 8675309,
+  "checksum": "52b5dbcaef1feec0da77bfe4e8286daa6d7a811c943fc4f6b542ec930422ae5a",
+  "confidence_level": 0.95,
+  "denominator_policy": "all_scheduled_assignments_noncompletion_is_failure",
+  "design": "factorial_interface",
+  "execution_scope": "publication",
+  "experiment_design_sha256": "fca53ba46786e90f04381698df80eed49bb30f0de924f14a69df07517253ba8a",
+  "min_base_trial_clusters": 100,
+  "min_decoding_replicates": 2,
+  "multiplicity_policy": "single_primary_estimand_supporting_descriptive",
+  "primary_estimand": {
+    "analysis_specification": "protocol_only",
+    "applicability": null,
+    "contrast_id": "P2-P0",
+    "metric": "primary_analysis_conforms",
+    "prompt_condition": null
+  },
+  "schema_id": "trialagentbench.trialeval_ablation_analysis_config/v1",
+  "supporting_metrics": [
+    "usable_primary",
+    "route_match",
+    "obligations_met",
+    "numeric_result_available",
+    "result_match",
+    "numeric_absolute_error",
+    "numeric_tolerance_ratio",
+    "primary_uncertainty_valid",
+    "primary_interval_agreement",
+    "planning_valid",
+    "planning_usable_with_primary",
+    "planning_achieved_power",
+    "planning_power_shortfall",
+    "planning_underpowered",
+    "planning_proportional_participant_deviation",
+    "planning_log_sample_size_ratio",
+    "planning_event_shortage",
+    "planning_excess_events",
+    "planning_excess_participants",
+    "planning_participant_shortage"
+  ]
+}

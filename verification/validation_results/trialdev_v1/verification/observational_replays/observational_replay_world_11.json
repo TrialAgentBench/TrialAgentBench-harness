@@ -1,0 +1,227 @@
+{
+  "absolute_tolerance": 0.0001,
+  "methods": [
+    {
+      "action_match": true,
+      "bootstrap_replicates": 500,
+      "candidate_results": [],
+      "confidence_level": 0.95,
+      "estimator_id": "multinomial_propensity_weighted_stratified_aalen_johansen",
+      "expected_acceptable_utility_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "expected_actions": {
+        "benefit_risk": [
+          "withhold_nomination"
+        ],
+        "cost_effective_best": [
+          "withhold_nomination"
+        ],
+        "net_clinical_value_under_budget": [
+          "withhold_nomination"
+        ],
+        "pure_efficacy": [
+          "withhold_nomination"
+        ]
+      },
+      "expected_definitely_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "expected_non_estimability_reason": "residual_unmeasured_confounding",
+      "expected_pairwise_contrast_half_widths": {
+        "benefit_risk": {},
+        "cost_effective_best": {},
+        "net_clinical_value_under_budget": {},
+        "pure_efficacy": {}
+      },
+      "expected_possibly_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "expected_rankings": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "maximum_efficacy_gain_absolute_error": 0.0,
+      "maximum_interval_endpoint_absolute_error": 0.0,
+      "maximum_pairwise_contrast_absolute_error": 0.0,
+      "maximum_standard_error_absolute_error": 0.0,
+      "maximum_utility_absolute_error": 0.0,
+      "method_route_id": "trialdev.observational.multinomial_propensity_weighted_stratified_aalen_johansen.v1",
+      "non_estimability_match": true,
+      "ranking_match": true,
+      "replayed_acceptable_utility_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "replayed_actions": {
+        "benefit_risk": [
+          "withhold_nomination"
+        ],
+        "cost_effective_best": [
+          "withhold_nomination"
+        ],
+        "net_clinical_value_under_budget": [
+          "withhold_nomination"
+        ],
+        "pure_efficacy": [
+          "withhold_nomination"
+        ]
+      },
+      "replayed_definitely_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "replayed_non_estimability_reason": "residual_unmeasured_confounding",
+      "replayed_pairwise_contrast_half_widths": {
+        "benefit_risk": {},
+        "cost_effective_best": {},
+        "net_clinical_value_under_budget": {},
+        "pure_efficacy": {}
+      },
+      "replayed_possibly_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "replayed_rankings": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "result_form": "qualified_non_nomination",
+      "status": "pass",
+      "uncertainty_estimator_id": "refitted_nuisance_participant_nonparametric_bootstrap",
+      "uncertainty_policy_match": true
+    },
+    {
+      "action_match": true,
+      "bootstrap_replicates": 500,
+      "candidate_results": [],
+      "confidence_level": 0.95,
+      "estimator_id": "entropy_balanced_standardized_aalen_johansen",
+      "expected_acceptable_utility_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "expected_actions": {
+        "benefit_risk": [
+          "withhold_nomination"
+        ],
+        "cost_effective_best": [
+          "withhold_nomination"
+        ],
+        "net_clinical_value_under_budget": [
+          "withhold_nomination"
+        ],
+        "pure_efficacy": [
+          "withhold_nomination"
+        ]
+      },
+      "expected_definitely_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "expected_non_estimability_reason": "residual_unmeasured_confounding",
+      "expected_pairwise_contrast_half_widths": {
+        "benefit_risk": {},
+        "cost_effective_best": {},
+        "net_clinical_value_under_budget": {},
+        "pure_efficacy": {}
+      },
+      "expected_possibly_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "expected_rankings": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "maximum_efficacy_gain_absolute_error": 0.0,
+      "maximum_interval_endpoint_absolute_error": 0.0,
+      "maximum_pairwise_contrast_absolute_error": 0.0,
+      "maximum_standard_error_absolute_error": 0.0,
+      "maximum_utility_absolute_error": 0.0,
+      "method_route_id": "trialdev.observational.entropy_balanced_standardized_aalen_johansen.v1",
+      "non_estimability_match": true,
+      "ranking_match": true,
+      "replayed_acceptable_utility_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "replayed_actions": {
+        "benefit_risk": [
+          "withhold_nomination"
+        ],
+        "cost_effective_best": [
+          "withhold_nomination"
+        ],
+        "net_clinical_value_under_budget": [
+          "withhold_nomination"
+        ],
+        "pure_efficacy": [
+          "withhold_nomination"
+        ]
+      },
+      "replayed_definitely_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "replayed_non_estimability_reason": "residual_unmeasured_confounding",
+      "replayed_pairwise_contrast_half_widths": {
+        "benefit_risk": {},
+        "cost_effective_best": {},
+        "net_clinical_value_under_budget": {},
+        "pure_efficacy": {}
+      },
+      "replayed_possibly_qualified_sets": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "replayed_rankings": {
+        "benefit_risk": [],
+        "cost_effective_best": [],
+        "net_clinical_value_under_budget": [],
+        "pure_efficacy": []
+      },
+      "result_form": "qualified_non_nomination",
+      "status": "pass",
+      "uncertainty_estimator_id": "refitted_nuisance_participant_nonparametric_bootstrap",
+      "uncertainty_policy_match": true
+    }
+  ],
+  "public_input_checksums_match": true,
+  "scenario_id": "portfolio-world-11",
+  "schema_id": "trialagentbench.trialdev_observational_replay/v1",
+  "status": "pass"
+}

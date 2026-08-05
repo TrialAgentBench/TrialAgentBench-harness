@@ -1,0 +1,468 @@
+{
+  "schema_id": "trialagentbench.validation.trialdev_portfolio_routes/v1",
+  "release_source_identity": "661efc9100dd684f893c54aa1d648ddb81f1e06d1367113a80e496396ad5fbc3",
+  "participant_view_count": 96,
+  "evaluated_state_count": 750,
+  "terminal_route_count": 327,
+  "supported_action_ids": [
+    "advance_active_to_confirmation",
+    "advance_lead_to_proof_of_concept",
+    "declare_failure",
+    "declare_inconclusive",
+    "declare_success",
+    "promote_reserve_to_proof_of_concept",
+    "select_lead_and_reserve",
+    "terminate_portfolio",
+    "withhold_selection"
+  ],
+  "reached_checkpoint_ids": [
+    "confirmation",
+    "joint_early_study_review",
+    "lead_proof_of_concept_review",
+    "observational_review",
+    "promoted_reserve_proof_of_concept_review"
+  ],
+  "terminal_dispositions": [
+    "failure",
+    "inconclusive",
+    "stopped",
+    "success",
+    "withheld"
+  ],
+  "independent_action_ids": [
+    "advance_active_to_confirmation",
+    "advance_lead_to_proof_of_concept",
+    "declare_failure",
+    "declare_inconclusive",
+    "declare_success",
+    "promote_reserve_to_proof_of_concept",
+    "select_lead_and_reserve",
+    "terminate_portfolio",
+    "withhold_selection"
+  ],
+  "independent_comparison_count": 846,
+  "independent_discrepancy_count": 0,
+  "nonidentified_view_count": 8,
+  "identified_withholding_only_view_count": 16,
+  "multiple_initial_action_view_count": 56,
+  "multiple_randomized_action_state_count": 258,
+  "safety_exclusion_state_count": 47,
+  "joint_safety_stop_state_count": 10,
+  "early_reserve_promotion_route_count": 66,
+  "late_reserve_promotion_route_count": 66,
+  "promoted_reserve_confirmation_route_count": 86,
+  "promoted_reserve_stop_route_count": 127,
+  "budget_contrast_world_objectives": [
+    "portfolio-world-01:cost_effective_best",
+    "portfolio-world-01:net_clinical_value_under_budget",
+    "portfolio-world-01:pure_efficacy",
+    "portfolio-world-02:benefit_risk",
+    "portfolio-world-02:cost_effective_best",
+    "portfolio-world-02:net_clinical_value_under_budget",
+    "portfolio-world-02:pure_efficacy",
+    "portfolio-world-03:benefit_risk",
+    "portfolio-world-03:cost_effective_best",
+    "portfolio-world-03:net_clinical_value_under_budget",
+    "portfolio-world-03:pure_efficacy",
+    "portfolio-world-07:benefit_risk",
+    "portfolio-world-07:cost_effective_best",
+    "portfolio-world-07:net_clinical_value_under_budget",
+    "portfolio-world-07:pure_efficacy",
+    "portfolio-world-08:benefit_risk",
+    "portfolio-world-08:cost_effective_best",
+    "portfolio-world-08:net_clinical_value_under_budget",
+    "portfolio-world-08:pure_efficacy",
+    "portfolio-world-09:benefit_risk",
+    "portfolio-world-09:cost_effective_best",
+    "portfolio-world-09:net_clinical_value_under_budget",
+    "portfolio-world-09:pure_efficacy",
+    "portfolio-world-12:benefit_risk",
+    "portfolio-world-12:cost_effective_best",
+    "portfolio-world-12:net_clinical_value_under_budget",
+    "portfolio-world-12:pure_efficacy"
+  ],
+  "families": [
+    {
+      "family_id": "P01_reference_allocation",
+      "world_id": "portfolio-world-01",
+      "participant_view_count": 8,
+      "state_count_min": 7,
+      "state_count_max": 13,
+      "terminal_route_count_min": 1,
+      "terminal_route_count_max": 4,
+      "supported_action_ids": [
+        "advance_active_to_confirmation",
+        "advance_lead_to_proof_of_concept",
+        "declare_inconclusive",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio"
+      ],
+      "reached_checkpoint_ids": [
+        "confirmation",
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "inconclusive",
+        "stopped"
+      ],
+      "initial_supported_pair_count_min": 2,
+      "initial_supported_pair_count_max": 3,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P02_multiple_supported_pairs",
+      "world_id": "portfolio-world-02",
+      "participant_view_count": 8,
+      "state_count_min": 7,
+      "state_count_max": 11,
+      "terminal_route_count_min": 2,
+      "terminal_route_count_max": 5,
+      "supported_action_ids": [
+        "advance_active_to_confirmation",
+        "advance_lead_to_proof_of_concept",
+        "declare_failure",
+        "declare_inconclusive",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio"
+      ],
+      "reached_checkpoint_ids": [
+        "confirmation",
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "failure",
+        "inconclusive",
+        "stopped"
+      ],
+      "initial_supported_pair_count_min": 2,
+      "initial_supported_pair_count_max": 2,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P03_early_safety_uncertainty",
+      "world_id": "portfolio-world-03",
+      "participant_view_count": 8,
+      "state_count_min": 4,
+      "state_count_max": 9,
+      "terminal_route_count_min": 3,
+      "terminal_route_count_max": 4,
+      "supported_action_ids": [
+        "advance_lead_to_proof_of_concept",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio"
+      ],
+      "reached_checkpoint_ids": [
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "stopped"
+      ],
+      "initial_supported_pair_count_min": 1,
+      "initial_supported_pair_count_max": 2,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P04_shared_class_safety_stop",
+      "world_id": "portfolio-world-04",
+      "participant_view_count": 8,
+      "state_count_min": 2,
+      "state_count_max": 3,
+      "terminal_route_count_min": 1,
+      "terminal_route_count_max": 1,
+      "supported_action_ids": [
+        "select_lead_and_reserve",
+        "terminate_portfolio"
+      ],
+      "reached_checkpoint_ids": [
+        "joint_early_study_review",
+        "observational_review"
+      ],
+      "terminal_dispositions": [
+        "stopped"
+      ],
+      "initial_supported_pair_count_min": 1,
+      "initial_supported_pair_count_max": 2,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 10
+    },
+    {
+      "family_id": "P05_single_plausible_asset",
+      "world_id": "portfolio-world-05",
+      "participant_view_count": 8,
+      "state_count_min": 1,
+      "state_count_max": 1,
+      "terminal_route_count_min": 1,
+      "terminal_route_count_max": 1,
+      "supported_action_ids": [
+        "withhold_selection"
+      ],
+      "reached_checkpoint_ids": [
+        "observational_review"
+      ],
+      "terminal_dispositions": [
+        "withheld"
+      ],
+      "initial_supported_pair_count_min": 0,
+      "initial_supported_pair_count_max": 0,
+      "selection_supported_view_count": 0,
+      "withholding_only_view_count": 8,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P06_no_plausible_asset",
+      "world_id": "portfolio-world-06",
+      "participant_view_count": 8,
+      "state_count_min": 1,
+      "state_count_max": 1,
+      "terminal_route_count_min": 1,
+      "terminal_route_count_max": 1,
+      "supported_action_ids": [
+        "withhold_selection"
+      ],
+      "reached_checkpoint_ids": [
+        "observational_review"
+      ],
+      "terminal_dispositions": [
+        "withheld"
+      ],
+      "initial_supported_pair_count_min": 0,
+      "initial_supported_pair_count_max": 0,
+      "selection_supported_view_count": 0,
+      "withholding_only_view_count": 8,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P07_lead_interval_indeterminate",
+      "world_id": "portfolio-world-07",
+      "participant_view_count": 8,
+      "state_count_min": 10,
+      "state_count_max": 31,
+      "terminal_route_count_min": 4,
+      "terminal_route_count_max": 10,
+      "supported_action_ids": [
+        "advance_active_to_confirmation",
+        "advance_lead_to_proof_of_concept",
+        "declare_failure",
+        "declare_inconclusive",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio",
+        "withhold_selection"
+      ],
+      "reached_checkpoint_ids": [
+        "confirmation",
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "failure",
+        "inconclusive",
+        "stopped",
+        "withheld"
+      ],
+      "initial_supported_pair_count_min": 3,
+      "initial_supported_pair_count_max": 6,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P08_budget_contrast",
+      "world_id": "portfolio-world-08",
+      "participant_view_count": 8,
+      "state_count_min": 8,
+      "state_count_max": 26,
+      "terminal_route_count_min": 4,
+      "terminal_route_count_max": 6,
+      "supported_action_ids": [
+        "advance_active_to_confirmation",
+        "advance_lead_to_proof_of_concept",
+        "declare_inconclusive",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio"
+      ],
+      "reached_checkpoint_ids": [
+        "confirmation",
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "inconclusive",
+        "stopped"
+      ],
+      "initial_supported_pair_count_min": 2,
+      "initial_supported_pair_count_max": 6,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P09_promoted_reserve_futility",
+      "world_id": "portfolio-world-09",
+      "participant_view_count": 8,
+      "state_count_min": 11,
+      "state_count_max": 33,
+      "terminal_route_count_min": 8,
+      "terminal_route_count_max": 11,
+      "supported_action_ids": [
+        "advance_active_to_confirmation",
+        "advance_lead_to_proof_of_concept",
+        "declare_failure",
+        "declare_inconclusive",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio",
+        "withhold_selection"
+      ],
+      "reached_checkpoint_ids": [
+        "confirmation",
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "failure",
+        "inconclusive",
+        "stopped",
+        "withheld"
+      ],
+      "initial_supported_pair_count_min": 2,
+      "initial_supported_pair_count_max": 6,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P10_stable_lead_confirmation",
+      "world_id": "portfolio-world-10",
+      "participant_view_count": 8,
+      "state_count_min": 6,
+      "state_count_max": 10,
+      "terminal_route_count_min": 3,
+      "terminal_route_count_max": 3,
+      "supported_action_ids": [
+        "advance_active_to_confirmation",
+        "advance_lead_to_proof_of_concept",
+        "declare_inconclusive",
+        "declare_success",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio"
+      ],
+      "reached_checkpoint_ids": [
+        "confirmation",
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "inconclusive",
+        "stopped",
+        "success"
+      ],
+      "initial_supported_pair_count_min": 1,
+      "initial_supported_pair_count_max": 2,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P11_residual_confounding_nonreach",
+      "world_id": "portfolio-world-11",
+      "participant_view_count": 8,
+      "state_count_min": 1,
+      "state_count_max": 1,
+      "terminal_route_count_min": 1,
+      "terminal_route_count_max": 1,
+      "supported_action_ids": [
+        "withhold_selection"
+      ],
+      "reached_checkpoint_ids": [
+        "observational_review"
+      ],
+      "terminal_dispositions": [
+        "withheld"
+      ],
+      "initial_supported_pair_count_min": 0,
+      "initial_supported_pair_count_max": 0,
+      "selection_supported_view_count": 0,
+      "withholding_only_view_count": 8,
+      "nonidentified_view_count": 8,
+      "joint_safety_stop_state_count": 0
+    },
+    {
+      "family_id": "P12_restricted_design_menu",
+      "world_id": "portfolio-world-12",
+      "participant_view_count": 8,
+      "state_count_min": 4,
+      "state_count_max": 11,
+      "terminal_route_count_min": 2,
+      "terminal_route_count_max": 4,
+      "supported_action_ids": [
+        "advance_active_to_confirmation",
+        "advance_lead_to_proof_of_concept",
+        "declare_failure",
+        "declare_inconclusive",
+        "promote_reserve_to_proof_of_concept",
+        "select_lead_and_reserve",
+        "terminate_portfolio"
+      ],
+      "reached_checkpoint_ids": [
+        "confirmation",
+        "joint_early_study_review",
+        "lead_proof_of_concept_review",
+        "observational_review",
+        "promoted_reserve_proof_of_concept_review"
+      ],
+      "terminal_dispositions": [
+        "failure",
+        "inconclusive",
+        "stopped"
+      ],
+      "initial_supported_pair_count_min": 1,
+      "initial_supported_pair_count_max": 2,
+      "selection_supported_view_count": 8,
+      "withholding_only_view_count": 0,
+      "nonidentified_view_count": 0,
+      "joint_safety_stop_state_count": 0
+    }
+  ],
+  "findings": [],
+  "status": "pass"
+}

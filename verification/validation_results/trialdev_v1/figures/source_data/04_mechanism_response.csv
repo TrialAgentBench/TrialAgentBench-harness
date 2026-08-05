@@ -1,0 +1,5 @@
+experiment_id,axis,primary_metric,world_count,reference_mean,reference_lower,reference_upper,intervention_mean,intervention_lower,intervention_upper,paired_difference,paired_bootstrap_lower,paired_bootstrap_upper,expected_direction
+efficacy_response,efficacy,progression_supported,400,0.3125,0.2690415608130786,0.3595255495622825,1.0,0.9904877056657034,1.0,0.6875,0.64,0.735,increase
+safety_response,safety,progression_supported,400,1.0,0.9904877056657034,1.0,0.0,0.0,0.0095122943342965,-1.0,-1.0,-1.0,decrease
+operations_response,operations,operational_success,400,0.795,0.7527205845205713,0.8316671618221938,0.225,0.1868047408249817,0.2684270210588814,-0.57,-0.6175,-0.5225,decrease
+asset_correlation_response,asset_correlation,asset_standardized_cross_product,400,-0.0262580157897126,-0.1162060345276114,0.0650359355016434,0.6718128921181896,0.5575088400916678,0.7925491801610797,0.6980709079079023,0.6013443893336042,0.799013627696856,increase
