@@ -1,0 +1,5 @@
+world,candidates,benefit_class,design,repeat,policy,decision,approved,outcome_difference,safety_difference,patients,cost_usd,elapsed_days,benefit_usd,safety_cost_usd,delay_cost_usd,value_usd,complete
+tdw-70ff3604b8a7,5,effective,staged,1,fixed,advance,True,-0.6934374999999999,-0.0034374999999999,1040,38494800.0,920.0,973615228.2478148,-40219947.08850065,13800000.0,961540375.3363156,True
+tdw-70ff3604b8a7,5,effective,staged,1,responsive,stop,False,-0.6934374999999999,-0.0034374999999999,20,1653600.0,150.0,0.0,0.0,2250000.0,-3903600.0,True
+tdw-84fc2dcd0306,5,harmful,staged,1,fixed,advance,False,0.2983125000000002,0.020625,1040,38494800.0,920.0,0.0,0.0,13800000.0,-52294800.0,True
+tdw-84fc2dcd0306,5,harmful,staged,1,responsive,stop,False,0.2983125000000002,0.020625,20,1653600.0,150.0,0.0,0.0,2250000.0,-3903600.0,True

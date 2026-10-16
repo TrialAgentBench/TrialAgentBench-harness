@@ -1,0 +1,13 @@
+{
+  "schema_id": "ariadne.trialeval.data_quality_plan/v1",
+  "task_id": "te_00000000000000000000",
+  "domains": [
+    {
+      "relative_path": "data/raw/endpoint_observations.parquet",
+      "compound_key_fields": [
+        "participant_id"
+      ]
+    }
+  ],
+  "primary_analysis_domain": "data/raw/endpoint_observations.parquet"
+}

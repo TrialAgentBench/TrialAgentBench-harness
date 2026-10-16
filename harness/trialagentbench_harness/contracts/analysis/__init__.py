@@ -1,1 +1,0 @@
-"""TrialAgentBench harness analysis contracts."""

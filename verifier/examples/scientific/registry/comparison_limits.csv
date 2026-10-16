@@ -1,0 +1,7 @@
+metric,registry_quantity,native_quantity,status,reason
+Study duration,Registered primary-completion date minus start date,Individual assessment horizon,not_compared,Primary completion includes accrual and follow-up; assessment time is measured from individual enrollment.
+Study noncompletion,One minus completed/started in posted participant flow,Unavailable final endpoint,not_compared,Noncompletion and missing measurements are different events; oncology flow can include death and progression.
+Serious adverse events,Participant incidence during the registered adverse-event window,Recorded events during native clinical follow-up,not_compared,"Exposure windows, event definitions and safety ascertainment are not aligned."
+Control endpoint and treatment effect,"Heterogeneous posted endpoint values, units, time windows and analysis populations","Family-specific risk, restricted mean time, terminal outcome or rate contrast",not_compared,No source-level adjudication aligns each registry estimand to the native target; proportional-hazard effects cannot validate marginal risk or time contrasts.
+Patient case mix,Aggregate trial registry,Generated participant-level baseline distributions and dependence,not_compared,The registry projection has no matching joint participant distributions; demographic or dependence realism is not evaluated.
+Causal truth and transportability,Observed registered trial results,Known-law synthetic targets,not_compared,The calibration source cannot validate synthetic causal truth or establish transfer to real-world patients.

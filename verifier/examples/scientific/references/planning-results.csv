@@ -1,0 +1,4 @@
+"request_id","method","unit","candidate_information","reference_information","relative_difference","relative_tolerance","passed","R_version"
+"continuous","stats::power.t.test","total participants",243,245,0.00816326530612245,0.02,TRUE,"4.5.1"
+"binary","stats::power.prop.test","total participants",1806,1811,0.00276090557702927,0.005,TRUE,"4.5.1"
+"survival","Schoenfeld event identity","primary events",508,508,0,0,TRUE,"4.5.1"

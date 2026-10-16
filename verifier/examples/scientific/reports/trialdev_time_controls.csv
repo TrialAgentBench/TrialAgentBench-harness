@@ -1,0 +1,12 @@
+study_id,phase,target_follow_up_days,source_study_id,source_follow_up_days,method,status,observed_active,observed_control,estimate,lower,upper,finite_outcome_reference,error,clinical_loss
+early_safety,early_safety,28,early_safety,28.0,scheduled_visit,estimated,10,10,0.4530000000000003,-0.7399561056494366,1.6459561056494372,-0.204108333333334,0.6571083333333343,1.521510272316104
+early_safety,early_safety,28,early_safety,0.0,baseline_as_followup,estimated,9,8,1.1140277777777765,0.11803325571988998,2.110022299835663,-0.204108333333334,1.3181361111111105,8.097894358677921
+early_safety,early_safety,28,early_safety,,programme_clock_as_duration,insufficient_observations,0,0,,,,-0.204108333333334,,
+exploration,exploration,84,exploration,84.0,scheduled_visit,estimated,57,57,-0.7103508771929818,-1.295988143328977,-0.12471361105698653,-0.43520416666666684,-0.275146710526315,0.7232106213991527
+exploration,exploration,84,exploration,0.0,baseline_as_followup,estimated,59,58,-0.12017533606078334,-0.522772724081863,0.28242205196029635,-0.43520416666666684,0.3150288306058835,0.5601118033240214
+exploration,exploration,84,exploration,,programme_clock_as_duration,insufficient_observations,0,0,,,,-0.43520416666666684,,
+exploration,exploration,84,early_safety,28.0,previous_study,estimated,10,10,0.4530000000000003,-0.7399561056494366,1.6459561056494372,-0.43520416666666684,0.8882041666666671,1.6370581889827704
+confirmation,confirmation,168,confirmation,168.0,scheduled_visit,estimated,287,292,-0.6467355973461881,-0.898073939558498,-0.3953972551338782,-0.4979708333333335,-0.14876476401285466,0.3257207242187372
+confirmation,confirmation,168,confirmation,0.0,baseline_as_followup,estimated,296,296,-0.07594594594594639,-0.2445561659235539,0.09266427403166111,-0.4979708333333335,0.4220248873873871,5.4479160118668934
+confirmation,confirmation,168,confirmation,,programme_clock_as_duration,insufficient_observations,0,0,,,,-0.4979708333333335,,
+confirmation,confirmation,168,exploration,84.0,previous_study,estimated,57,57,-0.7103508771929818,-1.295988143328977,-0.12471361105698653,-0.4979708333333335,-0.21238004385964837,0.6918272880658194

@@ -1,0 +1,8 @@
+sequence,action,study_id,programme_day,follow_up_days,planned_patients,enrolled_to_date,available_outcomes,study_cost_usd,overhead_usd,total_cost_usd,committed_followup_usd,budget_remaining_usd,estimate,lower,upper,response
+0,start_study,early_safety,0.0,28,20,0,0,1300000.0,0.0,1300000.0,0.0,48700000.0,,,,Open 6 sites; recruit 20 patients; assess at Day 28.
+1,readout,early_safety,150.0,28,20,20,20,1653600.0,2250000.0,3903600.0,0.0,48346400.0,0.4530000000000003,-0.7399561056494366,1.6459561056494372,20 observed outcomes; treatment minus control +0.45 DAS28 points.
+2,start_study,exploration,150.0,84,120,20,20,5153600.0,2250000.0,7403600.0,0.0,44846400.0,,,,Open 20 sites; recruit 120 patients; assess at Day 84.
+3,readout,exploration,400.0,84,120,140,134,7296800.0,6000000.0,13296800.0,0.0,42703200.0,-0.7103508771929818,-1.295988143328977,-0.1247136110569865,114 observed outcomes; treatment minus control -0.71 DAS28 points.
+4,start_study,confirmation,400.0,168,600,140,134,15296800.0,6000000.0,21296800.0,0.0,34703200.0,,,,Open 40 sites; recruit 600 patients; assess at Day 168.
+5,readout,confirmation,810.0,168,600,740,713,30128800.0,12150000.0,42278800.0,0.0,19871200.0,-0.6467355973461881,-0.898073939558498,-0.3953972551338782,579 observed outcomes; treatment minus control -0.65 DAS28 points.
+6,advance,programme,810.0,168,600,740,713,30128800.0,12150000.0,42278800.0,0.0,19871200.0,,,,Submit the candidate; confirmation evidence meets the simulator's approval rule.

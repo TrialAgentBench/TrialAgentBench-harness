@@ -1,37 +1,32 @@
-# Python
+# Python build artefacts
 __pycache__/
 *.py[oc]
+/build/
+# Runtime source, even where a global ignore excludes build/ directories
+!/trialagentbench/tools/build/
+/dist/
+/wheels/
 *.egg-info/
-.pytest_cache/
+
+# Virtual environments and tool caches
+.venv/
 .mypy_cache/
+.pytest_cache/
 .ruff_cache/
 
-# Environments and builds
-.venv/
-.smoke-venv/
-/build/
-/dist/
-/harness/build/
-/harness/dist/
-/verification/build/
-/verification/dist/
-!/harness/trialagentbench_harness/tools/build/
-!/harness/trialagentbench_harness/tools/build/*.py
-
-# Credentials and local configuration
+# Environment variables
 .env
-.env.*
-!.env.example
-*.pem
-*.key
 
-# Root-level run outputs
-/results/
-/cache/
-/logs/
+# Run outputs
+results/
+.cache/
+cache/
+
+# Large extras users may stage at the repository root
+/*.zip
 *.log
 
-# Editor and operating-system files
+# Editor and OS noise
 .DS_Store
 .idea/
 .vscode/

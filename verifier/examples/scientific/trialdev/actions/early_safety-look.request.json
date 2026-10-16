@@ -1,0 +1,6 @@
+{
+  "request": {
+    "action": "readout",
+    "study_id": "early_safety"
+  }
+}

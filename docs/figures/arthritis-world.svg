@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 644" role="img" aria-labelledby="title desc">
+<title id="title">How the world defines a reference independently of the agent</title><desc id="desc">The same 3,200 simulated people have day-28 outcomes under candidate treatment and control. Their mean difference is -0.240 arthritis-activity points. A recruited pilot reveals each participant's assigned-treatment outcome; its observed difference is +0.132. Patient characteristics, treatment, follow-up time and random variation determine outcomes. Lower disease activity is better. The comparison does not identify why the pilot differs.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10" fill="#536370"/></marker></defs>
+<style>text{font-family:Arial,"Liberation Sans",sans-serif;font-size:20px;fill:#23323d}.title{font-weight:700;font-size:23px}.small{font-size:18px;fill:#536370}.reference{fill:#79552a}.observed{fill:#226879}.path{stroke:#536370;stroke-width:1.8;fill:none;marker-end:url(#arrow)}.rule{stroke:#536370;stroke-width:1.4;fill:none}.panel{fill:none;stroke:#c8d1d7;stroke-width:1.2}</style>
+<g id="model"><text class="title" x="20" y="35">One clinical world</text>
+<rect class="panel" x="20" y="70" width="280" height="222" rx="3"/>
+<text class="title" x="38" y="105">3,200 simulated people</text>
+<text x="38" y="142">Patient characteristics</text><text x="38" y="175">+ treatment + follow-up time</text>
+<path class="path" d="M150 190V216"/><text class="small" x="38" y="244">Specified relationships</text><text class="small" x="38" y="272">and random variation</text>
+<text class="small" x="20" y="325">A structured causal model</text></g>
+<path class="rule" d="M300 151H311V92H607"/><path class="path" d="M607 92H443V102"/><path class="path" d="M607 92H771V102"/><path class="path" d="M285 292V431H318"/>
+<g id="evaluator"><rect class="panel" x="322" y="14" width="618" height="290" rx="3"/>
+<text class="title reference" x="342" y="48">Evaluator: both treatment conditions</text>
+<text class="small" x="342" y="79">The same 3,200 people, assessed after 28 days</text>
+<text x="360" y="122">Candidate treatment</text><text x="703" y="122">Control</text>
+<text class="title" x="360" y="161">Mean 4.605</text><text class="title" x="703" y="161">Mean 4.845</text>
+<path class="rule" d="M443 178V197H771V178M607 197V216"/>
+<text class="title reference" x="607" y="247" text-anchor="middle">4.605 − 4.845 = -0.240</text>
+<text class="small" x="607" y="280" text-anchor="middle">Population treatment effect</text></g>
+<g id="observed"><rect class="panel" x="322" y="347" width="618" height="229" rx="3"/>
+<text class="title observed" x="342" y="382">Agent: recruited participants and collected records</text>
+<text x="342" y="419">Recruit 20 people; randomly assign 10 to each treatment</text>
+<text x="342" y="451">Observe their assigned-treatment outcome after 28 days</text>
+<path class="path" d="M607 467V490"/>
+<text class="title observed" x="607" y="522" text-anchor="middle">5.142 − 5.010 = +0.132</text>
+<text class="small" x="607" y="553" text-anchor="middle">Observed pilot estimate</text></g>
+<text class="small" x="20" y="620">Both comparisons use day-28 arthritis activity (DAS28). Lower is better.</text>
+</svg>

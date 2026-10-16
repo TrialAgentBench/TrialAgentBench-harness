@@ -1,0 +1,9 @@
+{
+  "approved": false,
+  "clinical_value_usd": 0.0,
+  "decision": "stop",
+  "net_value_usd": -3903600.0,
+  "safety_cost_usd": 0.0,
+  "study_cost_usd": 1653600.0,
+  "time_cost_usd": 2250000.0
+}

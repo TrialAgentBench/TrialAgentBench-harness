@@ -1,0 +1,70 @@
+{
+  "arms": [
+    {
+      "arm_id": "active",
+      "asset_id": "mrd-88030",
+      "dose": "standard"
+    },
+    {
+      "arm_id": "control",
+      "asset_id": "control",
+      "dose": null
+    }
+  ],
+  "assessment_days": [
+    0,
+    84
+  ],
+  "calendar_origin": "2024-01-01",
+  "cost": {
+    "accrued_usd": 5643200.0,
+    "remaining_liability_usd": 0.0
+  },
+  "epochs": [
+    [
+      "TREATMENT",
+      0.0,
+      84.0
+    ]
+  ],
+  "follow_up_days": 84,
+  "outcome_object": "Rheumatoid arthritis",
+  "readout_day": 400.0,
+  "screened": 120,
+  "sites": 20,
+  "study_id": "exploration",
+  "surveillance_days": [
+    0,
+    84
+  ],
+  "targets": [
+    {
+      "arm_id": "active",
+      "confidence_level": 0.95,
+      "contrast": "active_minus_control",
+      "endpoint": "clinical_outcome",
+      "population": "programme_eligible_population",
+      "target_id": "mrd-88030:standard:vs_control:clinical_outcome",
+      "unit": "DAS28 points"
+    },
+    {
+      "arm_id": "active",
+      "confidence_level": 0.95,
+      "contrast": "active_minus_control",
+      "endpoint": "safety_risk",
+      "population": "programme_eligible_population",
+      "target_id": "mrd-88030:standard:vs_control:safety_risk",
+      "unit": "risk difference"
+    }
+  ],
+  "tariff": {
+    "assessment": 1500.0,
+    "closeout_days": 30,
+    "enrollment": 10000.0,
+    "followup_day": 40.0,
+    "per_site": 75000.0,
+    "screening": 1500.0,
+    "setup": 2000000.0,
+    "startup_days": 90
+  }
+}

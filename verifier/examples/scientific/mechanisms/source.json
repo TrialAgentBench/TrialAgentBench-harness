@@ -1,0 +1,28 @@
+{
+  "purpose": "Exhaustive finite teaching census and repeated analyses of all disclosed conditions; no scored release or real-patient validation",
+  "family_archive": {
+    "name": "family-records.zip",
+    "sha256": "0930a800e5ec4f341ff567e439025c90217680fde16d41c9792b33a0bf9f3604",
+    "projection": "review_mechanisms.project_cells",
+    "coverage": "30 clinical cells across 17 families; one realization per cell; same-family conditions share seeds",
+    "archive_last_changed_commit": "6dc0280c5",
+    "archive_last_changed_date": "2026-09-25"
+  },
+  "recovery_archive": {
+    "name": "recovery-records.zip",
+    "sha256": "695979180a8ce4fc52eb9aa4be501868467ea8eeceaa33660264d2a6412dc0eb",
+    "projection": "review_recovery.recovery",
+    "coverage": "11 conditions in 4 families, 32 analysis seeds per condition, 64 disjoint reference seeds per population; retrieval controls share references and event histories",
+    "seed_definition": "Analysis indices 0..31 use seed 86828000 + index. Reference indices32..95 use seed86828000 + index. Favourable asthma retrieval25/50/100 conditions share latent outcomes; condition rows are not mutually independent.",
+    "archive_last_changed_commit": "cb5273f3b",
+    "archive_last_changed_date": "2026-09-25"
+  },
+  "public_inputs": {
+    "clinical_cells.csv": "64f2e3a92efa0f9e6e07a41aa6addfd5c63e35ffc8f75f341401d1c7c394aecc",
+    "clinical_settings.csv": "25ecbd731ed53a2a63930a71cf0c10cf214d05e0d3edf830178ed01d4bc2df8c",
+    "conditions.csv": "e228c83d912ec67ce896f2212d3eb1a55b0f425ee349c97dd89cae3f2e6183bc",
+    "population_references.csv": "9ac30d4b870e24bc36bb88dc64d95e17bfcc53a88c0a8db2749343c292fa8bd4",
+    "study_estimates.csv": "d7080f8ab91e07271e200e87e8ede4aa5efda3cb25b9b563b2e2e7e79772c8f4"
+  },
+  "version_limit": "Both teaching archives predate registry-driven realism changes committed 2026-10-07/08. These are archived teaching demonstrations, not current-generator qualification; archive revision is not asserted to identify the generation-code revision."
+}

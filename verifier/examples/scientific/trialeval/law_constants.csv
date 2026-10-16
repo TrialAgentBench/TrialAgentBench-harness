@@ -1,0 +1,3 @@
+arm,direct_effect,initial_progressive_probability,progression_probability,recovery_probability,progressive_shift,transition_count,rounding_increment,residual_sd
+control,0.0,0.25,0.18,0.08,6.0,3,1.0,12.0
+active,-5.0,0.25,0.1,0.16,6.0,3,1.0,12.0

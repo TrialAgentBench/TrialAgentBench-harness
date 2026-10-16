@@ -1,0 +1,18 @@
+family_id,clinical_setting
+TE-S01,"mCRC maintenance, all-cause death"
+TE-S02,"CKD, kidney failure or death"
+TE-S03,"Relapsing MS, confirmed disability progression"
+TE-S04,"Severe asthma biologic, first severe exacerbation"
+TE-S05,"T2D cardiovascular outcomes, MACE"
+TE-S06,"Chronic HF device management, HF hospitalization"
+TE-S07,Cluster-parallel respiratory-infection prevention in long-term care
+TE-S08,"Stepped-wedge postpartum safety pathway, severe maternal morbidity"
+TE-S09,"Extended anticoagulation after VTE, recurrent VTE"
+TE-S10,"Early Parkinson disease rehabilitation, motor disability"
+TE-S11,"T2D add-on glucose lowering, HbA1c"
+TE-S12,"Uncontrolled asthma maintenance, asthma-control score"
+TE-S13,"CKD albuminuria reduction, UACR"
+TE-S14,"Early outpatient COVID-19 antiviral, sustained recovery"
+TE-S15,"First-line mCRC combination, objective response"
+TE-S16,"Severe asthma biologic, exacerbation count"
+TE-S17,"Chronic HF after hospitalization, HF hospitalization count"

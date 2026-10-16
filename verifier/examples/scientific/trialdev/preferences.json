@@ -1,0 +1,10 @@
+{
+  "annual_cost_per_safety_percentage_point_usd": 20833333.333333332,
+  "annual_profit_per_benefit_unit_usd": 250000000.0,
+  "benefit_unit": 1.0,
+  "discount_rate_per_year": 0.1,
+  "exclusivity_end_day": 6575,
+  "outcome_unit": "DAS28 points",
+  "programme_cost_per_day_usd": 15000.0,
+  "regulatory_review_days": 365
+}

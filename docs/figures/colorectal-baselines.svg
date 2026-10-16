@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 370" role="img" aria-labelledby="title desc">
+<title id="title">Clinical source and generated patient characteristics</title>
+<desc id="desc">Published TRIBE/TRIBE2 proportions and the generated colorectal teaching study agree closely for prior primary tumour resection and ECOG performance status one to two. Both bars show percentages of their own study population.</desc>
+<style>text{font-family:Arial,"Liberation Sans",sans-serif;font-size:17px;fill:#23323d}.title{font-weight:700}.small{font-size:15px;fill:#536370}</style>
+<text class="title" x="24" y="27">Primary tumour removed</text>
+<text class="small" x="24" y="58">TRIBE/TRIBE2</text>
+<rect x="24" y="66" width="542.9868" height="12" fill="#687b86"/>
+<text x="575.9868" y="78">57.9%</text>
+<text class="small" x="24" y="104">Generated study</text>
+<rect x="24" y="112" width="544.8096" height="12" fill="#226879"/>
+<text x="577.8096" y="124">58.1%</text>
+<text class="title" x="24" y="177">Activity limitation (ECOG 1–2)</text>
+<text class="small" x="24" y="208">TRIBE/TRIBE2</text>
+<rect x="24" y="216" width="115.3029" height="12" fill="#687b86"/>
+<text x="148.3029" y="228">12.3%</text>
+<text class="small" x="24" y="254">Generated study</text>
+<rect x="24" y="262" width="118.1691" height="12" fill="#226879"/>
+<text x="151.1691" y="274">12.6%</text>
+<path d="M24 324H680" stroke="#9ca8ad"/>
+<text class="small" x="24.0000" y="348" text-anchor="middle">0</text>
+<text class="small" x="211.4286" y="348" text-anchor="middle">20</text>
+<text class="small" x="398.8571" y="348" text-anchor="middle">40</text>
+<text class="small" x="586.2857" y="348" text-anchor="middle">60</text>
+<text class="small" x="780" y="348" text-anchor="end">% of participants</text>
+</svg>

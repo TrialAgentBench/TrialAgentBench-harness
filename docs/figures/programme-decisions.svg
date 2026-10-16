@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 660" role="img" aria-labelledby="title description">
+<title id="title">What later studies reveal in two arthritis worlds</title>
+<desc id="description">Programme A and Programme B use the same study plan in different simulated worlds. Both pilots are uncertain. Exploration favours treatment in A while B remains uncertain. Confirmation favours treatment in A and control in B. Each point is a treatment-minus-control difference with a 95% Welch interval. The three studies have different follow-up horizons.</desc>
+<style>text{font-family:Arial,"Liberation Sans",sans-serif;fill:#23323d;font-size:18px}.heading{font-size:24px;font-weight:700}.stage{font-size:21px;font-weight:700}.strong{font-weight:700}.rule{stroke:#c8d1d7;stroke-width:1}.zero{stroke:#78858d;stroke-width:1.2;stroke-dasharray:4 3}.interval{stroke-width:3}.estimate{stroke:white;stroke-width:1.5}</style>
+<text x="14" y="28" class="heading">What later studies reveal</text>
+<text x="14" y="59" class="">Treatment minus control · arthritis activity (DAS28 points)</text>
+<text x="14" y="87" class="">Negative favours treatment; positive favours control. Lines: 95% Welch intervals.</text>
+<text x="14" y="132" class="stage">Pilot</text>
+<text x="14" y="161" class="">20 participants</text>
+<text x="14" y="186" class="">28-day patient follow-up</text>
+<text x="14" y="216" class="">Both uncertain</text>
+<line class="zero" x1="598.2162162162163" x2="598.2162162162163" y1="143" y2="216"/>
+<g data-world="tdw-70ff3604b8a7" data-phase="early_safety">
+<text x="350" y="132" class="">A  +0.132 [−0.800, +1.064]</text>
+<line class="interval" x1="474.12596142041343" x2="763.2621466876949" y1="153" y2="153" stroke="#226879"/>
+<path d="M474.12596142041343 148v10" stroke="#226879" stroke-width="1.5"/>
+<path d="M763.2621466876949 148v10" stroke="#226879" stroke-width="1.5"/>
+<circle class="estimate" cx="618.6940540540542" cy="153" r="5.5" fill="#226879"/>
+</g>
+<g data-world="tdw-84fc2dcd0306" data-phase="early_safety">
+<text x="350" y="183" class="">B  +0.544 [−0.864, +1.952]</text>
+<line class="interval" x1="464.16262433029226" x2="901.0568351291671" y1="204" y2="204" stroke="#a45d45"/>
+<path d="M464.16262433029226 199v10" stroke="#a45d45" stroke-width="1.5"/>
+<path d="M901.0568351291671 199v10" stroke="#a45d45" stroke-width="1.5"/>
+<rect class="estimate" x="678.1097297297297" y="199.5" width="9" height="9" transform="rotate(45 682.6097297297297 204)" fill="#a45d45"/>
+</g>
+<path class="rule" d="M350 227H924"/>
+<path class="rule" d="M365.51351351351354 227v5"/>
+<text x="365.51351351351354" y="250" text-anchor="middle">−1.5</text>
+<path class="rule" d="M443.0810810810811 227v5"/>
+<text x="443.0810810810811" y="250" text-anchor="middle">−1</text>
+<path class="rule" d="M598.2162162162163 227v5"/>
+<text x="598.2162162162163" y="250" text-anchor="middle">0</text>
+<path class="rule" d="M753.3513513513514 227v5"/>
+<text x="753.3513513513514" y="250" text-anchor="middle">1</text>
+<path class="rule" d="M908.4864864864865 227v5"/>
+<text x="908.4864864864865" y="250" text-anchor="middle">2</text>
+<text x="14" y="312" class="stage">Exploration</text>
+<text x="14" y="341" class="">120 participants</text>
+<text x="14" y="366" class="">84-day patient follow-up</text>
+<text x="14" y="396" class="">A favours treatment;</text>
+<text x="14" y="420" class="">B uncertain</text>
+<line class="zero" x1="598.2162162162163" x2="598.2162162162163" y1="323" y2="396"/>
+<g data-world="tdw-70ff3604b8a7" data-phase="exploration">
+<text x="350" y="312" class="">A  −0.938 [−1.449, −0.428]</text>
+<line class="interval" x1="373.4020346184609" x2="531.8934608770348" y1="333" y2="333" stroke="#226879"/>
+<path d="M373.4020346184609 328v10" stroke="#226879" stroke-width="1.5"/>
+<path d="M531.8934608770348 328v10" stroke="#226879" stroke-width="1.5"/>
+<circle class="estimate" cx="452.64774774774787" cy="333" r="5.5" fill="#226879"/>
+</g>
+<g data-world="tdw-84fc2dcd0306" data-phase="exploration">
+<text x="350" y="363" class="">B  +0.108 [−0.411, +0.627]</text>
+<line class="interval" x1="534.4787876401547" x2="695.4764423266543" y1="384" y2="384" stroke="#a45d45"/>
+<path d="M534.4787876401547 379v10" stroke="#a45d45" stroke-width="1.5"/>
+<path d="M695.4764423266543 379v10" stroke="#a45d45" stroke-width="1.5"/>
+<rect class="estimate" x="610.4776149834045" y="379.5" width="9" height="9" transform="rotate(45 614.9776149834045 384)" fill="#a45d45"/>
+</g>
+<path class="rule" d="M350 407H924"/>
+<path class="rule" d="M365.51351351351354 407v5"/>
+<text x="365.51351351351354" y="430" text-anchor="middle">−1.5</text>
+<path class="rule" d="M443.0810810810811 407v5"/>
+<text x="443.0810810810811" y="430" text-anchor="middle">−1</text>
+<path class="rule" d="M598.2162162162163 407v5"/>
+<text x="598.2162162162163" y="430" text-anchor="middle">0</text>
+<path class="rule" d="M753.3513513513514 407v5"/>
+<text x="753.3513513513514" y="430" text-anchor="middle">1</text>
+<path class="rule" d="M908.4864864864865 407v5"/>
+<text x="908.4864864864865" y="430" text-anchor="middle">2</text>
+<text x="14" y="492" class="stage">Confirmation</text>
+<text x="14" y="521" class="">900 participants</text>
+<text x="14" y="546" class="">168-day patient follow-up</text>
+<text x="14" y="576" class="">Opposite directions</text>
+<line class="zero" x1="598.2162162162163" x2="598.2162162162163" y1="503" y2="576"/>
+<g data-world="tdw-70ff3604b8a7" data-phase="confirmation">
+<text x="350" y="492" class="">A  −0.665 [−0.871, −0.460]</text>
+<line class="interval" x1="463.13703043780185" x2="526.8760386312672" y1="513" y2="513" stroke="#226879"/>
+<path d="M463.13703043780185 508v10" stroke="#226879" stroke-width="1.5"/>
+<path d="M526.8760386312672 508v10" stroke="#226879" stroke-width="1.5"/>
+<circle class="estimate" cx="495.0065345345345" cy="513" r="5.5" fill="#226879"/>
+</g>
+<g data-world="tdw-84fc2dcd0306" data-phase="confirmation">
+<text x="350" y="543" class="">B  +0.290 [+0.074, +0.506]</text>
+<line class="interval" x1="609.6289846552365" x2="676.6569998138539" y1="564" y2="564" stroke="#a45d45"/>
+<path d="M609.6289846552365 559v10" stroke="#a45d45" stroke-width="1.5"/>
+<path d="M676.6569998138539 559v10" stroke="#a45d45" stroke-width="1.5"/>
+<rect class="estimate" x="638.6429922345451" y="559.5" width="9" height="9" transform="rotate(45 643.1429922345451 564)" fill="#a45d45"/>
+</g>
+<path class="rule" d="M350 587H924"/>
+<path class="rule" d="M365.51351351351354 587v5"/>
+<text x="365.51351351351354" y="610" text-anchor="middle">−1.5</text>
+<path class="rule" d="M443.0810810810811 587v5"/>
+<text x="443.0810810810811" y="610" text-anchor="middle">−1</text>
+<path class="rule" d="M598.2162162162163 587v5"/>
+<text x="598.2162162162163" y="610" text-anchor="middle">0</text>
+<path class="rule" d="M753.3513513513514 587v5"/>
+<text x="753.3513513513514" y="610" text-anchor="middle">1</text>
+<path class="rule" d="M908.4864864864865 587v5"/>
+<text x="908.4864864864865" y="610" text-anchor="middle">2</text>
+</svg>

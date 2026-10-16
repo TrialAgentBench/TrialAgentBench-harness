@@ -1,0 +1,4 @@
+request_id,power,two_sided_alpha,treatment_allocation,design_type,treatment_difference,outcome_standard_deviation,outcome_unit,candidate_information,relative_tolerance,control_probability,treatment_probability,hazard_ratio,event_probability
+continuous,0.9,0.05,0.5,continuous,-5.0,12.0,mmHg,243,0.02,,,,
+binary,0.8,0.05,0.5,binary,,,,1806,0.005,0.2,0.15,,
+survival,0.9,0.05,0.5,survival,,,,508,0.0,,,0.75,0.65

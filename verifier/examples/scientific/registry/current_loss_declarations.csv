@@ -1,0 +1,9 @@
+cell,control_by_horizon,active_by_horizon,driver,driver_log_odds_per_sd,source
+TE-S10-A1,0.08579718154186242,0.08579718154186242,completely_at_random,0.0,registry
+TE-S11-A1,0.12460436448442447,0.12460436448442447,completely_at_random,0.0,registry
+TE-S12-A1,0.05798319327731094,0.080952380952381,observed_history,0.8,registry
+TE-S13-A1,0.1402359108781127,0.11111111111111116,observed_history,0.8,registry
+TE-S14-A1,0.081989247311828,0.081989247311828,completely_at_random,0.0,registry
+TE-S15-A1,0.08,0.08,completely_at_random,0.0,authored
+TE-S16-A1,0.09750000000000003,0.09270198935325957,baseline_risk,0.5,registry
+TE-S17-A1,0.22024255144211002,0.16389244558258642,baseline_risk,0.5,registry

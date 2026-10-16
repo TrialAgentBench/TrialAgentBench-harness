@@ -1,0 +1,12 @@
+case,condition_label,display_order
+TE-S04-A4-favourable,Favourable; 50% retrieval,1
+TE-S04-A4-near_null,Near-null; 50% retrieval,2
+TE-S04-A4-unfavourable,Unfavourable; 50% retrieval,3
+TE-S04-A4r25-favourable,Favourable; 25% retrieval,4
+TE-S04-A4r100-favourable,Favourable; 100% retrieval,5
+TE-S07-A1-favourable,Cluster randomization,1
+TE-S10-A1-favourable,Favourable effect,1
+TE-S10-A1-near_null,Near-null effect,2
+TE-S10-A1-null,Exact equal-arm null,3
+TE-S10-A1-unfavourable,Unfavourable effect,4
+TE-S15-A3-favourable,Endpoint misclassification,1

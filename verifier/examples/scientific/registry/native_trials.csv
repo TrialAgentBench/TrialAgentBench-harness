@@ -1,0 +1,18 @@
+cell,family_id,condition,seed,planned_n,randomized_n,occupied_sites,horizon_days,endpoint_family,active_randomized_n,control_randomized_n,active_endpoint_unavailable,control_endpoint_unavailable
+TE-S01-A1,TE-S01,Proportional-hazards-compatible survival pattern,86911001,1896,1896,64,730.0,time_to_event,948,948,,
+TE-S02-A1,TE-S02,Independent censoring,86911002,1760,1760,64,1095.0,time_to_event,880,880,,
+TE-S03-A1,TE-S03,Low treatment-use event intensity,86911003,3376,3376,64,730.0,time_to_event,1688,1688,,
+TE-S04-A1,TE-S04,Independent censoring,86911004,3276,3276,64,365.0,time_to_event,1638,1638,,
+TE-S05-A1,TE-S05,Linear prognostic model compatible with the prespecified standardization,86911005,3276,3276,64,1095.0,time_to_event,1638,1638,,
+TE-S06-A1,TE-S06,Near-perfect endpoint ascertainment with complete validation support,86911006,9504,9504,118,365.0,time_to_event,4752,4752,,
+TE-S07-A1,TE-S07,Independent censoring in a cluster-parallel trial,86911007,7680,7680,384,180.0,time_to_event,3803,3877,,
+TE-S08-A1,TE-S08,No secular drift beyond the declared period model,86911008,143600,143600,718,42.0,time_to_event,71960,71640,,
+TE-S09-A1,TE-S09,Comparative repeated looks follow the prespecified group-sequential design,86911009,2800,2741,14,180.0,time_to_event,1370,1371,,
+TE-S10-A1,TE-S10,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911010,516,516,3,180.0,continuous,258,258,0.13178294573643412,0.08914728682170543
+TE-S11-A1,TE-S11,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911011,328,328,24,365.0,continuous,164,164,0.1402439024390244,0.08536585365853659
+TE-S12-A1,TE-S12,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911012,288,288,16,365.0,longitudinal,144,144,0.06944444444444445,0.034722222222222224
+TE-S13-A1,TE-S13,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911013,380,380,24,365.0,longitudinal,190,190,0.07894736842105263,0.14210526315789473
+TE-S14-A1,TE-S14,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911014,3392,3392,65,28.0,binary,1696,1696,0.07311320754716981,0.08549528301886793
+TE-S15-A1,TE-S15,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911015,3196,3196,34,168.0,binary,1598,1598,0.08448060075093868,0.08260325406758448
+TE-S16-A1,TE-S16,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911016,604,604,199,365.0,count,302,302,0.08609271523178808,0.09602649006622517
+TE-S17-A1,TE-S17,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86911017,620,620,24,365.0,count,310,310,0.13225806451612904,0.1870967741935484

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="340" viewBox="0 0 1100 340" role="img" aria-labelledby="title desc">
+<title id="title">Programme choices and terminal decisions</title><desc id="desc">Initial observational analysis leads to an active programme with repeated design, readout, analysis and adaptation. Stop is available without an efficacy rule; advance requires usable confirmation evidence for the selected asset and regimen. Both settle existing obligations.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#31465b"/></marker></defs>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#20354b;font-size:21px}.heading{font-size:25px;font-weight:700}.small{font-size:19px}.box{fill:#eef5f8;stroke:#226b93;stroke-width:2}.terminal{fill:#fff7eb;stroke:#9a6327;stroke-width:2}.line{fill:none;stroke:#31465b;stroke-width:2;marker-end:url(#arrow)}</style>
+<rect width="1100" height="340" fill="white"/>
+<text x="550" y="34" text-anchor="middle" class="heading"><tspan x="550" dy="0">Programme decisions</tspan></text>
+<g><rect x="20" y="143" width="240" height="88" rx="10" class="box"/><text x="140.0" y="174" text-anchor="middle" class=""><tspan x="140.0" dy="0">Initial observational</tspan><tspan x="140.0" dy="28">evidence and analysis</tspan></text>
+</g>
+<g><rect x="340" y="143" width="285" height="88" rx="10" class="box"/><text x="482.5" y="174" text-anchor="middle" class=""><tspan x="482.5" dy="0">Active programme</tspan><tspan x="482.5" dy="28">within time and budget</tspan></text>
+</g>
+<g><rect x="845" y="91" width="230" height="70" rx="10" class="terminal"/><text x="960.0" y="122" text-anchor="middle" class=""><tspan x="960.0" dy="0">Stop development</tspan></text>
+</g>
+<g><rect x="845" y="218" width="230" height="70" rx="10" class="terminal"/><text x="960.0" y="249" text-anchor="middle" class=""><tspan x="960.0" dy="0">Advance treatment</tspan></text>
+</g>
+<path d="M 260 187 H 340" class="line"/>
+<path d="M 625 171 H 720 V 126 H 845" class="line"/>
+<path d="M 625 203 H 720 V 253 H 845" class="line"/>
+<path d="M 380 143 V 90 H 590 V 143" class="line"/>
+<text x="485" y="67" text-anchor="middle" class="small"><tspan x="485" dy="0">Design · readout · analyse · adapt</tspan></text>
+<text x="755" y="103" text-anchor="middle" class="small"><tspan x="755" dy="0">No efficacy rule</tspan></text>
+<text x="744" y="300" text-anchor="middle" class="small"><tspan x="744" dy="0">Usable confirmation evidence</tspan></text>
+<text x="550" y="330" text-anchor="middle" class="small"><tspan x="550" dy="0">Both terminal choices retain incurred costs and committed follow-up.</tspan></text>
+</svg>

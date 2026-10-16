@@ -1,0 +1,1196 @@
+{
+ "schema_id": "trialagentbench.registry_calibration_targets/v1",
+ "source_id": "aact_20260801",
+ "archive_sha256": "8c9b5dc2a77151305ae55d0d3392ce8fc12cf5e5d4488914ec0f86383edccb70",
+ "manifest_sha256": "7ac6bc34ac44b437c3d7d273750f7093fcae0f19fcb879358bfc56d2c8db805b",
+ "trial_metrics_sha256": "55dfe3dd954fa05e317371c4fe3015dc300df05c99c8e240f52e4c3dcac2e776",
+ "family_summary_sha256": "88a9cfe380408dfd7dafeb25838ea96c158f759206d28f9cc61701345ff93017",
+ "minimum_band_trials": 5,
+ "families": [
+  {
+   "family_id": "DES-CLUSTER",
+   "label": "Any cluster-randomized parallel trial (design envelope)",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 1492,
+     "median": 528.5,
+     "lower_quartile": 157.0,
+     "upper_quartile": 2083.75
+    },
+    "sites": {
+     "trials": 1537,
+     "median": 1.0,
+     "lower_quartile": 1.0,
+     "upper_quartile": 2.0
+    },
+    "primary_completion_months": {
+     "trials": 1514,
+     "median": 19.30184804928131,
+     "lower_quartile": 10.349075975359343,
+     "upper_quartile": 32.05749486652977
+    },
+    "discontinued_fraction": {
+     "trials": 210,
+     "median": 0.08805739899871928,
+     "lower_quartile": 0.0,
+     "upper_quartile": 0.2066554022341124
+    },
+    "control_discontinued_fraction": {
+     "trials": 124,
+     "median": 0.06602243233222099,
+     "lower_quartile": 0.0,
+     "upper_quartile": 0.19766865079365076
+    },
+    "active_discontinued_fraction": {
+     "trials": 206,
+     "median": 0.08809523809523812,
+     "lower_quartile": 0.0,
+     "upper_quartile": 0.2075471698113207
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 117,
+     "median": 0.0,
+     "lower_quartile": 0.0,
+     "upper_quartile": 0.01126126126126126
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "DES-SW",
+   "label": "Any stepped-wedge trial (design envelope)",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 262,
+     "median": 895.0,
+     "lower_quartile": 160.0,
+     "upper_quartile": 3973.5
+    },
+    "sites": {
+     "trials": 266,
+     "median": 1.0,
+     "lower_quartile": 1.0,
+     "upper_quartile": 5.0
+    },
+    "primary_completion_months": {
+     "trials": 266,
+     "median": 24.24640657084189,
+     "lower_quartile": 15.129363449691992,
+     "upper_quartile": 35.42505133470226
+    },
+    "discontinued_fraction": {
+     "trials": 41,
+     "median": 0.17142857142857137,
+     "lower_quartile": 0.009708737864077666,
+     "upper_quartile": 0.30434782608695654
+    },
+    "control_discontinued_fraction": {
+     "trials": 13,
+     "median": 0.08872458410351203,
+     "lower_quartile": 0.00327332242225864,
+     "upper_quartile": 0.8765432098765432
+    },
+    "active_discontinued_fraction": {
+     "trials": 38,
+     "median": 0.15309318715740017,
+     "lower_quartile": 0.0032733224222585844,
+     "upper_quartile": 0.3112648221343874
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 21,
+     "median": 0.0,
+     "lower_quartile": 0.0,
+     "upper_quartile": 0.045454545454545456
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TD-AD",
+   "label": "TrialDev atopic dermatitis, EASI",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 170,
+     "median": 237.5,
+     "lower_quartile": 109.25,
+     "upper_quartile": 378.75
+    },
+    "sites": {
+     "trials": 171,
+     "median": 27.0,
+     "lower_quartile": 3.0,
+     "upper_quartile": 68.5
+    },
+    "primary_completion_months": {
+     "trials": 170,
+     "median": 13.22381930184805,
+     "lower_quartile": 10.661190965092402,
+     "upper_quartile": 17.659137577002053
+    },
+    "discontinued_fraction": {
+     "trials": 109,
+     "median": 0.22314049586776863,
+     "lower_quartile": 0.139344262295082,
+     "upper_quartile": 0.4036697247706422
+    },
+    "control_discontinued_fraction": {
+     "trials": 105,
+     "median": 0.2692307692307693,
+     "lower_quartile": 0.1415929203539823,
+     "upper_quartile": 0.4482758620689655
+    },
+    "active_discontinued_fraction": {
+     "trials": 108,
+     "median": 0.20172585163097495,
+     "lower_quartile": 0.09786569495054659,
+     "upper_quartile": 0.35061478482531117
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 105,
+     "median": 0.013333333333333334,
+     "lower_quartile": 0.0,
+     "upper_quartile": 0.033112582781456956
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "proportion",
+    "control_level_units": "proportion of participants",
+    "control_level": {
+     "trials": 57,
+     "median": 0.133,
+     "lower_quartile": 0.085,
+     "upper_quartile": 0.2641509433962264
+    },
+    "effect_scale": "difference",
+    "effect_units": "percentage of participants",
+    "effect": {
+     "trials": 24,
+     "median": 20.6,
+     "lower_quartile": 13.825,
+     "upper_quartile": 27.625
+    }
+   }
+  },
+  {
+   "family_id": "TD-COPD",
+   "label": "TrialDev COPD, moderate/severe exacerbation rate",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 45,
+     "median": 1200.0,
+     "lower_quartile": 828.0,
+     "upper_quartile": 1767.0
+    },
+    "sites": {
+     "trials": 47,
+     "median": 178.0,
+     "lower_quartile": 19.5,
+     "upper_quartile": 338.5
+    },
+    "primary_completion_months": {
+     "trials": 46,
+     "median": 32.95277207392197,
+     "lower_quartile": 25.963039014373717,
+     "upper_quartile": 45.97125256673511
+    },
+    "discontinued_fraction": {
+     "trials": 26,
+     "median": 0.19176808843740373,
+     "lower_quartile": 0.11435332402151624,
+     "upper_quartile": 0.294183368675468
+    },
+    "control_discontinued_fraction": {
+     "trials": 16,
+     "median": 0.1790164223132127,
+     "lower_quartile": 0.10476010101010103,
+     "upper_quartile": 0.2907968089593965
+    },
+    "active_discontinued_fraction": {
+     "trials": 25,
+     "median": 0.1656626506024096,
+     "lower_quartile": 0.10578661844484627,
+     "upper_quartile": 0.30188679245283023
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 14,
+     "median": 0.25231601360556494,
+     "lower_quartile": 0.1783562171728705,
+     "upper_quartile": 0.29735947741266305
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "annual_rate",
+    "control_level_units": "events per participant-year",
+    "control_level": {
+     "trials": 12,
+     "median": 1.3900000000000001,
+     "lower_quartile": 1.2225,
+     "upper_quartile": 1.7574999999999998
+    },
+    "effect_scale": "log_ratio",
+    "effect_units": "log ratio (HR, RR, OR or rate ratio)",
+    "effect": {
+     "trials": 20,
+     "median": -0.20150905223255636,
+     "lower_quartile": -0.24590053843682594,
+     "upper_quartile": -0.11653381625595151
+    }
+   }
+  },
+  {
+   "family_id": "TD-MIG",
+   "label": "TrialDev migraine prevention, monthly migraine days",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 64,
+     "median": 454.5,
+     "lower_quartile": 216.25,
+     "upper_quartile": 806.25
+    },
+    "sites": {
+     "trials": 65,
+     "median": 41.0,
+     "lower_quartile": 2.0,
+     "upper_quartile": 75.0
+    },
+    "primary_completion_months": {
+     "trials": 59,
+     "median": 17.31416837782341,
+     "lower_quartile": 12.993839835728952,
+     "upper_quartile": 23.44147843942505
+    },
+    "discontinued_fraction": {
+     "trials": 45,
+     "median": 0.14268585131894485,
+     "lower_quartile": 0.07999999999999996,
+     "upper_quartile": 0.25322997416020676
+    },
+    "control_discontinued_fraction": {
+     "trials": 45,
+     "median": 0.15591397849462363,
+     "lower_quartile": 0.06521739130434778,
+     "upper_quartile": 0.26356589147286824
+    },
+    "active_discontinued_fraction": {
+     "trials": 45,
+     "median": 0.1503496503496503,
+     "lower_quartile": 0.06866952789699576,
+     "upper_quartile": 0.2615384615384615
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 45,
+     "median": 0.011904761904761904,
+     "lower_quartile": 0.0030303030303030303,
+     "upper_quartile": 0.021114864864864864
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "continuous",
+    "control_level_units": "days",
+    "control_level": {
+     "trials": 12,
+     "median": -3.35,
+     "lower_quartile": -3.54,
+     "upper_quartile": -2.0925000000000002
+    },
+    "effect_scale": "difference",
+    "effect_units": "days",
+    "effect": {
+     "trials": 10,
+     "median": -1.9049999999999998,
+     "lower_quartile": -2.65,
+     "upper_quartile": -1.6275
+    }
+   }
+  },
+  {
+   "family_id": "TD-RA",
+   "label": "TrialDev rheumatoid arthritis, DAS28",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 269,
+     "median": 257.0,
+     "lower_quartile": 125.0,
+     "upper_quartile": 499.0
+    },
+    "sites": {
+     "trials": 281,
+     "median": 34.0,
+     "lower_quartile": 3.0,
+     "upper_quartile": 81.0
+    },
+    "primary_completion_months": {
+     "trials": 269,
+     "median": 18.989733059548254,
+     "lower_quartile": 13.995893223819301,
+     "upper_quartile": 26.51334702258727
+    },
+    "discontinued_fraction": {
+     "trials": 158,
+     "median": 0.18578785886478194,
+     "lower_quartile": 0.11797507106931995,
+     "upper_quartile": 0.36185972887409695
+    },
+    "control_discontinued_fraction": {
+     "trials": 120,
+     "median": 0.21525096525096526,
+     "lower_quartile": 0.10380333951762524,
+     "upper_quartile": 0.5240031108597285
+    },
+    "active_discontinued_fraction": {
+     "trials": 157,
+     "median": 0.17420435510887777,
+     "lower_quartile": 0.10110294117647056,
+     "upper_quartile": 0.32432432432432434
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 118,
+     "median": 0.029743065521240834,
+     "lower_quartile": 0.013424657534246575,
+     "upper_quartile": 0.05461773700305811
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "proportion",
+    "control_level_units": "proportion of participants",
+    "control_level": {
+     "trials": 91,
+     "median": 0.315,
+     "lower_quartile": 0.2604347826086957,
+     "upper_quartile": 0.4
+    },
+    "effect_scale": "difference",
+    "effect_units": "percentage of participants",
+    "effect": {
+     "trials": 27,
+     "median": 23.69,
+     "lower_quartile": 4.9,
+     "upper_quartile": 30.400000000000002
+    }
+   }
+  },
+  {
+   "family_id": "TE-S01",
+   "label": "mCRC maintenance, all-cause death",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 53,
+     "median": 492.0,
+     "lower_quartile": 264.0,
+     "upper_quartile": 820.0
+    },
+    "sites": {
+     "trials": 54,
+     "median": 38.0,
+     "lower_quartile": 6.5,
+     "upper_quartile": 111.0
+    },
+    "primary_completion_months": {
+     "trials": 54,
+     "median": 43.61396303901437,
+     "lower_quartile": 31.498973305954824,
+     "upper_quartile": 66.95687885010267
+    },
+    "discontinued_fraction": null,
+    "control_discontinued_fraction": null,
+    "active_discontinued_fraction": null,
+    "control_serious_adverse_event_fraction": {
+     "trials": 13,
+     "median": 0.32727272727272727,
+     "lower_quartile": 0.26666666666666666,
+     "upper_quartile": 0.34908136482939633
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "continuous",
+    "control_level_units": "months",
+    "control_level": {
+     "trials": 12,
+     "median": 8.85,
+     "lower_quartile": 5.8625,
+     "upper_quartile": 11.79
+    },
+    "effect_scale": "log_ratio",
+    "effect_units": "log ratio (HR, RR, OR or rate ratio)",
+    "effect": {
+     "trials": 17,
+     "median": -0.16960278438617998,
+     "lower_quartile": -0.2561834053924099,
+     "upper_quartile": -0.024292692569044587
+    }
+   }
+  },
+  {
+   "family_id": "TE-S02",
+   "label": "CKD, kidney failure or death",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 35,
+     "median": 577.0,
+     "lower_quartile": 176.5,
+     "upper_quartile": 953.5
+    },
+    "sites": {
+     "trials": 44,
+     "median": 1.5,
+     "lower_quartile": 1.0,
+     "upper_quartile": 33.5
+    },
+    "primary_completion_months": {
+     "trials": 40,
+     "median": 47.474332648870636,
+     "lower_quartile": 22.562628336755644,
+     "upper_quartile": 61.09240246406571
+    },
+    "discontinued_fraction": {
+     "trials": 15,
+     "median": 0.1291114383897889,
+     "lower_quartile": 0.0164568976747253,
+     "upper_quartile": 0.2907410504109801
+    },
+    "control_discontinued_fraction": {
+     "trials": 11,
+     "median": 0.08217054263565893,
+     "lower_quartile": 0.01448832079455098,
+     "upper_quartile": 0.31380968169761275
+    },
+    "active_discontinued_fraction": {
+     "trials": 15,
+     "median": 0.1291114383897889,
+     "lower_quartile": 0.01774395208187951,
+     "upper_quartile": 0.2739146431199411
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 11,
+     "median": 0.35247524752475246,
+     "lower_quartile": 0.3356881314207455,
+     "upper_quartile": 0.42050091817996327
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S03",
+   "label": "Relapsing MS, confirmed disability progression",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 5,
+     "median": 840.0,
+     "lower_quartile": 656.0,
+     "upper_quartile": 900.0
+    },
+    "sites": {
+     "trials": 5,
+     "median": 88.0,
+     "lower_quartile": 53.0,
+     "upper_quartile": 101.0
+    },
+    "primary_completion_months": {
+     "trials": 5,
+     "median": 43.95893223819302,
+     "lower_quartile": 38.93223819301848,
+     "upper_quartile": 46.98151950718686
+    },
+    "discontinued_fraction": null,
+    "control_discontinued_fraction": null,
+    "active_discontinued_fraction": null,
+    "control_serious_adverse_event_fraction": null
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S04",
+   "label": "Severe asthma biologic, first severe exacerbation",
+   "tier": "indication",
+   "operations": {
+    "enrolment": {
+     "trials": 45,
+     "median": 405.0,
+     "lower_quartile": 211.0,
+     "upper_quartile": 695.0
+    },
+    "sites": {
+     "trials": 45,
+     "median": 72.0,
+     "lower_quartile": 27.0,
+     "upper_quartile": 180.0
+    },
+    "primary_completion_months": {
+     "trials": 45,
+     "median": 30.981519507186857,
+     "lower_quartile": 23.195071868583163,
+     "upper_quartile": 40.18069815195072
+    },
+    "discontinued_fraction": {
+     "trials": 36,
+     "median": 0.06723163841807911,
+     "lower_quartile": 0.04769825381872014,
+     "upper_quartile": 0.10824912638322656
+    },
+    "control_discontinued_fraction": {
+     "trials": 31,
+     "median": 0.06171664286847528,
+     "lower_quartile": 0.0486615799347343,
+     "upper_quartile": 0.09808507371007374
+    },
+    "active_discontinued_fraction": {
+     "trials": 36,
+     "median": 0.07625774618931536,
+     "lower_quartile": 0.03434715095868213,
+     "upper_quartile": 0.10644148227295089
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 31,
+     "median": 0.10476190476190476,
+     "lower_quartile": 0.051846906987093905,
+     "upper_quartile": 0.15403452820671365
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S05",
+   "label": "T2D cardiovascular outcomes, MACE",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 41,
+     "median": 4786.0,
+     "lower_quartile": 2425.0,
+     "upper_quartile": 9341.0
+    },
+    "sites": {
+     "trials": 42,
+     "median": 302.5,
+     "lower_quartile": 1.0,
+     "upper_quartile": 589.25
+    },
+    "primary_completion_months": {
+     "trials": 42,
+     "median": 59.74537987679672,
+     "lower_quartile": 36.0082135523614,
+     "upper_quartile": 73.5441478439425
+    },
+    "discontinued_fraction": {
+     "trials": 26,
+     "median": 0.031533425795137016,
+     "lower_quartile": 0.01696793041126407,
+     "upper_quartile": 0.0749408015903178
+    },
+    "control_discontinued_fraction": {
+     "trials": 22,
+     "median": 0.03254437869822491,
+     "lower_quartile": 0.017754868270332236,
+     "upper_quartile": 0.06304801670146143
+    },
+    "active_discontinued_fraction": {
+     "trials": 26,
+     "median": 0.03066349133977675,
+     "lower_quartile": 0.015239531901936193,
+     "upper_quartile": 0.06809978347071563
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 22,
+     "median": 0.3370393816453624,
+     "lower_quartile": 0.23509041964150432,
+     "upper_quartile": 0.40367550704251703
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "proportion",
+    "control_level_units": "proportion of participants",
+    "control_level": {
+     "trials": 13,
+     "median": 0.11800000000000001,
+     "lower_quartile": 0.08900000000000001,
+     "upper_quartile": 0.13388529886914377
+    },
+    "effect_scale": "log_ratio",
+    "effect_units": "log ratio (HR, RR, OR or rate ratio)",
+    "effect": {
+     "trials": 16,
+     "median": -0.100935708019335,
+     "lower_quartile": -0.16181693687720455,
+     "upper_quartile": -0.059478696455506394
+    }
+   }
+  },
+  {
+   "family_id": "TE-S06",
+   "label": "Chronic HF device management, HF hospitalization",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 26,
+     "median": 486.0,
+     "lower_quartile": 120.5,
+     "upper_quartile": 685.0
+    },
+    "sites": {
+     "trials": 30,
+     "median": 3.5,
+     "lower_quartile": 1.0,
+     "upper_quartile": 30.75
+    },
+    "primary_completion_months": {
+     "trials": 27,
+     "median": 51.02258726899384,
+     "lower_quartile": 28.97741273100616,
+     "upper_quartile": 70.53798767967146
+    },
+    "discontinued_fraction": {
+     "trials": 8,
+     "median": 0.15943019244906037,
+     "lower_quartile": 0.11969934755774994,
+     "upper_quartile": 0.27062062937062936
+    },
+    "control_discontinued_fraction": {
+     "trials": 7,
+     "median": 0.1506493506493507,
+     "lower_quartile": 0.1273908185896046,
+     "upper_quartile": 0.2621383363471971
+    },
+    "active_discontinued_fraction": {
+     "trials": 8,
+     "median": 0.17535281619788662,
+     "lower_quartile": 0.1190498638173057,
+     "upper_quartile": 0.29693362193362194
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 6,
+     "median": 0.5049926488605734,
+     "lower_quartile": 0.3064435564435564,
+     "upper_quartile": 0.5507917789757413
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S07",
+   "label": "Cluster-parallel respiratory-infection prevention in long-term care",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": null,
+    "sites": null,
+    "primary_completion_months": null,
+    "discontinued_fraction": null,
+    "control_discontinued_fraction": null,
+    "active_discontinued_fraction": null,
+    "control_serious_adverse_event_fraction": null
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S08",
+   "label": "Stepped-wedge postpartum safety pathway, severe maternal morbidity",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": null,
+    "sites": null,
+    "primary_completion_months": null,
+    "discontinued_fraction": null,
+    "control_discontinued_fraction": null,
+    "active_discontinued_fraction": null,
+    "control_serious_adverse_event_fraction": null
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S09",
+   "label": "Extended anticoagulation after VTE, recurrent VTE",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 27,
+     "median": 605.0,
+     "lower_quartile": 358.5,
+     "upper_quartile": 2742.5
+    },
+    "sites": {
+     "trials": 29,
+     "median": 27.0,
+     "lower_quartile": 2.0,
+     "upper_quartile": 147.0
+    },
+    "primary_completion_months": {
+     "trials": 28,
+     "median": 42.61190965092403,
+     "lower_quartile": 30.480492813141684,
+     "upper_quartile": 54.50513347022587
+    },
+    "discontinued_fraction": {
+     "trials": 16,
+     "median": 0.13208757311866381,
+     "lower_quartile": 0.09511791583241161,
+     "upper_quartile": 0.18097705626057048
+    },
+    "control_discontinued_fraction": {
+     "trials": 5,
+     "median": 0.14954682779456197,
+     "lower_quartile": 0.07058823529411762,
+     "upper_quartile": 0.1678321678321678
+    },
+    "active_discontinued_fraction": {
+     "trials": 16,
+     "median": 0.12477622627998569,
+     "lower_quartile": 0.09189815153599604,
+     "upper_quartile": 0.17878812522541002
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 5,
+     "median": 0.09104704097116843,
+     "lower_quartile": 0.08813559322033898,
+     "upper_quartile": 0.19128329297820823
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S10",
+   "label": "Early Parkinson disease rehabilitation, motor disability",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 65,
+     "median": 44.0,
+     "lower_quartile": 30.0,
+     "upper_quartile": 60.0
+    },
+    "sites": {
+     "trials": 66,
+     "median": 1.0,
+     "lower_quartile": 1.0,
+     "upper_quartile": 1.0
+    },
+    "primary_completion_months": {
+     "trials": 64,
+     "median": 19.137577002053387,
+     "lower_quartile": 7.909650924024641,
+     "upper_quartile": 38.17659137577002
+    },
+    "discontinued_fraction": {
+     "trials": 17,
+     "median": 0.09042553191489366,
+     "lower_quartile": 0.033333333333333326,
+     "upper_quartile": 0.17021276595744683
+    },
+    "control_discontinued_fraction": {
+     "trials": 10,
+     "median": 0.08116883116883117,
+     "lower_quartile": 0.010638297872340413,
+     "upper_quartile": 0.18081613508442776
+    },
+    "active_discontinued_fraction": {
+     "trials": 17,
+     "median": 0.09042553191489366,
+     "lower_quartile": 0.033333333333333326,
+     "upper_quartile": 0.15555555555555556
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 10,
+     "median": 0.010638297872340425,
+     "lower_quartile": 0.0,
+     "upper_quartile": 0.04745493107104984
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S11",
+   "label": "T2D add-on glucose lowering, HbA1c",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 631,
+     "median": 453.0,
+     "lower_quartile": 280.0,
+     "upper_quartile": 708.0
+    },
+    "sites": {
+     "trials": 663,
+     "median": 45.0,
+     "lower_quartile": 1.0,
+     "upper_quartile": 92.0
+    },
+    "primary_completion_months": {
+     "trials": 643,
+     "median": 17.971252566735114,
+     "lower_quartile": 13.618069815195073,
+     "upper_quartile": 24.016427104722794
+    },
+    "discontinued_fraction": {
+     "trials": 417,
+     "median": 0.11885546588407925,
+     "lower_quartile": 0.07264957264957261,
+     "upper_quartile": 0.19922630560928434
+    },
+    "control_discontinued_fraction": {
+     "trials": 211,
+     "median": 0.13043478260869568,
+     "lower_quartile": 0.07843137254901966,
+     "upper_quartile": 0.23684210526315785
+    },
+    "active_discontinued_fraction": {
+     "trials": 415,
+     "median": 0.11877394636015326,
+     "lower_quartile": 0.06833437565144879,
+     "upper_quartile": 0.19588282396903778
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 208,
+     "median": 0.044160655098459733,
+     "lower_quartile": 0.02168069191210846,
+     "upper_quartile": 0.08630866685862366
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "continuous",
+    "control_level_units": "percentage of hba1c",
+    "control_level": {
+     "trials": 33,
+     "median": -0.11,
+     "lower_quartile": -0.29,
+     "upper_quartile": 0.04
+    },
+    "effect_scale": "difference",
+    "effect_units": "percentage of hba1c",
+    "effect": {
+     "trials": 69,
+     "median": -0.51,
+     "lower_quartile": -0.88,
+     "upper_quartile": -0.17
+    }
+   }
+  },
+  {
+   "family_id": "TE-S12",
+   "label": "Uncontrolled asthma maintenance, asthma-control score",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 24,
+     "median": 141.5,
+     "lower_quartile": 44.0,
+     "upper_quartile": 404.25
+    },
+    "sites": {
+     "trials": 26,
+     "median": 6.0,
+     "lower_quartile": 1.0,
+     "upper_quartile": 57.75
+    },
+    "primary_completion_months": {
+     "trials": 24,
+     "median": 27.876796714579054,
+     "lower_quartile": 24.082135523613964,
+     "upper_quartile": 35.9917864476386
+    },
+    "discontinued_fraction": {
+     "trials": 15,
+     "median": 0.06728971962616825,
+     "lower_quartile": 0.053110391945343394,
+     "upper_quartile": 0.10967640068075424
+    },
+    "control_discontinued_fraction": {
+     "trials": 12,
+     "median": 0.05798319327731094,
+     "lower_quartile": 0.03986842105263161,
+     "upper_quartile": 0.07896075689767393
+    },
+    "active_discontinued_fraction": {
+     "trials": 15,
+     "median": 0.080952380952381,
+     "lower_quartile": 0.05464806256665483,
+     "upper_quartile": 0.10844155844155845
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 12,
+     "median": 0.06823838820269572,
+     "lower_quartile": 0.011811023622047244,
+     "upper_quartile": 0.18303030303030304
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S13",
+   "label": "CKD albuminuria reduction, UACR",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 93,
+     "median": 125.0,
+     "lower_quartile": 60.0,
+     "upper_quartile": 248.0
+    },
+    "sites": {
+     "trials": 97,
+     "median": 16.0,
+     "lower_quartile": 1.0,
+     "upper_quartile": 49.0
+    },
+    "primary_completion_months": {
+     "trials": 93,
+     "median": 22.012320328542096,
+     "lower_quartile": 16.032854209445585,
+     "upper_quartile": 32.68993839835729
+    },
+    "discontinued_fraction": {
+     "trials": 32,
+     "median": 0.12741817869858024,
+     "lower_quartile": 0.07081216171434881,
+     "upper_quartile": 0.21024391396088557
+    },
+    "control_discontinued_fraction": {
+     "trials": 30,
+     "median": 0.1402359108781127,
+     "lower_quartile": 0.0638544891640867,
+     "upper_quartile": 0.192775974025974
+    },
+    "active_discontinued_fraction": {
+     "trials": 31,
+     "median": 0.11111111111111116,
+     "lower_quartile": 0.05803771890435566,
+     "upper_quartile": 0.21492490613266585
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 29,
+     "median": 0.07352941176470588,
+     "lower_quartile": 0.03571428571428571,
+     "upper_quartile": 0.10714285714285714
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S14",
+   "label": "Early outpatient COVID-19 antiviral, sustained recovery",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 35,
+     "median": 573.0,
+     "lower_quartile": 141.0,
+     "upper_quartile": 1369.0
+    },
+    "sites": {
+     "trials": 35,
+     "median": 10.0,
+     "lower_quartile": 2.0,
+     "upper_quartile": 87.0
+    },
+    "primary_completion_months": {
+     "trials": 34,
+     "median": 7.572895277207392,
+     "lower_quartile": 5.930184804928132,
+     "upper_quartile": 11.753593429158112
+    },
+    "discontinued_fraction": {
+     "trials": 23,
+     "median": 0.08196721311475408,
+     "lower_quartile": 0.032679205018528834,
+     "upper_quartile": 0.12905794123690156
+    },
+    "control_discontinued_fraction": {
+     "trials": 23,
+     "median": 0.08333333333333337,
+     "lower_quartile": 0.039730300701192434,
+     "upper_quartile": 0.12392869441008048
+    },
+    "active_discontinued_fraction": {
+     "trials": 23,
+     "median": 0.08064516129032262,
+     "lower_quartile": 0.03178749111584933,
+     "upper_quartile": 0.1331435800126502
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 22,
+     "median": 0.010514119633949963,
+     "lower_quartile": 0.004279558273153761,
+     "upper_quartile": 0.023348098929494278
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S15",
+   "label": "First-line mCRC combination, objective response",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 33,
+     "median": 93.0,
+     "lower_quartile": 64.0,
+     "upper_quartile": 151.0
+    },
+    "sites": {
+     "trials": 35,
+     "median": 4.0,
+     "lower_quartile": 1.0,
+     "upper_quartile": 21.5
+    },
+    "primary_completion_months": {
+     "trials": 34,
+     "median": 40.394250513347025,
+     "lower_quartile": 21.53593429158111,
+     "upper_quartile": 59.27720739219713
+    },
+    "discontinued_fraction": null,
+    "control_discontinued_fraction": null,
+    "active_discontinued_fraction": null,
+    "control_serious_adverse_event_fraction": null
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  },
+  {
+   "family_id": "TE-S16",
+   "label": "Severe asthma biologic, exacerbation count",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 14,
+     "median": 878.0,
+     "lower_quartile": 496.0,
+     "upper_quartile": 1589.5
+    },
+    "sites": {
+     "trials": 14,
+     "median": 213.5,
+     "lower_quartile": 125.75,
+     "upper_quartile": 267.0
+    },
+    "primary_completion_months": {
+     "trials": 14,
+     "median": 32.36139630390144,
+     "lower_quartile": 27.93429158110883,
+     "upper_quartile": 40.8952772073922
+    },
+    "discontinued_fraction": {
+     "trials": 14,
+     "median": 0.1001382066809427,
+     "lower_quartile": 0.06813880126182964,
+     "upper_quartile": 0.11822804473902238
+    },
+    "control_discontinued_fraction": {
+     "trials": 13,
+     "median": 0.09750000000000003,
+     "lower_quartile": 0.0658307210031348,
+     "upper_quartile": 0.15086206896551724
+    },
+    "active_discontinued_fraction": {
+     "trials": 14,
+     "median": 0.09270198935325957,
+     "lower_quartile": 0.07495749102588323,
+     "upper_quartile": 0.10732677646358182
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 13,
+     "median": 0.1374764595103578,
+     "lower_quartile": 0.09144542772861357,
+     "upper_quartile": 0.14250614250614252
+    }
+   },
+   "endpoint_source": "registry",
+   "endpoint": {
+    "control_level_kind": "annual_rate",
+    "control_level_units": "events per participant-year",
+    "control_level": {
+     "trials": 10,
+     "median": 1.2200000000000002,
+     "lower_quartile": 0.922875,
+     "upper_quartile": 1.7125
+    },
+    "effect_scale": "log_ratio",
+    "effect_units": "log ratio (HR, RR, OR or rate ratio)",
+    "effect": {
+     "trials": 14,
+     "median": -0.6255322059298932,
+     "lower_quartile": -0.8558705637959998,
+     "upper_quartile": -0.38986953670022895
+    }
+   }
+  },
+  {
+   "family_id": "TE-S17",
+   "label": "Chronic HF after hospitalization, HF hospitalization count",
+   "tier": "endpoint_matched",
+   "operations": {
+    "enrolment": {
+     "trials": 107,
+     "median": 320.0,
+     "lower_quartile": 124.0,
+     "upper_quartile": 912.0
+    },
+    "sites": {
+     "trials": 118,
+     "median": 1.5,
+     "lower_quartile": 1.0,
+     "upper_quartile": 12.25
+    },
+    "primary_completion_months": {
+     "trials": 112,
+     "median": 45.01026694045174,
+     "lower_quartile": 28.01642710472279,
+     "upper_quartile": 62.012320328542096
+    },
+    "discontinued_fraction": {
+     "trials": 33,
+     "median": 0.15934065934065933,
+     "lower_quartile": 0.028690662493479402,
+     "upper_quartile": 0.29392624728850325
+    },
+    "control_discontinued_fraction": {
+     "trials": 22,
+     "median": 0.22024255144211002,
+     "lower_quartile": 0.11523541858129044,
+     "upper_quartile": 0.28950994781474226
+    },
+    "active_discontinued_fraction": {
+     "trials": 33,
+     "median": 0.16389244558258642,
+     "lower_quartile": 0.05882352941176472,
+     "upper_quartile": 0.29392624728850325
+    },
+    "control_serious_adverse_event_fraction": {
+     "trials": 20,
+     "median": 0.4885861114927371,
+     "lower_quartile": 0.25937076622008126,
+     "upper_quartile": 0.5452324797843666
+    }
+   },
+   "endpoint_source": "authored",
+   "endpoint": null
+  }
+ ],
+ "checksum": "fd69a071632ea5b6a12d5e5aef62d9a70892f34813eba242c90468c7ed78526b"
+}

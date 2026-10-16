@@ -1,0 +1,400 @@
+{
+  "purpose": "Public design comparison against the registry calibration source, not independent external validation",
+  "registry_source": {
+    "name": "AACT ClinicalTrials.gov snapshot 2026-08-01",
+    "archive_sha256": "8c9b5dc2a77151305ae55d0d3392ce8fc12cf5e5d4488914ec0f86383edccb70",
+    "trial_metrics_sha256": "55dfe3dd954fa05e317371c4fe3015dc300df05c99c8e240f52e4c3dcac2e776",
+    "manifest_sha256": "7ac6bc34ac44b437c3d7d273750f7093fcae0f19fcb879358bfc56d2c8db805b",
+    "base_cohort": "study_type=INTERVENTIONAL, overall_status=COMPLETED, designs.allocation=RANDOMIZED",
+    "base_cohort_trials": 173965,
+    "family_queries": [
+      {
+        "family_id": "TE-S01",
+        "label": "mCRC maintenance, all-cause death",
+        "mesh": [
+          "colorectal neoplasms",
+          "colonic neoplasms",
+          "rectal neoplasms"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "overall survival|death|mortality",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": "metasta|advanced|stage iv",
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S02",
+        "label": "CKD, kidney failure or death",
+        "mesh": [
+          "renal insufficiency, chronic",
+          "kidney failure, chronic",
+          "diabetic nephropathies"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3",
+          "PHASE4"
+        ],
+        "endpoint": "kidney failure|end[- ]stage|esrd|eskd|dialysis|doubling of (?:serum )?creatinine|egfr decline|renal death|composite",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S03",
+        "label": "Relapsing MS, confirmed disability progression",
+        "mesh": [
+          "multiple sclerosis",
+          "multiple sclerosis, relapsing-remitting"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "disability|edss",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": "relaps",
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S04",
+        "label": "Severe asthma biologic, first severe exacerbation",
+        "mesh": [
+          "asthma"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "time to (?:the )?first.*exacerbation|first (?:severe )?exacerbation",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": "mab\\b"
+      },
+      {
+        "family_id": "TE-S05",
+        "label": "T2D cardiovascular outcomes, MACE",
+        "mesh": [
+          "diabetes mellitus, type 2"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3",
+          "PHASE4"
+        ],
+        "endpoint": "cardiovascular (?:death|event|outcome)|\\bmace\\b|myocardial infarction|stroke",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S06",
+        "label": "Chronic HF device management, HF hospitalization",
+        "mesh": [
+          "heart failure"
+        ],
+        "phases": [
+          "NA",
+          "PHASE2/PHASE3",
+          "PHASE3",
+          "PHASE4"
+        ],
+        "endpoint": "hospitali",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [
+          "DEVICE"
+        ],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S07",
+        "label": "Cluster-parallel respiratory-infection prevention in long-term care",
+        "mesh": [
+          "influenza, human",
+          "respiratory tract infections",
+          "covid-19",
+          "pneumonia",
+          "virus diseases"
+        ],
+        "phases": [
+          "EARLY_PHASE1",
+          "NA",
+          "PHASE1",
+          "PHASE1/PHASE2",
+          "PHASE2",
+          "PHASE2/PHASE3",
+          "PHASE3",
+          "PHASE4"
+        ],
+        "endpoint": "infection|influenza|illness|respiratory|hospitali|death",
+        "effect_scale": "log_ratio",
+        "design": "cluster",
+        "setting": "nursing home|long[- ]term care|care home|residential care|skilled nursing",
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S08",
+        "label": "Stepped-wedge postpartum safety pathway, severe maternal morbidity",
+        "mesh": [
+          "postpartum hemorrhage",
+          "pregnancy complications",
+          "obstetric labor complications",
+          "puerperal disorders",
+          "maternal death"
+        ],
+        "phases": [
+          "EARLY_PHASE1",
+          "NA",
+          "PHASE1",
+          "PHASE1/PHASE2",
+          "PHASE2",
+          "PHASE2/PHASE3",
+          "PHASE3",
+          "PHASE4"
+        ],
+        "endpoint": "morbidity|haemorrhage|hemorrhage|blood loss|death|mortality",
+        "effect_scale": "log_ratio",
+        "design": "stepped_wedge",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S09",
+        "label": "Extended anticoagulation after VTE, recurrent VTE",
+        "mesh": [
+          "venous thromboembolism",
+          "pulmonary embolism",
+          "venous thrombosis"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3",
+          "PHASE4"
+        ],
+        "endpoint": "recurren",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S10",
+        "label": "Early Parkinson disease rehabilitation, motor disability",
+        "mesh": [
+          "parkinson disease"
+        ],
+        "phases": [
+          "NA"
+        ],
+        "endpoint": "updrs|motor|disabilit",
+        "effect_scale": "difference",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [
+          "BEHAVIORAL",
+          "DEVICE",
+          "OTHER",
+          "PROCEDURE"
+        ],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S11",
+        "label": "T2D add-on glucose lowering, HbA1c",
+        "mesh": [
+          "diabetes mellitus, type 2"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "hba1c|a1c|glycated|glycosylated",
+        "effect_scale": "difference",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [
+          "BIOLOGICAL",
+          "DRUG"
+        ],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S12",
+        "label": "Uncontrolled asthma maintenance, asthma-control score",
+        "mesh": [
+          "asthma"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "asthma control|\\bacq|\\bact\\b",
+        "effect_scale": "difference",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S13",
+        "label": "CKD albuminuria reduction, UACR",
+        "mesh": [
+          "renal insufficiency, chronic",
+          "kidney failure, chronic",
+          "diabetic nephropathies",
+          "albuminuria",
+          "proteinuria"
+        ],
+        "phases": [
+          "PHASE2",
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "albumin|uacr|\\bacr\\b|proteinuria",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S14",
+        "label": "Early outpatient COVID-19 antiviral, sustained recovery",
+        "mesh": [
+          "covid-19"
+        ],
+        "phases": [
+          "PHASE2",
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "recover|resolution|sustained|alleviation|symptom",
+        "effect_scale": "difference",
+        "design": "parallel",
+        "setting": "outpatient|non-?hospitali|ambulatory|mild",
+        "intervention_types": [
+          "BIOLOGICAL",
+          "DRUG"
+        ],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S15",
+        "label": "First-line mCRC combination, objective response",
+        "mesh": [
+          "colorectal neoplasms",
+          "colonic neoplasms",
+          "rectal neoplasms"
+        ],
+        "phases": [
+          "PHASE2",
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "response rate|objective response|overall response|\\borr\\b",
+        "effect_scale": "difference",
+        "design": "parallel",
+        "setting": "metasta|advanced|stage iv",
+        "intervention_types": [],
+        "intervention_name": null
+      },
+      {
+        "family_id": "TE-S16",
+        "label": "Severe asthma biologic, exacerbation count",
+        "mesh": [
+          "asthma"
+        ],
+        "phases": [
+          "PHASE2/PHASE3",
+          "PHASE3"
+        ],
+        "endpoint": "exacerbation rate|annuali[sz]ed.*exacerbation|number of.*exacerbation",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": "mab\\b"
+      },
+      {
+        "family_id": "TE-S17",
+        "label": "Chronic HF after hospitalization, HF hospitalization count",
+        "mesh": [
+          "heart failure"
+        ],
+        "phases": [
+          "NA",
+          "PHASE2/PHASE3",
+          "PHASE3",
+          "PHASE4"
+        ],
+        "endpoint": "hospitali",
+        "effect_scale": "log_ratio",
+        "design": "parallel",
+        "setting": null,
+        "intervention_types": [],
+        "intervention_name": null
+      }
+    ],
+    "provenance_note": "The original trial-level derivation and calibration contract used this same registry snapshot. These rows cannot establish held-out external validation."
+  },
+  "native_source": {
+    "generation_date": "2026-10-11",
+    "source_commit": "5df3a9676cc47b6329bbba0c3941264df19113bf",
+    "native_source_tree_hashes": {
+      "ariadne-clinical": "a0f7a7b3b3db98d51012b273e6d650a5dc0b56af",
+      "ariadne-synth": "1fb1e1668bf0a500d81ed34c35154bee19c1b49e",
+      "trialagentbench-construction": "2dde70968675dab971bfa6591cfe3819d4beaae6"
+    },
+    "projection": "review_registry.project_native_trials",
+    "study_count": 17,
+    "visible_participants": 186433,
+    "seed_rule": "86911000 + numeric family identifier, A1 condition only",
+    "libraries": {
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "scipy": "1.15.3",
+      "pyarrow": "23.0.1"
+    },
+    "interpretation": "One realization per family; source construct comparison, not independent external validation or repeated-study qualification.",
+    "archive": "current-records.zip",
+    "sha256": "1480cdfa133e917c67453f1537969a31a52dfccda5989165aaa92d293b837837",
+    "native_participant_unit": "Unique randomized participant visible at the analysis cutoff; occupied sites count distinct recorded site_id",
+    "native_missingness_definition": "Fraction of randomized arm participants with no nonmissing endpoint at individual final assessment; not registry noncompletion or a direct estimate of the declared withdrawal parameter."
+  },
+  "public_inputs": {
+    "archived_native_trials.csv": "222b56743126a200a2ca0139e3900cfe5f22b08cd694568e5127a3deab51fa81",
+    "calibration_targets.json": "8d2e6f78446a9751b647de6a13ba8c04d9bea083ede5518eb7c64d07a21dab19",
+    "comparison_limits.csv": "0f64a7ad71b581c74c6545a6d308f1fb6c9fa7237f6ff95eaed9d5da3fd1e7c0",
+    "current_loss_declarations.csv": "03de0e78acf8ed93632e415e77b62cfead9bd357fc69425d91d14c58c2b52a56",
+    "native_trials.csv": "5a5bc7ab06c8c0d4e676bf2203ae1e476ccb696a3358bc21b2e50d9adab3f34e",
+    "registry_trials.csv": "8a31c2f9ac5fca37d27ec1709735ca776b5272791567d252dc3aa7dc69661fc7"
+  },
+  "archived_teaching_source": {
+    "archive": "family-records.zip",
+    "sha256": "0930a800e5ec4f341ff567e439025c90217680fde16d41c9792b33a0bf9f3604",
+    "projection": "review_registry.project_native_trials",
+    "native_participant_unit": "unique randomized participant; occupied sites count distinct recorded site_id",
+    "native_missingness_definition": "Proportion of randomized arm participants without a nonmissing endpoint record at the individual final assessment; not equated to study noncompletion.",
+    "archive_last_changed_commit": "6dc0280c5",
+    "archive_last_changed_date": "2026-09-25",
+    "version_limit": "The teaching archive predates registry-driven realism changes committed 2026-10-07/08; this is not a current-generator qualification. Archive revision is not asserted to identify the generation-code revision."
+  }
+}

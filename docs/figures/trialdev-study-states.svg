@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="450" viewBox="0 0 1100 450" role="img" aria-labelledby="title desc">
+<title id="title">Recruitment and readout within one committed study</title><desc id="desc">A committed design starts recruitment, which can pause at a prespecified count and resume after a published readout. Closing recruitment preserves enrolled patients and follow-up. Readouts use the next committed look and available records; waiting advances time without revealing a new look.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#31465b"/></marker></defs>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#20354b;font-size:21px}.heading{font-size:25px;font-weight:700}.small{font-size:19px}.box{fill:#eef5f8;stroke:#226b93;stroke-width:2}.terminal{fill:#fff7eb;stroke:#9a6327;stroke-width:2}.line{fill:none;stroke:#31465b;stroke-width:2;marker-end:url(#arrow)}</style>
+<rect width="1100" height="450" fill="white"/>
+<text x="550" y="34" text-anchor="middle" class="heading"><tspan x="550" dy="0">Recruitment within one committed study</tspan></text>
+<g><rect x="25" y="137" width="220" height="75" rx="10" class="box"/><text x="135.0" y="168" text-anchor="middle" class=""><tspan x="135.0" dy="0">Committed design</tspan></text>
+</g>
+<g><rect x="360" y="137" width="230" height="75" rx="10" class="box"/><text x="475.0" y="168" text-anchor="middle" class=""><tspan x="475.0" dy="0">Recruiting</tspan></text>
+</g>
+<g><rect x="765" y="137" width="285" height="75" rx="10" class="box"/><text x="907.5" y="168" text-anchor="middle" class=""><tspan x="907.5" dy="0">Planned pause</tspan></text>
+</g>
+<g><rect x="360" y="300" width="400" height="75" rx="10" class="terminal"/><text x="560.0" y="331" text-anchor="middle" class=""><tspan x="560.0" dy="0">No further recruitment</tspan><tspan x="560.0" dy="28">Enrolled patients retained</tspan></text>
+</g>
+<path d="M 245 174 H 360" class="line"/>
+<text x="302" y="158" text-anchor="middle" class="small"><tspan x="302" dy="0">Start</tspan></text>
+<path d="M 590 161 H 765" class="line"/>
+<text x="678" y="143" text-anchor="middle" class="small"><tspan x="678" dy="0">Planned count</tspan></text>
+<path d="M 910 212 V 254 H 475 V 212" class="line"/>
+<text x="720" y="283" text-anchor="middle" class="small"><tspan x="720" dy="0">Continue after a published readout</tspan></text>
+<path d="M 397 212 V 300" class="line"/>
+<text x="246" y="276" text-anchor="middle" class="small"><tspan x="246" dy="0">Close study or reach cap</tspan></text>
+<path d="M 1000 212 V 335 H 760" class="line"/>
+<text x="930" y="362" text-anchor="middle" class="small"><tspan x="930" dy="0">Close study</tspan></text>
+<text x="550" y="411" text-anchor="middle" class="small"><tspan x="550" dy="0">At a committed look: release available records → analyse → choose the next action.</tspan></text>
+<text x="550" y="439" text-anchor="middle" class="small"><tspan x="550" dy="0">Closing recruitment does not erase follow-up or invent missing outcomes.</tspan></text>
+</svg>

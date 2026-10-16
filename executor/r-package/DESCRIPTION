@@ -1,0 +1,10 @@
+Package: trialagentbenchR
+Type: Package
+Title: TrialAgentBench Release Data Helpers
+Version: 1.0.1
+Authors@R: person("TrialAgentBench", "Maintainers", role = c("aut", "cre"), email = "maintainers@example.invalid")
+Description: Minimal offline helpers for reading participant-visible benchmark data in the pinned release executor.
+License: MIT
+Encoding: UTF-8
+Depends: R (>= 4.5.0)
+Imports: jsonlite

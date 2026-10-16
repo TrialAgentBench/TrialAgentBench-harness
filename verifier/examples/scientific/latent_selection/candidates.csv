@@ -1,0 +1,4 @@
+asset_id,intercept,direct_effect,assignment_intercept,measured_assignment,hidden_assignment
+control,0.0,0.0,0.0,0.0,0.0
+asset_a,-0.4,-0.4,0.0,0.8,0.0
+asset_b,-0.6,-0.6,0.0,-0.4,0.7

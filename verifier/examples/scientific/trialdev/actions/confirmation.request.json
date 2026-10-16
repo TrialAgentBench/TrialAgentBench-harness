@@ -1,0 +1,41 @@
+{
+  "request": {
+    "action": "start_study",
+    "arms": [
+      {
+        "arm_id": "control",
+        "asset_id": "control",
+        "dose": null,
+        "participant_count": 300
+      },
+      {
+        "arm_id": "active",
+        "asset_id": "mrd-88030",
+        "dose": "standard",
+        "participant_count": 300
+      }
+    ],
+    "assessment_days": [
+      0,
+      168
+    ],
+    "follow_up_days": 168,
+    "looks": [
+      {
+        "completed_participants": null,
+        "deadline_day": 810.0
+      }
+    ],
+    "pause_after_enrolled": null,
+    "phase": "confirmation",
+    "recruitment": {
+      "background_fraction": 1.0,
+      "preferences": []
+    },
+    "sites": 40,
+    "surveillance_days": [
+      0,
+      168
+    ]
+  }
+}

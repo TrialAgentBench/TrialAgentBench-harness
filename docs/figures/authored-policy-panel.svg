@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="720pt" height="612pt" viewBox="0 0 720 612" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 612
+L 720 612
+L 720 0
+L 0 0
+L 0 612
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 158.297222 165.432343
+L 241.547222 165.432343
+L 241.547222 151.583657
+L 158.297222 151.583657
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 245.658333 165.432343
+L 328.908333 165.432343
+L 328.908333 151.583657
+L 245.658333 151.583657
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 158.297222 183.127886
+L 241.547222 183.127886
+L 241.547222 169.2792
+L 158.297222 169.2792
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 245.658333 183.127886
+L 328.908333 183.127886
+L 328.908333 169.2792
+L 245.658333 169.2792
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 158.297222 200.823429
+L 241.547222 200.823429
+L 241.547222 186.974743
+L 158.297222 186.974743
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 245.658333 200.823429
+L 328.908333 200.823429
+L 328.908333 186.974743
+L 245.658333 186.974743
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 158.297222 218.518971
+L 241.547222 218.518971
+L 241.547222 204.670286
+L 158.297222 204.670286
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 245.658333 218.518971
+L 328.908333 218.518971
+L 328.908333 204.670286
+L 245.658333 204.670286
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 158.297222 236.214514
+L 241.547222 236.214514
+L 241.547222 222.365829
+L 158.297222 222.365829
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 245.658333 236.214514
+L 328.908333 236.214514
+L 328.908333 222.365829
+L 245.658333 222.365829
+z
+" clip-path="url(#p4d1c510ae9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 600; font-size: 14px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="106.575429" transform="rotate(-0 25.2 106.575429)">Effective · 3 candidates</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="123.886286" transform="rotate(-0 25.2 123.886286)">World mean: 0.00M</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="141.197143" transform="rotate(-0 25.2 141.197143)">Design</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="141.197143" transform="rotate(-0 199.922222 141.197143)">Repeat 1</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="141.197143" transform="rotate(-0 287.283333 141.197143)">Repeat 2</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="161.869719" transform="rotate(-0 25.2 161.869719)">Balanced</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="161.869719" transform="rotate(-0 199.922222 161.869719)">0</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="161.869719" transform="rotate(-0 287.283333 161.869719)">0</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="179.565262" transform="rotate(-0 25.2 179.565262)">Allocation</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="179.565262" transform="rotate(-0 199.922222 179.565262)">0</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="179.565262" transform="rotate(-0 287.283333 179.565262)">0</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="197.260804" transform="rotate(-0 25.2 197.260804)">Larger</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="197.260804" transform="rotate(-0 199.922222 197.260804)">0</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="197.260804" transform="rotate(-0 287.283333 197.260804)">0</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="214.956347" transform="rotate(-0 25.2 214.956347)">Longer</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="214.956347" transform="rotate(-0 199.922222 214.956347)">0</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="214.956347" transform="rotate(-0 287.283333 214.956347)">0</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="232.65189" transform="rotate(-0 25.2 232.65189)">Staged</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="232.65189" transform="rotate(-0 199.922222 232.65189)">0</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="232.65189" transform="rotate(-0 287.283333 232.65189)">0</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_12">
+    <path d="M 515.963889 165.432343
+L 599.213889 165.432343
+L 599.213889 151.583657
+L 515.963889 151.583657
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 603.325 165.432343
+L 686.575 165.432343
+L 686.575 151.583657
+L 603.325 151.583657
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 515.963889 183.127886
+L 599.213889 183.127886
+L 599.213889 169.2792
+L 515.963889 169.2792
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 603.325 183.127886
+L 686.575 183.127886
+L 686.575 169.2792
+L 603.325 169.2792
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 515.963889 200.823429
+L 599.213889 200.823429
+L 599.213889 186.974743
+L 515.963889 186.974743
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 603.325 200.823429
+L 686.575 200.823429
+L 686.575 186.974743
+L 603.325 186.974743
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 515.963889 218.518971
+L 599.213889 218.518971
+L 599.213889 204.670286
+L 515.963889 204.670286
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 603.325 218.518971
+L 686.575 218.518971
+L 686.575 204.670286
+L 603.325 204.670286
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 515.963889 236.214514
+L 599.213889 236.214514
+L 599.213889 222.365829
+L 515.963889 222.365829
+z
+" clip-path="url(#p370b748e0e)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 603.325 236.214514
+L 686.575 236.214514
+L 686.575 222.365829
+L 603.325 222.365829
+z
+" clip-path="url(#p370b748e0e)" style="fill: #ead4c9"/>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 600; font-size: 14px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="106.575429" transform="rotate(-0 382.866667 106.575429)">Effective · 5 candidates</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="123.886286" transform="rotate(-0 382.866667 123.886286)">World mean: -96.54M</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="141.197143" transform="rotate(-0 382.866667 141.197143)">Design</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="141.197143" transform="rotate(-0 557.588889 141.197143)">Repeat 1</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="141.197143" transform="rotate(-0 644.95 141.197143)">Repeat 2</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="161.869719" transform="rotate(-0 382.866667 161.869719)">Balanced</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="161.869719" transform="rotate(-0 557.588889 161.869719)">0</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="161.869719" transform="rotate(-0 644.95 161.869719)">0</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="179.565262" transform="rotate(-0 382.866667 179.565262)">Allocation</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="179.565262" transform="rotate(-0 557.588889 179.565262)">0</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="179.565262" transform="rotate(-0 644.95 179.565262)">0</text>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="197.260804" transform="rotate(-0 382.866667 197.260804)">Larger</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="197.260804" transform="rotate(-0 557.588889 197.260804)">0</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="197.260804" transform="rotate(-0 644.95 197.260804)">0</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="214.956347" transform="rotate(-0 382.866667 214.956347)">Longer</text>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="214.956347" transform="rotate(-0 557.588889 214.956347)">0</text>
+   </g>
+   <g id="text_37">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="214.956347" transform="rotate(-0 644.95 214.956347)">0</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="232.65189" transform="rotate(-0 382.866667 232.65189)">Staged</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="232.65189" transform="rotate(-0 557.588889 232.65189)">0</text>
+   </g>
+   <g id="text_40">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="232.65189" transform="rotate(-0 644.95 232.65189)">-965.4</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_22">
+    <path d="M 158.297222 345.753771
+L 241.547222 345.753771
+L 241.547222 331.905086
+L 158.297222 331.905086
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 245.658333 345.753771
+L 328.908333 345.753771
+L 328.908333 331.905086
+L 245.658333 331.905086
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 158.297222 363.449314
+L 241.547222 363.449314
+L 241.547222 349.600629
+L 158.297222 349.600629
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 245.658333 363.449314
+L 328.908333 363.449314
+L 328.908333 349.600629
+L 245.658333 349.600629
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 158.297222 381.144857
+L 241.547222 381.144857
+L 241.547222 367.296171
+L 158.297222 367.296171
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 245.658333 381.144857
+L 328.908333 381.144857
+L 328.908333 367.296171
+L 245.658333 367.296171
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_28">
+    <path d="M 158.297222 398.8404
+L 241.547222 398.8404
+L 241.547222 384.991714
+L 158.297222 384.991714
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 245.658333 398.8404
+L 328.908333 398.8404
+L 328.908333 384.991714
+L 245.658333 384.991714
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_30">
+    <path d="M 158.297222 416.535943
+L 241.547222 416.535943
+L 241.547222 402.687257
+L 158.297222 402.687257
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_31">
+    <path d="M 245.658333 416.535943
+L 328.908333 416.535943
+L 328.908333 402.687257
+L 245.658333 402.687257
+z
+" clip-path="url(#pdf99f5d4a5)" style="fill: #dcece8"/>
+   </g>
+   <g id="text_41">
+    <text style="font-weight: 600; font-size: 14px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="286.896857" transform="rotate(-0 25.2 286.896857)">Harmful · 3 candidates</text>
+   </g>
+   <g id="text_42">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="304.207714" transform="rotate(-0 25.2 304.207714)">World mean: +39.51M</text>
+   </g>
+   <g id="text_43">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="321.518571" transform="rotate(-0 25.2 321.518571)">Design</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="321.518571" transform="rotate(-0 199.922222 321.518571)">Repeat 1</text>
+   </g>
+   <g id="text_45">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="321.518571" transform="rotate(-0 287.283333 321.518571)">Repeat 2</text>
+   </g>
+   <g id="text_46">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="342.191147" transform="rotate(-0 25.2 342.191147)">Balanced</text>
+   </g>
+   <g id="text_47">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="342.191147" transform="rotate(-0 199.922222 342.191147)">+31.4</text>
+   </g>
+   <g id="text_48">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="342.191147" transform="rotate(-0 287.283333 342.191147)">+40.8</text>
+   </g>
+   <g id="text_49">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="359.88669" transform="rotate(-0 25.2 359.88669)">Allocation</text>
+   </g>
+   <g id="text_50">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="359.88669" transform="rotate(-0 199.922222 359.88669)">+38.8</text>
+   </g>
+   <g id="text_51">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="359.88669" transform="rotate(-0 287.283333 359.88669)">+48.2</text>
+   </g>
+   <g id="text_52">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="377.582233" transform="rotate(-0 25.2 377.582233)">Larger</text>
+   </g>
+   <g id="text_53">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="377.582233" transform="rotate(-0 199.922222 377.582233)">+46.3</text>
+   </g>
+   <g id="text_54">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="377.582233" transform="rotate(-0 287.283333 377.582233)">+55.7</text>
+   </g>
+   <g id="text_55">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="395.277776" transform="rotate(-0 25.2 395.277776)">Longer</text>
+   </g>
+   <g id="text_56">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="395.277776" transform="rotate(-0 199.922222 395.277776)">+38.0</text>
+   </g>
+   <g id="text_57">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="395.277776" transform="rotate(-0 287.283333 395.277776)">+47.4</text>
+   </g>
+   <g id="text_58">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="412.973319" transform="rotate(-0 25.2 412.973319)">Staged</text>
+   </g>
+   <g id="text_59">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="412.973319" transform="rotate(-0 199.922222 412.973319)">0</text>
+   </g>
+   <g id="text_60">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="412.973319" transform="rotate(-0 287.283333 412.973319)">+48.4</text>
+   </g>
+  </g>
+  <g id="axes_4">
+   <g id="patch_32">
+    <path d="M 515.963889 345.753771
+L 599.213889 345.753771
+L 599.213889 331.905086
+L 515.963889 331.905086
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_33">
+    <path d="M 603.325 345.753771
+L 686.575 345.753771
+L 686.575 331.905086
+L 603.325 331.905086
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_34">
+    <path d="M 515.963889 363.449314
+L 599.213889 363.449314
+L 599.213889 349.600629
+L 515.963889 349.600629
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_35">
+    <path d="M 603.325 363.449314
+L 686.575 363.449314
+L 686.575 349.600629
+L 603.325 349.600629
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_36">
+    <path d="M 515.963889 381.144857
+L 599.213889 381.144857
+L 599.213889 367.296171
+L 515.963889 367.296171
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_37">
+    <path d="M 603.325 381.144857
+L 686.575 381.144857
+L 686.575 367.296171
+L 603.325 367.296171
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_38">
+    <path d="M 515.963889 398.8404
+L 599.213889 398.8404
+L 599.213889 384.991714
+L 515.963889 384.991714
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_39">
+    <path d="M 603.325 398.8404
+L 686.575 398.8404
+L 686.575 384.991714
+L 603.325 384.991714
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_40">
+    <path d="M 515.963889 416.535943
+L 599.213889 416.535943
+L 599.213889 402.687257
+L 515.963889 402.687257
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_41">
+    <path d="M 603.325 416.535943
+L 686.575 416.535943
+L 686.575 402.687257
+L 603.325 402.687257
+z
+" clip-path="url(#p6d4ee8f4d0)" style="fill: #dcece8"/>
+   </g>
+   <g id="text_61">
+    <text style="font-weight: 600; font-size: 14px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="286.896857" transform="rotate(-0 382.866667 286.896857)">Harmful · 5 candidates</text>
+   </g>
+   <g id="text_62">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="304.207714" transform="rotate(-0 382.866667 304.207714)">World mean: +28.89M</text>
+   </g>
+   <g id="text_63">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="321.518571" transform="rotate(-0 382.866667 321.518571)">Design</text>
+   </g>
+   <g id="text_64">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="321.518571" transform="rotate(-0 557.588889 321.518571)">Repeat 1</text>
+   </g>
+   <g id="text_65">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="321.518571" transform="rotate(-0 644.95 321.518571)">Repeat 2</text>
+   </g>
+   <g id="text_66">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="342.191147" transform="rotate(-0 382.866667 342.191147)">Balanced</text>
+   </g>
+   <g id="text_67">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="342.191147" transform="rotate(-0 557.588889 342.191147)">+40.8</text>
+   </g>
+   <g id="text_68">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="342.191147" transform="rotate(-0 644.95 342.191147)">0</text>
+   </g>
+   <g id="text_69">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="359.88669" transform="rotate(-0 382.866667 359.88669)">Allocation</text>
+   </g>
+   <g id="text_70">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="359.88669" transform="rotate(-0 557.588889 359.88669)">+48.2</text>
+   </g>
+   <g id="text_71">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="359.88669" transform="rotate(-0 644.95 359.88669)">0</text>
+   </g>
+   <g id="text_72">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="377.582233" transform="rotate(-0 382.866667 377.582233)">Larger</text>
+   </g>
+   <g id="text_73">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="377.582233" transform="rotate(-0 557.588889 377.582233)">+55.7</text>
+   </g>
+   <g id="text_74">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="377.582233" transform="rotate(-0 644.95 377.582233)">0</text>
+   </g>
+   <g id="text_75">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="395.277776" transform="rotate(-0 382.866667 395.277776)">Longer</text>
+   </g>
+   <g id="text_76">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="395.277776" transform="rotate(-0 557.588889 395.277776)">+47.4</text>
+   </g>
+   <g id="text_77">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="395.277776" transform="rotate(-0 644.95 395.277776)">0</text>
+   </g>
+   <g id="text_78">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="412.973319" transform="rotate(-0 382.866667 412.973319)">Staged</text>
+   </g>
+   <g id="text_79">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="412.973319" transform="rotate(-0 557.588889 412.973319)">+48.4</text>
+   </g>
+   <g id="text_80">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="412.973319" transform="rotate(-0 644.95 412.973319)">+48.4</text>
+   </g>
+  </g>
+  <g id="axes_5">
+   <g id="patch_42">
+    <path d="M 158.297222 526.0752
+L 241.547222 526.0752
+L 241.547222 512.226514
+L 158.297222 512.226514
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_43">
+    <path d="M 245.658333 526.0752
+L 328.908333 526.0752
+L 328.908333 512.226514
+L 245.658333 512.226514
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_44">
+    <path d="M 158.297222 543.770743
+L 241.547222 543.770743
+L 241.547222 529.922057
+L 158.297222 529.922057
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_45">
+    <path d="M 245.658333 543.770743
+L 328.908333 543.770743
+L 328.908333 529.922057
+L 245.658333 529.922057
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_46">
+    <path d="M 158.297222 561.466286
+L 241.547222 561.466286
+L 241.547222 547.6176
+L 158.297222 547.6176
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_47">
+    <path d="M 245.658333 561.466286
+L 328.908333 561.466286
+L 328.908333 547.6176
+L 245.658333 547.6176
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_48">
+    <path d="M 158.297222 579.161829
+L 241.547222 579.161829
+L 241.547222 565.313143
+L 158.297222 565.313143
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_49">
+    <path d="M 245.658333 579.161829
+L 328.908333 579.161829
+L 328.908333 565.313143
+L 245.658333 565.313143
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_50">
+    <path d="M 158.297222 596.857371
+L 241.547222 596.857371
+L 241.547222 583.008686
+L 158.297222 583.008686
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_51">
+    <path d="M 245.658333 596.857371
+L 328.908333 596.857371
+L 328.908333 583.008686
+L 245.658333 583.008686
+z
+" clip-path="url(#pd6d16b22ba)" style="fill: #eff1ee"/>
+   </g>
+   <g id="text_81">
+    <text style="font-weight: 600; font-size: 14px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="467.218286" transform="rotate(-0 25.2 467.218286)">Null · 3 candidates</text>
+   </g>
+   <g id="text_82">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="484.529143" transform="rotate(-0 25.2 484.529143)">World mean: +34.80M</text>
+   </g>
+   <g id="text_83">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="501.84" transform="rotate(-0 25.2 501.84)">Design</text>
+   </g>
+   <g id="text_84">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="501.84" transform="rotate(-0 199.922222 501.84)">Repeat 1</text>
+   </g>
+   <g id="text_85">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="501.84" transform="rotate(-0 287.283333 501.84)">Repeat 2</text>
+   </g>
+   <g id="text_86">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="522.512576" transform="rotate(-0 25.2 522.512576)">Balanced</text>
+   </g>
+   <g id="text_87">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="522.512576" transform="rotate(-0 199.922222 522.512576)">+31.4</text>
+   </g>
+   <g id="text_88">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="522.512576" transform="rotate(-0 287.283333 522.512576)">+31.4</text>
+   </g>
+   <g id="text_89">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="540.208119" transform="rotate(-0 25.2 540.208119)">Allocation</text>
+   </g>
+   <g id="text_90">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="540.208119" transform="rotate(-0 199.922222 540.208119)">+38.8</text>
+   </g>
+   <g id="text_91">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="540.208119" transform="rotate(-0 287.283333 540.208119)">+38.8</text>
+   </g>
+   <g id="text_92">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="557.903662" transform="rotate(-0 25.2 557.903662)">Larger</text>
+   </g>
+   <g id="text_93">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="557.903662" transform="rotate(-0 199.922222 557.903662)">+46.3</text>
+   </g>
+   <g id="text_94">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="557.903662" transform="rotate(-0 287.283333 557.903662)">+46.3</text>
+   </g>
+   <g id="text_95">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="575.599204" transform="rotate(-0 25.2 575.599204)">Longer</text>
+   </g>
+   <g id="text_96">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="575.599204" transform="rotate(-0 199.922222 575.599204)">+38.0</text>
+   </g>
+   <g id="text_97">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="575.599204" transform="rotate(-0 287.283333 575.599204)">+38.0</text>
+   </g>
+   <g id="text_98">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="25.2" y="593.294747" transform="rotate(-0 25.2 593.294747)">Staged</text>
+   </g>
+   <g id="text_99">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="199.922222" y="593.294747" transform="rotate(-0 199.922222 593.294747)">+38.8</text>
+   </g>
+   <g id="text_100">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="287.283333" y="593.294747" transform="rotate(-0 287.283333 593.294747)">0</text>
+   </g>
+  </g>
+  <g id="axes_6">
+   <g id="patch_52">
+    <path d="M 515.963889 526.0752
+L 599.213889 526.0752
+L 599.213889 512.226514
+L 515.963889 512.226514
+z
+" clip-path="url(#p399625b1e9)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_53">
+    <path d="M 603.325 526.0752
+L 686.575 526.0752
+L 686.575 512.226514
+L 603.325 512.226514
+z
+" clip-path="url(#p399625b1e9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_54">
+    <path d="M 515.963889 543.770743
+L 599.213889 543.770743
+L 599.213889 529.922057
+L 515.963889 529.922057
+z
+" clip-path="url(#p399625b1e9)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_55">
+    <path d="M 603.325 543.770743
+L 686.575 543.770743
+L 686.575 529.922057
+L 603.325 529.922057
+z
+" clip-path="url(#p399625b1e9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_56">
+    <path d="M 515.963889 561.466286
+L 599.213889 561.466286
+L 599.213889 547.6176
+L 515.963889 547.6176
+z
+" clip-path="url(#p399625b1e9)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_57">
+    <path d="M 603.325 561.466286
+L 686.575 561.466286
+L 686.575 547.6176
+L 603.325 547.6176
+z
+" clip-path="url(#p399625b1e9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_58">
+    <path d="M 515.963889 579.161829
+L 599.213889 579.161829
+L 599.213889 565.313143
+L 515.963889 565.313143
+z
+" clip-path="url(#p399625b1e9)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_59">
+    <path d="M 603.325 579.161829
+L 686.575 579.161829
+L 686.575 565.313143
+L 603.325 565.313143
+z
+" clip-path="url(#p399625b1e9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="patch_60">
+    <path d="M 515.963889 596.857371
+L 599.213889 596.857371
+L 599.213889 583.008686
+L 515.963889 583.008686
+z
+" clip-path="url(#p399625b1e9)" style="fill: #dcece8"/>
+   </g>
+   <g id="patch_61">
+    <path d="M 603.325 596.857371
+L 686.575 596.857371
+L 686.575 583.008686
+L 603.325 583.008686
+z
+" clip-path="url(#p399625b1e9)" style="fill: #eff1ee"/>
+   </g>
+   <g id="text_101">
+    <text style="font-weight: 600; font-size: 14px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="467.218286" transform="rotate(-0 382.866667 467.218286)">Null · 5 candidates</text>
+   </g>
+   <g id="text_102">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="484.529143" transform="rotate(-0 382.866667 484.529143)">World mean: +24.05M</text>
+   </g>
+   <g id="text_103">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="501.84" transform="rotate(-0 382.866667 501.84)">Design</text>
+   </g>
+   <g id="text_104">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="501.84" transform="rotate(-0 557.588889 501.84)">Repeat 1</text>
+   </g>
+   <g id="text_105">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="501.84" transform="rotate(-0 644.95 501.84)">Repeat 2</text>
+   </g>
+   <g id="text_106">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="522.512576" transform="rotate(-0 382.866667 522.512576)">Balanced</text>
+   </g>
+   <g id="text_107">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="522.512576" transform="rotate(-0 557.588889 522.512576)">+40.8</text>
+   </g>
+   <g id="text_108">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="522.512576" transform="rotate(-0 644.95 522.512576)">0</text>
+   </g>
+   <g id="text_109">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="540.208119" transform="rotate(-0 382.866667 540.208119)">Allocation</text>
+   </g>
+   <g id="text_110">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="540.208119" transform="rotate(-0 557.588889 540.208119)">+48.2</text>
+   </g>
+   <g id="text_111">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="540.208119" transform="rotate(-0 644.95 540.208119)">0</text>
+   </g>
+   <g id="text_112">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="557.903662" transform="rotate(-0 382.866667 557.903662)">Larger</text>
+   </g>
+   <g id="text_113">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="557.903662" transform="rotate(-0 557.588889 557.903662)">+55.7</text>
+   </g>
+   <g id="text_114">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="557.903662" transform="rotate(-0 644.95 557.903662)">0</text>
+   </g>
+   <g id="text_115">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="575.599204" transform="rotate(-0 382.866667 575.599204)">Longer</text>
+   </g>
+   <g id="text_116">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="575.599204" transform="rotate(-0 557.588889 575.599204)">+47.4</text>
+   </g>
+   <g id="text_117">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="575.599204" transform="rotate(-0 644.95 575.599204)">0</text>
+   </g>
+   <g id="text_118">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="382.866667" y="593.294747" transform="rotate(-0 382.866667 593.294747)">Staged</text>
+   </g>
+   <g id="text_119">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="557.588889" y="593.294747" transform="rotate(-0 557.588889 593.294747)">+48.4</text>
+   </g>
+   <g id="text_120">
+    <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #202a2e" x="644.95" y="593.294747" transform="rotate(-0 644.95 593.294747)">0</text>
+   </g>
+  </g>
+  <g id="text_121">
+   <text style="font-weight: 600; font-size: 18px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="28.8" y="20.388375" transform="rotate(-0 28.8 20.388375)">What early stopping gains — and loses</text>
+  </g>
+  <g id="text_122">
+   <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; fill: #202a2e" transform="translate(28.8 51.240063)">Early-stop minus complete-all value ($M)</text>
+   <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; fill: #202a2e" transform="translate(28.8 68.068969)">+ favours early stop; − complete all; 0 tie</text>
+  </g>
+  <g id="text_123">
+   <text style="font-size: 13px; font-family: 'Arial', 'Liberation Sans', sans-serif; text-anchor: start; fill: #202a2e" x="28.8" y="84.084938" transform="rotate(-0 28.8 84.084938)">6 worlds · 5 designs · 2 allocation repeats</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p4d1c510ae9">
+   <rect x="25.2" y="97.92" width="308.333333" height="144.257143"/>
+  </clipPath>
+  <clipPath id="p370b748e0e">
+   <rect x="382.866667" y="97.92" width="308.333333" height="144.257143"/>
+  </clipPath>
+  <clipPath id="pdf99f5d4a5">
+   <rect x="25.2" y="278.241429" width="308.333333" height="144.257143"/>
+  </clipPath>
+  <clipPath id="p6d4ee8f4d0">
+   <rect x="382.866667" y="278.241429" width="308.333333" height="144.257143"/>
+  </clipPath>
+  <clipPath id="pd6d16b22ba">
+   <rect x="25.2" y="458.562857" width="308.333333" height="144.257143"/>
+  </clipPath>
+  <clipPath id="p399625b1e9">
+   <rect x="382.866667" y="458.562857" width="308.333333" height="144.257143"/>
+  </clipPath>
+ </defs>
+</svg>

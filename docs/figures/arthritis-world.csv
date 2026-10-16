@@ -1,0 +1,5 @@
+view,arm,participants,follow_up_days,mean,treatment_minus_control
+complete population,treatment,3200,28,4.605125,-0.23980625
+observed pilot,treatment,10,28,5.142,0.13200000000000056
+complete population,control,3200,28,4.84493125,-0.23980625
+observed pilot,control,10,28,5.01,0.13200000000000056

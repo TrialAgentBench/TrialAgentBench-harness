@@ -1,0 +1,391 @@
+{
+  "budget_usd": 50000000.0,
+  "enrollments": [
+    {
+      "design_sha256": "9ea240fa58c949e19c31d8e26192bbdf5b355809f2a109698d4620c36a6ffcab",
+      "patients": [
+        {
+          "arm_id": "active",
+          "enrollment_day": 62.18568133788386,
+          "participant_id": 20,
+          "participant_label": "early_safety:screen-1"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 77.65056716029567,
+          "participant_id": 214,
+          "participant_label": "early_safety:screen-10"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 78.19522394847297,
+          "participant_id": 224,
+          "participant_label": "early_safety:screen-11"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 79.915643749891,
+          "participant_id": 242,
+          "participant_label": "early_safety:screen-12"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 85.48758934271963,
+          "participant_id": 306,
+          "participant_label": "early_safety:screen-13"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 89.26167178725666,
+          "participant_id": 365,
+          "participant_label": "early_safety:screen-14"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 90.7610935093261,
+          "participant_id": 381,
+          "participant_label": "early_safety:screen-15"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 92.04523598843616,
+          "participant_id": 408,
+          "participant_label": "early_safety:screen-16"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 92.23496644990323,
+          "participant_id": 412,
+          "participant_label": "early_safety:screen-17"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 92.96725386675962,
+          "participant_id": 424,
+          "participant_label": "early_safety:screen-18"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 95.57638558769091,
+          "participant_id": 479,
+          "participant_label": "early_safety:screen-19"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 64.79582604960187,
+          "participant_id": 62,
+          "participant_label": "early_safety:screen-2"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 96.6420556737029,
+          "participant_id": 506,
+          "participant_label": "early_safety:screen-20"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 66.15686114319763,
+          "participant_id": 77,
+          "participant_label": "early_safety:screen-3"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 68.26345377991558,
+          "participant_id": 100,
+          "participant_label": "early_safety:screen-4"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 70.33147930263584,
+          "participant_id": 123,
+          "participant_label": "early_safety:screen-5"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 70.43100098111103,
+          "participant_id": 124,
+          "participant_label": "early_safety:screen-6"
+        },
+        {
+          "arm_id": "active",
+          "enrollment_day": 70.84860982278845,
+          "participant_id": 129,
+          "participant_label": "early_safety:screen-7"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 74.11395898335128,
+          "participant_id": 173,
+          "participant_label": "early_safety:screen-8"
+        },
+        {
+          "arm_id": "control",
+          "enrollment_day": 77.05680908407712,
+          "participant_id": 205,
+          "participant_label": "early_safety:screen-9"
+        }
+      ],
+      "screened": 20,
+      "study_id": "early_safety"
+    }
+  ],
+  "horizon_days": 1460,
+  "pool_manifest_sha256": "a460c49f0909c147f1abf56b375f9b56b83345a77ebc522fb108a1dfdebe249b",
+  "receipts": [
+    {
+      "cost": {
+        "accrued_usd": 1300000.0,
+        "remaining_liability_usd": 0.0
+      },
+      "kind": "resource",
+      "programme_day": 0.0,
+      "readout_id": "resource:74f597cadaa1fe0de9134d1d99d47490da1ca031f83313f64297a5088f1b7d5b",
+      "study_id": "early_safety",
+      "supported_arms": []
+    },
+    {
+      "cost": {
+        "accrued_usd": 1653600.0,
+        "remaining_liability_usd": 0.0
+      },
+      "kind": "resource",
+      "programme_day": 150.0,
+      "readout_id": "resource:1072d36733b4ad22a67767dbaafced8637e144d7a6ab0ef31bb478b2ab0e937f",
+      "study_id": "early_safety",
+      "supported_arms": []
+    },
+    {
+      "cost": {
+        "accrued_usd": 1653600.0,
+        "remaining_liability_usd": 0.0
+      },
+      "kind": "readout",
+      "programme_day": 150.0,
+      "readout_id": "b62602e5103ddb46fdf8e529228510bdba13ae394b06839e0bb01773863b0dbf",
+      "study_id": "early_safety",
+      "supported_arms": [
+        "control",
+        "active"
+      ]
+    }
+  ],
+  "recruitment_commitments": [
+    {
+      "arms": [
+        {
+          "arm_id": "control",
+          "partition": {
+            "asset_id": "control",
+            "directory": "partitions/p000",
+            "dose": null
+          }
+        },
+        {
+          "arm_id": "active",
+          "partition": {
+            "asset_id": "mrd-88030",
+            "directory": "partitions/p001",
+            "dose": "standard"
+          }
+        }
+      ],
+      "assessment_days": [
+        0,
+        28
+      ],
+      "follow_up_days": 28,
+      "looks": [
+        {
+          "completed_participants": null,
+          "deadline_day": 150.0
+        }
+      ],
+      "pause_after_enrolled": null,
+      "phase": "early_safety",
+      "sites": 6,
+      "start_day": 0.0,
+      "study_id": "early_safety",
+      "surveillance_days": [
+        0,
+        28
+      ],
+      "tariff": {
+        "assessment": 1500.0,
+        "closeout_days": 14,
+        "enrollment": 12000.0,
+        "followup_day": 60.0,
+        "per_site": 50000.0,
+        "screening": 1000.0,
+        "setup": 1000000.0,
+        "startup_days": 60
+      }
+    }
+  ],
+  "recruitment_continuations": [],
+  "recruitment_seed": 86802403,
+  "reservations": [
+    {
+      "closed": true,
+      "closed_arms": [],
+      "patients": [
+        {
+          "arm_id": "active",
+          "participant_id": 20,
+          "screening_ordinal": 1
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 62,
+          "screening_ordinal": 2
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 77,
+          "screening_ordinal": 3
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 100,
+          "screening_ordinal": 4
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 123,
+          "screening_ordinal": 5
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 124,
+          "screening_ordinal": 6
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 129,
+          "screening_ordinal": 7
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 173,
+          "screening_ordinal": 8
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 205,
+          "screening_ordinal": 9
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 214,
+          "screening_ordinal": 10
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 224,
+          "screening_ordinal": 11
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 242,
+          "screening_ordinal": 12
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 306,
+          "screening_ordinal": 13
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 365,
+          "screening_ordinal": 14
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 381,
+          "screening_ordinal": 15
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 408,
+          "screening_ordinal": 16
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 412,
+          "screening_ordinal": 17
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 424,
+          "screening_ordinal": 18
+        },
+        {
+          "arm_id": "active",
+          "participant_id": 479,
+          "screening_ordinal": 19
+        },
+        {
+          "arm_id": "control",
+          "participant_id": 506,
+          "screening_ordinal": 20
+        }
+      ],
+      "plan": {
+        "arms": [
+          {
+            "arm_id": "control",
+            "participant_count": 10
+          },
+          {
+            "arm_id": "active",
+            "participant_count": 10
+          }
+        ],
+        "recruitment": {
+          "background_fraction": 1.0,
+          "preferences": []
+        },
+        "site_ids": [
+          "site_043",
+          "site_048",
+          "site_025",
+          "site_061",
+          "site_077",
+          "site_063"
+        ],
+        "study_id": "early_safety"
+      },
+      "retained_control_ids": null,
+      "screening_days": [
+        2.1856813378838558,
+        4.795826049601869,
+        6.156861143197631,
+        8.263453779915581,
+        10.331479302635843,
+        10.43100098111103,
+        10.848609822788449,
+        14.113958983351285,
+        17.05680908407711,
+        17.650567160295665,
+        18.195223948472965,
+        19.915643749891004,
+        25.487589342719634,
+        29.26167178725666,
+        30.7610935093261,
+        32.045235988436154,
+        32.23496644990323,
+        32.96725386675963,
+        35.5763855876909,
+        36.6420556737029
+      ]
+    }
+  ],
+  "resource_day": 150.0,
+  "settlement_usd": 0.0,
+  "terminal": {
+    "asset_id": null,
+    "decision": "stop",
+    "dose": null,
+    "programme_day": 150.0,
+    "regulatory_review": null
+  }
+}

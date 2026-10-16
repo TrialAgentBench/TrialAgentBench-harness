@@ -1,0 +1,3 @@
+field,mean,sd,outcome_coefficient,role
+baseline_risk,0.0,1.0,1.0,measured
+hidden_risk,0.0,1.0,0.8,latent

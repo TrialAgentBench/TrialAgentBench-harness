@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 1175" role="img" aria-labelledby="title desc">
+<title id="title">Who receives treatment together changes the analysis</title>
+<desc id="desc">Schematics distinguish individual assignment from whole-home assignment. The rollout grid shows the two observed switch patterns in a maternity study. Actual trial counts are given below each example. Repeated visits belong to the same person.</desc>
+<style>text{font-family:Arial,"Liberation Sans",sans-serif;font-size:17px;fill:#23323d}.title{font-size:21px;font-weight:700}.small{font-size:15px;fill:#536370}.strong{font-weight:700}</style>
+<circle cx="19" cy="20" r="7" fill="#226879"/><text x="34" y="26">Treatment</text>
+<circle cx="152" cy="20" r="7" fill="#aebdc4"/><text x="167" y="26">Control</text>
+<g id="design-0"><text class="title" x="12" y="67">Individual assignment</text>
+<text class="small" x="12" y="93">Schematic: each circle represents a person</text>
+<circle cx="31" cy="144" r="10" fill="#226879"/>
+<circle cx="61" cy="144" r="10" fill="#aebdc4"/>
+<circle cx="91" cy="144" r="10" fill="#226879"/>
+<circle cx="121" cy="144" r="10" fill="#aebdc4"/>
+<circle cx="189" cy="144" r="10" fill="#226879"/>
+<circle cx="219" cy="144" r="10" fill="#aebdc4"/>
+<circle cx="249" cy="144" r="10" fill="#226879"/>
+<circle cx="279" cy="144" r="10" fill="#aebdc4"/>
+<text class="small" x="12" y="202">Assignment varies from person to person</text>
+<text class="strong" x="12" y="244">Asthma: 288 people</text>
+<text class="small" x="12" y="269">144 treatment; 144 control</text>
+<text x="12" y="300">Compare the assigned groups;</text>
+<text x="12" y="325">preserve each person's identity.</text></g>
+<g id="design-1"><text class="title" x="12" y="372">Whole-home assignment</text>
+<text class="small" x="12" y="398">Schematic: each circle represents a person</text>
+<rect x="12" y="415" width="136" height="69" rx="3" fill="none" stroke="#536370"/>
+<circle cx="31" cy="449" r="10" fill="#226879"/>
+<circle cx="61" cy="449" r="10" fill="#226879"/>
+<circle cx="91" cy="449" r="10" fill="#226879"/>
+<circle cx="121" cy="449" r="10" fill="#226879"/>
+<rect x="170" y="415" width="136" height="69" rx="3" fill="none" stroke="#536370"/>
+<circle cx="189" cy="449" r="10" fill="#aebdc4"/>
+<circle cx="219" cy="449" r="10" fill="#aebdc4"/>
+<circle cx="249" cy="449" r="10" fill="#aebdc4"/>
+<circle cx="279" cy="449" r="10" fill="#aebdc4"/>
+<text class="small" x="24" y="507">Home A</text><text class="small" x="182" y="507">Home B</text>
+<text class="strong" x="12" y="549">Infection: 7,680 residents</text>
+<text class="small" x="12" y="574">384 randomized care homes</text>
+<text x="12" y="605">People in one home share conditions.</text>
+<text x="12" y="630">Account for their dependence.</text></g>
+<g id="design-2"><text class="title" x="12" y="677">Stepped-wedge rollout</text>
+<text class="small" x="12" y="703">Two recorded switch patterns</text>
+<text class="small" x="84" y="734" text-anchor="middle">0–14</text>
+<text class="small" x="162" y="734" text-anchor="middle">14–28</text>
+<text class="small" x="240" y="734" text-anchor="middle">28–42</text>
+<text class="small" x="12" y="765">A</text>
+<rect x="50" y="744" width="70" height="26" fill="#aebdc4"/>
+<rect x="128" y="744" width="70" height="26" fill="#226879"/>
+<rect x="206" y="744" width="70" height="26" fill="#226879"/>
+<text class="small" x="12" y="800">B</text>
+<rect x="50" y="779" width="70" height="26" fill="#aebdc4"/>
+<rect x="128" y="779" width="70" height="26" fill="#aebdc4"/>
+<rect x="206" y="779" width="70" height="26" fill="#226879"/>
+<text class="small" x="50" y="824">Calendar days of delivery →</text>
+<text class="strong" x="12" y="854">Maternity: 7,200 births</text>
+<text class="small" x="12" y="879">36 units switch at different times</text>
+<text x="12" y="910">Treatment changes as time advances.</text>
+<text x="12" y="935">Separate time from treatment.</text></g>
+<path d="M12 969H338" stroke="#c8d1d7"/>
+<text class="title" x="12" y="1005">Six visits are still one person</text>
+<path d="M22 1051H326" stroke="#536370" stroke-width="1.5"/>
+<circle cx="22.000" cy="1051" r="5" fill="#536370"/>
+<text class="small" x="22.000" y="1078" text-anchor="middle">0</text>
+<circle cx="46.986" cy="1051" r="5" fill="#536370"/>
+<text class="small" x="46.986" y="1078" text-anchor="middle">30</text>
+<circle cx="96.959" cy="1051" r="5" fill="#536370"/>
+<text class="small" x="96.959" y="1078" text-anchor="middle">90</text>
+<circle cx="171.918" cy="1051" r="5" fill="#536370"/>
+<text class="small" x="171.918" y="1078" text-anchor="middle">180</text>
+<circle cx="246.877" cy="1051" r="5" fill="#536370"/>
+<text class="small" x="246.877" y="1078" text-anchor="middle">270</text>
+<circle cx="326.000" cy="1051" r="5" fill="#536370"/>
+<text class="small" x="326.000" y="1078" text-anchor="middle">365</text>
+<text class="small" x="12" y="1109">Days since randomization · asthma schedule</text>
+<text x="12" y="1142">Repeated records are not extra participants.</text>
+</svg>

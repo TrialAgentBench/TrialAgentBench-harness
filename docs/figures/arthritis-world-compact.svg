@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 875" role="img" aria-labelledby="title desc">
+<title id="title">How the world defines a reference independently of the agent</title><desc id="desc">The same 3,200 simulated people have day-28 outcomes under candidate treatment and control. Their mean difference is -0.240 arthritis-activity points. A recruited pilot reveals each participant's assigned-treatment outcome; its observed difference is +0.132. Patient characteristics, treatment, follow-up time and random variation determine outcomes. Lower disease activity is better. The comparison does not identify why the pilot differs.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10" fill="#536370"/></marker></defs>
+<style>text{font-family:Arial,"Liberation Sans",sans-serif;font-size:20px;fill:#23323d}.title{font-weight:700;font-size:23px}.small{font-size:18px;fill:#536370}.reference{fill:#79552a}.observed{fill:#226879}.path{stroke:#536370;stroke-width:1.8;fill:none;marker-end:url(#arrow)}.rule{stroke:#536370;stroke-width:1.4;fill:none}.panel{fill:none;stroke:#c8d1d7;stroke-width:1.2}</style>
+<style>text{font-size:17px}.title{font-size:19px}.small{font-size:15px}</style>
+<g id="model"><text class="title" x="12" y="29">One clinical world</text>
+<rect class="panel" x="12" y="48" width="326" height="161" rx="3"/>
+<text class="title" x="27" y="79">3,200 simulated people</text><text x="27" y="111">Patient characteristics, treatment</text><text x="27" y="136">and follow-up time</text>
+<text class="small" x="27" y="170">Specified relationships + random variation</text><text class="small" x="27" y="194">A structured causal model</text></g>
+<path class="path" d="M175 209V252"/>
+<g id="evaluator"><rect class="panel" x="12" y="256" width="326" height="260" rx="3"/>
+<text class="title reference" x="27" y="288">Evaluator: both treatments</text>
+<text class="small" x="27" y="316">Same 3,200 people; 28-day follow-up</text>
+<path class="path" d="M175 327H74V334"/><path class="path" d="M175 327H264V334"/>
+<text x="27" y="354">Candidate</text><text x="220" y="354">Control</text>
+<text class="title" x="27" y="384">4.605</text><text class="title" x="220" y="384">4.845</text>
+<text class="small" x="27" y="405">Mean activity</text><text class="small" x="220" y="405">Mean activity</text>
+<path class="rule" d="M74 417V434H264V417M175 434V450"/>
+<text class="title reference" x="175" y="477" text-anchor="middle">Difference -0.240</text>
+<text class="small" x="175" y="503" text-anchor="middle">Population treatment effect</text></g>
+<path class="path" d="M338 128H346V653H337"/>
+<g id="observed"><rect class="panel" x="12" y="557" width="318" height="255" rx="3"/>
+<text class="title observed" x="27" y="590">Agent: collected records</text>
+<text x="27" y="626">Recruit 20; randomly assign</text><text x="27" y="651">10 to treatment and 10 to control</text>
+<text x="27" y="687">Observe each assigned treatment</text><text x="27" y="712">after 28 days</text>
+<path class="path" d="M175 728V748"/>
+<text class="title observed" x="175" y="778" text-anchor="middle">5.142 − 5.010 = +0.132</text>
+<text class="small" x="175" y="801" text-anchor="middle">Observed pilot estimate</text></g>
+<text class="small" x="12" y="850">Arthritis activity (DAS28): lower is better.</text>
+</svg>

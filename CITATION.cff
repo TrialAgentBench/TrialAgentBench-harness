@@ -1,10 +1,20 @@
 cff-version: 1.2.0
-message: "Please cite the TrialAgentBench paper when using this benchmark."
-title: "TrialAgentBench: Evaluation Harness and Independent Verification"
+message: "Please cite TrialAgentBench when using the benchmark or harness."
+title: "TrialAgentBench: Evaluating AI Agents for Clinical-Trial Analysis and Long-Horizon Drug-Development Decisions"
 type: software
-version: 0.1.0
+version: 1.0.0
+date-released: 2026-10-16
 authors:
-  - name: "Anonymous Authors"
+  - family-names: "Segal"
+    given-names: "Bradley"
+  - family-names: "Bolton"
+    given-names: "William"
+  - family-names: "Torr"
+    given-names: "Philip"
+  - family-names: "Clifton"
+    given-names: "David"
+  - family-names: "Clifton"
+    given-names: "Lei"
 repository-code: "https://github.com/TrialAgentBench/TrialAgentBench-harness"
 url: "https://huggingface.co/datasets/TrialAgentBench/TrialAgentBench/"
 license: "CC-BY-NC-4.0"

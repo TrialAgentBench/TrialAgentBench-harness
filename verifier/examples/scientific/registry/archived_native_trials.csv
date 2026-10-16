@@ -1,0 +1,31 @@
+cell,family_id,condition,seed,planned_n,randomized_n,occupied_sites,horizon_days,endpoint_family,active_randomized_n,control_randomized_n,active_endpoint_unavailable,control_endpoint_unavailable
+TE-S01-A1,TE-S01,Proportional-hazards-compatible survival pattern,86802601,1896,1896,64,730.0,time_to_event,948,948,,
+TE-S01-A2,TE-S01,Time-varying treatment hazards with varying direction and severity,86802601,1896,1896,64,730.0,time_to_event,948,948,,
+TE-S02-A1,TE-S02,Independent censoring,86802602,1760,1760,64,1095.0,time_to_event,880,880,,
+TE-S02-A2,TE-S02,Detectable but nonmaterial dependence on released prognosis,86802602,1760,1760,64,1095.0,time_to_event,880,880,,
+TE-S03-A1,TE-S03,Low treatment-use event intensity,86802603,3376,3376,64,730.0,time_to_event,1688,1688,,
+TE-S03-A2,TE-S03,Detectable treatment-use events under a treatment-policy strategy,86802603,3376,3376,64,730.0,time_to_event,1688,1688,,
+TE-S04-A1,TE-S04,Independent censoring,86802604,3276,3276,64,365.0,time_to_event,1638,1638,,
+TE-S04-A2,TE-S04,Detectable but nonmaterial measured prognostic censoring,86802604,3276,3276,64,365.0,time_to_event,1638,1638,,
+TE-S04-A4,TE-S04,Dependent follow-up loss with randomized horizon-status retrieval,86802604,3276,3276,64,365.0,time_to_event,1638,1638,,
+TE-S05-A1,TE-S05,Linear prognostic model compatible with the prespecified standardization,86802605,3276,3276,64,1095.0,time_to_event,1638,1638,,
+TE-S05-A2,TE-S05,Detectable but nonmaterial prognostic nonlinearity,86802605,3276,3276,64,1095.0,time_to_event,1638,1638,,
+TE-S06-A1,TE-S06,Near-perfect endpoint ascertainment with complete validation support,86802606,9504,9504,118,365.0,time_to_event,4752,4752,,
+TE-S06-A2,TE-S06,Detectable but nonmaterial endpoint error with complete validation support,86802606,9504,9504,118,365.0,time_to_event,4752,4752,,
+TE-S06-A4,TE-S06,Stratified random adjudication of imperfect routine endpoint records,86802606,9504,9504,118,365.0,time_to_event,4752,4752,,
+TE-S07-A1,TE-S07,Independent censoring in a cluster-parallel trial,86802607,7680,7680,384,180.0,time_to_event,3733,3947,,
+TE-S07-A2,TE-S07,Detectable but nonmaterial released-prognostic censoring by cluster,86802607,7680,7680,384,180.0,time_to_event,3733,3947,,
+TE-S08-A1,TE-S08,No secular drift beyond the declared period model,86802608,7200,7200,36,42.0,time_to_event,3643,3557,,
+TE-S08-A2,TE-S08,Detectable but controlled secular or operational stress,86802608,7200,7200,36,42.0,time_to_event,3643,3557,,
+TE-S09-A1,TE-S09,Comparative repeated looks follow the prespecified group-sequential design,86802609,2800,2752,14,180.0,time_to_event,1376,1376,,
+TE-S10-A1,TE-S10,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802610,516,516,3,180.0,continuous,258,258,0.03488372093023256,0.015503875968992248
+TE-S11-A1,TE-S11,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802611,328,328,24,365.0,continuous,164,164,0.018292682926829267,0.006097560975609756
+TE-S12-A1,TE-S12,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802612,288,288,16,365.0,longitudinal,144,144,0.08333333333333333,0.09027777777777778
+TE-S12-A4,TE-S12,Outcome-dependent routine nonresponse with random same-window endpoint recovery,86802612,288,288,16,365.0,longitudinal,144,144,0.04861111111111111,0.0625
+TE-S13-A1,TE-S13,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802613,380,380,24,365.0,longitudinal,190,190,0.015789473684210527,0.03684210526315789
+TE-S14-A1,TE-S14,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802614,3392,3392,65,28.0,binary,1696,1696,0.0,0.0
+TE-S15-A1,TE-S15,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802615,3196,3196,34,168.0,binary,1598,1598,0.0,0.0
+TE-S15-A3,TE-S15,Routine Day-168 objective-response classification has treatment- and prognosis-dependent error; a stratum-random blinded central-review validation sample reveals the reference endpoint,86802615,3196,3196,34,168.0,binary,1598,1598,0.0,0.0
+TE-S16-A1,TE-S16,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802616,604,604,24,365.0,count,302,302,0.0,0.0
+TE-S16-A3,TE-S16,"During complete common 365-day follow-up, routine severe-exacerbation counts have treatment- and prognosis-dependent event under-ascertainment; a stratum-random audit reveals complete counts",86802616,604,604,24,365.0,count,302,302,0.0,0.0
+TE-S17-A1,TE-S17,The prespecified randomized-arm analysis is compatible with the observed endpoint data,86802617,620,620,24,365.0,count,310,310,0.0,0.0

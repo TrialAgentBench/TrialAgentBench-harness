@@ -1,0 +1,9 @@
+assigned_arm,adjudicated_endpoint,objective_tumour_response,participants
+active,0,0,302
+active,0,1,0
+active,1,0,22
+active,1,1,160
+control,0,0,304
+control,0,1,12
+control,1,0,0
+control,1,1,154

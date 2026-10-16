@@ -1,0 +1,698 @@
+{
+  "approval": {
+    "description": "At advancement the regulator analyses every patient randomized to the advanced asset/regimen or control in this programme's confirmation studies whose committed follow-up has completed: a two-sided test of benefit at the stated alpha, pooled by inverse variance across studies, and at least the stated number of completed treated patients. Approval is required for any market value.",
+    "minimum_completed_treated": 300,
+    "two_sided_alpha": 0.05
+  },
+  "phases": [
+    {
+      "follow_up_days": [
+        28,
+        56
+      ],
+      "maximum_participants_per_arm": 100,
+      "minimum_completed_participants_per_arm": 2,
+      "minimum_participants_per_arm": 10,
+      "phase": "early_safety",
+      "prerequisite_phase": null,
+      "tariff": {
+        "assessment": 1500.0,
+        "closeout_days": 14,
+        "enrollment": 12000.0,
+        "followup_day": 60.0,
+        "per_site": 50000.0,
+        "screening": 1000.0,
+        "setup": 1000000.0,
+        "startup_days": 60
+      }
+    },
+    {
+      "follow_up_days": [
+        84,
+        168
+      ],
+      "maximum_participants_per_arm": 1500,
+      "minimum_completed_participants_per_arm": 2,
+      "minimum_participants_per_arm": 30,
+      "phase": "exploration",
+      "prerequisite_phase": "early_safety",
+      "tariff": {
+        "assessment": 1500.0,
+        "closeout_days": 30,
+        "enrollment": 10000.0,
+        "followup_day": 40.0,
+        "per_site": 75000.0,
+        "screening": 1500.0,
+        "setup": 2000000.0,
+        "startup_days": 90
+      }
+    },
+    {
+      "follow_up_days": [
+        168,
+        336
+      ],
+      "maximum_participants_per_arm": 3000,
+      "minimum_completed_participants_per_arm": 2,
+      "minimum_participants_per_arm": 300,
+      "phase": "confirmation",
+      "prerequisite_phase": "exploration",
+      "tariff": {
+        "assessment": 2000.0,
+        "closeout_days": 45,
+        "enrollment": 12000.0,
+        "followup_day": 40.0,
+        "per_site": 100000.0,
+        "screening": 2000.0,
+        "setup": 4000000.0,
+        "startup_days": 120
+      }
+    }
+  ],
+  "recruitment": {
+    "groups": [
+      {
+        "conditions": [
+          {
+            "field_id": "prior_biologic_dmard_use",
+            "operator": "greater_than",
+            "value": 0.0
+          }
+        ],
+        "group_id": "prior_biologic",
+        "label": "Prior biologic DMARD use",
+        "participant_count": 815
+      },
+      {
+        "conditions": [
+          {
+            "field_id": "baseline_c_reactive_protein",
+            "operator": "greater_than_or_equal",
+            "value": 10.0
+          },
+          {
+            "field_id": "baseline_diagnosis_duration_months",
+            "operator": "greater_than_or_equal",
+            "value": 60.0
+          }
+        ],
+        "group_id": "inflammation_longstanding",
+        "label": "CRP at least 10 mg/L and diagnosis for at least five years",
+        "participant_count": 542
+      }
+    ],
+    "sites": [
+      {
+        "candidate_count": 24,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_043"
+      },
+      {
+        "candidate_count": 51,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_048"
+      },
+      {
+        "candidate_count": 7,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_025"
+      },
+      {
+        "candidate_count": 28,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_061"
+      },
+      {
+        "candidate_count": 22,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_077"
+      },
+      {
+        "candidate_count": 48,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_063"
+      },
+      {
+        "candidate_count": 11,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_042"
+      },
+      {
+        "candidate_count": 41,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_071"
+      },
+      {
+        "candidate_count": 21,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_046"
+      },
+      {
+        "candidate_count": 16,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_028"
+      },
+      {
+        "candidate_count": 9,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_021"
+      },
+      {
+        "candidate_count": 32,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_059"
+      },
+      {
+        "candidate_count": 22,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_067"
+      },
+      {
+        "candidate_count": 34,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_070"
+      },
+      {
+        "candidate_count": 23,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_066"
+      },
+      {
+        "candidate_count": 32,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_044"
+      },
+      {
+        "candidate_count": 9,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_039"
+      },
+      {
+        "candidate_count": 18,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_057"
+      },
+      {
+        "candidate_count": 26,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_015"
+      },
+      {
+        "candidate_count": 25,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_020"
+      },
+      {
+        "candidate_count": 29,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_050"
+      },
+      {
+        "candidate_count": 34,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_055"
+      },
+      {
+        "candidate_count": 17,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_049"
+      },
+      {
+        "candidate_count": 14,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_029"
+      },
+      {
+        "candidate_count": 16,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_001"
+      },
+      {
+        "candidate_count": 19,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_008"
+      },
+      {
+        "candidate_count": 60,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_002"
+      },
+      {
+        "candidate_count": 19,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_031"
+      },
+      {
+        "candidate_count": 25,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_035"
+      },
+      {
+        "candidate_count": 44,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_036"
+      },
+      {
+        "candidate_count": 17,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_064"
+      },
+      {
+        "candidate_count": 48,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_076"
+      },
+      {
+        "candidate_count": 34,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_040"
+      },
+      {
+        "candidate_count": 36,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_054"
+      },
+      {
+        "candidate_count": 15,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_074"
+      },
+      {
+        "candidate_count": 5,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_016"
+      },
+      {
+        "candidate_count": 46,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_018"
+      },
+      {
+        "candidate_count": 21,
+        "country_code": "CAN",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_034"
+      },
+      {
+        "candidate_count": 35,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_047"
+      },
+      {
+        "candidate_count": 43,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_017"
+      },
+      {
+        "candidate_count": 51,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_003"
+      },
+      {
+        "candidate_count": 36,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_075"
+      },
+      {
+        "candidate_count": 37,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_053"
+      },
+      {
+        "candidate_count": 52,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_012"
+      },
+      {
+        "candidate_count": 30,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_051"
+      },
+      {
+        "candidate_count": 10,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_056"
+      },
+      {
+        "candidate_count": 40,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_045"
+      },
+      {
+        "candidate_count": 29,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_004"
+      },
+      {
+        "candidate_count": 32,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_073"
+      },
+      {
+        "candidate_count": 41,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_079"
+      },
+      {
+        "candidate_count": 38,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_069"
+      },
+      {
+        "candidate_count": 46,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_041"
+      },
+      {
+        "candidate_count": 57,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_030"
+      },
+      {
+        "candidate_count": 12,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_072"
+      },
+      {
+        "candidate_count": 38,
+        "country_code": "CAN",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_014"
+      },
+      {
+        "candidate_count": 34,
+        "country_code": "CAN",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_078"
+      },
+      {
+        "candidate_count": 32,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_065"
+      },
+      {
+        "candidate_count": 33,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_023"
+      },
+      {
+        "candidate_count": 31,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_024"
+      },
+      {
+        "candidate_count": 28,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_080"
+      },
+      {
+        "candidate_count": 21,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_009"
+      },
+      {
+        "candidate_count": 52,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_007"
+      },
+      {
+        "candidate_count": 31,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_032"
+      },
+      {
+        "candidate_count": 60,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_006"
+      },
+      {
+        "candidate_count": 37,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_005"
+      },
+      {
+        "candidate_count": 34,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_019"
+      },
+      {
+        "candidate_count": 12,
+        "country_code": "USA",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_013"
+      },
+      {
+        "candidate_count": 34,
+        "country_code": "GBR",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_027"
+      },
+      {
+        "candidate_count": 27,
+        "country_code": "GBR",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_011"
+      },
+      {
+        "candidate_count": 30,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_058"
+      },
+      {
+        "candidate_count": 18,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_026"
+      },
+      {
+        "candidate_count": 40,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_037"
+      },
+      {
+        "candidate_count": 54,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_068"
+      },
+      {
+        "candidate_count": 24,
+        "country_code": "DEU",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 8.0,
+        "site_id": "site_052"
+      },
+      {
+        "candidate_count": 12,
+        "country_code": "CAN",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_038"
+      },
+      {
+        "candidate_count": 21,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_062"
+      },
+      {
+        "candidate_count": 13,
+        "country_code": "CAN",
+        "opening_day": 30.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_022"
+      },
+      {
+        "candidate_count": 23,
+        "country_code": "CAN",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_010"
+      },
+      {
+        "candidate_count": 21,
+        "country_code": "DEU",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 4.0,
+        "site_id": "site_060"
+      },
+      {
+        "candidate_count": 53,
+        "country_code": "USA",
+        "opening_day": 0.0,
+        "screening_candidates_per_month": 12.0,
+        "site_id": "site_033"
+      }
+    ]
+  },
+  "target_population_participants": 2400,
+  "treatments": [
+    {
+      "asset_id": "control",
+      "dose": null
+    },
+    {
+      "asset_id": "mrd-88030",
+      "dose": "standard"
+    },
+    {
+      "asset_id": "mrd-88030",
+      "dose": "intensified"
+    },
+    {
+      "asset_id": "mrd-73360",
+      "dose": "standard"
+    },
+    {
+      "asset_id": "mrd-73360",
+      "dose": "intensified"
+    },
+    {
+      "asset_id": "mrd-42525",
+      "dose": "standard"
+    },
+    {
+      "asset_id": "mrd-42525",
+      "dose": "intensified"
+    }
+  ]
+}
