@@ -1,7 +1,7 @@
 {
   "schema_version": "trialagentbench.repository_sync/v1",
-  "source_commit": "5c5255835945237cd72c532e93470cae3bfbf11b",
-  "specification_sha256": "7872bb3bdfc6ca389e4bb8f028bf70a59b10f1a4cb4e6833b6a9afe63a47be0a",
+  "source_commit": "0735d245a1f0eebd3a73e20e9b6ea49d2090613e",
+  "specification_sha256": "2d25ce20389d736a4750f614b61dedbc51ec54dfd61da87126e05ece6ef8dc49",
   "files": [
     {
       "path": ".env.example",
@@ -25,11 +25,11 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "098812eef6a379b7adc85efecb0bb0f33a94dc686df33c49ab2059d6e7b71b1f"
+      "sha256": "0f6d6a818fe13e6bfe8b64675d46730892a4a5d07580d0b1112050ba892a259c"
     },
     {
       "path": "CITATION.cff",
-      "sha256": "cbd9d8e1e9e2200be10df49b5f729daafd1abea39e8dc2f57d252e5571d73503"
+      "sha256": "944174ca0729c31bc9d3fe61bfe6ce0b9e98ddbedecc0b7cce12fcd922c15cf0"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -37,7 +37,7 @@
     },
     {
       "path": "LICENSE",
-      "sha256": "3711f963c05d0be80d53e5923308a6dee31b203da23435c9cfb7c7b6e4dd5e19"
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "path": "Makefile",
@@ -45,7 +45,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "e8a90bca2eb1b1c3f3edf9ab45373a42d6af62795b8c47cce7be1666d3ceac99"
+      "sha256": "5abba13656ee8b34f0a7198d721b24708a140e6187c8d7f61a6dfd8e71d884ca"
     },
     {
       "path": "SECURITY.md",
@@ -53,7 +53,7 @@
     },
     {
       "path": "clinical-data/LICENSE",
-      "sha256": "3711f963c05d0be80d53e5923308a6dee31b203da23435c9cfb7c7b6e4dd5e19"
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "path": "clinical-data/README.md",
@@ -61,7 +61,7 @@
     },
     {
       "path": "clinical-data/pyproject.toml",
-      "sha256": "5dcd032ceb7094f6ccd39cd29fb64e66ec320fe7edf7a7e5b4ec9d5d0dd0841c"
+      "sha256": "e8cf4f72844044b952563a50c3a989115cb7073699f8781ac14b2b0afefe9827"
     },
     {
       "path": "clinical-data/src/clinical_data_tables/__init__.py",
@@ -76,12 +76,16 @@
       "sha256": "1552b968ce3f1400776841a0a76080db11201486f64b9eddbc0a4b2dfff11959"
     },
     {
+      "path": "docs/CAMPAIGN_CONFIGURATIONS.md",
+      "sha256": "8ba0d4688963d1df30b9de7a20dc382110317ffc37d30afe17c4408472f5823f"
+    },
+    {
       "path": "docs/GUIDE.md",
       "sha256": "9821e3fe4d698c751bc33cfcacd3f3a81c61809913db493bc30f1da33557d1d4"
     },
     {
       "path": "docs/QUICKSTART.md",
-      "sha256": "84b7709a3237458c5c090e12b529098b4c9519ace02c1d0c89dea2b9932ddb6b"
+      "sha256": "09ea100340459426f242b4d3c0c60b546ca202aac9457edee6e6a3fa0550fb54"
     },
     {
       "path": "docs/STATISTICAL_REVIEW.md",
@@ -369,7 +373,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "a33411800034620322d404ae2aec9020fbf635f440cf7dfe017d8d2c6bdecf9f"
+      "sha256": "16bf8efd60190c2e62a39b16a3b4fdf25c9373030fe29b332d4f4d2ab073c343"
     },
     {
       "path": "tests/adapters/test_compacting_responses.py",
@@ -705,7 +709,7 @@
     },
     {
       "path": "tests/release/test_wheel_public_contracts.py",
-      "sha256": "4abf088b7418ba6a7c6d45673e5d951feedb56a93879081ca207d15bf0932e2c"
+      "sha256": "7e97e37008940e9dbf47f3a92168c40527d82ed5c460f7a8c33fbf44c120b3b5"
     },
     {
       "path": "tests/test_public_harness_smoke.py",
@@ -733,7 +737,7 @@
     },
     {
       "path": "trialagentbench/__init__.py",
-      "sha256": "08faba8faa318fe6e9bcb7af631ada5da903d991f994bbd98f1d9401af92fda5"
+      "sha256": "423271c6a8da952ce8fbdf42eb8297c4c054ea4606b2064303d752800e38c1b5"
     },
     {
       "path": "trialagentbench/adapters/__init__.py",
@@ -1317,15 +1321,15 @@
     },
     {
       "path": "uv.lock",
-      "sha256": "7c751ef72271b197fa1378becbd8ff60d666cd8af0af2ab503018b9fe9f96e58"
+      "sha256": "96f383b6c6e409c5aa5d7f714622ee059f13456bf543f1416c1597d6abfec884"
     },
     {
       "path": "verifier/CITATION.cff",
-      "sha256": "f26edc078bf9361125d2a12fc81861a8a909137c04bcefc7bf43c767eb8c7070"
+      "sha256": "343fab2789fe27e023976e137f488bf8702047b88ea83661a62864d76234fdc9"
     },
     {
       "path": "verifier/LICENSE",
-      "sha256": "3711f963c05d0be80d53e5923308a6dee31b203da23435c9cfb7c7b6e4dd5e19"
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
     },
     {
       "path": "verifier/README.md",
@@ -1881,7 +1885,7 @@
     },
     {
       "path": "verifier/pyproject.toml",
-      "sha256": "5afe7a8c39c43b43f5830546bcf77a594c6ef23ba87345a37ec2e908d3e98ba7"
+      "sha256": "55535f28da61e89d9f943783dae4a914ab7caaf79de68d6f2b0dc623781f3f36"
     },
     {
       "path": "verifier/src/trialagentbench_verifier/__init__.py",

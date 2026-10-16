@@ -2,6 +2,21 @@
 
 All notable changes to the TrialAgentBench harness, verifier and documentation.
 
+## [1.0.1] - 2026-10-16
+
+The benchmark data, task identifiers, references and scores are unchanged from 1.0.0.
+
+- Licences: the software (harness, verifier, clinical-data tables and executor) is
+  Apache-2.0, except the executor's bundled R bridge package, which keeps its MIT licence;
+  the Hugging Face dataset is CC BY 4.0. Both were CC BY-NC 4.0.
+- The `main` and `withheld` campaign panels now select TrialDev's documented main
+  selection from its configuration manifest: 768 public and 128 withheld tasks. The
+  1.0.0 panels scheduled every raw TrialDev task (1,536 and 256). The manifests ship as
+  `main/trialdev-configuration.json` and `withheld/trialdev-configuration.json`, and
+  the 32-programme ablation subset as `trialdev-ablation/` (256 tasks).
+- `docs/CAMPAIGN_CONFIGURATIONS.md` lists every campaign setting, its values and
+  default, whether it is part of a run's scored condition, and the selection sizes.
+
 ## [1.0.0] - 2026-10-16
 
 ### Benchmark

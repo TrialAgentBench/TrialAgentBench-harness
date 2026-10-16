@@ -56,6 +56,6 @@ Drug-Development Decisions.*
 }
 ```
 
-Code, documentation and benchmark data are released under
-[CC BY-NC 4.0](LICENSE). [Citation metadata](CITATION.cff) ·
+The code and documentation in this repository are released under [Apache-2.0](LICENSE); the benchmark data on
+Hugging Face are released under CC BY 4.0. [Citation metadata](CITATION.cff) ·
 [Issues](https://github.com/TrialAgentBench/TrialAgentBench-harness/issues)

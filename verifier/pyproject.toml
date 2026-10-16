@@ -1,10 +1,10 @@
 [project]
 name = "trialagentbench-verifier"
-version = "1.0.0"
+version = "1.0.1"
 description = "Independent released-byte verification and normalized score replay for TrialAgentBench"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
-license = "CC-BY-NC-4.0"
+license = "Apache-2.0"
 license-files = ["LICENSE"]
 dependencies = [
   "lifelines>=0.30,<1",

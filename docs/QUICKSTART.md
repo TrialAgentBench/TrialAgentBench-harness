@@ -249,6 +249,9 @@ extracted byte. Both withheld releases are qualified.
 
 ### Main and full selections
 
+[Campaign configurations](CAMPAIGN_CONFIGURATIONS.md) lists every selection and setting,
+which settings are part of a scored condition, and the size of each selection.
+
 Use the HF release's `main/campaign-panel.json` for the main evaluation: all 84
 TrialEval C5 tasks (four laws in each of the 21 regime cells, over 68 independent
 base worlds) and 768 TrialDev tasks.
@@ -256,8 +259,9 @@ TrialDev main runs each of the 384 programmes once: its raw evidence analysis an
 one raw portfolio episode at one budget, rotated within strata over three budgets
 at 0.75, 1.1 and 2.5 times the programme's lean-programme cost. Use `full/campaign-panel.json` to include all 420 TrialEval tasks (C1–C5)
 and 3,072 TrialDev tasks (every budget, raw and analysis-ready). The TrialDev
-configuration manifest also declares a 32-programme ablation subset with every
-budget and both views for paired contrasts. Both selections use
+configuration manifest (`main/trialdev-configuration.json`) also declares a 32-programme
+ablation subset with every budget and both views for paired contrasts; its 256 tasks are
+in `trialdev-ablation/campaign-panel.json`. All selections use
 the same source payloads, task IDs, references and grading rules. TrialDev main
 still spans all 384 programmes; a small setup check requires explicit task
 selection. These are the qualified release counts; the release's campaign panels

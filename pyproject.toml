@@ -1,20 +1,20 @@
 [project]
 name = "trial-agent-bench"
-version = "1.0.0"
+version = "1.0.1"
 description = "TrialAgentBench: harnesses for clinical-trial agent benchmarks (TrialEval trial analysis and TrialDev treatment-development decisions)"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
-license = "CC-BY-NC-4.0"
+license = "Apache-2.0"
 license-files = ["LICENSE"]
 authors = [{ name = "Bradley Segal" }]
 dependencies = [
-  "clinical-data-tables==1.0.0",
+  "clinical-data-tables==1.0.1",
     "jsonschema>=4.26,<5",
     "numpy>=2.0,<2.4",
     "pandas>=2.2,<3",
     "pydantic>=2.12,<3",
     "pyarrow>=18,<24",
-    "trialagentbench-verifier==1.0.0",
+    "trialagentbench-verifier==1.0.1",
 ]
 
 [project.urls]

@@ -71,7 +71,7 @@ def test_package_metadata_points_to_canonical_public_repositories() -> None:
     with (root / "pyproject.toml").open("rb") as stream:
         project = tomllib.load(stream)["project"]
 
-    assert project["license"] == "CC-BY-NC-4.0"
+    assert project["license"] == "Apache-2.0"
     assert project["authors"] == [{"name": "Bradley Segal"}]
     assert project["urls"] == {
         "Homepage": "https://github.com/TrialAgentBench/TrialAgentBench-harness",
