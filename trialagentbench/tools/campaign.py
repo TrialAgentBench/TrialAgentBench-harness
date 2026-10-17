@@ -18,6 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field, JsonValue
 from trialagentbench_verifier.asset_cache import cache_footprint
 from trialagentbench_verifier.assets import AssetTask, ReleaseAssets, read_asset_catalog
 from trialagentbench_verifier.campaign import (
+    INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1,
     TrialEvalCampaignAttemptV1,
     TrialEvalCampaignCellV1,
     TrialEvalCampaignPlanV1,
@@ -27,6 +28,7 @@ from trialagentbench_verifier.campaign_inputs import (
     authenticate_development_inputs,
     verify_development_evaluator,
 )
+from trialagentbench_verifier.execution_contracts import EXECUTOR_SLOTS_PER_TASK, RELEASE_EXECUTION_LIMITS_V1
 from trialagentbench_verifier.executor import executor_session_capacity
 from trialagentbench_verifier.io import authenticated_archive, read_json_object, sha256_file, shared_release_archives
 from trialagentbench_verifier.release_set import (
@@ -59,6 +61,8 @@ from trialagentbench.util.campaign_control import CampaignCapacityStop, Campaign
 from trialagentbench.util.parallel import run_bounded_tasks
 from trialagentbench.util.reported_cost import RunStopSignal
 from trialagentbench.util.run_ownership import exclusive_run_directory as campaign_lock
+
+RETRY_REQUEST_REPLICATE_ID = "retry-1"
 
 
 def _role(panel: CampaignPanelV1, role: Literal["participant", "evaluator"]) -> str:
@@ -285,8 +289,13 @@ def _native_arguments(
     repetition: int,
     output: Path,
     resume: Path | None = None,
+    retry_task_ids: tuple[str, ...] = (),
 ) -> list[str]:
-    """Translate one public configuration into the existing native command contracts."""
+    """Translate one public configuration into the existing native command contracts.
+
+    Nonempty ``retry_task_ids`` select the prespecified TrialEval retry run:
+    only those tasks, under the distinct request replicate ``retry-1``.
+    """
     panel = configuration.panel
     archives = {artifact.filename: artifact.sha256 for artifact in manifest.artifacts}
     filename = role_filename(
@@ -312,7 +321,7 @@ def _native_arguments(
         "--analysis-language",
         panel.analysis_language,
         "--request-replicate-id",
-        f"request-{repetition}",
+        RETRY_REQUEST_REPLICATE_ID if retry_task_ids else f"request-{repetition}",
         "--max-tokens",
         str(model.maximum_completion_tokens),
         "--request-timeout-seconds",
@@ -340,8 +349,8 @@ def _native_arguments(
                 "--quiet",
             ]
         )
-        if panel.trialeval_tasks:
-            arguments.extend(["--task-id", *panel.trialeval_tasks])
+        if retry_task_ids or panel.trialeval_tasks:
+            arguments.extend(["--task-id", *(retry_task_ids or panel.trialeval_tasks)])
     else:
         arguments.extend(
             [
@@ -650,51 +659,75 @@ def prepare_campaign(configuration: CampaignConfigurationV1, root: Path) -> Camp
     ):
         manifest = _campaign_inputs(configuration, full_verification=True)
         root.mkdir(parents=True, exist_ok=False)
-        runs = []
         with campaign_lock(root):
             write_json_model(root / "configuration.json", configuration)
-            for repetition in range(1, configuration.panel.repetitions + 1):
-                for benchmark in configuration.panel.benchmarks:
-                    for model in configuration.models:
-                        job_id = f"{model.name}-{benchmark}-{repetition}"
-                        output = root / "runs" / job_id
-                        _invoke(
-                            benchmark,
-                            _native_arguments(
-                                configuration,
-                                manifest,
-                                model=model,
-                                benchmark=benchmark,
-                                repetition=repetition,
-                                output=output,
-                            ),
-                        )
-                        custody = "run_config.json" if benchmark == "trialeval" else "invocation.json"
-                        candidates = tuple(output.rglob(custody))
-                        if len(candidates) != 1:
-                            raise ValueError("Native preparation must produce exactly one frozen invocation")
-                        run = candidates[0].parent
-                        plan_path = None
-                        plan_sha = None
-                        if benchmark == "trialeval":
-                            plan_path = f"plans/{job_id}.json"
-                            write_json_model(root / plan_path, _trial_eval_plan(configuration, manifest, run))
-                            plan_sha = sha256_file(root / plan_path)
-                        runs.append(
-                            CampaignRunV1(
-                                job_id=job_id,
-                                benchmark=benchmark,
-                                model_name=model.name,
-                                repetition=repetition,
-                                relative_run_root=run.relative_to(root).as_posix(),
-                                invocation_sha256=sha256_file(candidates[0]),
-                                analysis_plan_path=plan_path,
-                                analysis_plan_sha256=plan_sha,
-                            )
-                        )
-            plan = CampaignPlanV1(configuration=configuration, runs=tuple(runs))
+            runs = tuple(
+                _prepare_native_run(
+                    root,
+                    configuration,
+                    manifest,
+                    model=model,
+                    benchmark=benchmark,
+                    repetition=repetition,
+                    job_id=f"{model.name}-{benchmark}-{repetition}",
+                )
+                for repetition in range(1, configuration.panel.repetitions + 1)
+                for benchmark in configuration.panel.benchmarks
+                for model in configuration.models
+            )
+            plan = CampaignPlanV1(configuration=configuration, runs=runs)
             write_json_model(root / "campaign.json", plan)
         return plan
+
+
+def _prepare_native_run(
+    root: Path,
+    configuration: CampaignConfigurationV1,
+    manifest: ReleaseSetManifestV1 | DevelopmentCampaignInputsV1,
+    *,
+    model: CampaignModelV1,
+    benchmark: Literal["trialeval", "trialdev"],
+    repetition: int,
+    job_id: str,
+    retry_of_job_id: str | None = None,
+    retry_task_ids: tuple[str, ...] = (),
+) -> CampaignRunV1:
+    """Freeze one native invocation and, for TrialEval, its hashed analysis plan."""
+    output = root / "runs" / job_id
+    _invoke(
+        benchmark,
+        _native_arguments(
+            configuration,
+            manifest,
+            model=model,
+            benchmark=benchmark,
+            repetition=repetition,
+            output=output,
+            retry_task_ids=retry_task_ids,
+        ),
+    )
+    custody = "run_config.json" if benchmark == "trialeval" else "invocation.json"
+    candidates = tuple(output.rglob(custody))
+    if len(candidates) != 1:
+        raise ValueError("Native preparation must produce exactly one frozen invocation")
+    run = candidates[0].parent
+    plan_path = None
+    plan_sha = None
+    if benchmark == "trialeval":
+        plan_path = f"plans/{job_id}.json"
+        write_json_model(root / plan_path, _trial_eval_plan(configuration, manifest, run))
+        plan_sha = sha256_file(root / plan_path)
+    return CampaignRunV1(
+        job_id=job_id,
+        benchmark=benchmark,
+        model_name=model.name,
+        repetition=repetition,
+        relative_run_root=run.relative_to(root).as_posix(),
+        invocation_sha256=sha256_file(candidates[0]),
+        analysis_plan_path=plan_path,
+        analysis_plan_sha256=plan_sha,
+        retry_of_job_id=retry_of_job_id,
+    )
 
 
 def load_campaign(root: Path) -> CampaignPlanV1:
@@ -714,11 +747,75 @@ def load_campaign(root: Path) -> CampaignPlanV1:
     return plan
 
 
+def check_host_capacity(capacity: int, *, host_memory_mb: int, host_cpus: int) -> None:
+    """Refuse an executor capacity whose containers cannot all fit on this host.
+
+    One task at a time (the two executor slots a task needs) is always allowed, so the default
+    configuration runs on any host; above it, every container must fit the host's memory and CPUs.
+
+    Parameters
+    ----------
+    capacity
+        Configured simultaneous analysis containers (``operations.executor_capacity``).
+    host_memory_mb
+        Total physical memory of the host, in MiB.
+    host_cpus
+        Logical CPUs of the host.
+
+    Raises
+    ------
+    ValueError
+        If more than one task's capacity times the fixed per-container memory or CPU limit exceeds the host.
+
+    Examples
+    --------
+    >>> check_host_capacity(4, host_memory_mb=65536, host_cpus=16)
+    >>> check_host_capacity(2, host_memory_mb=4096, host_cpus=2)
+    """
+    if capacity <= EXECUTOR_SLOTS_PER_TASK:
+        return
+    limits = RELEASE_EXECUTION_LIMITS_V1
+    setting = (
+        "prepare a new campaign with a lower operations.executor_workers (or model_workers x task_workers when it is "
+        "unset); a prepared campaign's operations are fixed"
+    )
+    if capacity * limits.memory_mb > host_memory_mb:
+        raise ValueError(
+            f"Executor capacity {capacity} x {limits.memory_mb} MB per container exceeds this host's "
+            f"{host_memory_mb} MB of memory; {setting}"
+        )
+    if capacity * limits.cpu_count > host_cpus:
+        raise ValueError(
+            f"Executor capacity {capacity} x {limits.cpu_count:g} CPUs per container exceeds this host's "
+            f"{host_cpus} CPUs; {setting}"
+        )
+
+
+def _host_resources() -> tuple[int, int]:
+    """Return this host's total memory in MiB and its logical CPU count."""
+    cpus = os.cpu_count()
+    if cpus is None or not hasattr(os, "sysconf"):
+        raise RuntimeError(
+            "Cannot read this host's CPUs and memory for the executor capacity check; prepare a new campaign that "
+            "runs one task at a time"
+        )
+    return os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES") // 2**20, cpus
+
+
+def _require_host_capacity(configuration: CampaignConfigurationV1) -> None:
+    """Refuse, before any container starts, a capacity this host cannot hold; one task at a time never reads it."""
+    if configuration.operations.executor_capacity <= EXECUTOR_SLOTS_PER_TASK:
+        return
+    host_memory_mb, host_cpus = _host_resources()
+    check_host_capacity(configuration.operations.executor_capacity, host_memory_mb=host_memory_mb, host_cpus=host_cpus)
+
+
 def run_campaign(root: Path) -> None:
     """Resume the native schedulers while retaining every scientific primary."""
     with campaign_lock(root):
         plan = load_campaign(root)
         configuration = plan.configuration
+        _require_host_capacity(configuration)
         inputs = _campaign_inputs(configuration)
         with shared_release_archives(
             configuration.release_directory, task_selections=_campaign_asset_selections(configuration, inputs)
@@ -730,17 +827,26 @@ def run_campaign(root: Path) -> None:
                 "OPENROUTER_API_KEY"
             ):
                 raise ValueError("Set OPENROUTER_API_KEY in the environment before running this campaign")
-            for run in plan.runs:
-                arguments = _native_arguments(
+
+            def arguments(run: CampaignRunV1) -> list[str]:
+                native = root / run.relative_run_root
+                return _native_arguments(
                     configuration,
                     manifest,
                     model=models[run.model_name],
                     benchmark=run.benchmark,
                     repetition=run.repetition,
                     output=root / "runs" / run.job_id,
-                    resume=root / run.relative_run_root,
+                    resume=native,
+                    retry_task_ids=(
+                        ()
+                        if run.retry_of_job_id is None
+                        else tuple(read_json_model(TrialEvalRunConfigV1, native / "run_config.json").task_ids)
+                    ),
                 )
-                _invoke(run.benchmark, [*arguments, "--prepare-only"])
+
+            for run in plan.runs:
+                _invoke(run.benchmark, [*arguments(run), "--prepare-only"])
             control = CampaignRequestControl(
                 database=root / "requests.sqlite", configuration=configuration, model_name=configuration.models[0].name
             )
@@ -749,17 +855,7 @@ def run_campaign(root: Path) -> None:
             def execute(run: CampaignRunV1) -> None:
                 try:
                     _invoke(
-                        run.benchmark,
-                        _native_arguments(
-                            configuration,
-                            manifest,
-                            model=models[run.model_name],
-                            benchmark=run.benchmark,
-                            repetition=run.repetition,
-                            output=root / "runs" / run.job_id,
-                            resume=root / run.relative_run_root,
-                        )
-                        + ["--campaign-root", str(root), "--campaign-job", run.job_id],
+                        run.benchmark, [*arguments(run), "--campaign-root", str(root), "--campaign-job", run.job_id]
                     )
                 except CampaignCapacityStop as error:
                     if error.campaign_wide:
@@ -779,6 +875,143 @@ def run_campaign(root: Path) -> None:
                 )
 
 
+def _finish_native_runs(
+    root: Path,
+    plan: CampaignPlanV1,
+    manifest: ReleaseSetManifestV1 | DevelopmentCampaignInputsV1,
+    runs: Sequence[CampaignRunV1],
+) -> None:
+    """Grade, verify and export native runs offline; a repeated call reuses completed stages.
+
+    Tasks left pending by an exhausted spending limit are budget-censored:
+    reported and unscored. Any other pending task refuses finishing.
+    """
+    from trialagentbench.tools.finish_campaign_analysis import campaign_censoring
+    from trialagentbench.tools.finish_run import main as finish
+
+    configuration = plan.configuration
+    censoring = campaign_censoring(root, plan)
+    censored = {} if censoring is None else {row.job_id: row.censored_task_ids for row in censoring.runs}
+    unrun = set() if censoring is None else {row.job_id for row in censoring.runs if row.wholly_censored}
+
+    def execute(run: CampaignRunV1) -> None:
+        if run.benchmark == "trialeval" and run.job_id in unrun:
+            return  # No TrialEval item ran, so there is nothing to grade, replay or export.
+        arguments = [
+            run.benchmark,
+            "--release-dir",
+            str(configuration.release_directory),
+            "--expected-manifest-sha256",
+            configuration.expected_release_manifest_sha256,
+            "--run-root",
+            str(root / run.relative_run_root),
+            "--output",
+            str(root / "results" / run.job_id),
+            "--resume",
+        ]
+        if run.benchmark == "trialeval":
+            arguments.extend(
+                [
+                    "--executor-image-id",
+                    configuration.executor_image_id,
+                    "--campaign-plan",
+                    str(root / str(run.analysis_plan_path)),
+                    "--expected-plan-sha256",
+                    str(run.analysis_plan_sha256),
+                ]
+            )
+            for task_id in censored.get(run.job_id, ()):
+                arguments.extend(["--budget-censored", task_id])
+        else:
+            arguments.extend(["--expected-invocation-sha256", run.invocation_sha256])
+        if isinstance(manifest, DevelopmentCampaignInputsV1):
+            finish([*arguments, "--development"])
+        else:
+            finish(arguments, qualified_manifest=manifest)
+
+    with executor_session_capacity(configuration.operations.executor_capacity):
+        run_bounded_tasks(
+            runs,
+            execute,
+            workers=configuration.operations.grading_workers or configuration.operations.executor_capacity,
+            consume=lambda _: None,
+            stop=RunStopSignal(),
+        )
+
+
+def retry_campaign(root: Path) -> None:
+    """Retry once, then run, every TrialEval primary that ended in an infrastructure failure.
+
+    The policy is prespecified: after all scheduled tasks reach an end state,
+    each repetition-one TrialEval job is graded offline, and the tasks whose
+    outcome is an evaluator error or pre-run identity exclusion are scheduled
+    in one retry run of that job (request replicate ``retry-1``) with its own
+    hashed analysis plan. Model outcomes are never retried. An interrupted
+    retry run continues with ``resume``; repeating this command never adds a
+    second retry of a job.
+
+    Raises
+    ------
+    ValueError
+        If comparisons were already finished, or work is pending without an exhausted spending limit.
+    """
+    from trialagentbench.analysis.trialeval_score_rows import iter_trialeval_score_rows
+
+    with campaign_lock(root):
+        plan = load_campaign(root)
+        if (root / "comparisons").exists():
+            raise ValueError("Infrastructure retries must precede campaign finish; comparisons already exist")
+        configuration = plan.configuration
+        _require_host_capacity(configuration)
+        models = {model.name: model for model in configuration.models}
+        retried = {run.retry_of_job_id for run in plan.runs}
+        primaries = tuple(
+            run
+            for run in plan.runs
+            if run.benchmark == "trialeval"
+            and run.repetition == 1
+            and run.retry_of_job_id is None
+            and run.job_id not in retried
+        )
+        inputs = _campaign_inputs(configuration)
+        with shared_release_archives(
+            configuration.release_directory, task_selections=_campaign_asset_selections(configuration, inputs)
+        ):
+            manifest = _campaign_inputs(configuration)
+            _finish_native_runs(root, plan, manifest, primaries)
+            for run in primaries:
+                grade = root / "results" / run.job_id / "grade"
+                failed = (
+                    tuple(
+                        row.task_id
+                        for row in iter_trialeval_score_rows(grade)
+                        if row.observed_attempt_outcome in INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1
+                    )
+                    if grade.is_dir()
+                    else ()
+                )
+                if not failed:
+                    continue
+                retry = _prepare_native_run(
+                    root,
+                    configuration,
+                    manifest,
+                    model=models[run.model_name],
+                    benchmark="trialeval",
+                    repetition=1,
+                    job_id=f"{run.job_id}-retry",
+                    retry_of_job_id=run.job_id,
+                    retry_task_ids=failed,
+                )
+                plan = CampaignPlanV1(configuration=configuration, runs=(*plan.runs, retry))
+                write_json_model(root / "campaign.json", plan)
+                print(f"{run.job_id}: retrying {len(failed)} infrastructure-failed primaries as {retry.job_id}")
+    if any(run.retry_of_job_id is not None for run in plan.runs):
+        run_campaign(root)
+    else:
+        print("No TrialEval primary ended in an infrastructure failure; nothing to retry.")
+
+
 def finish_campaign(root: Path) -> None:
     """Delegate grading, proof verification and export to the installed finalizer.
 
@@ -789,66 +1022,19 @@ def finish_campaign(root: Path) -> None:
 
     from trialagentbench.tools.analyse_calibration import main as analyse_resources
     from trialagentbench.tools.build.build_trace_analysis_bundle import build_trace_analysis_bundle
-    from trialagentbench.tools.finish_campaign_analysis import campaign_censoring
     from trialagentbench.tools.finish_run import _discard_incomplete_writes, _write_once
-    from trialagentbench.tools.finish_run import main as finish
 
     with campaign_lock(root):
         _discard_incomplete_writes(root)
         plan = load_campaign(root)
         configuration = plan.configuration
+        _require_host_capacity(configuration)
         inputs = _campaign_inputs(configuration)
         with shared_release_archives(
             configuration.release_directory, task_selections=_campaign_asset_selections(configuration, inputs)
         ):
             manifest = _campaign_inputs(configuration)
-            censoring = campaign_censoring(root, plan)
-            censored = {} if censoring is None else {row.job_id: row.censored_task_ids for row in censoring.runs}
-            unrun = set() if censoring is None else {row.job_id for row in censoring.runs if row.wholly_censored}
-
-            def execute(run: CampaignRunV1) -> None:
-                if run.benchmark == "trialeval" and run.job_id in unrun:
-                    return  # No TrialEval item ran, so there is nothing to grade, replay or export.
-                arguments = [
-                    run.benchmark,
-                    "--release-dir",
-                    str(configuration.release_directory),
-                    "--expected-manifest-sha256",
-                    configuration.expected_release_manifest_sha256,
-                    "--run-root",
-                    str(root / run.relative_run_root),
-                    "--output",
-                    str(root / "results" / run.job_id),
-                    "--resume",
-                ]
-                if run.benchmark == "trialeval":
-                    arguments.extend(
-                        [
-                            "--executor-image-id",
-                            configuration.executor_image_id,
-                            "--campaign-plan",
-                            str(root / str(run.analysis_plan_path)),
-                            "--expected-plan-sha256",
-                            str(run.analysis_plan_sha256),
-                        ]
-                    )
-                    for task_id in censored.get(run.job_id, ()):
-                        arguments.extend(["--budget-censored", task_id])
-                else:
-                    arguments.extend(["--expected-invocation-sha256", run.invocation_sha256])
-                if isinstance(manifest, DevelopmentCampaignInputsV1):
-                    finish([*arguments, "--development"])
-                else:
-                    finish(arguments, qualified_manifest=manifest)
-
-            with executor_session_capacity(configuration.operations.executor_capacity):
-                run_bounded_tasks(
-                    plan.runs,
-                    execute,
-                    workers=configuration.operations.grading_workers or configuration.operations.executor_capacity,
-                    consume=lambda _: None,
-                    stop=RunStopSignal(),
-                )
+            _finish_native_runs(root, plan, manifest, plan.runs)
             from trialagentbench.tools.finish_campaign_analysis import finish_comparisons, write_campaign_index
 
             finish_comparisons(root, plan, manifest)
@@ -890,7 +1076,7 @@ def finish_campaign(root: Path) -> None:
 def main(argv: Sequence[str] | None = None) -> int:
     """Operate one saved native campaign without reconstructing model commands."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=("preview", "prepare", "run", "status", "resume", "finish"))
+    parser.add_argument("action", choices=("preview", "prepare", "run", "status", "resume", "retry", "finish"))
     parser.add_argument("--config", type=Path)
     parser.add_argument("--campaign", type=Path)
     parser.add_argument(
@@ -914,9 +1100,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.config is not None or args.campaign is None:
         parser.error("Use only --campaign for a saved campaign lifecycle operation")
     root = args.campaign.resolve(strict=True)
-    if args.action in {"run", "resume"}:
+    if args.action in {"run", "resume", "retry"}:
         try:
-            run_campaign(root)
+            (retry_campaign if args.action == "retry" else run_campaign)(root)
         except CampaignCapacityStop as stopped:
             print(f"Campaign paused: {stopped}")
             return 3

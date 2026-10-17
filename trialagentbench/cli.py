@@ -98,6 +98,12 @@ _COMMANDS: dict[str, dict[str, _Command]] = {
     "campaign": {
         action: _Command(partial(campaign_action, action), f"{action.capitalize()} a native benchmark campaign.")
         for action in ("preview", "prepare", "run", "status", "resume", "finish")
+    }
+    | {
+        "retry": _Command(
+            partial(campaign_action, "retry"),
+            "Retry once every TrialEval primary that ended in an infrastructure failure.",
+        )
     },
     "run": {
         "trialeval": _Command(run_trialeval, "Run TrialEval."),

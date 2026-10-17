@@ -1137,6 +1137,7 @@ def test_native_campaign_preparation_and_recovery_preserve_primary_custody(
 ) -> None:
     config = configuration(tmp_path)
     monkeypatch.setenv("OPENROUTER_API_KEY", "nonsecret-test-fixture")
+    monkeypatch.setattr(campaign, "_host_resources", lambda: (65536, 16))
     manifest = SimpleNamespace(
         artifacts=(SimpleNamespace(filename="trialdev-evaluator.zip", sha256="d" * 64),),
         executor=SimpleNamespace(environment_sha256="c" * 64),
@@ -1212,6 +1213,11 @@ def test_native_campaign_preparation_and_recovery_preserve_primary_custody(
         lambda **kwargs: completed.get((kwargs["output_root"], kwargs["task_id"])),
     )
     monkeypatch.setattr(canonical_trialdev, "summarize_provider_telemetry_v1", lambda **kwargs: None)
+    with monkeypatch.context() as small_host:
+        small_host.setattr(campaign, "_host_resources", lambda: (8192, 64))
+        with pytest.raises(ValueError, match="exceeds this host's 8192 MB"):
+            campaign.run_campaign(root)
+    assert not provider_calls
     campaign.run_campaign(root)
     assert len(provider_calls) == (3 if pause_first_model else 4)
     retained_results = dict(completed)
@@ -1232,7 +1238,7 @@ def test_native_campaign_preparation_and_recovery_preserve_primary_custody(
 
 
 def test_combined_trialeval_plan_fixes_repetition_one_before_outcomes(tmp_path: Path) -> None:
-    """Link repetitions without outcome selection or duplicate scheduled-unit labels."""
+    """Link repetitions and the infrastructure retry without outcome selection or duplicate unit labels."""
     from trialagentbench_verifier.campaign import TrialEvalCampaignPlanV1
     from trialagentbench_verifier.io import sha256_file
 
@@ -1244,64 +1250,76 @@ def test_combined_trialeval_plan_fixes_repetition_one_before_outcomes(tmp_path: 
         update={"panel": config.panel.model_copy(update={"benchmarks": ("trialeval",), "repetitions": 2})}
     )
     runs = []
-    for model in config.models:
-        for repetition in (1, 2):
-            job_id = f"{model.name}-{repetition}"
-            path = tmp_path / "plans" / f"{job_id}.json"
-            path.parent.mkdir(exist_ok=True)
-            source = TrialEvalCampaignPlanV1.model_validate(
-                {
-                    "release_id": "release",
-                    "release_manifest_sha256": "a" * 64,
-                    "participant_manifest_checksum": "b" * 64,
-                    "prospective_analysis_plan_sha256": "c" * 64,
-                    "cells": [{"series_id": "TE-S01", "regime_cell_id": "TE-S01-A1"}],
-                    "attempts": [
-                        {
-                            "attempt_id": job_id,
-                            "scheduled_unit_id": "shared-old-task-label",
-                            "attempt_role": "primary",
-                            "model_id": model.model,
-                            "run_identity_sha256": "d" * 64,
-                            "task_id": "task",
-                            "trial_id": "trial_" + "a" * 20,
-                            "base_world_id": "world_" + "b" * 20,
-                            "series_id": "TE-S01",
-                            "regime_cell_id": "TE-S01-A1",
-                            "effect_state": "near_null",
-                            "context": "C1",
-                            "condition_id": "primary",
-                            "request_replicate_id": str(repetition),
-                            "procedure_assistance": "output_contract_only",
-                            "analysis_specification": "locked_sap",
-                            "design_family": "individual_randomized",
-                            "reconstruction_family": None,
-                            "target_ids": ["effect"],
-                            "target_kind": "point",
-                            "effect_measure": "risk_difference",
-                            "result_unit": "probability",
-                        }
-                    ],
-                }
+    for model, repetition, retry_of in (
+        *((model, repetition, None) for model in config.models for repetition in (1, 2)),
+        (config.models[0], 1, f"{config.models[0].name}-1"),
+    ):
+        job_id = f"{model.name}-{repetition}" if retry_of is None else f"{retry_of}-retry"
+        path = tmp_path / "plans" / f"{job_id}.json"
+        path.parent.mkdir(exist_ok=True)
+        source = TrialEvalCampaignPlanV1.model_validate(
+            {
+                "release_id": "release",
+                "release_manifest_sha256": "a" * 64,
+                "participant_manifest_checksum": "b" * 64,
+                "prospective_analysis_plan_sha256": "c" * 64,
+                "cells": [{"series_id": "TE-S01", "regime_cell_id": "TE-S01-A1"}],
+                "attempts": [
+                    {
+                        "attempt_id": job_id,
+                        "scheduled_unit_id": "shared-old-task-label",
+                        "attempt_role": "primary",
+                        "model_id": model.model,
+                        "run_identity_sha256": "d" * 64,
+                        "task_id": "task",
+                        "trial_id": "trial_" + "a" * 20,
+                        "base_world_id": "world_" + "b" * 20,
+                        "series_id": "TE-S01",
+                        "regime_cell_id": "TE-S01-A1",
+                        "effect_state": "near_null",
+                        "context": "C1",
+                        "condition_id": "primary",
+                        "request_replicate_id": str(repetition) if retry_of is None else "retry-1",
+                        "procedure_assistance": "output_contract_only",
+                        "analysis_specification": "locked_sap",
+                        "design_family": "individual_randomized",
+                        "reconstruction_family": None,
+                        "target_ids": ["effect"],
+                        "target_kind": "point",
+                        "effect_measure": "risk_difference",
+                        "result_unit": "probability",
+                    }
+                ],
+            }
+        )
+        path.write_text(source.model_dump_json(indent=2))
+        runs.append(
+            CampaignRunV1(
+                job_id=job_id,
+                benchmark="trialeval",
+                model_name=model.name,
+                repetition=repetition,
+                relative_run_root=f"runs/{job_id}",
+                invocation_sha256="e" * 64,
+                analysis_plan_path=path.relative_to(tmp_path).as_posix(),
+                analysis_plan_sha256=sha256_file(path),
+                retry_of_job_id=retry_of,
             )
-            path.write_text(source.model_dump_json(indent=2))
-            runs.append(
-                CampaignRunV1(
-                    job_id=job_id,
-                    benchmark="trialeval",
-                    model_name=model.name,
-                    repetition=repetition,
-                    relative_run_root=f"runs/{job_id}",
-                    invocation_sha256="e" * 64,
-                    analysis_plan_path=path.relative_to(tmp_path).as_posix(),
-                    analysis_plan_sha256=sha256_file(path),
-                )
-            )
+        )
     plan = CampaignPlanV1(configuration=config, runs=tuple(runs))
     combined = combined_trialeval_plan(tmp_path, plan)
     assert len({row.scheduled_unit_id for row in combined.attempts}) == 4
-    assert [row.attempt_role for row in combined.attempts] == ["primary", "stochastic_duplicate"] * 2
+    assert [row.attempt_role for row in combined.attempts] == ["primary", "stochastic_duplicate"] * 2 + ["retry"]
+    retry = combined.attempts[-1]
+    assert retry.retry_of_attempt_id == retry.scheduled_unit_id == "first-1"
+    assert retry.request_replicate_id == "retry-1"
     assert combined.model_comparisons == (("fixture/first", "fixture/second"),)
+    with pytest.raises(ValueError, match="at most one infrastructure retry"):
+        CampaignPlanV1(configuration=config, runs=(*runs, runs[-1].model_copy(update={"job_id": "second-retry"})))
+    with pytest.raises(ValueError, match="must repeat one TrialEval primary"):
+        CampaignPlanV1(
+            configuration=config, runs=(*runs[:-1], runs[-1].model_copy(update={"retry_of_job_id": "first-2"}))
+        )
     path.write_text("{}")
     with pytest.raises(ValueError):
         combined_trialeval_plan(tmp_path, plan)
@@ -1550,6 +1568,41 @@ def test_default_capacity_follows_task_parallelism_and_is_reused_for_grading(tmp
     assert (operations.grading_workers or operations.executor_capacity) == 12
     with pytest.raises(ValueError, match="Two executor slots"):
         CampaignOperationsV1(model_workers=2, task_workers=3, executor_workers=11, spend_limit_micro_usd=1000000)
+
+
+@pytest.mark.parametrize(
+    ("memory_mb", "cpus", "message"),
+    [(4 * 4096, 8, None), (4 * 4096 - 1, 64, "4096 MB per container"), (1 << 20, 7, "2 CPUs per container")],
+)
+def test_host_capacity_refuses_containers_the_host_cannot_hold(memory_mb: int, cpus: int, message: str | None) -> None:
+    """Capacity x the fixed per-container limits must fit the host's memory and CPUs."""
+    if message is None:
+        campaign.check_host_capacity(4, host_memory_mb=memory_mb, host_cpus=cpus)
+        return
+    with pytest.raises(ValueError, match=message) as refused:
+        campaign.check_host_capacity(4, host_memory_mb=memory_mb, host_cpus=cpus)
+    assert "operations.executor_workers" in str(refused.value)
+
+
+def test_one_task_at_a_time_runs_on_any_host(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """The default single-task capacity (two executor slots) is never refused, even on a small host."""
+    campaign.check_host_capacity(2, host_memory_mb=2048, host_cpus=1)
+
+    def unreadable() -> tuple[int, int]:
+        raise AssertionError("one task at a time must not read the host")
+
+    monkeypatch.setattr(campaign, "_host_resources", unreadable)
+    from trialagentbench_verifier.campaign_contracts import CampaignOperationsV1
+
+    base = configuration(tmp_path)
+    operations = CampaignOperationsV1(
+        model_workers=1, task_workers=1, spend_limit_micro_usd=base.operations.spend_limit_micro_usd
+    )
+    single = base.model_copy(update={"operations": operations})
+    assert single.operations.executor_capacity == 2
+    campaign._require_host_capacity(single)
+    with pytest.raises(ValueError, match="4096 MB per container"):
+        campaign.check_host_capacity(4, host_memory_mb=2048, host_cpus=64)
 
 
 def test_actual_request_pricing_reserves_small_request_and_detects_excess(tmp_path):

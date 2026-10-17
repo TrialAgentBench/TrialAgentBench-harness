@@ -1,6 +1,6 @@
 {
   "schema_version": "trialagentbench.repository_sync/v1",
-  "source_commit": "0735d245a1f0eebd3a73e20e9b6ea49d2090613e",
+  "source_commit": "9b2250c1d77b864ac8929303da882e6f404ec78e",
   "specification_sha256": "2d25ce20389d736a4750f614b61dedbc51ec54dfd61da87126e05ece6ef8dc49",
   "files": [
     {
@@ -25,11 +25,11 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "0f6d6a818fe13e6bfe8b64675d46730892a4a5d07580d0b1112050ba892a259c"
+      "sha256": "b3347f3cdc83028ee8e6455918f2d36150a6f5691e67de9cfab3e9c82fd8f711"
     },
     {
       "path": "CITATION.cff",
-      "sha256": "944174ca0729c31bc9d3fe61bfe6ce0b9e98ddbedecc0b7cce12fcd922c15cf0"
+      "sha256": "04661a507d5f73ef91802da3557ee3d69b9d26ca92a6c6444cada5076e6a78ad"
     },
     {
       "path": "CONTRIBUTING.md",
@@ -61,7 +61,7 @@
     },
     {
       "path": "clinical-data/pyproject.toml",
-      "sha256": "e8cf4f72844044b952563a50c3a989115cb7073699f8781ac14b2b0afefe9827"
+      "sha256": "3748933b55b56da61c9517a54e1dfb4dce164a47636618969b34e4569ac3daec"
     },
     {
       "path": "clinical-data/src/clinical_data_tables/__init__.py",
@@ -73,23 +73,23 @@
     },
     {
       "path": "docs/BENCHMARK_AND_DATA.md",
-      "sha256": "1552b968ce3f1400776841a0a76080db11201486f64b9eddbc0a4b2dfff11959"
+      "sha256": "c559dbe6a0c37497dceefbbd9f5b6910c04780f44211b50445f9d18e232daa2e"
     },
     {
       "path": "docs/CAMPAIGN_CONFIGURATIONS.md",
-      "sha256": "8ba0d4688963d1df30b9de7a20dc382110317ffc37d30afe17c4408472f5823f"
+      "sha256": "9c9a282474dd67c23c8c33ff06053b3bc138e08f188c029c88e325b5e2691aa5"
     },
     {
       "path": "docs/GUIDE.md",
-      "sha256": "9821e3fe4d698c751bc33cfcacd3f3a81c61809913db493bc30f1da33557d1d4"
+      "sha256": "464a44019d902e31e00430048121f770debb2a76f3bae23c0262c928487785de"
     },
     {
       "path": "docs/QUICKSTART.md",
-      "sha256": "09ea100340459426f242b4d3c0c60b546ca202aac9457edee6e6a3fa0550fb54"
+      "sha256": "dc9772b3f776ed684eec5b16c409f0c86e136d3fd6e36c91f15c54e85f8ba784"
     },
     {
       "path": "docs/STATISTICAL_REVIEW.md",
-      "sha256": "cf1579a71a19669f6d025122c336355cdef863f7a137dfa51f7da7429723109c"
+      "sha256": "74e56f4056d9d77f77dbc8f673f7250e0559a4b5142ba775a7938b291c7de360"
     },
     {
       "path": "docs/figures/arthritis-world-compact.svg",
@@ -373,7 +373,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "16bf8efd60190c2e62a39b16a3b4fdf25c9373030fe29b332d4f4d2ab073c343"
+      "sha256": "08617b912ebb71dfe9faeb76a9383288093c107cc9d6bb28e11d5a9547feee68"
     },
     {
       "path": "tests/adapters/test_compacting_responses.py",
@@ -457,11 +457,11 @@
     },
     {
       "path": "tests/execution/test_campaign.py",
-      "sha256": "2192221eb1b70a97b176a09ec5a9737b205cad946f0d5ce7293b3a38e9ce4c33"
+      "sha256": "ee0fbf7bf3e317d0f9ebca4f7d396a6e5cf0a99a3d996d30d143cf856981a8d2"
     },
     {
       "path": "tests/execution/test_campaign_budget_lifecycle.py",
-      "sha256": "3dc1e4903765e5767a7448c2564a5eb3209e288bab4a637ad7aa320b615d2978"
+      "sha256": "661364b448030bdcc0b94b4327d5e71dd3a088f643f08827f0097ba5140cb3d5"
     },
     {
       "path": "tests/execution/test_canonical_trialdev_schedule.py",
@@ -737,7 +737,7 @@
     },
     {
       "path": "trialagentbench/__init__.py",
-      "sha256": "423271c6a8da952ce8fbdf42eb8297c4c054ea4606b2064303d752800e38c1b5"
+      "sha256": "d7dd7d36b4cc080b3fbf50f4e9ddce1040c5d87a4b0df8e15f878dbdb6423d26"
     },
     {
       "path": "trialagentbench/adapters/__init__.py",
@@ -793,7 +793,7 @@
     },
     {
       "path": "trialagentbench/cli.py",
-      "sha256": "3b265250bbeb1ddaa5eff1838f84ec610e301d8625b2c99896c77a8361b5a306"
+      "sha256": "5737db9c655a7447fe0a09e3285eece59e297a9b55b5a40f845a7a9dd6c32c9d"
     },
     {
       "path": "trialagentbench/clinical_tables.py",
@@ -1077,7 +1077,7 @@
     },
     {
       "path": "trialagentbench/tools/campaign.py",
-      "sha256": "ea6112670527fac30d0254348fca363ccb3ff434d8acbe3fc5cd72674e421e69"
+      "sha256": "26a59f2c68d4835ee45915b5ff1f66a2a34cd944d354c38afb2d5cf73e45efce"
     },
     {
       "path": "trialagentbench/tools/demo.py",
@@ -1089,7 +1089,7 @@
     },
     {
       "path": "trialagentbench/tools/finish_campaign_analysis.py",
-      "sha256": "0766f4aa2400b336d7cc810604e9949ccd03f949fcd3f0eb2b6abb84b6334a3f"
+      "sha256": "00ba693716badb245a3ef35fd5708fe426930952afdd83319be26d22efbef7c0"
     },
     {
       "path": "trialagentbench/tools/finish_run.py",
@@ -1141,7 +1141,7 @@
     },
     {
       "path": "trialagentbench/trialdev/__init__.py",
-      "sha256": "722fd9ba0bd5164ee53be65db7791b2fee82c03ff6a5b92b517b67c7b924d0f1"
+      "sha256": "3a6b227090495ac3b981d0fed5468614e553b133259f15f2e1152acbdd56a4f3"
     },
     {
       "path": "trialagentbench/trialdev/action_trace.py",
@@ -1321,11 +1321,11 @@
     },
     {
       "path": "uv.lock",
-      "sha256": "96f383b6c6e409c5aa5d7f714622ee059f13456bf543f1416c1597d6abfec884"
+      "sha256": "5ebee3e712bada5586f8b2c16d79fec8fb469644c36c2c3a2b5c3ba788348915"
     },
     {
       "path": "verifier/CITATION.cff",
-      "sha256": "343fab2789fe27e023976e137f488bf8702047b88ea83661a62864d76234fdc9"
+      "sha256": "694e913cf9f6fe7275b91ad5b3535004405e9c511a6b1b62bc774e6c5daaccf6"
     },
     {
       "path": "verifier/LICENSE",
@@ -1885,7 +1885,7 @@
     },
     {
       "path": "verifier/pyproject.toml",
-      "sha256": "55535f28da61e89d9f943783dae4a914ab7caaf79de68d6f2b0dc623781f3f36"
+      "sha256": "97d259681c124cab1eab84b2be14952daffb091855a7c88b536f5c1ddd363688"
     },
     {
       "path": "verifier/src/trialagentbench_verifier/__init__.py",
@@ -1921,11 +1921,11 @@
     },
     {
       "path": "verifier/src/trialagentbench_verifier/campaign.py",
-      "sha256": "2bb65d40d5f54f7180527ca6e2c4dc09e1555412c15bcdbaa10bf6091232b8f8"
+      "sha256": "6c6b5675c476cbd303c23f14dc24e94797af456b9a35644eb8987d71df879e44"
     },
     {
       "path": "verifier/src/trialagentbench_verifier/campaign_contracts.py",
-      "sha256": "4657a6d731c34c3a7a5f75403c2137a9c5d22bd37018e4afd9e96ee47fb420fc"
+      "sha256": "ad0f8a2731d56ea8316b26e1280c5ce5da8e2ee19c8ec798198132bbbc5f79a6"
     },
     {
       "path": "verifier/src/trialagentbench_verifier/campaign_inputs.py",

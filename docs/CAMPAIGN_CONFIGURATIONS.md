@@ -118,6 +118,26 @@ repetitions and seed. Every value, including these, is bound into the campaign p
 one starts a new campaign. Tasks left unrun when a spending limit is reached are reported as
 censored, and the analysis warns when censoring differs between models by more than five points.
 
+One campaign per host is supported. The executor capacity (`executor_workers`, or twice
+`model_workers` × `task_workers` when unset) is a per-process limit, not a host limit: `run`,
+`resume`, `retry` and `finish` refuse to start, before any container runs, when a capacity above one
+task at a time (two containers) times 4,096 MB exceeds the host's memory or times 2 CPUs exceeds its
+CPU count, and name the setting to lower in a newly prepared campaign. One task at a time always runs
+without reading the host; on macOS the check reads the host's memory, not the Docker VM's allocation. Campaigns run concurrently on one host must
+divide that capacity between them; the per-container limits are fixed and cannot be lowered.
+
+Infrastructure retries follow one prespecified policy. After every scheduled task has reached an
+end state, `trialagentbench campaign retry --campaign DIR` grades the TrialEval primaries offline
+and retries, exactly once, each primary whose outcome is an evaluator error or a pre-run identity
+exclusion. The retry is a separate native run of those tasks only (request replicate `retry-1`)
+with its own hashed analysis plan, recorded in `campaign.json` as `retry_of_job_id`. Model
+noncompletion, malformed output, provider stops and budget exhaustion are scored model outcomes and
+are never retried. The analysis uses a retry free of infrastructure faults in place of its primary
+and reports the recovered count; it withholds comparisons only while a primary infrastructure
+failure has no retry or its retry also failed for infrastructure. A retry left unrun by an exhausted
+spending limit is budget-censored like any other task. Run `retry` before `finish`. TrialDev has no
+retry: an evaluator error withholds the affected TrialDev comparison with reason `evaluator_fault`.
+
 ## Invalid combinations
 
 - A withheld split with `input_mode: development`.

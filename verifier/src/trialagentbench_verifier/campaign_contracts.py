@@ -259,7 +259,11 @@ class CampaignConfigurationV1(_Model):
 
 
 class CampaignRunV1(_Model):
-    """A native scheduled run and exact immutable invocation, never a second task ledger."""
+    """A native scheduled run and exact immutable invocation, never a second task ledger.
+
+    ``retry_of_job_id`` marks the one prespecified TrialEval retry run of a
+    primary job: it reruns only that job's infrastructure-failed tasks.
+    """
 
     job_id: Identifier
     benchmark: Literal["trialeval", "trialdev"]
@@ -269,6 +273,7 @@ class CampaignRunV1(_Model):
     invocation_sha256: Digest
     analysis_plan_path: str | None = None
     analysis_plan_sha256: Digest | None = None
+    retry_of_job_id: Identifier | None = Field(default=None, exclude_if=lambda value: value is None)
 
     @model_validator(mode="after")
     def validate_paths(self) -> Self:
@@ -299,7 +304,11 @@ class CampaignRunV1(_Model):
 
 
 class CampaignPlanV1(_Model):
-    """Complete pre-observation campaign bound to native run identities."""
+    """Complete pre-observation campaign bound to native run identities.
+
+    Retry runs are appended only under the prespecified infrastructure-retry
+    policy: at most one per TrialEval primary (repetition one) job.
+    """
 
     schema_id: Literal["trialagentbench.campaign_plan/v1"] = "trialagentbench.campaign_plan/v1"
     configuration: CampaignConfigurationV1
@@ -315,9 +324,25 @@ class CampaignPlanV1(_Model):
             for benchmark in self.configuration.panel.benchmarks
             for repetition in range(1, self.configuration.panel.repetitions + 1)
         }
-        observed = {(run.model_name, run.benchmark, run.repetition) for run in self.runs}
-        if observed != expected or len(observed) != len(self.runs):
+        scheduled = tuple(run for run in self.runs if run.retry_of_job_id is None)
+        observed = {(run.model_name, run.benchmark, run.repetition) for run in scheduled}
+        if observed != expected or len(observed) != len(scheduled):
             raise ValueError("Campaign native runs do not cover the configured inventory")
+        originals = {run.job_id: run for run in scheduled}
+        retried = [run.retry_of_job_id for run in self.runs if run.retry_of_job_id is not None]
+        if len(retried) != len(set(retried)):
+            raise ValueError("Campaign permits at most one infrastructure retry run per primary job")
+        for run in self.runs:
+            if run.retry_of_job_id is None:
+                continue
+            original = originals.get(run.retry_of_job_id)
+            if (
+                original is None
+                or original.benchmark != "trialeval"
+                or original.repetition != 1
+                or (run.benchmark, run.model_name, run.repetition) != ("trialeval", original.model_name, 1)
+            ):
+                raise ValueError("Campaign retry run must repeat one TrialEval primary job of the same model")
         if len({run.job_id for run in self.runs}) != len(self.runs):
             raise ValueError("Campaign job identities must be unique")
         if len({run.relative_run_root for run in self.runs}) != len(self.runs):

@@ -267,41 +267,60 @@ def combined_trialeval_plan(root: Path, plan: CampaignPlanV1) -> TrialEvalCampai
 
     Repetition one is the primary by design. Later repetitions remain linked
     stochastic duplicates in the existing variability analysis; no outcome can
-    select a primary. TrialDev instead averages repetitions within each world.
+    select a primary. A retry run's attempts are retries of the same task's
+    primary in the job it repeats. TrialDev instead averages repetitions within
+    each world.
     """
     runs = tuple(run for run in plan.runs if run.benchmark == "trialeval")
-    sources = tuple(read_json_model(TrialEvalCampaignPlanV1, root / str(run.analysis_plan_path)) for run in runs)
+    sources = {
+        run.job_id: read_json_model(TrialEvalCampaignPlanV1, root / str(run.analysis_plan_path)) for run in runs
+    }
     if not sources:
         raise ValueError("No TrialEval runs were scheduled")
-    first = sources[0]
+    first = sources[runs[0].job_id]
     identity = (
         first.release_id,
         first.release_manifest_sha256,
         first.participant_manifest_checksum,
         first.prospective_analysis_plan_sha256,
-        first.cells,
     )
     attempts: list[TrialEvalCampaignAttemptV1] = []
-    for run, source in zip(runs, sources, strict=True):
+    for run in runs:
+        source = sources[run.job_id]
         if sha256_file(root / str(run.analysis_plan_path)) != run.analysis_plan_sha256:
             raise ValueError("Native TrialEval plan differs from its frozen identity")
+        # A retry run covers only its failed tasks, so its cells are a subset of the panel's.
         if (
             source.release_id,
             source.release_manifest_sha256,
             source.participant_manifest_checksum,
             source.prospective_analysis_plan_sha256,
-            source.cells,
-        ) != identity:
+        ) != identity or not (
+            set(source.cells) <= set(first.cells) if run.retry_of_job_id else source.cells == first.cells
+        ):
             raise ValueError("Combined TrialEval plans differ in scientific condition or task cells")
-        attempts.extend(
-            row.model_copy(
-                update={
-                    "attempt_role": "primary" if run.repetition == 1 else "stochastic_duplicate",
-                    "scheduled_unit_id": row.attempt_id,
-                }
+        if run.retry_of_job_id is None:
+            attempts.extend(
+                row.model_copy(
+                    update={
+                        "attempt_role": "primary" if run.repetition == 1 else "stochastic_duplicate",
+                        "scheduled_unit_id": row.attempt_id,
+                    }
+                )
+                for row in source.attempts
             )
-            for row in source.attempts
-        )
+        else:
+            originals = {row.task_id: row.attempt_id for row in sources[run.retry_of_job_id].attempts}
+            attempts.extend(
+                row.model_copy(
+                    update={
+                        "attempt_role": "retry",
+                        "retry_of_attempt_id": originals[row.task_id],
+                        "scheduled_unit_id": originals[row.task_id],
+                    }
+                )
+                for row in source.attempts
+            )
     payload = first.model_dump(exclude={"checksum", "attempts", "model_comparisons"})
     return TrialEvalCampaignPlanV1.model_validate(
         {

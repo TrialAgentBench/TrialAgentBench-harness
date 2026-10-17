@@ -70,6 +70,11 @@ MetricDomain = Literal[
     "decision_consequence",
     "plan_execution",
 ]
+# Infrastructure outcomes are the only ones a primary may be retried after, exactly once. Model
+# noncompletion, malformed output, provider stops and budget exhaustion are scored model outcomes.
+INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1: frozenset[AttemptOutcome] = frozenset(
+    {"evaluator_error", "pre_run_identity_exclusion"}
+)
 AnalysisStatus = Literal["complete", "unavailable_due_unscored_primary_attempts"]
 EstimateStatus = Literal["estimated", "unavailable_due_missing_metric"]
 
@@ -1138,8 +1143,8 @@ def _validate_retry_ledger(bound: tuple[_BoundAttempt, ...]) -> dict[str, _Bound
         if row.attempt_role != "retry":
             continue
         original = by_id.get(row.retry_of_attempt_id or "")
-        if original is None or original.plan.attempt_role == "retry":
-            raise ValueError("TrialEval retry must bind to an original attempt")
+        if original is None or original.plan.attempt_role != "primary":
+            raise ValueError("TrialEval retry must bind to a primary attempt")
         identity = (
             "scheduled_unit_id",
             "model_id",
@@ -1167,15 +1172,38 @@ def _validate_retry_ledger(bound: tuple[_BoundAttempt, ...]) -> dict[str, _Bound
     return by_id
 
 
+def _recovering_retries(bound: tuple[_BoundAttempt, ...]) -> dict[str, _BoundAttempt]:
+    """Map each infrastructure-failed primary to its retry when that retry ran without an infrastructure fault.
+
+    A retry is admitted only after its primary's evaluator error or pre-run
+    identity exclusion. Outcomes are checked once either attempt has a graded
+    row, so a prospective plan without outcomes still validates.
+    """
+    by_id = _validate_retry_ledger(bound)
+    recovered = {}
+    for item in bound:
+        if item.plan.attempt_role != "retry":
+            continue
+        original = by_id[str(item.plan.retry_of_attempt_id)]
+        if (original.row is not None or item.row is not None) and (
+            original.outcome not in INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1
+        ):
+            raise ValueError("TrialEval retry is permitted only after an infrastructure failure of its primary")
+        if item.row is not None and item.outcome not in INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1:
+            recovered[original.plan.attempt_id] = item
+    return recovered
+
+
 def _scientific_primaries(bound: tuple[_BoundAttempt, ...]) -> tuple[_BoundAttempt, ...]:
-    _validate_retry_ledger(bound)
-    return tuple(item for item in bound if item.plan.attempt_role == "primary")
+    """Return each scheduled primary, or the retry that recovered it from an infrastructure fault."""
+    recovered = _recovering_retries(bound)
+    return tuple(recovered.get(item.plan.attempt_id, item) for item in bound if item.plan.attempt_role == "primary")
 
 
 def summarize_trial_eval_attempt_ledger_v1(bound: tuple[_BoundAttempt, ...]) -> TrialEvalAttemptLedgerSummaryV1:
     """Summarize all source-bound attempts and recoverable operational failures."""
 
-    _validate_retry_ledger(bound)
+    recovered = _recovering_retries(bound)
     executed = tuple(item for item in bound if item.plan.attempt_role != "retry" or item.row is not None)
     outcomes = Counter(item.outcome for item in executed)
     unresolved = tuple(
@@ -1183,7 +1211,8 @@ def summarize_trial_eval_attempt_ledger_v1(bound: tuple[_BoundAttempt, ...]) -> 
             item.plan.attempt_id
             for item in bound
             if item.plan.attempt_role == "primary"
-            and item.outcome in {"evaluator_error", "pre_run_identity_exclusion"}
+            and item.outcome in INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1
+            and item.plan.attempt_id not in recovered
         )
     )
     return TrialEvalAttemptLedgerSummaryV1(
@@ -1191,7 +1220,7 @@ def summarize_trial_eval_attempt_ledger_v1(bound: tuple[_BoundAttempt, ...]) -> 
         scheduled_stochastic_duplicates=sum(item.plan.attempt_role == "stochastic_duplicate" for item in bound),
         retry_attempts=sum(item.plan.attempt_role == "retry" for item in executed),
         total_attempts=len(executed),
-        recovered_primary_attempt_ids=(),
+        recovered_primary_attempt_ids=tuple(sorted(recovered)),
         primary_scientifically_unscored_attempt_ids=unresolved,
         outcomes=TrialEvalAttemptOutcomeCountsV1(
             completed=outcomes["completed"],
@@ -2999,12 +3028,19 @@ def render_trial_eval_campaign_analysis_v1(report: TrialEvalCampaignAnalysisV1) 
             f"{outcomes.budget_exhausted}; evaluator errors {outcomes.evaluator_error}; pre-run exclusions "
             f"{outcomes.pre_run_identity_exclusion}."
         ),
+        (
+            "Retry policy: a primary that ended in an evaluator error or pre-run identity exclusion is retried once; "
+            "a retry free of infrastructure faults replaces it. Model outcomes are never retried. "
+            f"Recovered primaries: {len(report.ledger.recovered_primary_attempt_ids)}; "
+            f"unresolved: {len(report.ledger.primary_scientifically_unscored_attempt_ids)}."
+        ),
     ]
     if report.scientific_analysis_status != "complete":
         lines.extend(
             (
                 "",
-                "Official comparisons are withheld until the evaluator fault is repaired and the original primary output is regraded.",
+                "Official comparisons are withheld: a primary infrastructure failure has no retry, "
+                "or its retry also failed for infrastructure.",
             )
         )
         return "\n".join(lines) + "\n"
@@ -3144,6 +3180,7 @@ __all__ = [
     "CONTEXTS_V1",
     "C_CONTRASTS_V1",
     "EFFECT_STATES_V1",
+    "INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1",
     "TrialEvalAuthenticatedGradeSourceV1",
     "TrialEvalAttemptLedgerSummaryV1",
     "TrialEvalAttemptOutcomeCountsV1",

@@ -2,6 +2,52 @@
 
 All notable changes to the TrialAgentBench harness, verifier and documentation.
 
+## [1.1.0] - 2026-10-17
+
+### Benchmark
+
+- TE-S06 is resized from 9,504 to 5,500 participants, the smallest size at which its
+  trap stays consequential with margin in every effect tier; 9,504 lay above its
+  largest confirmatory exemplar trial and had not been re-minimised after the trap's
+  arm difference was strengthened. Its effect anchor is recompiled at that size.
+  Only TE-S06-A1 and TE-S06-A3 change: every other trial is byte-identical to 1.0.1,
+  and TrialDev is unchanged. Both TrialEval splits are re-qualified with every cell
+  re-acquired on freshly drawn recovery worlds, so release-scale figures were
+  recomputed and changed in unchanged cells too; regret at the population targets
+  carries no published Monte Carlo standard error. Task identifiers are unchanged, but
+  the 40 public and 8 withheld TE-S06 tasks carry new data, so scores on them, and
+  TrialEval aggregates that include them, are not comparable with 1.0.x.
+- Realism is reported strictly. A comparison agrees only inside the range of its
+  verified exemplar values; a value outside that range but inside the quantity's
+  stated tolerance is reported separately; tolerance bands are clipped to physical
+  limits. The withheld release now has its own scorecard, and its held-out trap is
+  compared without being named.
+- Ascertainment traps are compared on the ratio of odds ratios of Cochrane review
+  MR000043 (on-site over committee, harmful events), against the subgroup in which the
+  committee identified events independently of unblinded sites: 0.76 (0.48-1.12)
+  (for TE-S16-A3's exacerbation counts, the ratio of rate ratios). 1.0.x compared the
+  routine-sensitivity arm gaps with a blinded estimate (0-0.034) and reported them as
+  departures; both traps lie inside the matching interval.
+- Trap-series sizes are compared with confirmatory exemplar trials, not with the
+  median of every registered trial of the family; agreement with AACT is described
+  as reproducing the calibration that sized the trials.
+- The release evidence reports each fixed policy's aggregate excess regret over the
+  scripted reference across the economics band, and labels TE-S08-A1's period-free
+  analysis as design-incompatible rather than a trap answer.
+
+### Harness
+
+- `trialagentbench campaign retry` reruns, once, every TrialEval primary that failed
+  for infrastructure (an evaluator error or a pre-run identity exclusion), and the
+  analysis uses the completed retry in its place. Model failures are never retried.
+- The toolkit's documentation adds the statistical review, the campaign
+  configurations and the figure tables, and its links resolve inside the toolkit; the
+  dataset's `release-evidence/` adds the bundle manifest whose digest the release facts
+  cite.
+- `campaign run`, `resume`, `retry` and `finish` refuse, before any container starts,
+  an executor capacity above one task at a time whose containers (2 CPUs and 4 GB each)
+  cannot all fit in the host's memory and CPUs. One task at a time always runs.
+
 ## [1.0.1] - 2026-10-16
 
 The benchmark data, task identifiers, references and scores are unchanged from 1.0.0.

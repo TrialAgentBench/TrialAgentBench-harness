@@ -1,4 +1,4 @@
-"""A budget-capped campaign finishes on its paired panel through the real native lifecycle.
+"""Budget-capped and infrastructure-retried campaigns finish through the real native lifecycle.
 
 Both offline-control routes run the scripted teaching analysis, whose study design fits the
 small teaching world; every turn reserves one microdollar through the campaign's real spending
@@ -198,6 +198,91 @@ def test_budget_capped_campaign_finishes_with_paired_comparisons(
     retained = (comparisons / "trialdev/development-results.json").read_bytes()
     assert campaign.main(["finish", "--campaign", str(root)]) == 0
     assert (comparisons / "trialdev/development-results.json").read_bytes() == retained
+
+
+def test_infrastructure_failed_primary_is_retried_once_and_recovered(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A lost execution session is retried once in its own hashed run; the retry replaces the primary."""
+    from trialagentbench_verifier.campaign import TrialEvalCampaignAnalysisV1, TrialEvalCampaignPlanV1
+    from trialagentbench_verifier.executor import CodeExecutionSessionTerminated
+
+    release = tmp_path / "development"
+    manifest_sha256, image_id = _development_inputs(release, trialdev_evaluator=None)
+    config = tmp_path / "campaign-config.json"
+    config.write_text(
+        json.dumps(
+            {
+                "release_directory": str(release),
+                "input_mode": "development",
+                "expected_release_manifest_sha256": manifest_sha256,
+                "executor_image_id": image_id,
+                "models": [_model("python", 1000)],
+                "panel": {
+                    "benchmarks": ["trialeval"],
+                    "trialeval_tasks": [TRIALEVAL_TASK],
+                    "trialeval_turns": 12,
+                    "condition_id": "infrastructure-retry-lifecycle",
+                },
+                "operations": {
+                    "model_workers": 1,
+                    "task_workers": 1,
+                    "executor_workers": 2,
+                    "grading_workers": 1,
+                    "spend_limit_micro_usd": 1000,
+                },
+            }
+        )
+    )
+    lost_sessions: list[str] = []
+
+    class _LostSession:
+        """End the first primary's execution session, as a host fault would."""
+
+        def __init__(self, provider: object) -> None:
+            self._provider = provider
+
+        def __getattr__(self, name: str) -> object:
+            return getattr(self._provider, name)
+
+        def generate_turn(self, *args: object, **kwargs: object) -> object:
+            raise CodeExecutionSessionTerminated("controlled executor session loss")
+
+    def provider(model: str, **kwargs: object) -> object:
+        metered = _metered(model, **kwargs)  # type: ignore[arg-type]
+        if lost_sessions:
+            return metered
+        lost_sessions.append(model)
+        return _LostSession(metered)
+
+    monkeypatch.setattr(trialeval, "get_provider", provider)
+    root = tmp_path / "campaign"
+    assert campaign.main(["prepare", "--config", str(config), "--campaign", str(root)]) == 0
+    assert campaign.main(["run", "--campaign", str(root)]) == 0
+    assert lost_sessions == ["smoke-zero-python"]
+    capsys.readouterr()
+    assert campaign.main(["retry", "--campaign", str(root)]) == 0
+    assert "python-trialeval-1: retrying 1 infrastructure-failed primaries" in capsys.readouterr().out
+    plan = campaign.load_campaign(root)
+    assert [run.retry_of_job_id for run in plan.runs] == [None, "python-trialeval-1"]
+    # A repeated retry resumes the existing retry run and never schedules a second one.
+    assert campaign.main(["retry", "--campaign", str(root)]) == 0
+    assert campaign.load_campaign(root) == plan
+
+    assert campaign.main(["finish", "--campaign", str(root)]) == 0
+    combined = TrialEvalCampaignPlanV1.model_validate_json((root / "comparisons/trialeval/plan.json").read_bytes())
+    primary, retry = combined.attempts
+    assert (primary.attempt_role, retry.attempt_role) == ("primary", "retry")
+    assert retry.retry_of_attempt_id == primary.attempt_id and retry.request_replicate_id == "retry-1"
+    analysis = TrialEvalCampaignAnalysisV1.model_validate_json(
+        (root / "comparisons/trialeval/analysis.json").read_bytes()
+    )
+    assert analysis.scientific_analysis_status == "complete"
+    assert analysis.ledger.recovered_primary_attempt_ids == (primary.attempt_id,)
+    assert analysis.ledger.primary_scientifically_unscored_attempt_ids == ()
+    assert (analysis.ledger.outcomes.evaluator_error, analysis.ledger.outcomes.completed) == (1, 1)
+    with pytest.raises(ValueError, match="must precede campaign finish"):
+        campaign.retry_campaign(root)
 
 
 @pytest.mark.skipif(

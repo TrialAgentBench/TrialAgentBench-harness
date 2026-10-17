@@ -286,10 +286,13 @@ The [counts and denominators](figures/colorectal-baselines.csv) compare the sour
 Registry summaries also inform selected trial-conduct assumptions, including
 noncompletion. Most benchmark trials enrol the median of matched registry trials.
 Three trap series are larger because their trap is consequential only at
-confirmatory size, one is power-planned because its registry evidence is sparse,
-and one sits at a registry floor. Because
-the registry also calibrates the worlds, resemblance to it is not the test of a
-convincing trial. The relevant questions concern what the records exhibit:
+confirmatory size; their sizes lie inside the range of their confirmatory exemplar
+trials and above the median of all registered trials of their families. One series
+is power-planned because its registry evidence is sparse, and one sits at a
+registry floor. The registry (AACT) is the calibration source of the sizes and
+dropout, so agreement with it reproduces the calibration rather than validating it;
+realism is instead checked against published exemplar trials that played no part in
+calibration. The relevant questions concern what the records exhibit:
 assignment at the correct unit, rollout across calendar time, repeated observations,
 loss of follow-up and the evidence available at each readout. A registered facility
 is not necessarily an occupied site, and noncompletion is not identical to an

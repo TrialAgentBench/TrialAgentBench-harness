@@ -63,23 +63,31 @@ values and research costs also contain modeling assumptions. A published median 
 Registered facilities, occupied study sites and randomized clusters are different
 units. Registry noncompletion and endpoint unavailability are different quantities.
 
-External realism is therefore assessed against published exemplar trials rather
-than the calibration registry. The public release's scorecard compares 112
-series quantities (enrolment, occupied sites, horizon, control event proportion,
-withdrawal, treatment discontinuation, baseline age and sex, and trap mechanism
-strength) with ranges derived from those trials: 97 agree, 15 are declared
-departures and 0 are undeclared. Most agreements use lenient tolerances: 74 of 91
-series agreements use a widened or nearest-value tolerance. The trap strengths of
-TE-S06-A3, TE-S15-A3 and TE-S16-A3 are among the declared departures, lying
-outside published estimates (see *Disclosed limitations*). The scorecard covers the
-public release only. The release evidence bundle's realism linkage
+External realism is therefore assessed against published exemplar trials, which
+played no part in calibration, rather than the calibration registry: agreement
+with AACT reproduces the calibration rather than validating it. The public
+release's scorecard compares 112 series quantities (enrolment, occupied sites,
+horizon, control event proportion, withdrawal, treatment discontinuation, baseline
+age and sex, and trap mechanism strength) with ranges derived from those trials,
+counted strictly. A value agrees only inside the range of its verified exemplar
+values; a value outside that range but inside the quantity's stated tolerance is
+reported separately as within tolerance. Of the 112 cells, 69 agree, 29 are within
+tolerance, 14 are declared departures and 0 are undeclared; 61 of 103 series
+comparisons lie inside the exemplar range. The ascertainment traps are compared on
+the ratio of odds ratios of Cochrane review MR000043 (on-site over committee
+assessment of harmful events; below 1 favours the experimental arm) in the subgroup
+in which the committee identified events independently of unblinded on-site
+assessors, 0.76 (0.48–1.12): TE-S06-A3 measures about 0.86 and TE-S16-A3
+about 0.84 (for its exacerbation counts, the ratio of rate ratios). The withheld release has its own scorecard of 113 cells, which compares its
+held-out trap without naming it, with 0 undeclared (see *Disclosed limitations*).
+The release evidence bundle's realism linkage
 report (`realism/realism_linkage.md`) gives each value, its external range and the
 exemplar trial locators. The realised effect distribution is judged against the
 law the worlds are drawn from, the Cochrane mixture truncated to each series'
-anchor range, which is disclosed: over 20,400 prior-drawn worlds, 0.261 of
+anchor range, which is disclosed: over 20,400 prior-drawn worlds, 0.260 of
 the z statistics of each series' primary credited analysis lie beyond 1.96, inside
 the interval 0.256–0.268 that law implies. Against the untruncated prespecified
-mixture (0.285, interval 0.279–0.291; Kolmogorov–Smirnov distance 0.018) it is a
+mixture (0.285, interval 0.279–0.291; Kolmogorov–Smirnov distance 0.017) it is a
 measured departure, and the departure equals the disclosed truncation.
 
 ## TrialEval: question, study and information
@@ -143,10 +151,11 @@ are not stacked, because each would change the question or invalidate the
 credited analyses.
 
 Each trial is sized to the median randomized enrolment of matched AACT trials
-(snapshot 2026-08-01), with the exceptions stated here. TE-S06 (9,504
-participants), TE-S08 (114,000) and TE-S15 (660) are sized at their trap's
-consequence minimum: the trap is consequential at that confirmatory, power-planned
-size. Their enrolment is not registry-calibrated, and the traps are not claimed to
+(snapshot 2026-08-01), with the exceptions stated here. TE-S06 (5,500
+participants), TE-S08 (114,000) and TE-S15 (660) are sized for trap consequence at
+confirmatory scale: each is the smallest power-planned size at which its trap is
+consequential, inside the range of its confirmatory exemplar trials and above the
+median of all registered trials of its family. Their enrolment is not registry-calibrated, and the traps are not claimed to
 be realistic at registry-median size. TE-S07 (7,680) is power-planned because its
 registry evidence is only four trials, and TE-S10 (52) sits at a registry floor;
 every other series uses its registry median. The teaching census, from an earlier development build, and the separate controlled
@@ -252,22 +261,26 @@ qualification.
 Fixed policies are priced over the same 1,200 prior-drawn worlds per cell, so
 their costs are prior-averaged rather than conditional on one law. Of the
 21 public cells, always taking the naive analysis fails 5, always taking the robust
-analysis fails 1, following the plan fails 3, the prior-only policy fails all 21 and
+analysis fails 1, following the plan fails 3, the prior-only policy fails 20 and
 the interval-gaming policies 20 or 21, and the scripted reference fails none. The naive answer's
-posterior-expected regret per answer, in US$ millions, is 85.0 in TE-S06-A3 (45.2%
-consequential), 42.3 in TE-S08-A3 (9.3%), 44.4 in TE-S15-A3 (25.6%) and 60.6 in
-TE-S16-A3 (13.6%). In the withheld
-split the naive analysis of the held-out trap costs 19.5 (11.2%). TE-S08's naive
+posterior-expected regret per answer, in US$ millions, is 49.8 in TE-S06-A3 (30.3%
+consequential), 47.1 in TE-S08-A3 (9.7%), 45.7 in TE-S15-A3 (26.9%) and 57.8 in
+TE-S16-A3 (11.4%). In the withheld
+split the naive analysis of the held-out trap costs 19.0 (10.7%). TE-S08's naive
 route is the credited model without its period terms; in its A1 twin, where there
-is no secular trend, this uncredited analysis costs 21.5 (9.2% consequential). The naive
+is no secular trend, this uncredited analysis is design-incompatible rather than a
+trap answer, and costs 22.7 (10.6% consequential). The naive
 answer's regret at the true effect, against the release laws' population targets
-on each cell's 1,600 coverage worlds, is 61.8 in TE-S06-A3, 63.4 in TE-S08-A3, 68.6 in TE-S15-A3,
-77.2 in TE-S16-A3 and −30.6 in TE-S08-A1. These law-conditional figures are not
+on each cell's 1,600 coverage worlds, is 50.0 in TE-S06-A3, 58.9 in TE-S08-A3, 84.2 in TE-S15-A3,
+71.6 in TE-S16-A3 and −28.1 in TE-S08-A1. These law-conditional figures are not
 interchangeable with the prior averages; the prior panel's in-sample regret is not
 a true-effect measure and is not reported. Across the ×0.5 and ×2 value and cost
 band the scripted reference fails no cell, and the shortcut and interval-gaming
-controls fail cells at every point; at ×0.5 value and at ×2 cost the data-blind
-always-robust policy passes every cell. This release reports no model comparison. A single-model end-to-end check (GPT-6 Luna on all 420 public and 88
+controls fail cells at every point; at ×0.5 value the data-blind always-robust
+policy passes every cell (at ×2 cost it fails one). Its posterior-expected regret
+in excess of the scripted reference's, paired by world and averaged over cells, is
+$0.4M (standard error $0.02M) per answer at ×0.5 value and $0.8M at the declared
+economics. This release reports no model comparison. A single-model end-to-end check (GPT-6 Luna on all 420 public and 88
 withheld tasks) exercised the harness, grading and failure attribution; its
 results are descriptive and are not a model ranking.
 
@@ -280,29 +293,36 @@ response, the item says so.
 - **Design coverage and replication.** There are no A2 or A4 cells. Public and
   withheld recovery are one shared acquisition, with one recovery plan and one set
   of 1,200 prior-drawn and 1,600 coverage worlds per cell, so agreement between
-  the splits is not a replication. Trap consequence depends on the trap-minimum
-  and power-planned sizes (TE-S06 9,504, TE-S08 114,000, TE-S15 660), far above
-  registry medians.
+  the splits is not a replication. Trap consequence depends on the trap-series
+  sizes: TE-S06 (5,500), TE-S08 (114,000) and TE-S15 (660) are sized for trap
+  consequence at confirmatory scale, inside the range of their confirmatory
+  exemplar trials and above the median of all registered trials of their families.
 - **TE-S08 trap identification.** TE-S08-A3 is admitted through the interval clause
-  only (width ratio 0.501, shortcut coverage 0.419). Its excluded route is the
+  only (width ratio 0.503, shortcut coverage 0.438). Its excluded route is the
   credited model without period terms, with cluster jackknife intervals, and its A1
-  twin shares no defect, so the A1/A3 contrast isolates the secular trend. In TE-S08-A1, which has no secular trend, that period-free analysis is unbiased and calibrated, but it omits the period adjustment a stepped-wedge analysis requires, so it is uncredited: the headline charges it $21.5M posterior-expected, while at the
-  population targets it gains (−$30.6M), beating the credited analysis. It and the
+  twin shares no defect, so the A1/A3 contrast isolates the secular trend. In TE-S08-A1, which has no secular trend, that period-free analysis is unbiased and calibrated, but it omits the period adjustment a stepped-wedge analysis requires, so it is uncredited: it is design-incompatible, not a trap answer. The headline charges it $22.7M posterior-expected, while at the
+  population targets it gains (−$28.1M), beating the credited analysis. It and the
   TE-S14-A1 routine contrast stay uncredited because the analysis-compatibility rule
   rejects them for their cell's design.
-- **Realism.** Of the 112 scorecard cells, 0 are undeclared departures, but 74 of
-  91 series agreements use widened or nearest-value tolerances, usually resting on
-  one to three exemplar trials. The routine-sensitivity arm gaps of TE-S06-A3
-  (0.098) and TE-S16-A3 (0.139) are declared departures three to four times beyond
-  the published estimates (0–0.034), and the TE-S15-A3 case discordance (2.36%)
-  lies outside its published range (5.4–20%). The withheld release and its
-  held-out trap have no realism comparison. AACT both calibrates the sizes and
-  dropout and serves as their reference, so agreement there is partly circular.
-  The share of credited z beyond 1.96, 0.2606, lies inside the disclosed truncated
+- **Realism.** Of the 112 public scorecard cells, 0 are undeclared departures, but
+  only 61 of 103 series comparisons lie inside the range of their verified
+  exemplar values; 29 lie outside it but within a stated tolerance, and the ranges
+  usually rest on one to three exemplar trials. TE-S06-A3 (about 0.86) and
+  TE-S16-A3 (about 0.84, a ratio of rate ratios for its counts) lie inside the interval of MR000043's ratio of odds
+  ratios for committees independent of unblinded on-site assessors, 0.76
+  (0.48–1.12); the only declared public trap-strength departure is the TE-S15-A3
+  case discordance (2.36%), outside its published range (5.4–20%). The withheld
+  release's own scorecard has 113 cells: 71 agree, 27 are within tolerance, 15 are
+  declared departures and 0 are undeclared. AACT is the calibration source of the
+  sizes and dropout, so agreement with AACT reproduces the calibration rather than
+  validating it; the exemplar trials played no part in calibration.
+  The share of credited z beyond 1.96, 0.2600, lies inside the disclosed truncated
   prior's interval (0.2563–0.2684); against the untruncated prespecified mixture
   (0.2848, interval 0.2786–0.2910) the departure equals the disclosed truncation.
-- **Policy panels.** At value ×0.5 and at cost ×2 the data-blind always-robust policy fails no
-  cell, so that control does not separate at those ends of the band. TrialDev
+- **Policy panels.** At value ×0.5 the data-blind always-robust policy fails no
+  cell, so its cell-failure count does not separate it there; over all cells it
+  costs $0.4M (standard error $0.02M) more per answer than the scripted reference.
+  TrialDev
   meets its design requirement in every programme at profit ×0.5, ×1 and
   ×2: the reference is a strong baseline, stopping is optimal in a minority of
   programmes (23–38%), and attainable value rises from the 0.75× to the 1.1×

@@ -13,7 +13,8 @@ instructions below run scored agent evaluation against the published release.
 
 ## Installation
 
-For the agent workflow, use Python 3.12 and Docker. From the GitHub checkout:
+For the agent workflow, use Python 3.12 and Docker (each concurrent task uses two containers of
+2 CPUs and 4 GB). From the GitHub checkout:
 
 ```bash
 python3.12 -m venv .venv
@@ -404,6 +405,20 @@ settings.
 
 A recorded unsuccessful attempt remains part of the results. Resuming continues
 pending work; it does not replace completed attempts with a more favourable run.
+
+```bash
+trialagentbench campaign retry --campaign results/comparison
+```
+
+The only exception is prespecified: a TrialEval primary that ended in an evaluator
+error or a pre-run identity exclusion (an infrastructure fault, never a model outcome)
+is retried exactly once. Run `retry` after all scheduled tasks have reached an end
+state and before `finish`; it grades the primaries offline and runs one retry run of
+the affected tasks. Continue an interrupted retry run with `resume`. The analysis replaces each
+recovered primary with its retry and withholds comparisons only while an
+infrastructure failure remains unrecovered. Run one campaign per host; run, resume,
+retry and finish refuse an executor capacity above one task at a time that the host's
+memory or CPUs cannot hold (each container takes 2 CPUs and 4 GB).
 
 ## Results
 
