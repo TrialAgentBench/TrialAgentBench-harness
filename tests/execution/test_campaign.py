@@ -1,0 +1,1772 @@
+"""Campaign custody and durable commercial boundaries without provider network calls."""
+
+from __future__ import annotations
+
+import csv
+import json
+import sqlite3
+import subprocess
+import sys
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import contextmanager
+from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
+
+from trialagentbench.contracts.campaign import CampaignConfigurationV1
+from trialagentbench.contracts.trialdev.release import TrialDevStream
+from trialagentbench.execution_policy import TRIALDEV_RELEASE_BUDGET_V1
+from trialagentbench.tools import campaign
+from trialagentbench.tools.run import canonical_trialdev
+from trialagentbench.util.campaign_control import CampaignCapacityStop, CampaignRequestControl, controlled_http_client
+
+
+def configuration(tmp_path: Path) -> CampaignConfigurationV1:
+    for name, route in (("first", "route-a"), ("second", "route-b")):
+        (tmp_path / f"{name}-capability.json").write_text(
+            json.dumps(
+                {
+                    "provider_transport": "openrouter",
+                    "model_id": f"fixture/{name}",
+                    "upstream_provider": route,
+                    "context_window_tokens": 1000000,
+                    "maximum_completion_tokens": 1000,
+                    "source_url": "https://provider.example/deterministic-control",
+                    "source_retrieved_utc": "2026-09-13T00:00:00Z",
+                    "source_payload_sha256": "a" * 64,
+                }
+            )
+        )
+    return CampaignConfigurationV1.model_validate(
+        {
+            "release_directory": str(tmp_path),
+            "expected_release_manifest_sha256": "a" * 64,
+            "executor_image_id": "sha256:" + "b" * 64,
+            "models": [
+                {
+                    "name": name,
+                    "model": f"fixture/{name}",
+                    "upstream_provider": route,
+                    "capability_snapshot": str(tmp_path / f"{name}-capability.json"),
+                    "maximum_completion_tokens": 100,
+                    "spend_limit_micro_usd": 5000,
+                    "reservation_micro_usd": 1000,
+                    "reservation_tokens": 1000,
+                    "pricing_premise": "Deterministic transport control; no real billing quote",
+                    "requests_per_minute": 100,
+                    "tokens_per_minute": 100000,
+                }
+                for name, route in (("first", "route-a"), ("second", "route-b"))
+            ],
+            "panel": {"benchmarks": ["trialdev"]},
+            "operations": {"model_workers": 2, "executor_workers": 4, "spend_limit_micro_usd": 7000},
+        }
+    )
+
+
+@pytest.mark.parametrize(
+    "benchmark,default,flag",
+    [("trialeval", 3600, "--item-watchdog-seconds"), ("trialdev", 1800, "--watchdog-seconds")],
+)
+@pytest.mark.parametrize("override", [None, 77])
+def test_campaign_watchdog_uses_suite_default_or_explicit_override(tmp_path, benchmark, default, flag, override):
+    config = configuration(tmp_path)
+    config = config.model_copy(update={"panel": config.panel.model_copy(update={"watchdog_seconds": override})})
+    manifest = SimpleNamespace(
+        artifacts=tuple(
+            SimpleNamespace(filename=name, sha256="d" * 64)
+            for name in ("trialeval-participant.zip", "trialdev-evaluator.zip")
+        ),
+        executor=SimpleNamespace(environment_sha256="c" * 64),
+    )
+    args = campaign._native_arguments(
+        config, manifest, model=config.models[0], benchmark=benchmark, repetition=1, output=tmp_path / "run"
+    )
+    assert args[args.index(flag) + 1] == str(default if override is None else override)
+
+
+@pytest.mark.parametrize("benchmark", ["trialeval", "trialdev"])
+def test_withheld_split_runs_against_the_withheld_role_archives(tmp_path, benchmark):
+    config = configuration(tmp_path)
+    config = config.model_copy(update={"panel": config.panel.model_copy(update={"split": "withheld"})})
+    names = (
+        "trialeval-participant.zip",
+        "trialdev-evaluator.zip",
+        "trialeval-withheld-participant.zip",
+        "trialdev-withheld-evaluator.zip",
+    )
+    manifest = SimpleNamespace(
+        artifacts=tuple(SimpleNamespace(filename=name, sha256="d" * 64) for name in names),
+        executor=SimpleNamespace(environment_sha256="c" * 64),
+    )
+    args = campaign._native_arguments(
+        config, manifest, model=config.models[0], benchmark=benchmark, repetition=1, output=tmp_path / "run"
+    )
+    flag = "--participant-release" if benchmark == "trialeval" else "--release"
+    assert Path(args[args.index(flag) + 1]).name == (
+        "trialeval-withheld-participant.zip" if benchmark == "trialeval" else "trialdev-withheld-evaluator.zip"
+    )
+    public = config.model_copy(update={"panel": config.panel.model_copy(update={"split": "public"})})
+    assert "split" not in public.panel.model_dump(mode="json")
+
+
+def request(model="first", route="route-a") -> bytes:
+    return json.dumps(
+        {"model": f"fixture/{model}", "provider": {"only": [route], "allow_fallbacks": False}, "max_tokens": 100}
+    ).encode()
+
+
+@pytest.mark.parametrize("benchmark", ["trialeval", "trialdev"])
+@pytest.mark.parametrize("mode", ["default", "exclude", "replay"])
+def test_campaign_records_and_forwards_returned_reasoning_condition(tmp_path, benchmark, mode):
+    """Returned reasoning is retained by default; exclusion and replay are explicit, recorded conditions."""
+    from trialagentbench.tools.run import trialeval
+    from trialagentbench.util.experiment_condition import resolve_experiment_condition_v1
+
+    config = configuration(tmp_path)
+    model = config.models[0].model_copy(
+        update={"exclude_reasoning": mode == "exclude", "replay_reasoning": mode == "replay"}
+    )
+    manifest = SimpleNamespace(
+        artifacts=tuple(
+            SimpleNamespace(filename=name, sha256="d" * 64)
+            for name in ("trialeval-participant.zip", "trialdev-evaluator.zip")
+        ),
+        executor=SimpleNamespace(environment_sha256="c" * 64),
+    )
+    arguments = campaign._native_arguments(
+        config, manifest, model=model, benchmark=benchmark, repetition=1, output=tmp_path / "run"
+    )
+    assert ("--exclude-returned-reasoning" in arguments) is (mode == "exclude")
+    assert ("--replay-returned-reasoning" in arguments) is (mode == "replay")
+    owner = trialeval if benchmark == "trialeval" else canonical_trialdev
+    parsed = owner._parser().parse_args(arguments)
+    condition = resolve_experiment_condition_v1(
+        condition_id="diagnostic",
+        request_replicate_id="1",
+        reasoning_effort=None,
+        provider_capability_snapshot=model.capability_snapshot,
+        provider=model.provider,
+        model=model.model,
+        openrouter_provider=model.upstream_provider,
+        procedure_assistance="output_contract_only",
+        maximum_turns_per_step=12,
+        tool_choice="auto",
+        exclude_reasoning=parsed.exclude_returned_reasoning,
+        replay_reasoning=parsed.replay_returned_reasoning,
+    )
+    reasoning = condition.model_dump()["reasoning"]
+    assert reasoning["exclude_from_response"] is (mode == "exclude")
+    # Defaults are not serialized, so existing campaign and condition identities are unchanged.
+    assert ("replay_in_context" in reasoning) is (mode == "replay")
+    assert ("exclude_reasoning" in model.model_dump()) is (mode == "exclude")
+    assert ("replay_reasoning" in model.model_dump()) is (mode == "replay")
+
+
+def test_campaign_rejects_replaying_excluded_reasoning(tmp_path):
+    config = configuration(tmp_path)
+    model = config.models[0]
+    with pytest.raises(ValueError, match="cannot be replayed"):
+        type(model).model_validate(model.model_dump() | {"exclude_reasoning": True, "replay_reasoning": True})
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"model": "other/model"},
+        {"max_tokens": 101},
+        {"stream": True},
+        {"plugins": [{}]},
+        {"plugins": [{"id": "web"}]},
+        {"web_search_options": {"search_context_size": "low"}},
+        {"tools": [{"type": "openrouter:web_search"}]},
+        {"tools": [{"type": "web_search_preview"}]},
+        {"model": "fixture/first:online"},
+        {"service_tier": "priority"},
+        {"provider": {"only": ["route-a"], "allow_fallbacks": True}},
+    ],
+)
+def test_campaign_rejects_unplanned_billable_features(tmp_path: Path, changes: dict[str, object]) -> None:
+    from pydantic import ValidationError
+
+    config = configuration(tmp_path)
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    payload = json.loads(request()) | changes
+    with pytest.raises((ValueError, ValidationError)):
+        control.reserve(json.dumps(payload).encode())
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT COUNT(*) FROM attempts").fetchone() == (0,)
+
+
+@pytest.mark.parametrize(
+    "route", ["openai/gpt-5:online", "perplexity/sonar-pro", "openai/gpt-4o-search-preview", "openai/o3-deep-research"]
+)
+def test_campaign_configuration_rejects_web_enabled_routes(tmp_path: Path, route: str) -> None:
+    from pydantic import ValidationError
+
+    payload = configuration(tmp_path).model_dump(mode="json")
+    payload["models"][0]["model"] = route
+    with pytest.raises(ValidationError, match="built-in web retrieval"):
+        type(configuration(tmp_path)).model_validate(payload)
+
+
+def test_campaign_reservations_are_atomic_and_retain_ambiguous_attempts(tmp_path: Path) -> None:
+    config = configuration(tmp_path)
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        attempts = list(pool.map(lambda _: control.reserve(request()), range(5)))
+    assert len(set(attempts)) == 5
+    with pytest.raises(CampaignCapacityStop, match="exhausted"):
+        control.reserve(request())
+    control.settle(attempts[0], b'{"choices":[{}],"usage":{}}')
+    restarted = CampaignRequestControl(database=control.database, configuration=config, model_name="first")
+    with pytest.raises(CampaignCapacityStop, match="exhausted"):
+        restarted.reserve(request())
+    restarted.settle(attempts[0], b'{"choices":[{}],"usage":{"cost":0.0000001}}')
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT SUM(charge) FROM attempts").fetchone() == (4001,)
+    second = CampaignRequestControl(database=control.database, configuration=config, model_name="second")
+    second.reserve(request("second", "route-b"))
+    second.reserve(request("second", "route-b"))
+    with pytest.raises(CampaignCapacityStop, match="exhausted"):
+        second.reserve(request("second", "route-b"))
+    with pytest.raises(ValueError, match="already settled"):
+        control.settle(attempts[0], b'{"choices":[{}],"usage":{"cost":0}}')
+
+
+@pytest.mark.parametrize("campaign_wide", [False, True])
+def test_active_transport_settlement_admits_a_waiting_worker(tmp_path, monkeypatch, campaign_wide):
+    from threading import Event
+
+    config = configuration(tmp_path)
+    if campaign_wide:
+        config = config.model_copy(
+            update={"operations": config.operations.model_copy(update={"spend_limit_micro_usd": 1200})}
+        )
+    else:
+        config = config.model_copy(
+            update={"models": (config.models[0].model_copy(update={"spend_limit_micro_usd": 1200}), config.models[1])}
+        )
+    first = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    waiting = CampaignRequestControl(database=first.database, configuration=config, model_name="first")
+    active = first.reserve(request(), timeout_seconds=2, active_transport=True)
+    blocked = Event()
+    original = waiting.try_reserve
+
+    def observe(**kwargs):
+        result = original(**kwargs)
+        if result is None:
+            blocked.set()
+        return result
+
+    monkeypatch.setattr(waiting, "try_reserve", observe)
+    with ThreadPoolExecutor(max_workers=1) as workers:
+        future = workers.submit(waiting.reserve, request(), timeout_seconds=2)
+        assert blocked.wait(1)
+        assert not future.done()
+        first.settle(active, b'{"choices":[{}],"usage":{"cost":0.0001}}')
+        assert future.result(timeout=2) > active
+    with sqlite3.connect(first.database) as connection:
+        assert connection.execute("SELECT SUM(charge) FROM attempts").fetchone() == (1100,)
+
+
+@pytest.mark.parametrize("campaign_wide", [False, True])
+def test_permanent_budget_exhaustion_does_not_wait_for_active_transport(tmp_path, monkeypatch, campaign_wide):
+    import time
+
+    config = configuration(tmp_path)
+    if campaign_wide:
+        config = config.model_copy(
+            update={"operations": config.operations.model_copy(update={"spend_limit_micro_usd": 1200})}
+        )
+    else:
+        config = config.model_copy(
+            update={"models": (config.models[0].model_copy(update={"spend_limit_micro_usd": 1200}), config.models[1])}
+        )
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    model = config.models[0]
+    control.try_reserve(model=model, now=time.time(), micro_usd=300)
+    control.try_reserve(model=model, now=time.time(), micro_usd=900, active_until=time.time() + 60)
+    monkeypatch.setattr(time, "sleep", lambda _: pytest.fail("Permanent exhaustion must not wait"))
+    with pytest.raises(CampaignCapacityStop, match="retained 300.*requested 1000") as failure:
+        control.reserve(request())
+    assert failure.value.campaign_wide is campaign_wide
+
+
+def test_spending_limit_exhaustion_is_recorded_and_never_reopens(tmp_path: Path, capsys) -> None:
+    """Budgets never refill: a recorded exhaustion refuses every later request of its scope."""
+    import time
+
+    from trialagentbench.util.campaign_control import CAMPAIGN_BUDGET_SCOPE, exhausted_budgets, print_spending_status
+
+    config = configuration(tmp_path)
+    first = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    second = CampaignRequestControl(database=first.database, configuration=config, model_name="second")
+    attempts = [first.try_reserve(model=config.models[0], now=time.time(), micro_usd=1000) for _ in range(5)]
+    assert exhausted_budgets(first.database, config) == {}
+    with pytest.raises(CampaignCapacityStop, match="Model spending reservations exhausted") as stop:
+        first.try_reserve(model=config.models[0], now=time.time(), micro_usd=1000)
+    assert stop.value.campaign_wide is False
+    assert set(exhausted_budgets(first.database, config)) == {"first"}
+    # A later settlement lowers retained spending, but cannot reopen the exhausted model budget.
+    attempt = attempts[0]
+    assert attempt is not None
+    first.settle(attempt, b'{"choices":[{}],"usage":{"cost":0.000001}}')
+    with pytest.raises(CampaignCapacityStop, match="Model spending reservations exhausted"):
+        first.try_reserve(model=config.models[0], now=time.time(), micro_usd=1)
+    for _ in range(2):
+        assert second.try_reserve(model=config.models[1], now=time.time(), micro_usd=1000) is not None
+    with pytest.raises(CampaignCapacityStop, match="Campaign spending reservations exhausted") as stop:
+        second.try_reserve(model=config.models[1], now=time.time(), micro_usd=1000)
+    assert stop.value.campaign_wide is True
+    with pytest.raises(CampaignCapacityStop, match="Campaign spending reservations exhausted"):
+        second.try_reserve(model=config.models[1], now=time.time(), micro_usd=1)
+    assert set(exhausted_budgets(first.database, config)) == {"first", CAMPAIGN_BUDGET_SCOPE}
+    print_spending_status(first.database, config)
+    status = capsys.readouterr().out
+    assert "Spending limit exhausted (model first)" in status and "Spending limit exhausted (campaign)" in status
+
+
+def test_finish_censors_only_pending_work_behind_an_exhausted_budget(tmp_path: Path) -> None:
+    """Pending tasks are budget-censored only when their spending limit is recorded as exhausted."""
+    import time
+
+    from trialagentbench.contracts.campaign import CampaignPlanV1, CampaignRunV1
+    from trialagentbench.contracts.core.runs import RunCoverageV1
+    from trialagentbench.io import write_json_model
+    from trialagentbench.tools.finish_campaign_analysis import campaign_censoring
+
+    config = configuration(tmp_path)
+    plan = CampaignPlanV1(
+        configuration=config,
+        runs=tuple(
+            CampaignRunV1(
+                job_id=f"{model.name}-trialdev-1",
+                benchmark="trialdev",
+                model_name=model.name,
+                repetition=1,
+                relative_run_root=f"runs/{model.name}",
+                invocation_sha256="e" * 64,
+            )
+            for model in config.models
+        ),
+    )
+    root = tmp_path / "campaign"
+    tasks = ("td-1", "td-2", "td-3", "td-4")
+
+    def coverage(name: str, completed: tuple[str, ...]) -> None:
+        (root / "runs" / name).mkdir(parents=True, exist_ok=True)
+        write_json_model(
+            root / "runs" / name / "coverage.json",
+            RunCoverageV1(
+                run_identity_sha256="a" * 64, schedule_sha256="b" * 64, unit_ids=tasks, completed_unit_ids=completed
+            ),
+        )
+
+    coverage("first", tasks)
+    coverage("second", tasks[:2])
+    assert campaign_censoring(root, plan.model_copy(update={"runs": plan.runs[:1]})) is None
+    # A crashed or interrupted run can resume, so finishing it is refused.
+    with pytest.raises(ValueError, match="second-trialdev-1 has 2 pending tasks without an exhausted spending limit"):
+        campaign_censoring(root, plan)
+    control = CampaignRequestControl(database=root / "requests.sqlite", configuration=config, model_name="second")
+    for _ in range(5):
+        control.try_reserve(model=config.models[1], now=time.time(), micro_usd=1000)
+    with pytest.raises(CampaignCapacityStop):
+        control.try_reserve(model=config.models[1], now=time.time(), micro_usd=1)
+    censoring = campaign_censoring(root, plan)
+    assert censoring is not None
+    assert censoring.exhausted_models == ("second",) and not censoring.campaign_budget_exhausted
+    assert censoring.censored_by_job("trialdev") == {
+        "first-trialdev-1": frozenset(),
+        "second-trialdev-1": frozenset({"td-3", "td-4"}),
+    }
+    assert censoring.paired_task_ids("trialdev") == {"td-1", "td-2"}
+    assert [(row.model_id, row.budget_censored_tasks, row.censoring_rate) for row in censoring.models] == [
+        ("fixture/first", 0, 0.0),
+        ("fixture/second", 2, 0.5),
+    ]
+    assert len(censoring.warnings) == 1 and "differs materially" in censoring.warnings[0]
+    # Another model's exhaustion never explains this model's unfinished work.
+    coverage("first", tasks[:3])
+    with pytest.raises(ValueError, match="first-trialdev-1 has 1 pending tasks"):
+        campaign_censoring(root, plan)
+
+
+def test_active_reservation_timeout_and_expiry_never_release_liability(tmp_path, monkeypatch):
+    import time
+
+    config = configuration(tmp_path)
+    config = config.model_copy(
+        update={"models": (config.models[0].model_copy(update={"spend_limit_micro_usd": 1200}), config.models[1])}
+    )
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    clock = SimpleNamespace(now=0.0)
+    monkeypatch.setattr(time, "monotonic", lambda: clock.now)
+    monkeypatch.setattr(time, "time", lambda: 1000 + clock.now)
+    monkeypatch.setattr(time, "sleep", lambda seconds: setattr(clock, "now", clock.now + seconds))
+    control.reserve(request(), timeout_seconds=1, active_transport=True)
+    with pytest.raises(CampaignCapacityStop, match="capacity window"):
+        control.reserve(request(), timeout_seconds=0.5)
+    assert clock.now == 0.5
+    # An abandoned/crashed transport lease becomes permanent, never free capacity.
+    clock.now = 1.1
+    with pytest.raises(CampaignCapacityStop, match="Model spending reservations exhausted"):
+        control.reserve(request(), timeout_seconds=0.5)
+    assert clock.now == 1.1
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT charge,settled,active_until FROM attempts").fetchall() == [(1000, 0, 1001)]
+
+
+@pytest.mark.parametrize("signal", ["cancel", "overrun"])
+def test_waiting_reservation_observes_stop_or_overrun(tmp_path, monkeypatch, signal):
+    import time
+
+    config = configuration(tmp_path)
+    config = config.model_copy(
+        update={"models": (config.models[0].model_copy(update={"spend_limit_micro_usd": 1200}), config.models[1])}
+    )
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    active = control.reserve(request(), timeout_seconds=2, active_transport=True)
+
+    def interrupt_wait(_):
+        if signal == "cancel":
+            control.set_cancelled(True)
+        else:
+            with pytest.raises(CampaignCapacityStop, match="Observed provider usage"):
+                control.settle(active, b'{"choices":[{}],"usage":{"cost":0.002}}')
+
+    monkeypatch.setattr(time, "sleep", interrupt_wait)
+    with pytest.raises(CampaignCapacityStop, match="stop requested" if signal == "cancel" else "previous charge"):
+        control.reserve(request(), timeout_seconds=1)
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT COUNT(*),SUM(charge) FROM attempts").fetchone() == (
+            1,
+            1000 if signal == "cancel" else 2000,
+        )
+
+
+def test_legacy_ledger_migration_retains_unresolved_charges(tmp_path):
+    database = tmp_path / "requests.sqlite"
+    with sqlite3.connect(database) as connection:
+        connection.execute(
+            "CREATE TABLE attempts (id INTEGER PRIMARY KEY, model TEXT, route TEXT, started REAL, tokens INTEGER, charge INTEGER, settled INTEGER, excess INTEGER DEFAULT 0)"
+        )
+        connection.execute("INSERT INTO attempts VALUES (1,'first','route-a',1,1000,5000,0,0)")
+        original = connection.execute("SELECT * FROM attempts").fetchone()
+    control = CampaignRequestControl(database=database, configuration=configuration(tmp_path), model_name="first")
+    with pytest.raises(CampaignCapacityStop, match="Model spending reservations exhausted"):
+        control.reserve(request())
+    with sqlite3.connect(database) as connection:
+        migrated = connection.execute("SELECT * FROM attempts").fetchone()
+        assert migrated[:-1] == original
+        assert migrated[-1] == 0
+
+
+def test_explicit_zero_http_timeout_never_transports_or_reserves(tmp_path, monkeypatch):
+    import httpx2
+
+    control = CampaignRequestControl(
+        database=tmp_path / "requests.sqlite", configuration=configuration(tmp_path), model_name="first"
+    )
+    monkeypatch.setattr(
+        httpx2.Client, "send", lambda *args, **kwargs: pytest.fail("Expired request reached transport")
+    )
+    with controlled_http_client(control) as client:
+        with pytest.raises(CampaignCapacityStop, match="capacity window"):
+            client.post("https://openrouter.ai/api/v1/chat/completions", content=request(), timeout=0)
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT COUNT(*),COALESCE(SUM(charge),0) FROM attempts").fetchone() == (0, 0)
+
+
+def test_capacity_lock_wait_respects_http_deadline_without_reserving(tmp_path, monkeypatch):
+    import time
+
+    import httpx2
+
+    control = CampaignRequestControl(
+        database=tmp_path / "requests.sqlite", configuration=configuration(tmp_path), model_name="first"
+    )
+    monkeypatch.setattr(
+        httpx2.Client, "send", lambda *args, **kwargs: pytest.fail("Expired request reached transport")
+    )
+
+    def send():
+        client.post("https://openrouter.ai/api/v1/chat/completions", content=request(), timeout=0.05)
+
+    with controlled_http_client(control) as client, ThreadPoolExecutor(max_workers=1) as workers:
+        lock = sqlite3.connect(control.database)
+        lock.execute("BEGIN IMMEDIATE")
+        started = time.monotonic()
+        try:
+            future = workers.submit(send)
+            with pytest.raises(CampaignCapacityStop, match="capacity window"):
+                future.result(timeout=0.5)
+            assert time.monotonic() - started < 0.25
+        finally:
+            lock.rollback()
+            lock.close()
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT COUNT(*),COALESCE(SUM(charge),0) FROM attempts").fetchone() == (0, 0)
+
+
+def test_capacity_lock_released_before_deadline_admits_transport(tmp_path, monkeypatch):
+    from threading import Event
+
+    import httpx2
+
+    control = CampaignRequestControl(
+        database=tmp_path / "requests.sqlite", configuration=configuration(tmp_path), model_name="first"
+    )
+    waiting = Event()
+    original = control.try_reserve
+
+    def observe(**kwargs):
+        result = original(**kwargs)
+        if result is None:
+            waiting.set()
+        return result
+
+    def transport(self, outgoing, **kwargs):
+        assert 0 < outgoing.extensions["timeout"]["read"] < 1
+        return httpx2.Response(200, request=outgoing, json={"choices": [{}], "usage": {"cost": 0.0001}})
+
+    def send():
+        return client.post("https://openrouter.ai/api/v1/chat/completions", content=request(), timeout=1)
+
+    monkeypatch.setattr(control, "try_reserve", observe)
+    monkeypatch.setattr(httpx2.Client, "send", transport)
+    with controlled_http_client(control) as client, ThreadPoolExecutor(max_workers=1) as workers:
+        lock = sqlite3.connect(control.database)
+        lock.execute("BEGIN IMMEDIATE")
+        try:
+            future = workers.submit(send)
+            assert waiting.wait(0.5)
+        finally:
+            lock.rollback()
+            lock.close()
+        assert future.result(timeout=2).is_success
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT charge,settled,active_until FROM attempts").fetchall() == [(100, 1, 0)]
+
+
+def test_request_expiring_inside_transaction_never_inserts_or_sleeps(tmp_path, monkeypatch):
+    import time
+
+    control = CampaignRequestControl(
+        database=tmp_path / "requests.sqlite", configuration=configuration(tmp_path), model_name="first"
+    )
+    clock = iter((0.0, 0.0, 0.0))
+    monkeypatch.setattr(time, "monotonic", lambda: next(clock, 2.0))
+    monkeypatch.setattr(time, "sleep", lambda _: pytest.fail("Expired request must not sleep"))
+    with pytest.raises(CampaignCapacityStop, match="capacity window"):
+        control.reserve(request(), timeout_seconds=1, active_transport=True)
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT COUNT(*) FROM attempts").fetchone() == (0,)
+
+
+def test_unexpected_spending_database_error_is_not_retried(tmp_path):
+    control = CampaignRequestControl(
+        database=tmp_path / "requests.sqlite", configuration=configuration(tmp_path), model_name="first"
+    )
+    with sqlite3.connect(control.database) as connection:
+        connection.execute("DROP TABLE attempts")
+    with pytest.raises(sqlite3.OperationalError, match="no such table"):
+        control.reserve(request(), timeout_seconds=0.1)
+
+
+def test_process_death_and_competing_workers_preserve_request_liabilities(tmp_path: Path) -> None:
+    """A killed transport owner still consumes capacity after independent workers restart."""
+    config = configuration(tmp_path)
+    configuration_path = tmp_path / "configuration.json"
+    configuration_path.write_text(config.model_dump_json(), encoding="utf-8")
+    database = tmp_path / "requests.sqlite"
+    # Initialize the same durable boundary a campaign creates before dispatching workers.
+    CampaignRequestControl(database=database, configuration=config, model_name="first")
+    script = """
+import sys
+from pathlib import Path
+from trialagentbench.contracts.campaign import CampaignConfigurationV1
+from trialagentbench.util.campaign_control import CampaignCapacityStop, CampaignRequestControl
+configuration = CampaignConfigurationV1.model_validate_json(Path(sys.argv[1]).read_text())
+control = CampaignRequestControl(database=Path(sys.argv[2]), configuration=configuration, model_name='first')
+try:
+    attempt = control.reserve(b'{"model":"fixture/first","provider":{"only":["route-a"],"allow_fallbacks":false},"max_tokens":100}')
+except CampaignCapacityStop:
+    print('capacity', flush=True)
+else:
+    print(attempt, flush=True)
+    if sys.argv[3] == 'hold':
+        sys.stdin.read()
+"""
+    arguments = [sys.executable, "-c", script, str(configuration_path), str(database)]
+    with subprocess.Popen(
+        [*arguments, "hold"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+    ) as interrupted:
+        try:
+            assert interrupted.stdout is not None
+            committed = int(interrupted.stdout.readline())
+        finally:
+            interrupted.kill()
+            interrupted.communicate(timeout=10)
+
+    def reserve(_: int) -> str:
+        return subprocess.check_output([*arguments, "reserve"], text=True, timeout=30).strip()
+
+    with ThreadPoolExecutor(max_workers=6) as workers:
+        results = list(workers.map(reserve, range(8)))
+    assert results.count("capacity") == 4
+    accepted = [int(result) for result in results if result != "capacity"]
+    assert len(set([committed, *accepted])) == 5
+    with sqlite3.connect(database) as connection:
+        assert connection.execute("SELECT COUNT(*), SUM(charge) FROM attempts").fetchone() == (5, 5000)
+    recovered = CampaignRequestControl(database=database, configuration=config, model_name="first")
+    with pytest.raises(CampaignCapacityStop, match="exhausted"):
+        recovered.reserve(request())
+
+
+def test_interruption_drains_workers_and_durably_stops_new_transport(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from threading import Event, Lock
+
+    from trialagentbench.util.parallel import run_bounded_tasks
+    from trialagentbench.util.reported_cost import RunStopSignal
+
+    config = configuration(tmp_path)
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    cancelled, companion_started = Event(), Event()
+    lock = Lock()
+    active = 0
+    original = control.set_cancelled
+
+    def cancel(value: bool) -> None:
+        original(value)
+        if value:
+            cancelled.set()
+
+    monkeypatch.setattr(control, "set_cancelled", cancel)
+
+    def execute(index: int) -> None:
+        nonlocal active
+        with lock:
+            active += 1
+        try:
+            if index == 0:
+                assert companion_started.wait(5)
+                raise RuntimeError("injected interruption")
+            companion_started.set()
+            assert cancelled.wait(5)
+            with pytest.raises(CampaignCapacityStop):
+                control.reserve(request())
+        finally:
+            with lock:
+                active -= 1
+
+    with pytest.raises(RuntimeError, match="injected interruption"):
+        run_bounded_tasks(
+            range(20), execute, workers=2, consume=lambda _: None, stop=RunStopSignal(), request_control=control
+        )
+    assert active == 0 and cancelled.is_set()
+    restarted = CampaignRequestControl(database=control.database, configuration=config, model_name="first")
+    with pytest.raises(CampaignCapacityStop):
+        restarted.reserve(request())
+    restarted.set_cancelled(False)
+    assert restarted.reserve(request()) > 0
+
+
+def test_campaign_rate_windows_routes_and_excess_cost(tmp_path: Path) -> None:
+    config = configuration(tmp_path)
+    model = config.models[0].model_copy(update={"requests_per_minute": 1})
+    config = config.model_copy(update={"models": (model, config.models[1])})
+    first = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    attempt = first.try_reserve(model=model, now=100)
+    assert attempt is not None
+    assert first.try_reserve(model=model, now=159) is None
+    second = CampaignRequestControl(database=first.database, configuration=config, model_name="second")
+    assert second.try_reserve(model=config.models[1], now=159) is not None
+    assert first.try_reserve(model=model, now=161) is not None
+    with pytest.raises(CampaignCapacityStop, match="exceeded"):
+        first.settle(attempt, b'{"choices":[{}],"usage":{"cost":0.002}}')
+    with pytest.raises(CampaignCapacityStop, match="previous charge"):
+        second.reserve(request("second", "route-b"))
+    changed = config.model_copy(update={"analysis": config.analysis.model_copy(update={"seed": 42})})
+    with pytest.raises(ValueError, match="different frozen campaign"):
+        CampaignRequestControl(database=first.database, configuration=changed, model_name="first")
+
+
+def test_status_retains_unknown_charges_without_mutating_ledger(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from trialagentbench.util.campaign_control import print_spending_status
+
+    config = configuration(tmp_path)
+    database = tmp_path / "requests.sqlite"
+    print_spending_status(database, config)
+    assert not database.exists()
+    control = CampaignRequestControl(database=database, configuration=config, model_name="first")
+    control.reserve(request())
+    before = database.read_bytes()
+    print_spending_status(database, config)
+    output = capsys.readouterr().out
+    assert "unsettled attempts=1" in output and "charged-or-reserved microUSD=1000" in output
+    assert database.read_bytes() == before
+
+
+def test_preview_rejects_unknown_tasks_before_preparation(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from zipfile import ZipFile
+
+    config = configuration(tmp_path)
+    task = {
+        "task_id": "td-000000000001",
+        "case_id": "tdw-0001",
+        "stream": "evidence_analysis",
+        "title": "Control",
+        "clinical_question": "Compare the observed candidates.",
+        "available_materials": [{"relative_path": "cohort.parquet", "description": "Observed cohort"}],
+        "requested_outputs": ["comparative estimates"],
+    }
+    with ZipFile(tmp_path / "trialdev-evaluator.zip", "w") as archive:
+        archive.writestr("participant/tasks/td-000000000001/task.json", json.dumps(task))
+        ready = task | {"task_id": "td-000000000002", "data_view": "analysis_ready"}
+        archive.writestr("participant/tasks/td-000000000002/task.json", json.dumps(ready))
+    monkeypatch.setattr(
+        campaign,
+        "_campaign_inputs",
+        lambda _: SimpleNamespace(artifacts=(SimpleNamespace(filename="trialdev-evaluator.zip", sha256="d" * 64),)),
+    )
+    campaign.preview_panel(config)
+    assert "2 scheduled attempts" in capsys.readouterr().out
+    explicit = config.model_copy(
+        update={"panel": config.panel.model_copy(update={"trialdev_tasks": (task["task_id"], ready["task_id"])})}
+    )
+    inventory = tmp_path / "selection.csv"
+    campaign.preview_panel(explicit, inventory=inventory)
+    preview = capsys.readouterr().out
+    assert "4 scheduled attempts" in preview
+    assert "analysis_ready: 1 tasks" in preview
+    with inventory.open(newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert [row["task_id"] for row in rows] == [task["task_id"], ready["task_id"]]
+    assert [row["presentation"] for row in rows] == ["raw", "analysis_ready"]
+    assert all(row["attempts"] == "2" for row in rows)
+    assert set(rows[0]) == {
+        "benchmark",
+        "task_id",
+        "world_or_case",
+        "presentation",
+        "stream",
+        "models",
+        "repetitions",
+        "attempts",
+    }
+    campaign.preview_panel(explicit, inventory=inventory)
+    changed = config.model_copy(update={"panel": config.panel.model_copy(update={"trialdev_tasks": ("unknown",)})})
+    with pytest.raises(ValueError, match="matched no released task"):
+        campaign.preview_panel(changed)
+
+
+def test_offline_preview_authenticates_only_selected_participant_bytes(tmp_path, monkeypatch, capsys):
+    """An unconfigured model can preview local tasks without provider or evaluator access."""
+    from zipfile import ZipFile
+
+    from trialagentbench_verifier.io import VerificationInputError, sha256_file
+
+    task = {
+        "task_id": "td-000000000001",
+        "case_id": "tdw-0001",
+        "stream": "evidence_analysis",
+        "title": "Control",
+        "clinical_question": "Compare the observed candidates.",
+        "available_materials": [{"relative_path": "cohort.parquet", "description": "Observed cohort"}],
+        "requested_outputs": ["comparative estimates"],
+    }
+    archive_path = tmp_path / "trialdev-participant.zip"
+    with ZipFile(archive_path, "w") as archive:
+        archive.writestr("tasks/td-000000000001/task.json", json.dumps(task))
+    manifest_path = tmp_path / "release-set-manifest.json"
+    manifest_path.write_text("{}")
+    path = tmp_path / "campaign.json"
+    path.write_text(
+        json.dumps(
+            {
+                "release_directory": ".",
+                "expected_release_manifest_sha256": sha256_file(manifest_path),
+                "panel": {"benchmarks": ["trialdev"]},
+                "models": [{"name": "my-agent", "model": "NOT_CONFIGURED_YET"}],
+            }
+        )
+    )
+    metadata = SimpleNamespace(
+        artifacts=(SimpleNamespace(filename=archive_path.name, sha256=sha256_file(archive_path)),)
+    )
+    monkeypatch.setattr(campaign, "authenticate_release_set_manifest", lambda *args, **kwargs: metadata)
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Offline preview entered execution preparation")
+
+    monkeypatch.setattr(campaign, "load_configuration", forbidden)
+    monkeypatch.setattr(campaign, "authenticate_release_set", forbidden)
+    monkeypatch.setattr(campaign, "validate_model_capabilities", forbidden)
+    inventory = tmp_path / "selection.csv"
+    assert campaign.main(["preview", "--config", str(path), "--inventory", str(inventory)]) == 0
+    assert "1 scheduled attempts" in capsys.readouterr().out
+    assert task["task_id"] in inventory.read_text()
+    assert not (tmp_path / "trialdev-evaluator.zip").exists()
+    with archive_path.open("ab") as destination:
+        destination.write(b"changed")
+    with pytest.raises(VerificationInputError, match="trusted SHA-256"):
+        campaign.main(["preview", "--config", str(path)])
+
+
+def test_preview_uses_canonical_trialeval_context_without_assumption_filter(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from zipfile import ZipFile
+
+    from trialagentbench.io import canonical_payload_sha256
+
+    config = configuration(tmp_path)
+    config = config.model_copy(update={"panel": config.panel.model_copy(update={"benchmarks": ("trialeval",)})})
+    entries = []
+    for number, context, assumption in ((1, "C1", "A1"), (2, "C5", "A1"), (3, "C5", "A3")):
+        entries.append(
+            {
+                "task_id": f"te_{number:020x}",
+                "trial_id": f"trial_{number:020x}",
+                "base_world_id": f"world_{number:020x}",
+                "design_tier": "D1",
+                "design_subtype": "individual_randomized",
+                "design_family": "individual_randomized",
+                "assumption_tier": assumption,
+                "context_tier": context,
+                "evaluation_series_id": "TE-S01",
+                "regime_cell_id": f"TE-S01-{assumption}",
+                "effect_state": "near_null",
+                "data_preparation": "analysis_ready" if context == "C1" else "raw_domains_declared_defect",
+                "analysis_specification": "locked_sap" if context == "C1" else "protocol_only",
+                "reconstruction_family": "clean_transfer_v1" if context == "C5" else None,
+                "data_integrity_reference_row_count": 10,
+            }
+        )
+    payload = {"schema_id": "ariadne.trialeval.task_index/v2", "release_id": "release_" + "a" * 64, "entries": entries}
+    payload["checksum"] = canonical_payload_sha256(payload)
+    with ZipFile(tmp_path / "trialeval-evaluator.zip", "w") as archive:
+        archive.writestr("evaluation/grader/task_index.json", json.dumps(payload))
+    monkeypatch.setattr(
+        campaign,
+        "_campaign_inputs",
+        lambda _: SimpleNamespace(artifacts=(SimpleNamespace(filename="trialeval-evaluator.zip", sha256="d" * 64),)),
+    )
+    inventory = tmp_path / "trialeval-selection.csv"
+    campaign.preview_panel(config, inventory=inventory)
+    assert "2 tasks/model/repetition; 4 scheduled attempts" in capsys.readouterr().out
+    with inventory.open(newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    assert [row["task_id"] for row in rows] == [entries[1]["task_id"], entries[2]["task_id"]]
+    assert "effect_state" not in inventory.read_text()
+    explicit = config.model_copy(
+        update={"panel": config.panel.model_copy(update={"trialeval_tasks": (entries[0]["task_id"],)})}
+    )
+    campaign.preview_panel(explicit)
+    assert "1 tasks/model/repetition; 2 scheduled attempts" in capsys.readouterr().out
+
+    participant = tmp_path / "trialeval-participant.zip"
+    with ZipFile(participant, "w") as archive:
+        for row in entries:
+            task_id = row["task_id"]
+            artifacts = (("protocol", "documents/protocol.md"),) + (
+                (
+                    ("analysis_data", "data/analysis.parquet"),
+                    ("analysis_plan", "documents/statistical_analysis_plan.md"),
+                )
+                if row["context_tier"] == "C1"
+                else (
+                    ("participant_records", "data/raw/participant_records.parquet"),
+                    ("event_history", "data/raw/event_history.parquet"),
+                    ("data_integrity_policy", "documents/data_integrity_policy.md"),
+                )
+            )
+            task = {
+                "schema_id": "ariadne.trialeval.task/v1",
+                "task_id": task_id,
+                "title": "Clinical source-record analysis",
+                "study_design": "Randomized trial",
+                "question": "Estimate the treatment contrast.",
+                "available_materials": [
+                    {"artifact_id": name, "relative_path": f"tasks/{task_id}/{path}", "description": name}
+                    for name, path in artifacts
+                ],
+                "requested_outputs": ["Estimate and interval"],
+                "target_ids": ["primary"],
+            }
+            archive.writestr(f"tasks/{task_id}/task.json", json.dumps(task))
+    participant_inventory = tmp_path / "participant-selection.csv"
+    campaign.preview_panel(config, inventory=participant_inventory, sources={"trialeval": participant})
+    with participant_inventory.open(newline="") as handle:
+        participant_rows = list(csv.DictReader(handle))
+    assert [row["task_id"] for row in participant_rows] == [row["task_id"] for row in rows]
+    assert all(row["world_or_case"] == "" for row in participant_rows)
+
+
+def test_preflight_rejects_route_and_capacity_drift_before_creating_runs(tmp_path: Path) -> None:
+    config = configuration(tmp_path)
+    path = config.models[1].capability_snapshot
+    original = json.loads(path.read_text())
+    for changes, message in (
+        ({"upstream_provider": "other"}, "does not match"),
+        ({"maximum_completion_tokens": 50}, "exceed"),
+    ):
+        path.write_text(json.dumps(original | changes))
+        with pytest.raises(ValueError, match=message):
+            campaign.prepare_campaign(config, tmp_path / "not-created")
+        assert not (tmp_path / "not-created").exists()
+
+
+def _counted_sessions(monkeypatch: pytest.MonkeyPatch) -> dict[str, int]:
+    """Replace container launch with a counter of simultaneously open sessions."""
+    import threading
+
+    from trialagentbench_verifier import executor
+
+    counts = {"active": 0, "peak": 0}
+    mutex = threading.Lock()
+
+    def launch(self):
+        with mutex:
+            counts["active"] += 1
+            counts["peak"] = max(counts["active"], counts["peak"])
+
+    def terminate(self, **kwargs):
+        with mutex:
+            counts["active"] -= 1
+
+    monkeypatch.setattr(executor.shutil, "which", lambda _: "docker")
+    monkeypatch.setattr(executor.DockerCodeSession, "_resolve_image_id", lambda _: "sha256:" + "0" * 64)
+    monkeypatch.setattr(executor.DockerCodeSession, "_launch_runtime", launch)
+    monkeypatch.setattr(executor.DockerCodeSession, "_prime_runtime", lambda _: None)
+    monkeypatch.setattr(executor.DockerCodeSession, "_terminate_runtime", terminate)
+    return counts
+
+
+def _open_session(path: Path) -> None:
+    import time
+
+    from trialagentbench_verifier import executor
+
+    path.mkdir()
+    with executor.DockerCodeSession(path):
+        time.sleep(0.02)
+
+
+def test_executor_capacity_bounds_actual_session_launches(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from trialagentbench_verifier import executor
+
+    counts = _counted_sessions(monkeypatch)
+    with executor.executor_session_capacity(2), ThreadPoolExecutor(max_workers=4) as pool:
+        with executor.executor_session_capacity(8):  # a native run inside a campaign keeps the campaign bound
+            list(pool.map(_open_session, (tmp_path / str(index) for index in range(8))))
+    assert counts == {"active": 0, "peak": 2}
+
+
+def test_standalone_runs_cap_executor_sessions_per_worker(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    from trialagentbench.util.parallel import run_bounded_tasks
+    from trialagentbench.util.reported_cost import RunStopSignal
+
+    counts = _counted_sessions(monkeypatch)
+
+    def task(index: int) -> None:
+        # One task oversubscribes the executor: four simultaneous sessions against a two-slot share.
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            list(pool.map(_open_session, (tmp_path / f"{index}-{part}" for part in range(4))))
+
+    run_bounded_tasks(range(3), task, workers=1, consume=lambda _: None, stop=RunStopSignal())
+    assert counts == {"active": 0, "peak": 2}
+
+
+def test_executor_unavailability_leaves_only_that_task_pending() -> None:
+    from trialagentbench_verifier.executor import ExecutorUnavailableError
+
+    from trialagentbench.util.parallel import run_bounded_tasks
+    from trialagentbench.util.reported_cost import RunStopSignal
+
+    def task(index: int) -> int:
+        if index == 2:
+            raise ExecutorUnavailableError("Executor capacity unavailable within the declared execution timeout")
+        return index
+
+    consumed: list[int] = []
+    stop = RunStopSignal()
+    with pytest.raises(CampaignCapacityStop, match="1 task") as stopped:
+        run_bounded_tasks(range(6), task, workers=2, consume=consumed.append, stop=stop)
+    assert sorted(consumed) == [0, 1, 3, 4, 5]
+    assert stopped.value.campaign_wide is False
+    stop.before_request()  # the other routes and later requests are not stopped
+
+
+@pytest.mark.parametrize("failure", ["timeout", "http_error", "malformed", "missing_cost"])
+def test_actual_transport_reserves_before_interruption(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, failure
+) -> None:
+    import httpx2
+    from pydantic import ValidationError
+
+    control = CampaignRequestControl(
+        database=tmp_path / "requests.sqlite", configuration=configuration(tmp_path), model_name="first"
+    )
+
+    def interrupted(self, request, **kwargs):
+        with sqlite3.connect(control.database) as connection:
+            assert connection.execute("SELECT active_until>started FROM attempts").fetchone() == (1,)
+        if failure == "timeout":
+            raise httpx2.ReadTimeout("Interrupted after possible provider receipt", request=request)
+        if failure == "malformed":
+            return httpx2.Response(200, request=request, content=b"not-json")
+        if failure == "http_error":
+            return httpx2.Response(503, request=request, json={"error": "unavailable"})
+        return httpx2.Response(200, request=request, json={"choices": [{}], "usage": {}})
+
+    monkeypatch.setattr(httpx2.Client, "send", interrupted)
+    with controlled_http_client(control) as client:
+        if failure in {"timeout", "malformed"}:
+            with pytest.raises(httpx2.ReadTimeout if failure == "timeout" else ValidationError):
+                client.post("https://openrouter.ai/api/v1/chat/completions", content=request())
+        else:
+            client.post("https://openrouter.ai/api/v1/chat/completions", content=request())
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT charge,settled,active_until FROM attempts").fetchall() == [(1000, 0, 0)]
+
+
+def test_transport_capacity_wait_uses_the_original_request_deadline(tmp_path, monkeypatch):
+    import time
+
+    import httpx2
+
+    config = configuration(tmp_path)
+    config = config.model_copy(
+        update={"models": (config.models[0].model_copy(update={"spend_limit_micro_usd": 1200}), config.models[1])}
+    )
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    clock = SimpleNamespace(now=0.0)
+    monkeypatch.setattr(time, "monotonic", lambda: clock.now)
+    monkeypatch.setattr(time, "time", lambda: 1000 + clock.now)
+    active = control.reserve(request(), timeout_seconds=2, active_transport=True)
+
+    def settle_while_waiting(seconds):
+        clock.now += seconds
+        control.settle(active, b'{"choices":[{}],"usage":{"cost":0.0001}}')
+
+    def transport(self, outgoing, **kwargs):
+        assert outgoing.extensions["timeout"] == dict(connect=0.75, read=0.75, write=0.75, pool=0.75)
+        with sqlite3.connect(control.database) as connection:
+            assert connection.execute("SELECT active_until FROM attempts WHERE id!=?", (active,)).fetchone() == (1001,)
+        return httpx2.Response(200, request=outgoing, json={"choices": [{}], "usage": {"cost": 0.00005}})
+
+    monkeypatch.setattr(time, "sleep", settle_while_waiting)
+    monkeypatch.setattr(httpx2.Client, "send", transport)
+    with controlled_http_client(control) as client:
+        assert client.post("https://openrouter.ai/api/v1/chat/completions", content=request(), timeout=1).is_success
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT SUM(charge),SUM(active_until) FROM attempts").fetchone() == (150, 0)
+
+
+def test_real_sdk_adapter_pins_route_and_reserves_each_retry(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import httpx2
+
+    from trialagentbench.adapters import ProviderRouting, close_provider, get_provider
+
+    control = CampaignRequestControl(
+        database=tmp_path / "requests.sqlite", configuration=configuration(tmp_path), model_name="first"
+    )
+    requests = []
+    sleeps = []
+
+    def transport(self, outgoing, **kwargs):
+        payload = json.loads(outgoing.content)
+        requests.append(payload)
+        assert payload["provider"] == {"only": ["route-a"], "allow_fallbacks": False}
+        if len(requests) == 1:
+            return httpx2.Response(
+                429, request=outgoing, headers={"retry-after": "7"}, json={"error": {"message": "controlled throttle"}}
+            )
+        return httpx2.Response(
+            200,
+            request=outgoing,
+            json={
+                "id": "control",
+                "model": "fixture/first",
+                "provider": "route-a",
+                "object": "chat.completion",
+                "created": 1,
+                "choices": [
+                    {"index": 0, "message": {"role": "assistant", "content": "done"}, "finish_reason": "stop"}
+                ],
+                "usage": {"prompt_tokens": 10, "completion_tokens": 1, "total_tokens": 11, "cost": 0.0001},
+            },
+        )
+
+    monkeypatch.setenv("OPENROUTER_API_KEY", "nonsecret-test-fixture")
+    monkeypatch.setattr(httpx2.Client, "send", transport)
+    monkeypatch.setattr("trialagentbench.adapters.llm_providers.time.sleep", sleeps.append)
+    provider = get_provider(
+        "fixture/first",
+        routing=ProviderRouting("openrouter", "route-a"),
+        send_temperature=False,
+        timeout_s=30,
+        request_control=control,
+    )
+    try:
+        response = provider.generate_turn([{"role": "user", "content": "control"}], temperature=0, max_tokens=100)
+    finally:
+        close_provider(provider)
+    assert response.content == "done"
+    assert len(requests) == 2 and sleeps == [7.0]
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT charge,settled FROM attempts ORDER BY id").fetchall() == [
+            (1000, 0),
+            (100, 1),
+        ]
+
+
+@pytest.mark.parametrize("pause_first_model", [False, True])
+def test_native_campaign_preparation_and_recovery_preserve_primary_custody(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, pause_first_model: bool, capsys: pytest.CaptureFixture[str]
+) -> None:
+    config = configuration(tmp_path)
+    monkeypatch.setenv("OPENROUTER_API_KEY", "nonsecret-test-fixture")
+    monkeypatch.setattr(campaign, "_host_resources", lambda: (65536, 16))
+    manifest = SimpleNamespace(
+        artifacts=(SimpleNamespace(filename="trialdev-evaluator.zip", sha256="d" * 64),),
+        executor=SimpleNamespace(environment_sha256="c" * 64),
+    )
+    monkeypatch.setattr(campaign, "verify_release_set", lambda *args, **kwargs: manifest)
+    monkeypatch.setattr(campaign, "authenticate_release_set", lambda *args, **kwargs: manifest)
+    monkeypatch.setattr(campaign, "preview_panel", lambda _: None)
+    tasks = tuple(
+        SimpleNamespace(
+            task_id=f"td-{index:012d}",
+            case_id=f"case-{index}",
+            stream=TrialDevStream.EVIDENCE_ANALYSIS,
+            data_view="raw",
+        )
+        for index in (1, 2)
+    )
+    release = SimpleNamespace(
+        manifest=SimpleNamespace(release_id="release_" + "d" * 64),
+        participant=SimpleNamespace(tasks=tasks, release_manifest_sha256="a" * 64),
+    )
+    release.analysis_configuration = lambda task: None
+    release.authored_configuration = lambda task: None
+    monkeypatch.setattr(canonical_trialdev, "load_trialdev_evaluator_release", lambda _: release)
+    monkeypatch.setattr(
+        canonical_trialdev,
+        "resolve_trusted_executor_environment",
+        lambda **_: SimpleNamespace(
+            image_id=config.executor_image_id, limits=TRIALDEV_RELEASE_BUDGET_V1.code_execution
+        ),
+    )
+
+    @contextmanager
+    def materialized(*args, **kwargs):
+        yield SimpleNamespace(root=tmp_path, archive_sha256="d" * 64)
+
+    monkeypatch.setattr(canonical_trialdev, "materialized_release_archive", materialized)
+    provider_calls = []
+
+    def provider(*args, **kwargs):
+        provider_calls.append(args)
+        assert kwargs["request_control"] is not None
+        return SimpleNamespace()
+
+    monkeypatch.setattr(canonical_trialdev, "get_provider", provider)
+    root = tmp_path / "campaign"
+    plan = campaign.prepare_campaign(config, root)
+    assert len(plan.runs) == 2 and not provider_calls
+    # Status must remain readable while a transport event is being written.
+    # Completed-run telemetry validation belongs to campaign finish.
+    (root / plan.runs[0].relative_run_root / "provider_responses.jsonl").write_text('{"request_id":')
+    assert campaign.main(["status", "--campaign", str(root)]) == 0
+    assert "terminal checkpoints=0/2; pending checkpoints=2" in capsys.readouterr().out
+    before = (root / "campaign.json").read_bytes()
+    completed = {}
+    pause_pending = pause_first_model
+
+    def run_task(**kwargs):
+        nonlocal pause_pending
+        if pause_pending and "first-trialdev-1" in str(kwargs["output_root"]):
+            pause_pending = False
+            raise CampaignCapacityStop("controlled route pause", campaign_wide=False)
+        task_id = kwargs["task_id"]
+        result = SimpleNamespace(
+            task_id=task_id, stream=TrialDevStream.EVIDENCE_ANALYSIS, execution_status="completed", checksum="e" * 64
+        )
+        completed[kwargs["output_root"], task_id] = result
+        return result
+
+    monkeypatch.setattr(canonical_trialdev, "run_trialdev_task", run_task)
+    monkeypatch.setattr(
+        canonical_trialdev,
+        "recover_terminal_trialdev_task",
+        lambda **kwargs: completed.get((kwargs["output_root"], kwargs["task_id"])),
+    )
+    monkeypatch.setattr(canonical_trialdev, "summarize_provider_telemetry_v1", lambda **kwargs: None)
+    with monkeypatch.context() as small_host:
+        small_host.setattr(campaign, "_host_resources", lambda: (8192, 64))
+        with pytest.raises(ValueError, match="exceeds this host's 8192 MB"):
+            campaign.run_campaign(root)
+    assert not provider_calls
+    campaign.run_campaign(root)
+    assert len(provider_calls) == (3 if pause_first_model else 4)
+    retained_results = dict(completed)
+    with sqlite3.connect(root / "requests.sqlite") as connection:
+        assert connection.execute("SELECT cancelled FROM control").fetchone() == (0,)
+    campaign.run_campaign(root)
+    assert len(provider_calls) == (5 if pause_first_model else 4)
+    assert all(completed[key] is value for key, value in retained_results.items())
+    assert campaign.main(["status", "--campaign", str(root)]) == 0
+    assert "terminal checkpoints=2/2; pending checkpoints=0" in capsys.readouterr().out
+    assert (root / "campaign.json").read_bytes() == before
+    with campaign.campaign_lock(root), pytest.raises(ValueError, match="Another process"):
+        campaign.run_campaign(root)
+    invocation = root / plan.runs[0].relative_run_root / "invocation.json"
+    invocation.write_text(invocation.read_text() + " ")
+    with pytest.raises(ValueError, match="invocation differs"):
+        campaign.load_campaign(root)
+
+
+def test_combined_trialeval_plan_fixes_repetition_one_before_outcomes(tmp_path: Path) -> None:
+    """Link repetitions and the infrastructure retry without outcome selection or duplicate unit labels."""
+    from trialagentbench_verifier.campaign import TrialEvalCampaignPlanV1
+    from trialagentbench_verifier.io import sha256_file
+
+    from trialagentbench.contracts.campaign import CampaignPlanV1, CampaignRunV1
+    from trialagentbench.tools.finish_campaign_analysis import combined_trialeval_plan
+
+    config = configuration(tmp_path)
+    config = config.model_copy(
+        update={"panel": config.panel.model_copy(update={"benchmarks": ("trialeval",), "repetitions": 2})}
+    )
+    runs = []
+    for model, repetition, retry_of in (
+        *((model, repetition, None) for model in config.models for repetition in (1, 2)),
+        (config.models[0], 1, f"{config.models[0].name}-1"),
+    ):
+        job_id = f"{model.name}-{repetition}" if retry_of is None else f"{retry_of}-retry"
+        path = tmp_path / "plans" / f"{job_id}.json"
+        path.parent.mkdir(exist_ok=True)
+        source = TrialEvalCampaignPlanV1.model_validate(
+            {
+                "release_id": "release",
+                "release_manifest_sha256": "a" * 64,
+                "participant_manifest_checksum": "b" * 64,
+                "prospective_analysis_plan_sha256": "c" * 64,
+                "cells": [{"series_id": "TE-S01", "regime_cell_id": "TE-S01-A1"}],
+                "attempts": [
+                    {
+                        "attempt_id": job_id,
+                        "scheduled_unit_id": "shared-old-task-label",
+                        "attempt_role": "primary",
+                        "model_id": model.model,
+                        "run_identity_sha256": "d" * 64,
+                        "task_id": "task",
+                        "trial_id": "trial_" + "a" * 20,
+                        "base_world_id": "world_" + "b" * 20,
+                        "series_id": "TE-S01",
+                        "regime_cell_id": "TE-S01-A1",
+                        "effect_state": "near_null",
+                        "context": "C1",
+                        "condition_id": "primary",
+                        "request_replicate_id": str(repetition) if retry_of is None else "retry-1",
+                        "procedure_assistance": "output_contract_only",
+                        "analysis_specification": "locked_sap",
+                        "design_family": "individual_randomized",
+                        "reconstruction_family": None,
+                        "target_ids": ["effect"],
+                        "target_kind": "point",
+                        "effect_measure": "risk_difference",
+                        "result_unit": "probability",
+                    }
+                ],
+            }
+        )
+        path.write_text(source.model_dump_json(indent=2))
+        runs.append(
+            CampaignRunV1(
+                job_id=job_id,
+                benchmark="trialeval",
+                model_name=model.name,
+                repetition=repetition,
+                relative_run_root=f"runs/{job_id}",
+                invocation_sha256="e" * 64,
+                analysis_plan_path=path.relative_to(tmp_path).as_posix(),
+                analysis_plan_sha256=sha256_file(path),
+                retry_of_job_id=retry_of,
+            )
+        )
+    plan = CampaignPlanV1(configuration=config, runs=tuple(runs))
+    combined = combined_trialeval_plan(tmp_path, plan)
+    assert len({row.scheduled_unit_id for row in combined.attempts}) == 4
+    assert [row.attempt_role for row in combined.attempts] == ["primary", "stochastic_duplicate"] * 2 + ["retry"]
+    retry = combined.attempts[-1]
+    assert retry.retry_of_attempt_id == retry.scheduled_unit_id == "first-1"
+    assert retry.request_replicate_id == "retry-1"
+    assert combined.model_comparisons == (("fixture/first", "fixture/second"),)
+    with pytest.raises(ValueError, match="at most one infrastructure retry"):
+        CampaignPlanV1(configuration=config, runs=(*runs, runs[-1].model_copy(update={"job_id": "second-retry"})))
+    with pytest.raises(ValueError, match="must repeat one TrialEval primary"):
+        CampaignPlanV1(
+            configuration=config, runs=(*runs[:-1], runs[-1].model_copy(update={"retry_of_job_id": "first-2"}))
+        )
+    path.write_text("{}")
+    with pytest.raises(ValueError):
+        combined_trialeval_plan(tmp_path, plan)
+
+
+def test_finished_diagnostic_campaign_retains_public_unavailable_result(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Withheld panel inference must still produce a portable completion record."""
+    from trialagentbench_verifier.campaign import TrialEvalCampaignUnavailableV1, UnsupportedTrialEvalPanelError
+    from trialagentbench_verifier.io import sha256_file
+
+    from trialagentbench.tools import finish_campaign_analysis as finish
+
+    config = configuration(tmp_path)
+    config = config.model_copy(update={"panel": config.panel.model_copy(update={"benchmarks": ("trialeval",)})})
+    plan = SimpleNamespace(configuration=config, runs=())
+    combined = SimpleNamespace(
+        release_id="release",
+        release_manifest_sha256="a" * 64,
+        checksum="b" * 64,
+        model_dump_json=lambda **_: "{}",
+    )
+    monkeypatch.setattr(finish, "combined_trialeval_plan", lambda *_: combined)
+
+    @contextmanager
+    def staged(*args, **kwargs):
+        yield SimpleNamespace(root=tmp_path)
+
+    def exported(*, output_dir, **kwargs):
+        output_dir.mkdir()
+        (output_dir / "fixture.zip").write_bytes(b"isolated export-owner fixture")
+
+    def unsupported(*args, **kwargs):
+        raise UnsupportedTrialEvalPanelError("diagnostic panel lacks crossed inference support")
+
+    monkeypatch.setattr(finish, "materialized_release_archive", staged)
+    monkeypatch.setattr(finish, "export_results_v1", exported)
+    monkeypatch.setattr(finish, "analyse_trial_eval_campaign_v1", unsupported)
+    manifest = SimpleNamespace(artifacts=(SimpleNamespace(filename="trialeval-evaluator.zip", sha256="a" * 64),))
+    finish.finish_comparisons(tmp_path, plan, manifest)
+    destination = tmp_path / "comparisons" / "trialeval"
+    public_path = destination / "public-results.json"
+    result = TrialEvalCampaignUnavailableV1.model_validate_json(public_path.read_text())
+    assert result.result_export_sha256 == sha256_file(destination / "export" / "fixture.zip")
+    assert result.campaign_plan_sha256 == combined.checksum
+    assert public_path.read_bytes() == (destination / "analysis.json").read_bytes()
+    # Offline finalisation is repeatable; an unavailable comparison is terminal.
+    finish.finish_comparisons(tmp_path, plan, manifest)
+    assert TrialEvalCampaignUnavailableV1.model_validate_json(public_path.read_text()) == result
+
+
+def test_cli_capacity_pause_is_explicit_nonzero(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """A planned commercial pause is recoverable but cannot look like completion."""
+
+    def paused(root: Path) -> None:
+        raise CampaignCapacityStop("campaign reservation limit reached")
+
+    monkeypatch.setattr(campaign, "run_campaign", paused)
+    assert campaign.main(["run", "--campaign", str(tmp_path)]) == 3
+    assert "Campaign paused" in capsys.readouterr().out
+
+
+def test_development_campaign_authenticates_inputs_without_qualification(tmp_path: Path) -> None:
+    """Development selection binds archive bytes without accepting a release set."""
+    from trialagentbench_verifier.campaign_inputs import (
+        DevelopmentArchiveV1,
+        DevelopmentCampaignInputsV1,
+        DevelopmentExecutorV1,
+    )
+    from trialagentbench_verifier.io import sha256_file
+
+    config = configuration(tmp_path)
+    root = tmp_path / "development"
+    root.mkdir()
+    archive = root / "trialdev-evaluator.zip"
+    archive.write_bytes(b"development archive authentication fixture")
+    manifest = DevelopmentCampaignInputsV1(
+        artifacts=(
+            DevelopmentArchiveV1(
+                filename=archive.name, sha256=sha256_file(archive), byte_length=archive.stat().st_size
+            ),
+        ),
+        executor=DevelopmentExecutorV1(image_id=config.executor_image_id, environment_sha256="c" * 64),
+    )
+    path = root / "development-inputs.json"
+    path.write_text(manifest.model_dump_json())
+    assert "input_mode" not in config.model_dump(mode="json")
+    config = config.model_copy(
+        update={
+            "input_mode": "development",
+            "release_directory": root,
+            "expected_release_manifest_sha256": sha256_file(path),
+        }
+    )
+    assert campaign._campaign_inputs(config) == manifest
+    assert config.model_dump(mode="json")["input_mode"] == "development"
+    # A local rebuild keeps the semantic identity; every native run verifies the environment hash.
+    assert campaign._campaign_inputs(config.model_copy(update={"executor_image_id": "sha256:" + "f" * 64})) == manifest
+    with pytest.raises(ValueError):
+        campaign._campaign_inputs(config.model_copy(update={"input_mode": "qualified"}))
+    archive.write_bytes(b"changed archive")
+    with pytest.raises(ValueError, match="archive changed"):
+        campaign._campaign_inputs(config)
+
+
+def test_development_aggregate_cannot_parse_as_qualified_public_result(tmp_path: Path) -> None:
+    from pydantic import ValidationError
+    from trialagentbench_verifier.campaign import TrialEvalCampaignUnavailableV1
+
+    from trialagentbench.tools.finish_campaign_analysis import _DevelopmentResults, _write_aggregate
+
+    config = configuration(tmp_path).model_copy(update={"input_mode": "development"})
+    # The aggregate writer only consumes the already-frozen configuration.
+    plan = SimpleNamespace(configuration=config)
+    result = TrialEvalCampaignUnavailableV1(
+        reason="diagnostic subset", result_export_sha256="b" * 64, campaign_plan_sha256="c" * 64
+    )
+    _write_aggregate(tmp_path, result, plan)
+    assert not (tmp_path / "public-results.json").exists()
+    payload = json.loads((tmp_path / "development-results.json").read_text())
+    assert _DevelopmentResults.model_validate(payload).status == "unqualified"
+    assert payload["input_manifest_sha256"] == config.expected_release_manifest_sha256
+    with pytest.raises(ValidationError):
+        TrialEvalCampaignUnavailableV1.model_validate(payload)
+
+
+def test_token_capacity_uses_request_bound_then_complete_observed_usage(tmp_path: Path) -> None:
+    config = configuration(tmp_path)
+    config = config.model_copy(
+        update={
+            "models": (
+                config.models[0].model_copy(update={"tokens_per_minute": 1000}),
+                config.models[1],
+            )
+        }
+    )
+    control = CampaignRequestControl(database=tmp_path / "requests.sqlite", configuration=config, model_name="first")
+    content = request()
+    attempt = control.reserve(content)
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT tokens FROM attempts").fetchone() == (len(content) + 100,)
+    assert control.reserve(content, timeout_seconds=0.01) > attempt
+    control.settle(
+        attempt, b'{"choices":[{}],"usage":{"cost":0.0001,"prompt_tokens":10,"completion_tokens":2,"total_tokens":12}}'
+    )
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT tokens,settled FROM attempts").fetchone() == (12, 1)
+    incomplete = control.reserve(content)
+    control.settle(incomplete, b'{"choices":[{}],"usage":{"cost":0.0001,"total_tokens":12}}')
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT tokens FROM attempts WHERE id=?", (incomplete,)).fetchone() == (
+            len(content) + 100,
+        )
+    invalid = control.reserve(content)
+    with pytest.raises(ValueError, match="total tokens differ"):
+        control.settle(
+            invalid,
+            b'{"choices":[{}],"usage":{"cost":0.0001,"prompt_tokens":10,"completion_tokens":2,"total_tokens":5}}',
+        )
+    with sqlite3.connect(control.database) as connection:
+        assert connection.execute("SELECT tokens,settled FROM attempts WHERE id=?", (invalid,)).fetchone() == (
+            len(content) + 100,
+            0,
+        )
+
+
+@pytest.mark.parametrize("automatic_pricing", [False, True])
+def test_configuration_resolves_download_sidecar_and_provider_records(tmp_path, monkeypatch, automatic_pricing):
+    """Normal editable configuration need not copy digests, image IDs or API metadata."""
+    from trialagentbench_verifier.campaign_inputs import (
+        DevelopmentArchiveV1,
+        DevelopmentCampaignInputsV1,
+        DevelopmentExecutorV1,
+    )
+    from trialagentbench_verifier.io import sha256_file
+
+    from trialagentbench.adapters import provider_capabilities
+
+    config = configuration(tmp_path)
+    release = tmp_path / "downloads"
+    release.mkdir()
+    archive = release / "trialdev-evaluator.zip"
+    archive.write_bytes(b"fixture")
+    manifest = DevelopmentCampaignInputsV1(
+        artifacts=(DevelopmentArchiveV1(filename=archive.name, sha256=sha256_file(archive), byte_length=7),),
+        executor=DevelopmentExecutorV1(image_id=config.executor_image_id, environment_sha256="c" * 64),
+    )
+    manifest_path = release / "development-inputs.json"
+    manifest_path.write_text(manifest.model_dump_json())
+    digest = sha256_file(manifest_path)
+    (release / "development-inputs.json.sha256").write_text(f"{digest}  development-inputs.json\n")
+    payload = config.model_dump(mode="json", exclude={"expected_release_manifest_sha256", "executor_image_id"})
+    payload.update(input_mode="development", release_directory="downloads")
+    for row in payload["models"]:
+        row.pop("capability_snapshot")
+        if automatic_pricing:
+            for key in ("reservation_micro_usd", "reservation_tokens", "pricing_premise"):
+                row.pop(key)
+    if automatic_pricing:
+        from trialagentbench_verifier.campaign_contracts import CampaignRequestPricingV1
+
+        pricing = CampaignRequestPricingV1(
+            prompt_usd_per_token="0.000001", completion_usd_per_token="0.000002", request_usd="0"
+        )
+        monkeypatch.setattr(
+            provider_capabilities,
+            "campaign_reservations",
+            lambda *args, **kwargs: (100000, 1000000, "retained route prices", pricing),
+        )
+    path = tmp_path / "campaign.json"
+    path.write_text(json.dumps(payload))
+    calls = []
+
+    def discover(*, model, upstream_provider, directory):
+        calls.append((model, upstream_provider, directory))
+        return tmp_path / f"{model.split('/')[-1]}-capability.json"
+
+    monkeypatch.setattr(provider_capabilities, "snapshot_openrouter_capability", discover)
+    resolved = campaign.load_configuration(path)
+    campaign.validate_model_capabilities(resolved)
+    assert resolved.expected_release_manifest_sha256 == digest
+    assert resolved.executor_image_id == config.executor_image_id
+    assert resolved.release_directory == release
+    assert len(calls) == 2
+    if automatic_pricing:
+        assert resolved.models[0].reservation_micro_usd == 5000
+        assert resolved.models[0].reservation_tokens == 100000
+        assert resolved.models[0].request_pricing is not None
+    # Changed manifests are rejected before metadata discovery or provider execution.
+    calls.clear()
+    manifest_path.write_text(manifest_path.read_text() + " ")
+    with pytest.raises(ValueError, match="pinned digest"):
+        campaign.load_configuration(path)
+    assert calls == []
+
+
+def test_default_capacity_follows_task_parallelism_and_is_reused_for_grading(tmp_path: Path) -> None:
+    """Normal concurrency needs no manual executor-slot arithmetic."""
+    from trialagentbench_verifier.campaign_contracts import CampaignOperationsV1
+
+    operations = CampaignOperationsV1(model_workers=2, task_workers=3, spend_limit_micro_usd=1000000)
+    assert operations.executor_capacity == 12
+    assert (operations.grading_workers or operations.executor_capacity) == 12
+    with pytest.raises(ValueError, match="Two executor slots"):
+        CampaignOperationsV1(model_workers=2, task_workers=3, executor_workers=11, spend_limit_micro_usd=1000000)
+
+
+@pytest.mark.parametrize(
+    ("memory_mb", "cpus", "message"),
+    [(4 * 4096, 8, None), (4 * 4096 - 1, 64, "4096 MB per container"), (1 << 20, 7, "2 CPUs per container")],
+)
+def test_host_capacity_refuses_containers_the_host_cannot_hold(memory_mb: int, cpus: int, message: str | None) -> None:
+    """Capacity x the fixed per-container limits must fit the host's memory and CPUs."""
+    if message is None:
+        campaign.check_host_capacity(4, host_memory_mb=memory_mb, host_cpus=cpus)
+        return
+    with pytest.raises(ValueError, match=message) as refused:
+        campaign.check_host_capacity(4, host_memory_mb=memory_mb, host_cpus=cpus)
+    assert "operations.executor_workers" in str(refused.value)
+
+
+def test_one_task_at_a_time_runs_on_any_host(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """The default single-task capacity (two executor slots) is never refused, even on a small host."""
+    campaign.check_host_capacity(2, host_memory_mb=2048, host_cpus=1)
+
+    def unreadable() -> tuple[int, int]:
+        raise AssertionError("one task at a time must not read the host")
+
+    monkeypatch.setattr(campaign, "_host_resources", unreadable)
+    from trialagentbench_verifier.campaign_contracts import CampaignOperationsV1
+
+    base = configuration(tmp_path)
+    operations = CampaignOperationsV1(
+        model_workers=1, task_workers=1, spend_limit_micro_usd=base.operations.spend_limit_micro_usd
+    )
+    single = base.model_copy(update={"operations": operations})
+    assert single.operations.executor_capacity == 2
+    campaign._require_host_capacity(single)
+    with pytest.raises(ValueError, match="4096 MB per container"):
+        campaign.check_host_capacity(4, host_memory_mb=2048, host_cpus=64)
+
+
+def test_actual_request_pricing_reserves_small_request_and_detects_excess(tmp_path):
+    from trialagentbench_verifier.campaign_contracts import CampaignRequestPricingV1
+
+    config = configuration(tmp_path)
+    pricing = CampaignRequestPricingV1(
+        prompt_usd_per_token="0.000001", completion_usd_per_token="0.000002", request_usd="0"
+    )
+    model = config.models[0].model_copy(update={"request_pricing": pricing})
+    config = config.model_copy(update={"models": (model, config.models[1])})
+    control = CampaignRequestControl(database=tmp_path / "costs.sqlite", configuration=config, model_name=model.name)
+    content = request()
+    attempt = control.reserve(content)
+    with sqlite3.connect(control.database) as connection:
+        reserved = connection.execute("SELECT charge FROM attempts WHERE id=?", (attempt,)).fetchone()[0]
+    assert reserved == len(content) + 200 < model.reservation_micro_usd
+    with pytest.raises(CampaignCapacityStop, match="exceeded"):
+        control.settle(
+            attempt,
+            json.dumps(
+                {"choices": [{"message": {"content": "ok"}}], "usage": {"cost": (reserved + 1) / 1_000_000}}
+            ).encode(),
+        )
+
+
+def test_finished_campaign_retains_csv_bytes_and_rejects_normalized_replay(tmp_path: Path) -> None:
+    """The exported table must retain the exact bytes bound by its manifest."""
+    import hashlib
+
+    from trialagentbench.tools.finish_run import _write_once
+
+    original = b"task_id,result\r\ntrial,complete\r\n"
+    expected = hashlib.sha256(original).hexdigest()
+    output = tmp_path / "actions.csv"
+    _write_once(output, original)
+    assert hashlib.sha256(output.read_bytes()).hexdigest() == expected
+    _write_once(output, original)
+    with pytest.raises(ValueError, match="differs from verified inputs"):
+        _write_once(output, original.decode().replace("\r\n", "\n"))
+
+
+def test_finalization_write_failure_is_recoverable_without_partial_result(tmp_path: Path, monkeypatch) -> None:
+    """Failed durable storage cannot publish a partial canonical report."""
+    from trialagentbench.tools import finish_run
+
+    output = tmp_path / "score.json"
+
+    def fail_sync(descriptor: int) -> None:
+        raise OSError("injected storage failure")
+
+    with monkeypatch.context() as failure:
+        failure.setattr(finish_run.os, "fsync", fail_sync)
+        with pytest.raises(OSError, match="injected storage failure"):
+            finish_run._write_once(output, b'{"status":"pass"}\n')
+    assert list(tmp_path.iterdir()) == []
+    finish_run._write_once(output, b'{"status":"pass"}\n')
+    assert output.read_bytes() == b'{"status":"pass"}\n'
+
+
+def test_finalization_concurrent_first_result_cannot_be_overwritten(tmp_path: Path, monkeypatch) -> None:
+    """A writer arriving between inspection and publication keeps its exact bytes."""
+    from trialagentbench.tools import finish_run
+
+    output = tmp_path / "score.json"
+
+    def publish_first(source: Path, target: Path) -> None:
+        target.write_bytes(b"first result\n")
+        raise FileExistsError(target)
+
+    monkeypatch.setattr(finish_run.os, "link", publish_first)
+    with pytest.raises(ValueError, match="differs from verified inputs"):
+        finish_run._write_once(output, b"second result\n")
+    assert output.read_bytes() == b"first result\n"
+    assert list(tmp_path.iterdir()) == [output]
+
+
+@pytest.mark.parametrize("published", (False, True))
+def test_finalization_recovers_only_owned_staging_after_process_death(tmp_path: Path, published: bool) -> None:
+    """A killed publisher leaves no committed report and cannot conceal unrelated files."""
+    from trialagentbench.tools.finish_run import _discard_incomplete_writes, _write_once
+
+    output = tmp_path / "run-custody.sha256"
+    script = r"""
+import os, sys
+from pathlib import Path
+from trialagentbench.tools import finish_run
+publish = finish_run.os.link
+def die(source, target):
+    if sys.argv[2] == 'True':
+        publish(source, target)
+    os._exit(73)
+finish_run.os.link = die
+finish_run._write_once(Path(sys.argv[1]), b'complete custody\n')
+"""
+    killed = subprocess.run([sys.executable, "-c", script, str(output), str(published)], check=False, timeout=30)
+    assert killed.returncode == 73
+    assert output.exists() == published
+    assert len(list(tmp_path.iterdir())) == 1 + int(published)
+    _discard_incomplete_writes(tmp_path)
+    assert list(tmp_path.iterdir()) == ([output] if published else [])
+    _write_once(output, b"complete custody\n")
+    unrelated = tmp_path / ".notes.tmp"
+    unrelated.write_text("must remain", encoding="utf-8")
+    _discard_incomplete_writes(tmp_path)
+    assert unrelated.read_text(encoding="utf-8") == "must remain"
+    assert output.read_bytes() == b"complete custody\n"
+    impostor = tmp_path / f".score.json.{'a' * 32}.tmp"
+    impostor.symlink_to(output)
+    with pytest.raises(ValueError, match="not a regular file"):
+        _discard_incomplete_writes(tmp_path)
+    assert output.read_bytes() == b"complete custody\n"
+
+
+def test_campaign_index_preserves_diagnostic_status_and_portable_links(tmp_path: Path) -> None:
+    """A diagnostic campaign has useful navigation without fabricated inference."""
+    import re
+    from urllib.parse import unquote
+
+    from trialagentbench.contracts.campaign import CampaignPlanV1, CampaignRunV1
+    from trialagentbench.contracts.core.runs import RunCoverageV1
+    from trialagentbench.io import write_json_model
+    from trialagentbench.tools.finish_campaign_analysis import write_campaign_index
+
+    config = configuration(tmp_path)
+    runs = tuple(
+        CampaignRunV1(
+            job_id=model.name,
+            benchmark="trialdev",
+            model_name=model.name,
+            repetition=1,
+            relative_run_root=f"runs/{model.name}",
+            invocation_sha256="b" * 64,
+        )
+        for model in config.models
+    )
+    plan = CampaignPlanV1(configuration=config, runs=runs)
+    for run in runs:
+        native = tmp_path / run.relative_run_root
+        native.mkdir(parents=True)
+        write_json_model(
+            native / "coverage.json",
+            RunCoverageV1(
+                run_identity_sha256="a" * 64,
+                schedule_sha256="b" * 64,
+                unit_ids=("a", "b"),
+                completed_unit_ids=("a", "b"),
+            ),
+        )
+        grade = tmp_path / "results" / run.job_id / "grade"
+        grade.mkdir(parents=True)
+        (grade / "ranking.json").write_text('{"status":"unavailable"}')
+    comparison = tmp_path / "comparisons" / "trialdev"
+    comparison.mkdir(parents=True)
+    public = comparison / "public-results.json"
+    public.write_text('{"status":"unavailable","reason":"diagnostic panel"}')
+    original = public.read_bytes()
+    report = write_campaign_index(tmp_path, plan)
+    html = report.read_text()
+    assert "terminal checkpoints 2/2" in html
+    assert "do not establish reproduced analyses or scientific success" in html
+    assert "Public summary" in html and "reference answers" in html
+    for href in re.findall(r'href="([^"]+)"', html):
+        assert not Path(href).is_absolute()
+        assert (tmp_path / unquote(href)).is_file()
+    assert public.read_bytes() == original
+    assert write_campaign_index(tmp_path, plan).read_text() == html

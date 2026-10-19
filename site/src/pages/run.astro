@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageContents from "../components/PageContents.astro";
+import { readme, running, section } from "../lib/docs";
+
+const parts = [section(readme, "Quickstart"), ...running.sections];
+---
+<Layout title="Run it" description="Install TrialAgentBench, download and verify the release, run a smoke campaign, then configure and run an evaluation." current="run">
+  <div class="reading-layout">
+    <PageContents sections={parts.map((part) => ({ slug: part.id, text: part.title }))} />
+    <article class="reading-prose doc">
+      <header>
+        <h1>Running TrialAgentBench</h1>
+        <Fragment set:html={running.preamble} />
+      </header>
+      {parts.map((part) => (
+        <section aria-labelledby={part.id}>
+          <h2 id={part.id}>{part.title}</h2>
+          <Fragment set:html={part.html} />
+        </section>
+      ))}
+    </article>
+  </div>
+</Layout>

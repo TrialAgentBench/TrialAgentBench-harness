@@ -1,0 +1,29 @@
+programme,policy,rung,budget_musd,realised_value_musd,step_musd,step_lower_musd,step_upper_musd,worlds
+atopic_dermatitis,oracle,constrained,32,277.296,,,,96
+atopic_dermatitis,oracle,lean,53,334.42,57.1237,45.5267,68.7206,96
+atopic_dermatitis,oracle,generous,120,334.916,0.49568,-0.417962,1.40932,96
+atopic_dermatitis,reference,constrained,32,192.111,,,,96
+atopic_dermatitis,reference,lean,53,274.459,82.3483,62.6436,102.053,96
+atopic_dermatitis,reference,generous,120,274.309,-0.150316,-0.503218,0.202585,96
+atopic_dermatitis,readout_rank,main selection,,47.4454,,,,
+copd_exacerbation,oracle,constrained,58,557.395,,,,96
+copd_exacerbation,oracle,lean,153,653.374,95.9786,76.3339,115.623,96
+copd_exacerbation,oracle,generous,348,653.374,0,0,0,96
+copd_exacerbation,reference,constrained,58,233.242,,,,96
+copd_exacerbation,reference,lean,153,315.658,82.4164,52.9901,111.843,96
+copd_exacerbation,reference,generous,348,315.658,0,0,0,96
+copd_exacerbation,readout_rank,main selection,,-14.0151,,,,
+migraine_prevention,oracle,constrained,34,318.476,,,,96
+migraine_prevention,oracle,lean,48,369.306,50.8304,38.8006,62.8601,96
+migraine_prevention,oracle,generous,109,370.633,1.3263,-2.36248,5.01509,96
+migraine_prevention,reference,constrained,34,208.05,,,,96
+migraine_prevention,reference,lean,48,245.392,37.3418,24.2908,50.3927,96
+migraine_prevention,reference,generous,109,243.784,-1.6079,-6.80205,3.58625,96
+migraine_prevention,readout_rank,main selection,,36.0125,,,,
+rheumatoid_arthritis,oracle,constrained,39,235.6,,,,96
+rheumatoid_arthritis,oracle,lean,61,295.959,60.3586,47.92,72.7973,96
+rheumatoid_arthritis,oracle,generous,139,296.677,0.718184,-1.05307,2.48943,96
+rheumatoid_arthritis,reference,constrained,39,144.627,,,,96
+rheumatoid_arthritis,reference,lean,61,224.598,79.9707,54.3387,105.603,96
+rheumatoid_arthritis,reference,generous,139,224.522,-0.0764015,-1.44375,1.29095,96
+rheumatoid_arthritis,readout_rank,main selection,,42.9329,,,,

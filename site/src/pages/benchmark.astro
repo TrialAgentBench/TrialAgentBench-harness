@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageContents from "../components/PageContents.astro";
+import ReleaseEvidence from "../components/ReleaseEvidence.astro";
+import { demonstration, methods, section } from "../lib/docs";
+
+// The release evidence follows the construct-validity argument whose evidence column it supplies.
+const validity = section(methods, "9. Why a score measures the construct");
+const panel = demonstration("No shortcut passes");
+const contents = methods.sections.flatMap((part) => [
+  { slug: part.id, text: part.title },
+  ...(part === validity ? [{ slug: "release-evidence-heading", text: "Release evidence" }] : []),
+]);
+---
+<Layout title="Methods and evidence" description="How TrialAgentBench builds and grades its tasks, why a score measures what it claims, the release evidence and the limitations." current="benchmark">
+  <div class="reading-layout">
+    <PageContents sections={contents} />
+    <article class="reading-prose doc">
+      <header>
+        <h1>Methods and evidence</h1>
+        <Fragment set:html={methods.preamble} />
+      </header>
+      {methods.sections.map((part) => (
+        <>
+          <section aria-labelledby={part.id}>
+            <h2 id={part.id}>{part.title}</h2>
+            <Fragment set:html={part.html} />
+          </section>
+          {part === validity && (
+            <ReleaseEvidence>
+              <h3 id={panel.id}>{panel.title}</h3>
+              <Fragment set:html={panel.html} />
+            </ReleaseEvidence>
+          )}
+        </>
+      ))}
+    </article>
+  </div>
+</Layout>

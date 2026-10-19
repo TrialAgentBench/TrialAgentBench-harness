@@ -1,0 +1,11 @@
+participant_id,baseline_das28_score,age_years,prior_biologic_dmard_use,sex,baseline_body_mass_index,baseline_c_reactive_protein,baseline_current_smoker,baseline_diagnosis_duration_months,site_id,country_code,consent_time,enrollment_day
+early_safety:screen-3,4.44,70,1,female,32.6,5.0,0,80,site_048,DEU,0.0,66.15686114319763
+early_safety:screen-4,5.01,59,0,male,20.1,2.5,1,107,site_048,DEU,0.0,68.26345377991558
+early_safety:screen-5,5.16,53,1,male,35.6,3.6,1,313,site_048,DEU,0.0,70.33147930263584
+early_safety:screen-6,3.6,69,1,female,25.3,17.8,0,9,site_048,DEU,0.0,70.43100098111103
+early_safety:screen-8,5.11,59,0,male,30.6,2.7,0,99,site_048,DEU,0.0,74.11395898335128
+early_safety:screen-9,3.25,79,0,female,23.1,4.4,0,7,site_048,DEU,0.0,77.05680908407712
+early_safety:screen-13,4.15,56,0,male,31.8,3.9000000000000004,0,65,site_048,DEU,0.0,85.48758934271963
+early_safety:screen-16,4.69,51,0,female,30.6,1.6,0,47,site_043,GBR,0.0,92.04523598843616
+early_safety:screen-18,5.04,52,0,female,28.0,7.5,0,71,site_048,DEU,0.0,92.96725386675962
+early_safety:screen-20,3.5700000000000003,49,0,male,29.1,6.800000000000001,0,85,site_063,GBR,0.0,96.6420556737029

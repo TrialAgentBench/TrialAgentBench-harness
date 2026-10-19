@@ -1,0 +1,9 @@
+role,world,cell,tier,base_world_id,task_id,true_risk_difference,analysis,credited,estimate,lower,upper,confirm,size_multiple,confirmatory_participants,regret_musd,regret_at_truth_musd,decision_differs,consequential
+trap,1,TE-S06-A3,A3,world_ea39a3570206df3d0be3,te_763cdc64a97101eb3fd3,-0.0451898,routine,False,-0.106557,-0.187258,-0.0258566,True,10.0071,4883.47,8.82018,29.7275,False,False
+trap,1,TE-S06-A3,A3,world_ea39a3570206df3d0be3,te_763cdc64a97101eb3fd3,-0.0451898,audit,True,-0.061712,-0.180062,0.0566383,True,13.9605,6812.74,0,0,False,False
+trap,2,TE-S06-A3,A3,world_bed2071533033ff29a0e,te_bd1abff7195bb8c02dc9,-0.00704271,routine,False,-0.102459,-0.183674,-0.0212437,True,10.8757,5307.34,30.0034,-37.3294,False,False
+trap,2,TE-S06-A3,A3,world_bed2071533033ff29a0e,te_bd1abff7195bb8c02dc9,-0.00704271,audit,True,-0.0322544,-0.0915943,0.0270854,True,17.9204,8745.14,0,0,False,False
+trap,3,TE-S06-A3,A3,world_c7e3cd396bf9c01e439b,te_e7958b97f8b0fc692843,0.0353673,routine,False,-0.00409836,-0.0872634,0.0790667,True,12.8456,6268.64,103.284,137.003,True,True
+trap,3,TE-S06-A3,A3,world_c7e3cd396bf9c01e439b,te_e7958b97f8b0fc692843,0.0353673,audit,True,0.151015,0.0194131,0.282616,False,0,0,0,0,False,False
+trap,4,TE-S06-A3,A3,world_92565f306af1d61c80da,te_11f2c7f6d0b0930be294,0.170716,routine,False,0.00409836,-0.0814182,0.0896149,True,10.8757,5307.34,115.248,116.899,True,True
+trap,4,TE-S06-A3,A3,world_92565f306af1d61c80da,te_11f2c7f6d0b0930be294,0.170716,audit,True,0.111917,0.0390705,0.184763,False,0,0,0,0,False,False

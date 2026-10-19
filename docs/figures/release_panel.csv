@@ -1,0 +1,53 @@
+policy,band,failing_cells,cells,panel,cell,tertile,shift_se,shift_consequential,interval_consequential,width_ratio
+always_naive,declared,7,21,a,,,,,,
+always_robust,declared,3,21,a,,,,,,
+follow_plan,declared,3,21,a,,,,,,
+null_point_plan_interval,declared,21,21,a,,,,,,
+plan_hedged_3x,declared,21,21,a,,,,,,
+plan_overconfident_0.3x,declared,21,21,a,,,,,,
+prior_only,declared,21,21,a,,,,,,
+scripted_reference,declared,0,21,a,,,,,,
+always_naive,value x0.5,7,21,a,,,,,,
+always_robust,value x0.5,2,21,a,,,,,,
+follow_plan,value x0.5,3,21,a,,,,,,
+null_point_plan_interval,value x0.5,21,21,a,,,,,,
+plan_hedged_3x,value x0.5,21,21,a,,,,,,
+plan_overconfident_0.3x,value x0.5,20,21,a,,,,,,
+prior_only,value x0.5,21,21,a,,,,,,
+scripted_reference,value x0.5,0,21,a,,,,,,
+always_naive,value x2,7,21,a,,,,,,
+always_robust,value x2,2,21,a,,,,,,
+follow_plan,value x2,3,21,a,,,,,,
+null_point_plan_interval,value x2,19,21,a,,,,,,
+plan_hedged_3x,value x2,19,21,a,,,,,,
+plan_overconfident_0.3x,value x2,21,21,a,,,,,,
+prior_only,value x2,19,21,a,,,,,,
+scripted_reference,value x2,0,21,a,,,,,,
+always_naive,cost x0.5,7,21,a,,,,,,
+always_robust,cost x0.5,2,21,a,,,,,,
+follow_plan,cost x0.5,3,21,a,,,,,,
+null_point_plan_interval,cost x0.5,19,21,a,,,,,,
+plan_hedged_3x,cost x0.5,19,21,a,,,,,,
+plan_overconfident_0.3x,cost x0.5,21,21,a,,,,,,
+prior_only,cost x0.5,19,21,a,,,,,,
+scripted_reference,cost x0.5,0,21,a,,,,,,
+always_naive,cost x2,7,21,a,,,,,,
+always_robust,cost x2,2,21,a,,,,,,
+follow_plan,cost x2,3,21,a,,,,,,
+null_point_plan_interval,cost x2,21,21,a,,,,,,
+plan_hedged_3x,cost x2,21,21,a,,,,,,
+plan_overconfident_0.3x,cost x2,20,21,a,,,,,,
+prior_only,cost x2,21,21,a,,,,,,
+scripted_reference,cost x2,0,21,a,,,,,,
+,,,,b,TE-S06-A3,lower,-2.64764,True,False,0.738924
+,,,,b,TE-S06-A3,middle,-1.88016,True,False,0.738924
+,,,,b,TE-S06-A3,upper,-1.29769,True,False,0.738924
+,,,,b,TE-S14-A3,lower,1.37557,True,False,0.908221
+,,,,b,TE-S14-A3,middle,1.34812,True,False,0.908221
+,,,,b,TE-S14-A3,upper,1.31626,True,False,0.908221
+,,,,b,TE-S15-A3,lower,-1.31128,True,False,0.806163
+,,,,b,TE-S15-A3,middle,-1.71537,True,False,0.806163
+,,,,b,TE-S15-A3,upper,-2.20316,True,False,0.806163
+,,,,b,TE-S16-A3,lower,-1.13418,True,False,0.896287
+,,,,b,TE-S16-A3,middle,-1.17076,True,False,0.896287
+,,,,b,TE-S16-A3,upper,-1.15187,True,False,0.896287

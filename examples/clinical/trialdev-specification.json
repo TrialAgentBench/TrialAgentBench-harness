@@ -1,0 +1,1227 @@
+{
+  "action_resources": [
+    {
+      "action": "nominate",
+      "cost": 0.0,
+      "elapsed_days": 0
+    },
+    {
+      "action": "stop",
+      "cost": 0.0,
+      "elapsed_days": 0
+    },
+    {
+      "action": "complete",
+      "cost": 0.0,
+      "elapsed_days": 0
+    },
+    {
+      "action": "defer",
+      "cost": 0.0,
+      "elapsed_days": 0
+    },
+    {
+      "action": "backtrack",
+      "cost": 0.5,
+      "elapsed_days": 14
+    },
+    {
+      "action": "switch",
+      "cost": 0.5,
+      "elapsed_days": 14
+    }
+  ],
+  "asset_ids": [
+    "asset_a",
+    "asset_b",
+    "asset_c"
+  ],
+  "calendar_origin": "2024-01-01",
+  "candidate_mechanisms": {
+    "assignment_intercept_step": 0.15,
+    "candidate_axes": {
+      "assignment_score": {
+        "lower": -1.0,
+        "upper": 1.0
+      },
+      "history_response_difference_per_sd": {
+        "lower": -0.15,
+        "upper": 0.15
+      },
+      "near_tie_offset": {
+        "lower": -0.02,
+        "upper": 0.02
+      },
+      "relative_benefit": {
+        "components": [
+          {
+            "component_id": "effective",
+            "lower": 0.5,
+            "mean": 1.0,
+            "probability": 0.15,
+            "standard_deviation": 0.25,
+            "upper": 1.6
+          },
+          {
+            "component_id": "partial",
+            "lower": 0.25,
+            "mean": null,
+            "probability": 0.15,
+            "standard_deviation": null,
+            "upper": 0.5
+          },
+          {
+            "component_id": "null",
+            "lower": -0.15,
+            "mean": 0.0,
+            "probability": 0.55,
+            "standard_deviation": 0.06,
+            "upper": 0.15
+          },
+          {
+            "component_id": "harmful",
+            "lower": -0.4,
+            "mean": null,
+            "probability": 0.15,
+            "standard_deviation": null,
+            "upper": -0.1
+          }
+        ]
+      },
+      "relative_safety_risk": {
+        "components": [
+          {
+            "component_id": "protective",
+            "lower": -0.5,
+            "mean": null,
+            "probability": 0.1,
+            "standard_deviation": null,
+            "upper": 0.0
+          },
+          {
+            "component_id": "neutral",
+            "lower": -0.3,
+            "mean": 0.0,
+            "probability": 0.45,
+            "standard_deviation": 0.1,
+            "upper": 0.3
+          },
+          {
+            "component_id": "elevated",
+            "lower": 0.25,
+            "mean": null,
+            "probability": 0.35,
+            "standard_deviation": null,
+            "upper": 1.0
+          },
+          {
+            "component_id": "high",
+            "lower": 1.0,
+            "mean": null,
+            "probability": 0.1,
+            "standard_deviation": null,
+            "upper": 2.0
+          }
+        ]
+      }
+    },
+    "hidden_assignment_coefficient": 1.1,
+    "hidden_outcome_coefficient": 0.9,
+    "limited_overlap_assignment_coefficient": 2.0,
+    "measured_assignment_coefficient": 0.65,
+    "regimen_response_lower": {
+      "half_maximal_relative_exposure": 0.1,
+      "response_half_time_fraction": 0.15,
+      "safety_log_odds_per_log_exposure": 0.0
+    },
+    "regimen_response_upper": {
+      "half_maximal_relative_exposure": 3.0,
+      "response_half_time_fraction": 0.5,
+      "safety_log_odds_per_log_exposure": 0.8
+    }
+  },
+  "clinical_profiles": [
+    {
+      "baseline_assignment": [
+        {
+          "log_odds_ratio_per_sd": 0.65,
+          "variable_id": "baseline_risk"
+        },
+        {
+          "log_odds_ratio_per_sd": -0.2,
+          "variable_id": "age_at_index"
+        },
+        {
+          "log_odds_ratio_per_sd": 0.45,
+          "variable_id": "secondary_risk"
+        },
+        {
+          "log_odds_ratio_per_sd": 0.05,
+          "variable_id": "sex_code"
+        },
+        {
+          "log_odds_ratio_per_sd": 0.05,
+          "variable_id": "body_mass_index"
+        },
+        {
+          "log_odds_ratio_per_sd": 0.15,
+          "variable_id": "c_reactive_protein"
+        },
+        {
+          "log_odds_ratio_per_sd": 0.05,
+          "variable_id": "current_smoker"
+        },
+        {
+          "log_odds_ratio_per_sd": 0.0,
+          "variable_id": "diagnosis_duration_months_fraction"
+        },
+        {
+          "log_odds_ratio_per_sd": 0.15,
+          "variable_id": "diagnosis_duration_months"
+        }
+      ],
+      "baseline_factors": [
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "normal",
+            "lower": 2.0,
+            "mean": 5.2,
+            "standard_deviation": 1.0,
+            "upper": 9.0
+          },
+          "outcome_difference_per_sd": 0.8,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.0,
+          "unit": "DAS28 points",
+          "variable_id": "baseline_risk"
+        },
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "normal",
+            "lower": 18.0,
+            "mean": 55.0,
+            "standard_deviation": 12.0,
+            "upper": 85.0
+          },
+          "outcome_difference_per_sd": 0.1,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.35,
+          "unit": "years",
+          "variable_id": "age_at_index"
+        },
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "bernoulli",
+            "lower": null,
+            "mean": 0.35,
+            "standard_deviation": 0.47696960070847283,
+            "upper": null
+          },
+          "outcome_difference_per_sd": 0.25,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.3,
+          "unit": "indicator",
+          "variable_id": "secondary_risk"
+        },
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "bernoulli",
+            "lower": null,
+            "mean": 0.8,
+            "standard_deviation": 0.39999999999999997,
+            "upper": null
+          },
+          "outcome_difference_per_sd": 0.08,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.03,
+          "unit": "indicator",
+          "variable_id": "sex_code"
+        },
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "normal",
+            "lower": 16.0,
+            "mean": 28.0,
+            "standard_deviation": 5.0,
+            "upper": 50.0
+          },
+          "outcome_difference_per_sd": 0.08,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.1,
+          "unit": "kg/m2",
+          "variable_id": "body_mass_index"
+        },
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "log_normal",
+            "lower": null,
+            "mean": 12.0,
+            "standard_deviation": 15.0,
+            "upper": null
+          },
+          "outcome_difference_per_sd": 0.15,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.1,
+          "unit": "mg/L",
+          "variable_id": "c_reactive_protein"
+        },
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "bernoulli",
+            "lower": null,
+            "mean": 0.2,
+            "standard_deviation": 0.4,
+            "upper": null
+          },
+          "outcome_difference_per_sd": 0.08,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.15,
+          "unit": "0=no, 1=yes",
+          "variable_id": "current_smoker"
+        },
+        {
+          "derivation": null,
+          "distribution": {
+            "family": "beta",
+            "lower": null,
+            "mean": 0.20516129032258063,
+            "standard_deviation": 0.18686362286581598,
+            "upper": null
+          },
+          "outcome_difference_per_sd": 0.0,
+          "role": "latent",
+          "safety_log_odds_per_sd": 0.0,
+          "unit": "fraction",
+          "variable_id": "diagnosis_duration_months_fraction"
+        },
+        {
+          "derivation": {
+            "effects": [
+              {
+                "coefficient": -195.0,
+                "effect_id": "minimum_diagnosis_age",
+                "effect_type": "main",
+                "input_variable": "diagnosis_duration_months_fraction",
+                "unit": "months"
+              },
+              {
+                "coefficient": 12.0,
+                "effect_id": "eligible_lifetime",
+                "effect_type": "interaction",
+                "input_variables": [
+                  "age_at_index",
+                  "diagnosis_duration_months_fraction"
+                ],
+                "unit": "months"
+              }
+            ],
+            "hierarchical_effect_correlations": [],
+            "inputs": [
+              "diagnosis_duration_months_fraction",
+              "age_at_index"
+            ],
+            "learned": null,
+            "measurement_model": null,
+            "mechanism_id": "diagnosis_duration_months",
+            "mechanism_type": "derived_effect",
+            "nominal_calibration": null,
+            "nominal_logits": null,
+            "observation_rule": null,
+            "output": "diagnosis_duration_months",
+            "output_levels": null,
+            "output_unit": "months",
+            "parameters": [
+              {
+                "input_variable": null,
+                "parameter_id": "intercept",
+                "role": "intercept",
+                "source": "fixed",
+                "unit": "months",
+                "value": 3.0
+              }
+            ],
+            "probability_bounds": null,
+            "residual_scale": null,
+            "stochastic": false
+          },
+          "distribution": {
+            "family": "normal",
+            "lower": null,
+            "mean": 98.39999999999999,
+            "standard_deviation": 95.64,
+            "upper": null
+          },
+          "outcome_difference_per_sd": 0.165,
+          "role": "measured",
+          "safety_log_odds_per_sd": 0.1,
+          "unit": "months",
+          "variable_id": "diagnosis_duration_months"
+        }
+      ],
+      "baseline_fields": [
+        {
+          "allowed_values": null,
+          "categories": [],
+          "evidence_role": "mechanism_relative",
+          "family": "disease_measure",
+          "field_id": "baseline_das28_score",
+          "label": "Baseline Disease Activity Score in 28 joints",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Protocol-defined baseline assessment",
+            "missing_value": "",
+            "resolution": 0.01
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [],
+          "source_direction": 1,
+          "source_field_id": "baseline_risk",
+          "source_ids": [],
+          "support": {
+            "lower": 0.0,
+            "upper": 10.0
+          },
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "DAS28 points",
+          "value_type": "continuous"
+        },
+        {
+          "allowed_values": null,
+          "categories": [],
+          "evidence_role": "mechanism_relative",
+          "family": "demographic",
+          "field_id": "age_years",
+          "label": "Age at treatment initiation",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Protocol-defined baseline assessment",
+            "missing_value": "",
+            "resolution": 1.0
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [],
+          "source_direction": 1,
+          "source_field_id": "age_at_index",
+          "source_ids": [],
+          "support": {
+            "lower": 18.0,
+            "upper": 95.0
+          },
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "years",
+          "value_type": "integer"
+        },
+        {
+          "allowed_values": null,
+          "categories": [],
+          "evidence_role": "mechanism_relative",
+          "family": "treatment",
+          "field_id": "prior_biologic_dmard_use",
+          "label": "Prior biologic DMARD use before baseline",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Protocol-defined baseline assessment",
+            "missing_value": "",
+            "resolution": 1.0
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [],
+          "source_direction": 1,
+          "source_field_id": "secondary_risk",
+          "source_ids": [],
+          "support": {
+            "lower": 0.0,
+            "upper": 1.0
+          },
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "0=no, 1=yes",
+          "value_type": "integer"
+        },
+        {
+          "allowed_values": null,
+          "categories": [
+            "male",
+            "female"
+          ],
+          "evidence_role": "mechanism_relative",
+          "family": "demographic",
+          "field_id": "sex",
+          "label": "Recorded sex",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Recorded baseline sex",
+            "missing_value": "",
+            "resolution": null
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [
+            0.0,
+            1.0
+          ],
+          "source_direction": 1,
+          "source_field_id": "sex_code",
+          "source_ids": [],
+          "support": null,
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "category",
+          "value_type": "categorical"
+        },
+        {
+          "allowed_values": null,
+          "categories": [],
+          "evidence_role": "mechanism_relative",
+          "family": "anthropometric",
+          "field_id": "baseline_body_mass_index",
+          "label": "Body mass index",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Protocol-defined baseline assessment",
+            "missing_value": "",
+            "resolution": 0.1
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [],
+          "source_direction": 1,
+          "source_field_id": "body_mass_index",
+          "source_ids": [],
+          "support": {
+            "lower": 16.0,
+            "upper": 50.0
+          },
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "kg/m2",
+          "value_type": "continuous"
+        },
+        {
+          "allowed_values": null,
+          "categories": [],
+          "evidence_role": "mechanism_relative",
+          "family": "laboratory",
+          "field_id": "baseline_c_reactive_protein",
+          "label": "C-reactive protein",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Protocol-defined baseline assessment",
+            "missing_value": "",
+            "resolution": 0.1
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [],
+          "source_direction": 1,
+          "source_field_id": "c_reactive_protein",
+          "source_ids": [],
+          "support": {
+            "lower": 0.0,
+            "upper": null
+          },
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "mg/L",
+          "value_type": "continuous"
+        },
+        {
+          "allowed_values": null,
+          "categories": [],
+          "evidence_role": "mechanism_relative",
+          "family": "demographic",
+          "field_id": "baseline_current_smoker",
+          "label": "Current cigarette smoking",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Protocol-defined baseline assessment",
+            "missing_value": "",
+            "resolution": 1.0
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [],
+          "source_direction": 1,
+          "source_field_id": "current_smoker",
+          "source_ids": [],
+          "support": {
+            "lower": 0.0,
+            "upper": 1.0
+          },
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "0=no, 1=yes",
+          "value_type": "integer"
+        },
+        {
+          "allowed_values": null,
+          "categories": [],
+          "evidence_role": "mechanism_relative",
+          "family": "disease_measure",
+          "field_id": "baseline_diagnosis_duration_months",
+          "label": "Time since diagnosis",
+          "measurement": {
+            "artifact_modes": [],
+            "device_or_assay": null,
+            "error": {
+              "error_model": "exact"
+            },
+            "method": "Protocol-defined baseline assessment",
+            "missing_value": "",
+            "resolution": 1.0
+          },
+          "offset": 0.0,
+          "role": "covariate",
+          "scale": 1.0,
+          "settings": [
+            "observational",
+            "trial"
+          ],
+          "source_codes": [],
+          "source_direction": 1,
+          "source_field_id": "diagnosis_duration_months",
+          "source_ids": [],
+          "support": {
+            "lower": 3.0,
+            "upper": null
+          },
+          "timing": {
+            "reference": "baseline",
+            "repeatable": false,
+            "window_unit": null
+          },
+          "unit": "months",
+          "value_type": "integer"
+        }
+      ],
+      "candidate_class": "oral immunomodulatory candidates",
+      "candidate_code_prefix": "MRD",
+      "candidate_descriptor": "oral immunomodulatory candidate",
+      "candidate_labels": [
+        "MRD-217",
+        "MRD-402",
+        "MRD-618"
+      ],
+      "clinical_setting": "add-on treatment for rheumatoid arthritis despite conventional therapy",
+      "comparator_label": "standard care",
+      "confirmatory_assessment_days": 168,
+      "count_dispersion": null,
+      "endpoint_support_lower": 0.0,
+      "endpoint_support_upper": 10.0,
+      "exploratory_assessment_days": 84,
+      "maximum_acceptable_safety_risk_difference": 0.03,
+      "observational_assessment_days": 168,
+      "outcome_field_id": "das28_score_end_of_follow_up",
+      "outcome_label": "Disease Activity Score in 28 joints at the endpoint assessment",
+      "outcome_link_scale": 1.1,
+      "outcome_object": "Rheumatoid arthritis",
+      "outcome_offset": 1.0,
+      "outcome_reference_difference": 0.6,
+      "outcome_reference_interpretation": "A 0.6-point within-person improvement is the lower EULAR moderate-response threshold; it is an interpretation anchor, not a required between-group effect.",
+      "outcome_rounding_increment": 0.01,
+      "outcome_scale": 1.1,
+      "outcome_unit": "DAS28 points",
+      "population": "adults with diagnosed rheumatoid arthritis receiving stable background conventional therapy",
+      "profile_id": "rheumatoid_arthritis",
+      "programme_name": "MERIDIAN rheumatoid-arthritis programme",
+      "recruitment_countries": [
+        "USA",
+        "CAN",
+        "GBR",
+        "DEU"
+      ],
+      "recruitment_subsets": [
+        {
+          "criteria": [
+            {
+              "column": "prior_biologic_dmard_use",
+              "operator": "greater_than",
+              "value": 0.0
+            }
+          ],
+          "label": "Prior biologic DMARD use",
+          "subset_id": "prior_biologic"
+        },
+        {
+          "criteria": [
+            {
+              "column": "baseline_c_reactive_protein",
+              "operator": "greater_than_or_equal",
+              "value": 10.0
+            },
+            {
+              "column": "baseline_diagnosis_duration_months",
+              "operator": "greater_than_or_equal",
+              "value": 60.0
+            }
+          ],
+          "label": "CRP at least 10 mg/L and diagnosis for at least five years",
+          "subset_id": "inflammation_longstanding"
+        }
+      ],
+      "regimens": [
+        {
+          "amount_mg": 15.0,
+          "dose": "standard",
+          "interval_days": 1,
+          "route": "oral"
+        },
+        {
+          "amount_mg": 30.0,
+          "dose": "intensified",
+          "interval_days": 1,
+          "route": "oral"
+        }
+      ],
+      "registry_family_id": "TD-RA",
+      "rescue_event": {
+        "arm_coefficients": [
+          {
+            "arm_id": "control",
+            "value": 0.0
+          },
+          {
+            "arm_id": "active",
+            "value": 0.0
+          }
+        ],
+        "baseline_coefficient": 0.3,
+        "baseline_variable": "baseline_risk",
+        "cluster_probability_concentration": null,
+        "cluster_reference_probability": null,
+        "effects": [],
+        "event_id": "rescue_antirheumatic_therapy",
+        "event_type": "intercurrent",
+        "exposure_action": "no_change",
+        "hierarchical_effect_correlations": [],
+        "intercept": -3.0,
+        "kind": "rescue_medication",
+        "learned_effect": null,
+        "occurrence_timing": "within_contact_interval",
+        "outcome_shift": -0.25,
+        "recurrent": false,
+        "risk_reference_duration": 70.0,
+        "risk_window_end": null,
+        "risk_window_start": 98.0,
+        "state_coefficients": [],
+        "target_arm": null,
+        "time_coefficient": 0.0,
+        "withdrawal_reason": null,
+        "withdrawal_reason_text": null
+      },
+      "residual_confounding_context": "Routine-care baseline records include DAS28, age and prior biologic DMARD use; treatment was not randomized.",
+      "risk_factor_correlation_matrix": [
+        [
+          1.0,
+          0.1,
+          0.3,
+          0.08,
+          0.15,
+          0.25,
+          0.1,
+          0.0,
+          0.25
+        ],
+        [
+          0.1,
+          1.0,
+          0.2,
+          0.008,
+          0.015,
+          0.025,
+          0.01,
+          0.0,
+          0.1
+        ],
+        [
+          0.3,
+          0.2,
+          1.0,
+          0.024,
+          0.045,
+          0.075,
+          0.03,
+          0.0,
+          0.15
+        ],
+        [
+          0.08,
+          0.008,
+          0.024,
+          1.0,
+          0.012,
+          0.02,
+          0.008,
+          0.0,
+          0.02
+        ],
+        [
+          0.15,
+          0.015,
+          0.045,
+          0.012,
+          1.0,
+          0.0375,
+          0.015,
+          0.0,
+          0.0375
+        ],
+        [
+          0.25,
+          0.025,
+          0.075,
+          0.02,
+          0.0375,
+          1.0,
+          0.025,
+          0.0,
+          0.0625
+        ],
+        [
+          0.1,
+          0.01,
+          0.03,
+          0.008,
+          0.015,
+          0.025,
+          1.0,
+          0.0,
+          0.025
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.25,
+          0.1,
+          0.15,
+          0.02,
+          0.0375,
+          0.0625,
+          0.025,
+          0.0,
+          1.0
+        ]
+      ],
+      "risk_factor_dependence_scale": "latent",
+      "safety_event_id": "infection_aesi",
+      "safety_events": [
+        {
+          "category": "infection",
+          "coding_system": "Protocol AESI dictionary v1",
+          "dictionary_term": "Upper respiratory tract infection",
+          "discontinuation_severities": [
+            "severe"
+          ],
+          "event_id": "respiratory_infection",
+          "hazard_share": 0.65,
+          "medical_code": "Upper respiratory tract infection",
+          "resolution_probability_per_contact": 0.8,
+          "severity_levels": [
+            {
+              "level": "mild_or_moderate",
+              "probability": 0.98,
+              "serious": false,
+              "seriousness_criteria": []
+            },
+            {
+              "level": "severe",
+              "probability": 0.02,
+              "serious": true,
+              "seriousness_criteria": [
+                "AESHOSP"
+              ]
+            }
+          ]
+        },
+        {
+          "category": "infection",
+          "coding_system": "Protocol AESI dictionary v1",
+          "dictionary_term": "Urinary tract infection",
+          "discontinuation_severities": [
+            "severe"
+          ],
+          "event_id": "urinary_infection",
+          "hazard_share": 0.35,
+          "medical_code": "Urinary tract infection",
+          "resolution_probability_per_contact": 0.6,
+          "severity_levels": [
+            {
+              "level": "mild_or_moderate",
+              "probability": 0.95,
+              "serious": false,
+              "seriousness_criteria": []
+            },
+            {
+              "level": "severe",
+              "probability": 0.05,
+              "serious": true,
+              "seriousness_criteria": [
+                "AESHOSP"
+              ]
+            }
+          ]
+        }
+      ],
+      "safety_field_id": "infection_aesi_end_of_follow_up",
+      "safety_label": "treatment-emergent infection of special interest by the endpoint assessment",
+      "screen_failure_fraction": 0.4,
+      "screening_candidates_per_site_month": 13.33,
+      "site_activation_days": 120,
+      "site_case_mix_latent_icc": 0.05,
+      "site_outcome_standard_deviation": 0.264,
+      "site_safety_log_odds_standard_deviation": 0.25,
+      "source_ids": [
+        "TAB-SRC-068",
+        "TAB-SRC-094"
+      ],
+      "study_options": [
+        {
+          "cluster_size": null,
+          "cost": 7.5,
+          "design": "parallel_group",
+          "dose": "standard",
+          "duration_days": 126,
+          "endpoint_assessment_days": 84,
+          "endpoints": [
+            "clinical_outcome",
+            "safety_risk"
+          ],
+          "intracluster_correlation": null,
+          "participant_count": 300,
+          "phase": "exploratory",
+          "population": "all_eligible",
+          "study_id": "ra_exploratory_all_eligible"
+        },
+        {
+          "cluster_size": null,
+          "cost": 9.0,
+          "design": "parallel_group",
+          "dose": "intensified",
+          "duration_days": 126,
+          "endpoint_assessment_days": 84,
+          "endpoints": [
+            "clinical_outcome",
+            "safety_risk"
+          ],
+          "intracluster_correlation": null,
+          "participant_count": 160,
+          "phase": "exploratory",
+          "population": "higher_baseline_risk",
+          "study_id": "ra_exploratory_higher_risk"
+        },
+        {
+          "cluster_size": null,
+          "cost": 20.0,
+          "design": "parallel_group",
+          "dose": "standard",
+          "duration_days": 224,
+          "endpoint_assessment_days": 168,
+          "endpoints": [
+            "clinical_outcome",
+            "safety_risk"
+          ],
+          "intracluster_correlation": null,
+          "participant_count": 1000,
+          "phase": "confirmatory",
+          "population": "all_eligible",
+          "study_id": "ra_confirmatory_all_eligible"
+        },
+        {
+          "cluster_size": null,
+          "cost": 24.5,
+          "design": "parallel_group",
+          "dose": "standard",
+          "duration_days": 224,
+          "endpoint_assessment_days": 168,
+          "endpoints": [
+            "clinical_outcome",
+            "safety_risk"
+          ],
+          "intracluster_correlation": null,
+          "participant_count": 640,
+          "phase": "confirmatory",
+          "population": "higher_baseline_risk",
+          "study_id": "ra_confirmatory_higher_risk"
+        }
+      ],
+      "therapeutic_area": "rheumatology",
+      "treatment_discontinuation_risk": 0.08,
+      "typical_outcome_effect": -1.0
+    }
+  ],
+  "difficulty_profiles": [
+    {
+      "attendance_log_odds_per_baseline_sd": -0.2,
+      "attendance_log_odds_per_site_sd": -0.3,
+      "dropout_hazard_multiplier": 1.0,
+      "endpoint_attendance_probability": 0.98,
+      "measurement_error_standard_deviation": 0.1,
+      "observation_log_odds_after_reported_safety_event": -0.75,
+      "observation_log_odds_per_baseline_sd": -0.25,
+      "observation_log_odds_per_prior_outcome_sd": -0.5,
+      "observational_sample_size_multiplier": 1.0,
+      "profile_id": "standard_information",
+      "recurrent_loss_log_hazard_per_baseline_sd": 0.25,
+      "recurrent_loss_log_hazard_per_prior_event": 0.25,
+      "study_cost_multiplier": 1.0,
+      "study_duration_multiplier": 1.0
+    }
+  ],
+  "identification_regimes": [
+    "measured_with_overlap"
+  ],
+  "observation_loss_multiplier": {
+    "lower": 0.75,
+    "upper": 1.25
+  },
+  "population": {
+    "baseline_outcome_intercept": 2.0,
+    "baseline_safety_probability": 0.04,
+    "latent_risk_mean": 0.0,
+    "latent_risk_standard_deviation": 1.0,
+    "outcome_standard_deviation": 1.2,
+    "participant_count": 300
+  },
+  "portfolio_asset_counts": [],
+  "prospective_process": {
+    "active_endpoint_observation_probability": 1.0,
+    "attendance_log_odds_per_baseline_sd": 0.0,
+    "attendance_log_odds_per_site_sd": 0.0,
+    "endpoint_attendance_probability": 1.0,
+    "endpoint_observation_probability": 1.0,
+    "measurement_error_standard_deviation": 0.0,
+    "monotone_dropout": false,
+    "observation_log_odds_after_reported_safety_event": 0.0,
+    "observation_log_odds_per_baseline_sd": 0.0,
+    "observation_log_odds_per_prior_outcome_sd": 0.0,
+    "outcome_autocorrelation": 0.6,
+    "population_risk_profiles": [
+      {
+        "mean": 0.75,
+        "population": "higher_baseline_risk",
+        "standard_deviation": 1.0
+      }
+    ],
+    "randomization_block_size": 4,
+    "recurrent_loss_log_hazard_per_baseline_sd": 0.0,
+    "recurrent_loss_log_hazard_per_prior_event": 0.0,
+    "recurrent_loss_to_follow_up_hazard_per_day": 0.0,
+    "safety_endpoint": {
+      "event_id": "candidate_safety",
+      "events": [
+        {
+          "category": "treatment_emergent_adverse_event",
+          "coding_system": "Protocol AESI dictionary v1",
+          "dictionary_term": null,
+          "discontinuation_severities": [
+            "severe"
+          ],
+          "event_id": "candidate_safety",
+          "hazard_share": 1.0,
+          "medical_code": "AESI-CANDIDATE-SAFETY",
+          "resolution_probability_per_contact": 0.5,
+          "severity_levels": [
+            {
+              "level": "mild_or_moderate",
+              "probability": 0.8,
+              "serious": false,
+              "seriousness_criteria": []
+            },
+            {
+              "level": "severe",
+              "probability": 0.2,
+              "serious": true,
+              "seriousness_criteria": [
+                "AESHOSP"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "treatment_discontinuation_risk": 0.0
+  },
+  "regime_seed_stride": 1000,
+  "root_seed": 611069,
+  "study_options": [
+    {
+      "cluster_size": null,
+      "cost": 7.0,
+      "design": "parallel_group",
+      "dose": "standard",
+      "duration_days": 210,
+      "endpoint_assessment_days": 180,
+      "endpoints": [
+        "clinical_outcome",
+        "safety_risk"
+      ],
+      "intracluster_correlation": null,
+      "participant_count": 240,
+      "phase": "exploratory",
+      "population": "all_eligible",
+      "study_id": "exploratory_all_eligible_standard_parallel"
+    },
+    {
+      "cluster_size": null,
+      "cost": 19.0,
+      "design": "parallel_group",
+      "dose": "standard",
+      "duration_days": 420,
+      "endpoint_assessment_days": 365,
+      "endpoints": [
+        "clinical_outcome",
+        "safety_risk"
+      ],
+      "intracluster_correlation": null,
+      "participant_count": 1200,
+      "phase": "confirmatory",
+      "population": "all_eligible",
+      "study_id": "confirmatory_all_eligible_standard_parallel"
+    },
+    {
+      "cluster_size": null,
+      "cost": 9.0,
+      "design": "parallel_group",
+      "dose": "intensified",
+      "duration_days": 210,
+      "endpoint_assessment_days": 180,
+      "endpoints": [
+        "clinical_outcome",
+        "safety_risk"
+      ],
+      "intracluster_correlation": null,
+      "participant_count": 120,
+      "phase": "exploratory",
+      "population": "higher_baseline_risk",
+      "study_id": "exploratory_high_risk_intensified_parallel"
+    },
+    {
+      "cluster_size": null,
+      "cost": 24.0,
+      "design": "parallel_group",
+      "dose": "standard",
+      "duration_days": 420,
+      "endpoint_assessment_days": 365,
+      "endpoints": [
+        "clinical_outcome",
+        "safety_risk"
+      ],
+      "intracluster_correlation": null,
+      "participant_count": 600,
+      "phase": "confirmatory",
+      "population": "higher_baseline_risk",
+      "study_id": "confirmatory_high_risk_standard_parallel"
+    }
+  ],
+  "value_definition": {
+    "clinical_outcome_value_per_point": 80.0,
+    "maximum_acceptable_safety_risk_difference": 0.035,
+    "safety_event_value_per_risk_difference": 100.0
+  },
+  "worlds_per_regime": 1
+}
