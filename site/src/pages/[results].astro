@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { results } from "../lib/docs";
+
+// /results/ is built only when the README carries the model results section rendered from the results record.
+export function getStaticPaths() {
+  return results ? [{ params: { results: "results" } }] : [];
+}
+
+const section = results!;
+---
+<Layout title="Model results" description="TrialAgentBench model results: TrialEval decision regret and consequential errors, and TrialDev development value, with their intervals." current="results">
+  <article class="page doc">
+    <header class="page-intro">
+      <h1>{section.title}</h1>
+    </header>
+    <Fragment set:html={section.html} />
+  </article>
+</Layout>

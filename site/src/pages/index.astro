@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { readme, section, transform } from "../lib/docs";
+import { project } from "../lib/project";
+import { routeHref } from "../lib/urls";
+
+// The README's opening paragraph is the governing claim; the rest of its preamble describes the repository.
+const claim = transform(readme.preamble, (body) => {
+  for (const block of [...body.children].slice(1)) block.remove();
+});
+const sections = [section(readme, "What it measures and why")];
+---
+<Layout title={project.name} description="TrialAgentBench measures whether an AI agent's analysis of clinical-trial evidence leads to the development decision the evidence supports." current="home">
+  <article class="page doc">
+    <header class="page-intro">
+      <h1>{project.name}</h1>
+      <Fragment set:html={claim} />
+      <ul class="start-links">
+        <li><a href={project.datasetUrl}>Dataset on Hugging Face</a></li>
+        <li><a href={project.repositoryUrl}>Harness and verifier on GitHub</a></li>
+        <li><a href={routeHref("benchmark")}>Methods and evidence</a></li>
+        <li><a href={routeHref("run")}>Run it</a></li>
+      </ul>
+    </header>
+    {sections.map((part) => (
+      <section aria-labelledby={part.id}>
+        <h2 id={part.id}>{part.title}</h2>
+        <Fragment set:html={part.html} />
+      </section>
+    ))}
+    <nav class="next-reading" aria-label="Continue reading">
+      <a href={routeHref("benchmark")}><strong>Methods and evidence</strong><span>Targets, construction, grading, qualification, construct validity and limitations, with the release evidence.</span></a>
+      <a href={routeHref("run")}><strong>Run it</strong><span>Installation, download and verification, selections, configuration, execution and results.</span></a>
+    </nav>
+  </article>
+</Layout>

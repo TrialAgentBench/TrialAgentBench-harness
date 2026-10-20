@@ -1,0 +1,162 @@
+---
+import { releaseEvidence } from "../lib/evidence";
+import { artifactHref } from "../lib/urls";
+
+const { trialeval: te, trialdev: td } = releaseEvidence();
+const REFERENCE = "scripted_reference";
+const integer = (value: number) => value.toLocaleString("en-US");
+const fixed = (value: number, digits: number) => value.toFixed(digits);
+// Shares carry one decimal, as the release facts state them.
+const percent = (value: number) => `${(100 * value).toFixed(1)}%`;
+const money = (value: number) => `${value < 0 ? "−" : ""}$${Math.abs(value).toFixed(1)}M`;
+const span = ([low, high]: [number, number], render: (value: number) => string) =>
+  render(low) === render(high) ? render(low) : `${render(low)} to ${render(high)}`;
+const notRecorded = "not recorded";
+// Policy and band-point names as the methods' policy table and the panel figure (examples/release_panel.py) give them.
+const POLICY_LABELS: Record<string, string> = {
+  follow_plan: "follow the plan",
+  plan_hedged_3x: "plan estimate, interval ×3",
+  "plan_overconfident_0.3x": "plan estimate, interval ×0.3",
+  null_point_plan_interval: "null estimate, plan interval",
+};
+const BAND_LABELS: Record<string, string> = {
+  declared: "Declared",
+  "value x0.5": "Value ×½",
+  "value x2": "Value ×2",
+  "cost x0.5": "Costs ×½",
+  "cost x2": "Costs ×2",
+};
+const label = (policy: string) => POLICY_LABELS[policy] ?? policy.replaceAll("_", " ");
+const STATUS_LABELS: [string, string][] = [
+  ["agrees", "inside the disjoint range"],
+  ["within_tolerance", "within a stated tolerance"],
+  ["not_comparable", "not comparable"],
+];
+const record = (name: string) => artifactHref(`release-evidence/${name}`);
+const traps = te.consequence;
+const twins = te.over_correction;
+const naive = te.policy_public.naive_cost;
+// The build fails rather than render a value the record does not state.
+function stated<T>(value: T | undefined, what: string): T {
+  if (value === undefined) throw new Error(`the release evidence record does not state ${what}`);
+  return value;
+}
+const bar = stated(te.economics.band_regret_bar_musd.declared, "the declared regret bar");
+// The fewest public cells any fixed policy other than the reference fails at one band point, with those policies.
+const fewest = (counts: Record<string, number>) => {
+  const others = Object.entries(counts).filter(([policy]) => policy !== REFERENCE);
+  const least = Math.min(...others.map(([, count]) => count));
+  const policies = others.filter(([, count]) => count === least).map(([policy]) => label(policy)).sort();
+  return `${least} (${policies.join("; ")})`;
+};
+// The withheld split is stated by rule outcome only: whether the reference fails a cell, and which policies fail none.
+const passing = (outcomes: Record<string, boolean>) => {
+  const policies = Object.entries(outcomes)
+    .filter(([policy, fails]) => policy !== REFERENCE && !fails)
+    .map(([policy]) => label(policy))
+    .sort();
+  return policies.length ? policies.join("; ") : "none";
+};
+const bandRows = Object.entries(te.economics.band_failing_cells).map(([point, publicCounts]) => {
+  const withheld = stated(te.policy_withheld.fails_a_cell[point], `the withheld rule outcomes at ${point}`);
+  return {
+    point: BAND_LABELS[point] ?? point,
+    bar: stated(te.economics.band_regret_bar_musd[point], `the regret bar at ${point}`),
+    reference: stated(publicCounts[REFERENCE], `the reference at ${point}`),
+    fewest: fewest(publicCounts),
+    referenceWithheld: stated(withheld[REFERENCE], `the reference's withheld outcome at ${point}`) ? "yes" : "no",
+    passingWithheld: passing(withheld),
+  };
+});
+const margin = twins.margin;
+const statuses = STATUS_LABELS.filter(([status]) => status !== "not_comparable" || te.realism.status_counts[status])
+  .map(([status, text]) => `${text} ${te.realism.status_counts[status] ?? 0}`)
+  .join(" · ");
+const effect = te.realism.effect_distribution;
+const parity = te.public.pair_parity;
+---
+<section id="release-evidence" aria-labelledby="release-evidence-heading">
+  <h2 id="release-evidence-heading">Release evidence</h2>
+  <p>Every number in this section is read from the <a href={record("release-evidence.json")}>release evidence record</a>, which the <a href={record("RELEASE_FACTS.md")}>release facts</a> restate. Trap and twin cells are stated by count and as ranges across cells; no cell is named. The withheld split is stated by counts and rule outcomes only, because a withheld measurement over its cells would differ from the public split's by the held-out cell alone. In the public split a series' cells share each base world, and the evidence contexts of a world share its participants, so the unit of evidence is the independent base world rather than the task.</p>
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Release composition and qualification">
+    <table>
+      <caption>Release composition and qualification</caption>
+      <thead><tr><th scope="col">Benchmark and split</th><th scope="col">Cells</th><th scope="col">Independent worlds</th><th scope="col">Tasks</th><th scope="col">Qualification</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">TrialEval, public</th><td>{te.public.regime_cells} ({te.public.a2_cells} A2, {te.public.trap_cells} traps)</td><td>{te.public.independent_base_worlds} ({te.public.series} series × {te.public.laws_per_series} laws)</td><td>{integer(te.public.tasks)}</td><td>{te.public.accepted ? "Accepted" : "Not accepted"}, {te.public.failed_cells} failed cells</td></tr>
+        <tr><th scope="row">TrialEval, withheld</th><td>{te.withheld.regime_cells - te.withheld.held_out_cells} public + {te.withheld.held_out_cells} held out ({te.withheld.a2_cells} A2, {te.withheld.trap_cells} traps)</td><td>{te.withheld.independent_base_worlds} ({te.withheld.series} series × {te.withheld.laws_per_series} laws)</td><td>{integer(te.withheld.tasks)}</td><td>{te.withheld.accepted ? "Accepted" : "Not accepted"}, {te.withheld.failed_cells} failed cells</td></tr>
+        <tr><th scope="row">TrialDev, public</th><td>—</td><td>{integer(td.public.programmes)} programmes</td><td>{integer(td.public.tasks)}</td><td>{td.public.qualification_status === "pending" ? "Recovery and qualification pending: published as an evidence update with unchanged data; no pass claimed" : `${td.public.accepted ? "Accepted" : "Not accepted"}, ${td.public.failed} failed`}</td></tr>
+        <tr><th scope="row">TrialDev, withheld</th><td>—</td><td>{integer(td.withheld.programmes)} programmes</td><td>{integer(td.withheld.tasks)}</td><td>{td.withheld.accepted ? "Accepted" : "Not accepted"}, {td.withheld.failed} failed</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The public and withheld TrialEval splits share {te.base_worlds_shared_between_splits} base worlds. Recovery was measured on {integer(te.recovery.prior_drawn_worlds_per_cell)} prior-drawn and {integer(te.recovery.coverage_worlds_per_cell)} coverage worlds per cell.{parity && ` In the public split, ${parity.identical_pairs} of ${parity.pairs} pairs of a trap and its series' benign cell present identical documents once identifiers, dates and data-dependent times are masked.`}</p>
+
+  <h3>The excluded analysis in the traps</h3>
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Excluded analysis across the public trap cells">
+    <table>
+      <caption>The excluded analysis across the {traps.traps} public trap cells, on {integer(te.recovery.prior_drawn_worlds_per_cell)} prior-drawn worlds per cell</caption>
+      <thead><tr><th scope="col">Measure</th><th scope="col">Across the public traps</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Admitted at release scale</th><td>{traps.admitted} of {traps.traps}</td></tr>
+        <tr><th scope="row">Consequential by a shift of at least {fixed(traps.shift_threshold_sd, 1)} grading SD in every effect tertile</th><td>{traps.shift}{traps.smallest_tertile_shift_sd !== null && ` (smallest tertile shift ${fixed(traps.smallest_tertile_shift_sd, 2)} grading SD)`}</td></tr>
+        <tr><th scope="row">Consequential by an overconfident interval only</th><td>{traps.interval_only}</td></tr>
+        <tr><th scope="row">Interval width ÷ credited</th><td>{span(traps.width_ratio, value => fixed(value, 2))}</td></tr>
+        <tr><th scope="row">Interval coverage</th><td>{span(traps.shortcut_coverage, value => fixed(value, 2))}</td></tr>
+        <tr><th scope="row">Squared error ÷ credited</th><td>{span(traps.loss_ratio, value => fixed(value, 2))}</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  {naive && <h3>The naive answer in the cells it fails</h3>}
+  {naive && <div class="table-scroll" tabindex="0" role="region" aria-label="The naive answer across the public cells it fails">
+    <table>
+      <caption>The naive answer across the {naive.cells} public cells it fails ({naive.traps} traps and {naive.cells - naive.traps} cells whose excluded analysis is design-incompatible), priced over {integer(te.policy_public.worlds_per_cell)} prior-drawn worlds per cell</caption>
+      <thead><tr><th scope="col">Measure</th><th scope="col">Across those cells</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Posterior-expected regret per answer</th><td>{span(naive.regret_musd, money)}</td></tr>
+        <tr><th scope="row">Consequential errors</th><td>{span(naive.consequential_share, percent)}</td></tr>
+        <tr><th scope="row">Regret at the true effect</th><td>{span(naive.regret_at_truth_musd, money)}</td></tr>
+      </tbody>
+    </table>
+  </div>}
+  {naive && <p>Here regret at the true effect is valued at each prior-drawn world's law target over {integer(te.policy_public.worlds_per_cell)} worlds per cell, so it averages over the disclosed effect prior.</p>}
+
+  <h3>The tempting correction in the twins</h3>
+  <div class="table-scroll" tabindex="0" role="region" aria-label="The tempting correction across the public twins">
+    <table>
+      <caption>The tempting correction applied across the {twins.twins} public A2 twins</caption>
+      <thead><tr><th scope="col">Measure</th><th scope="col">Across the public twins</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">{margin !== null ? `Meeting the gate: mean regret at least ${margin} times the bar at every band point` : "Meeting the over-correction gate"}</th><td>{twins.consequential} of {twins.twins}</td></tr>
+        <tr><th scope="row">Smallest ratio of mean regret to the bar across the band (the gated quantity; least over twins)</th><td>{twins.band_min_mean_over_bar === null ? notRecorded : fixed(twins.band_min_mean_over_bar, 2)}</td></tr>
+        <tr><th scope="row">Mean regret per answer at the declared economics</th><td>{span(twins.mean_regret_musd, money)}</td></tr>
+        <tr><th scope="row">Share of worlds whose regret is at least {money(bar)}</th><td>{span(twins.consequential_share, percent)}</td></tr>
+        <tr><th scope="row">Share of worlds where stop or confirm flips and the regret is at least {money(bar)}</th><td>{twins.decision_flip_share === null ? notRecorded : span(twins.decision_flip_share, percent)}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  {margin !== null && twins.consequential === twins.twins && twins.decision_flip_share !== null && <p>In every public twin the tempting correction costs at least {margin} times the bar in expected regret at every band point. Stop or confirm also flips, at a regret of at least {money(bar)}, in {span(twins.decision_flip_share, percent)} of worlds; where it does not flip, the correction's cost is a mis-sized confirmatory trial.</p>}
+
+  <h3>Fixed policies across the economics band</h3>
+  <p>The panel shows public failed-cell counts and withheld rule outcomes only: whether a policy fails at least one withheld cell. {te.policy_public.unpriced_worlds != null ? `Across the public cells, ${integer(te.policy_public.unpriced_worlds)} cell-worlds where no credited analysis fits add zero regret and remain in every mean and rate's denominator.` : "The public panel's unpriced-world total was not recorded."}</p>
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Public cells failed and withheld rule outcomes across the economics band">
+    <table>
+      <caption>At each point of the economics band: public cells failed by the credited-analysis reference and the fewest failed by any fixed policy, of {te.policy_public.cells}; and, of the {te.policy_withheld.cells} withheld cells, whether the reference fails any and which fixed policies fail none</caption>
+      <thead><tr><th scope="col">Economics</th><th scope="col">Regret bar</th><th scope="col">Reference, public</th><th scope="col">Fewest by a fixed policy, public</th><th scope="col">Reference fails a withheld cell</th><th scope="col">Fixed policies failing no withheld cell</th></tr></thead>
+      <tbody>{bandRows.map(row => <tr><th scope="row">{row.point}</th><td>{money(row.bar)}</td><td>{row.reference}</td><td>{row.fewest}</td><td>{row.referenceWithheld}</td><td>{row.passingWithheld}</td></tr>)}</tbody>
+    </table>
+  </div>
+
+  <slot />
+
+  <h3>TrialDev resource-gradient evaluation</h3>
+  <p>Public split: {td.gradient_status === "pending" ? "pending: published as an evidence update with unchanged data" : "published in the release facts"}. Withheld split: {td.withheld_gradient_status === "pending" ? "pending: published as an evidence update with unchanged data" : "published in the release facts"}. <a href={record("RELEASE_FACTS.md")}>Release facts and verdicts</a>.</p>
+
+
+  <h3>Realism against published trials</h3>
+  <p>Each quantity is compared only with evidence disjoint from what calibrated it: the half of the matched registry cohort that did not calibrate it, or published exemplar trials that did not. Of {te.realism.cells} compared quantities: {statuses} · departure {te.realism.departures}, of which trap strength {te.realism.trap_departures}. A value outside its band departs only when its whole 95% interval (value ± 1.96 between-world standard errors) lies outside the band too. The <a href={record("realism/realism_linkage.md")}>linkage report</a> names the calibration source, the exemplar trials and their locators for every series comparison.</p>
+  <figure><div class="figure-scroll" tabindex="0" role="region" aria-label="Realism scorecard"><img src={record("realism/realism_scorecard.svg")} alt="Realism scorecard: each series by compared quantity, marked by status." /></div><figcaption>Each series by compared quantity, marked by status. The scorecard draws the series quantities only, so its counts leave out the trap-strength comparisons counted above.</figcaption></figure>
+  <figure><div class="figure-scroll" tabindex="0" role="region" aria-label="Synthetic values against their exemplar ranges"><img src={record("realism/realism_position.svg")} alt="Each synthetic value placed within its range from published exemplar trials, where the range spans zero to one." /></div><figcaption>Each synthetic value placed against its exemplar range (0 and 1 mark the range ends).</figcaption></figure>
+  {effect && <figure><div class="figure-scroll" tabindex="0" role="region" aria-label="Credited-analysis z statistics against the effect prior"><img src={record("realism/realism_effect_qq.svg")} alt={`Quantiles of credited-analysis z statistics against the disclosed effect prior over ${integer(effect.worlds)} prior-drawn worlds.`} /></div><figcaption>Credited-analysis z statistics against the disclosed effect prior over {integer(effect.worlds)} prior-drawn worlds; {fixed(effect.share_beyond_196, 3)} lie beyond 1.96.</figcaption></figure>}
+</section>

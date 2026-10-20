@@ -1,0 +1,28 @@
+{
+  "name": "trialagentbench-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "build": "node scripts/verify-evidence.mjs && astro build && node scripts/copy-evidence.mjs && node scripts/write-site-manifest.mjs && node scripts/verify-site.mjs",
+    "check": "node scripts/verify-evidence.mjs && astro check",
+    "dev": "astro dev",
+    "preview": "astro preview",
+    "test:evidence": "node --test tests/evidence-adapter.test.mjs",
+    "test:product": "playwright test"
+  },
+  "dependencies": {
+    "astro": "7.2.9",
+    "linkedom": "0.18.12"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "@types/node": "22.19.15",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,70 @@
+name: Pages
+
+# Build the site from this repository's documentation and the published release evidence on Hugging Face,
+# then deploy it with GitHub Pages.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build the site
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: false
+      - name: Download the release evidence of this version
+        run: |
+          version="$(python3 -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
+          uvx --from huggingface_hub==2.2.0 hf download TrialAgentBench/TrialAgentBench --repo-type dataset \
+            --revision "v${version}" --include "SHA256SUMS" --include "release-evidence/*" \
+            --local-dir "${RUNNER_TEMP}/evidence"
+          echo "TRIALAGENTBENCH_EVIDENCE=${RUNNER_TEMP}/evidence" >> "${GITHUB_ENV}"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: site/.node-version
+      - name: Check and build
+        working-directory: site
+        env:
+          TRIALAGENTBENCH_SITE_BASE: ${{ steps.pages.outputs.base_path }}/
+        run: |
+          npm ci
+          npm run test:evidence
+          npm run check
+          npm run build
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: site/dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write # publish the uploaded site
+      id-token: write # authenticate the deployment to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

@@ -1,0 +1,7 @@
+---
+interface Props { sections: { slug: string; text: string }[]; }
+const { sections } = Astro.props;
+---
+<aside class="local-contents">
+  <nav aria-label="On this page"><strong>On this page</strong><ol>{sections.map(section => <li><a href={`#${section.slug}`}>{section.text}</a></li>)}</ol></nav>
+</aside>
