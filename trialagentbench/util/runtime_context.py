@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 import json
+import math
 import time
 from collections.abc import Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, wait
@@ -53,7 +54,14 @@ class RuntimeDeadline:
 
     monotonic: float | None
     label: str
+    budget_seconds: float | None = None
     _paused_at: float | None = field(default=None, init=False, repr=False)
+
+    def __post_init__(self) -> None:
+        if self.monotonic is not None and not math.isfinite(self.monotonic):
+            raise ValueError("Deadline must be finite when provided.")
+        if self.budget_seconds is not None and (not math.isfinite(self.budget_seconds) or self.budget_seconds <= 0.0):
+            raise ValueError("Deadline duration must be finite and positive when provided.")
 
     @classmethod
     def after(cls, seconds: float | None, *, label: str) -> RuntimeDeadline:
@@ -64,16 +72,49 @@ class RuntimeDeadline:
         return cls(
             monotonic=time.monotonic() + seconds if seconds is not None else None,
             label=label,
+            budget_seconds=seconds,
+        )
+
+    def snapshot_remaining(self) -> float | None:
+        """Record the remaining budget, including zero, without failing during cleanup."""
+
+        if self.monotonic is None:
+            return None
+        now = time.monotonic() if self._paused_at is None else self._paused_at
+        return max(0.0, self.monotonic - now)
+
+    def restore_remaining(self, seconds: float | None) -> None:
+        """Resume a saved allowance without charging the time the process was stopped."""
+
+        if seconds is not None and (not math.isfinite(seconds) or seconds < 0.0):
+            raise ValueError("Saved remaining agent time must be finite and nonnegative.")
+        if (seconds is None) != (self.monotonic is None):
+            raise ValueError("Saved and requested agent-time limits differ.")
+        if self.budget_seconds is not None and seconds is not None and seconds > self.budget_seconds:
+            raise ValueError("Saved remaining agent time exceeds the configured allowance.")
+        self.monotonic = None if seconds is None else time.monotonic() + seconds
+        self._paused_at = None
+
+    def model_notice(self) -> str | None:
+        """Disclose the current allowance immediately before a model request."""
+
+        remaining = self.remaining()
+        if remaining is None:
+            return None
+        total = "" if self.budget_seconds is None else f"{self.budget_seconds:g} seconds total; "
+        return (
+            f"[Agent-time budget: {total}{math.floor(remaining)} seconds remaining. "
+            "Model requests and agent-run tools consume this time. Harness-owned analysis checks, "
+            "saved-script replays, readouts and decisions do not. This is separate from simulated programme days "
+            "and the turn limit; time can expire before all turns are used. "
+            "Submit your response or terminal development decision before time runs out.]"
         )
 
     def remaining(self) -> float | None:
         """Return remaining agent seconds, failing once no agent work may start."""
 
-        if self.monotonic is None:
-            return None
-        now = time.monotonic() if self._paused_at is None else self._paused_at
-        remaining = self.monotonic - now
-        if remaining <= 0.0:
+        remaining = self.snapshot_remaining()
+        if remaining is not None and remaining <= 0.0:
             raise RuntimeDeadlineExceeded(f"{self.label} exceeded its declared wall-clock budget.")
         return remaining
 

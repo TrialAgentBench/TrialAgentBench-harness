@@ -604,7 +604,7 @@ def test_trialeval_turn_limit_is_failed_terminal_and_workspace_is_reusable(
         for line in event_path.read_text(encoding="utf-8").splitlines()
         if json.loads(line)["event_type"] == "prompt"
     ]
-    assert len(prompt_events) == 2
+    assert len(prompt_events) == 3  # Task, current agent-time allowance, final-turn reminder.
     assert (workspace / "item").is_dir()
     audit_marker = workspace / "item" / "scratch" / "audit-marker.txt"
     audit_marker.parent.mkdir(parents=True)
@@ -620,6 +620,48 @@ def test_trialeval_turn_limit_is_failed_terminal_and_workspace_is_reusable(
     )
     assert second["status"] == "max_turns_reached"
     assert audit_marker.read_text(encoding="utf-8") == "retained"
+
+
+def test_trialeval_sends_and_records_remaining_time_even_after_context_compaction(tmp_path, monkeypatch):
+    from trialagentbench.util import runtime_context
+
+    clock = [1_000.0]
+    monkeypatch.setattr(runtime_context.time, "monotonic", lambda: clock[0])
+    monkeypatch.setattr(agent, "DockerCodeSession", lambda **_: _Session())
+    seen = []
+
+    class Provider(_NoSubmissionProvider):
+        def generate_turn(self, **kwargs):
+            response = super().generate_turn(**kwargs)
+            notices = [
+                message["content"]
+                for message in kwargs["messages"]
+                if str(message.get("content", "")).startswith("[Agent-time budget:")
+            ]
+            seen.append((notices[-1], kwargs["timeout_seconds"]))
+            clock[0] += 10
+            return response
+
+    log = tmp_path / "conversation.json"
+    output = agent.run_agent(
+        _item(tmp_path),
+        Provider(),
+        max_turns=3,
+        max_elapsed_seconds=100,
+        max_context_chars=500,
+        analysis_specification="protocol_only",
+        verbose=False,
+        conversation_log_path=log,
+        item_workspace=tmp_path / "workspace",
+    )
+    assert output["status"] == "max_turns_reached"
+    assert [timeout for _, timeout in seen] == [100, 90, 80]
+    for (notice, _), remaining in zip(seen, (100, 90, 80), strict=True):
+        assert f"100 seconds total; {remaining} seconds remaining" in notice
+    logged = json.loads(log.read_text())
+    assert [message["content"] for message in logged if str(message.get("content", "")).startswith("[Agent-time")] == [
+        notice for notice, _ in seen
+    ]
 
 
 def test_trialeval_tool_reply_exposes_remaining_turn_budget(

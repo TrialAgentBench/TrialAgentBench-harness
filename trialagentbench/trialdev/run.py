@@ -1027,6 +1027,7 @@ def run_trialdev_task(
         executor_limits=executor_limits,
         analysis_language=analysis_language,
         deadline_monotonic=time.monotonic() + watchdog_seconds,
+        agent_time_budget_seconds=watchdog_seconds,
         max_context_chars=max_context_characters,
         provider_capability=provider_capability,
         authored_programme=programme,

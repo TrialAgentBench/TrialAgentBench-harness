@@ -2,15 +2,20 @@ from __future__ import annotations
 
 import json
 from collections.abc import Sequence
+from dataclasses import replace
 from pathlib import Path
 from typing import Literal
 
 import pytest
 from pydantic import ValidationError
 
-from trialagentbench.contracts.core.runs import ProviderRequestEventV1, RunCoverageV1
+from trialagentbench.contracts.core.runs import (
+    ProviderRequestEventV1,
+    ProviderTelemetrySummaryV1,
+    RunCoverageV1,
+)
 from trialagentbench.ports import LLMResponse, LLMResponseMetadata, RetryTelemetry
-from trialagentbench.ports.llm_provider import JsonObject
+from trialagentbench.ports.llm_provider import JsonObject, ToolCall
 from trialagentbench.util.provider_telemetry import (
     fail_provider_request_v1,
     generate_provider_turn_v1,
@@ -24,8 +29,10 @@ class _Provider:
     model = "test/model"
     telemetry_route = "test"
 
-    def __init__(self, error: Exception | None = None) -> None:
+    def __init__(self, error: Exception | None = None, *, response: LLMResponse | None = None) -> None:
         self.error = error
+        self.response = response
+        self.call_count = 0
 
     def generate_turn(
         self,
@@ -37,9 +44,10 @@ class _Provider:
         timeout_seconds: float | None = None,
         tool_choice: Literal["auto", "required"] = "auto",
     ) -> LLMResponse:
+        self.call_count += 1
         if self.error is not None:
             raise self.error
-        return _response()
+        return self.response if self.response is not None else _response()
 
 
 def _response() -> LLMResponse:
@@ -543,3 +551,233 @@ def test_provider_success_records_cached_and_reasoning_tokens_and_returned_reaso
     assert (event.cached_tokens, event.reasoning_tokens, event.reasoning) == (8, 2, "Compare the arms first.")
     with pytest.raises(ValidationError, match="cannot exceed"):
         ProviderRequestEventV1.model_validate(event.model_dump() | {"cached_tokens": 11})
+
+
+def _generate_recorded_turn(tmp_path: Path, provider: _Provider):
+    return generate_provider_turn_v1(
+        provider=provider,
+        messages=({"role": "user", "content": "analyse"},),
+        tools=({"type": "function", "function": {"name": "read_file"}},),
+        temperature=0,
+        max_tokens=100,
+        timeout_seconds=30,
+        tool_choice="auto",
+        log_path=tmp_path / "logs" / "TASK1_provider_responses.jsonl",
+        benchmark="trialdev",
+        unit_id="TASK1",
+        phase_id="portfolio_management",
+        step_id="decision-001",
+        turn_index=1,
+    )
+
+
+_USAGE_COUNTERS = (
+    "prompt_tokens",
+    "completion_tokens",
+    "total_tokens",
+    "cached_tokens",
+    "reasoning_tokens",
+    "compaction_requests",
+    "compaction_input_tokens",
+    "compaction_output_tokens",
+)
+
+
+@pytest.mark.parametrize(
+    "usage",
+    [
+        pytest.param(
+            {"prompt_tokens": 10, "completion_tokens": 3, "total_tokens": 13, "cached_tokens": 11},
+            id="cached-exceeds-prompt",
+        ),
+        pytest.param(
+            {"prompt_tokens": 10, "completion_tokens": 3, "total_tokens": 13, "reasoning_tokens": 4},
+            id="reasoning-exceeds-completion",
+        ),
+        pytest.param(
+            {"prompt_tokens": 10, "completion_tokens": 3, "total_tokens": 12},
+            id="inconsistent-total",
+        ),
+        pytest.param(
+            {"prompt_tokens": -1, "completion_tokens": 3, "total_tokens": 2},
+            id="negative-count",
+        ),
+        pytest.param(
+            {"prompt_tokens": "10", "completion_tokens": 3, "total_tokens": 13},
+            id="string-count",
+        ),
+        pytest.param(
+            {"prompt_tokens": 10, "completion_tokens": 3.5, "total_tokens": 13.5},
+            id="fractional-count",
+        ),
+        pytest.param(
+            {"prompt_tokens": True, "completion_tokens": 3, "total_tokens": 4},
+            id="boolean-count",
+        ),
+        pytest.param(
+            {"prompt_tokens": 10, "completion_tokens": None, "total_tokens": 13},
+            id="null-count",
+        ),
+        pytest.param({"completion_tokens": 3, "total_tokens": 13}, id="missing-prompt"),
+        pytest.param({"prompt_tokens": 10, "total_tokens": 13}, id="missing-completion"),
+        pytest.param({"prompt_tokens": 10, "completion_tokens": 3}, id="missing-total"),
+        pytest.param(
+            {"prompt_tokens": 10, "completion_tokens": 3, "total_tokens": 13, "cached_tokens": "bad"},
+            id="malformed-optional-count",
+        ),
+        pytest.param(
+            {
+                "prompt_tokens": 10,
+                "completion_tokens": 3,
+                "total_tokens": 13,
+                "compaction_requests": 1,
+                "compaction_input_tokens": 11,
+                "compaction_output_tokens": 2,
+            },
+            id="inconsistent-compaction",
+        ),
+    ],
+)
+@pytest.mark.parametrize("include_raw_response", [True, False], ids=["raw-response", "usage-only"])
+def test_invalid_usage_keeps_answer_and_diagnostics_without_retry(
+    tmp_path: Path, usage: JsonObject, include_raw_response: bool
+) -> None:
+    response = _response()
+    response.content = "I will read the published study."
+    response.tool_calls = [ToolCall(id="call-1", name="read_file", arguments='{"path":"study.json"}')]
+    response.reasoning = "Use the available study before choosing a final action."
+    response.usage = usage
+    response.raw_response = {"id": "response-1", "usage": dict(usage)} if include_raw_response else None
+    provider = _Provider(response=response)
+
+    result = _generate_recorded_turn(tmp_path, provider)
+
+    # The agent must receive the actual answer, not a reconstructed response or a paid retry.
+    assert provider.call_count == 1
+    assert result.response is response
+    assert result.response.usage is usage
+    assert result.response.tool_calls == [ToolCall(id="call-1", name="read_file", arguments='{"path":"study.json"}')]
+    assert result.response.reasoning == "Use the available study before choosing a final action."
+    log_path = tmp_path / "logs" / "TASK1_provider_responses.jsonl"
+    events = [ProviderRequestEventV1.model_validate_json(line) for line in log_path.read_text().splitlines()]
+    assert [event.status for event in events] == ["started", "succeeded"]
+    terminal = events[-1]
+    assert terminal.usage_status == "invalid"
+    assert terminal.usage_error
+    assert all(getattr(terminal, field) == 0 for field in _USAGE_COUNTERS)
+    assert terminal.reported_cost_usd == pytest.approx(0.001)
+    assert (terminal.request_attempts, terminal.transient_failure_count, terminal.backoff_seconds) == (3, 2, 6)
+    assert terminal.reasoning == response.reasoning
+    assert terminal.failure_type is None
+
+    payload_path = tmp_path / "logs" / "TASK1_provider_payloads.raw.jsonl"
+    payloads = [json.loads(line) for line in payload_path.read_text().splitlines()]
+    assert len(payloads) == 1
+    assert payloads[0]["request_id"] == terminal.request_id
+    assert payloads[0]["response"] == response.raw_response
+    assert payloads[0]["usage"] == usage
+
+    summary = summarize_provider_telemetry_v1(run_root=tmp_path, coverage=_coverage())
+    assert summary.response_count == 1
+    assert summary.failed_request_count == 0
+    assert summary.responses_with_invalid_usage == 1
+    assert summary.responses_with_usage == 0
+    assert (summary.prompt_tokens, summary.completion_tokens, summary.total_tokens) == (0, 0, 0)
+    assert summary.responses_with_reported_cost == 1
+    assert summary.reported_cost_usd == pytest.approx(0.001)
+    assert (summary.request_attempt_count, summary.transient_failure_count, summary.backoff_seconds) == (3, 2, 6)
+
+
+def test_mixed_usage_summary_keeps_valid_token_totals_and_all_reported_costs(tmp_path: Path) -> None:
+    _generate_recorded_turn(tmp_path, _Provider())
+    response = _response()
+    response.usage = {**response.usage, "reasoning_tokens": 100}
+    _generate_recorded_turn(tmp_path, _Provider(response=response))
+
+    summary = summarize_provider_telemetry_v1(run_root=tmp_path, coverage=_coverage())
+
+    assert summary.response_count == 2
+    assert summary.responses_with_usage == 1
+    assert summary.responses_with_invalid_usage == 1
+    assert (summary.prompt_tokens, summary.completion_tokens, summary.total_tokens) == (10, 3, 13)
+    assert summary.reported_cost_usd == pytest.approx(0.002)
+    assert summary.responses_with_reported_cost == 2
+
+
+@pytest.mark.parametrize("invalid_usage", [False, True])
+def test_unrelated_invalid_metadata_still_fails_with_diagnostics_and_one_raw_payload(
+    tmp_path: Path, invalid_usage: bool
+) -> None:
+    response = _response()
+    response.metadata = replace(response.metadata, reported_cost_usd=-1)
+    if invalid_usage:
+        response.usage = {**response.usage, "cached_tokens": 20}
+    response.raw_response = {"id": "response-1", "usage": dict(response.usage)}
+    provider = _Provider(response=response)
+
+    with pytest.raises(ValidationError, match="reported_cost_usd"):
+        _generate_recorded_turn(tmp_path, provider)
+
+    assert provider.call_count == 1
+    log_path = tmp_path / "logs" / "TASK1_provider_responses.jsonl"
+    events = [ProviderRequestEventV1.model_validate_json(line) for line in log_path.read_text().splitlines()]
+    assert [event.status for event in events] == ["started", "failed"]
+    assert events[-1].exception_type == "ValidationError"
+    assert events[-1].error_detail and "reported_cost_usd" in events[-1].error_detail
+    payloads = [
+        json.loads(line) for line in (tmp_path / "logs" / "TASK1_provider_payloads.raw.jsonl").read_text().splitlines()
+    ]
+    assert len(payloads) == 1
+    assert payloads[0]["response"] == response.raw_response
+    assert payloads[0]["usage"] == response.usage
+
+
+@pytest.mark.parametrize("field", [None, *_USAGE_COUNTERS], ids=["missing-error", *_USAGE_COUNTERS])
+def test_invalid_usage_contract_requires_diagnostic_and_zero_placeholders(tmp_path: Path, field: str | None) -> None:
+    event = succeed_provider_request_v1(_start(tmp_path), elapsed_seconds=0.5, response=_response())
+    payload = event.model_dump() | {key: 0 for key in _USAGE_COUNTERS}
+    payload.update(usage_status="invalid", usage_error="Provider counts are inconsistent.")
+    ProviderRequestEventV1.model_validate(payload)
+    if field is None:
+        del payload["usage_error"]
+    else:
+        payload[field] = 1
+
+    with pytest.raises(ValidationError):
+        ProviderRequestEventV1.model_validate(payload)
+
+
+@pytest.mark.parametrize("state", ["reported", "not_reported", "started", "failed"])
+def test_usage_diagnostic_is_allowed_only_for_invalid_successful_usage(tmp_path: Path, state: str) -> None:
+    handle = _start(tmp_path)
+    if state == "started":
+        event = ProviderRequestEventV1.model_validate_json(handle.path.read_text().splitlines()[0])
+    elif state == "failed":
+        event = fail_provider_request_v1(handle, elapsed_seconds=0.5, failure_type="provider_error")
+    else:
+        response = _response()
+        if state == "not_reported":
+            response.usage = None
+        event = succeed_provider_request_v1(handle, elapsed_seconds=0.5, response=response)
+
+    with pytest.raises(ValidationError):
+        ProviderRequestEventV1.model_validate(event.model_dump() | {"usage_error": "Misplaced diagnostic."})
+
+
+def test_pre_fix_valid_events_and_summaries_remain_readable(tmp_path: Path) -> None:
+    _generate_recorded_turn(tmp_path, _Provider())
+    path = tmp_path / "logs" / "TASK1_provider_responses.jsonl"
+    legacy_events = [json.loads(line) for line in path.read_text().splitlines()]
+    for event in legacy_events:
+        event.pop("usage_error", None)
+    path.write_text("".join(json.dumps(event) + "\n" for event in legacy_events), encoding="utf-8")
+
+    summary = summarize_provider_telemetry_v1(run_root=tmp_path, coverage=_coverage())
+    legacy_summary = summary.model_dump(mode="json")
+    legacy_summary.pop("responses_with_invalid_usage", None)
+    restored = ProviderTelemetrySummaryV1.model_validate_json(json.dumps(legacy_summary))
+
+    assert restored.responses_with_invalid_usage == 0
+    assert restored.responses_with_usage == 1
+    assert restored.total_tokens == 13
+    assert restored.reported_cost_usd == pytest.approx(0.001)

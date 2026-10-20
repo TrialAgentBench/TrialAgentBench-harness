@@ -6,7 +6,7 @@ import json
 import sys
 import time
 from collections.abc import Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Literal
 from uuid import uuid4
@@ -145,11 +145,12 @@ def generate_provider_turn_v1(
                         elapsed_seconds=elapsed,
                         response=response,
                     )
-                except (TypeError, ValueError):
+                except (TypeError, ValueError) as error:
                     fail_provider_request_v1(
                         handle,
                         elapsed_seconds=elapsed,
                         failure_type="provider_error",
+                        error=error,
                     )
                     raise
     if response is None:
@@ -222,32 +223,49 @@ def succeed_provider_request_v1(
     elapsed_seconds: float,
     response: LLMResponse,
 ) -> ProviderRequestEventV1:
-    """Append the successful terminal event for a started request."""
+    """Retain the response before validating accounting; bad usage must not discard an answer."""
 
-    usage = response.usage
-    usage_status: Literal["reported", "not_reported"] = "reported" if usage is not None else "not_reported"
-    prompt_tokens = _required_usage_integer(usage, "prompt_tokens") if usage is not None else 0
-    completion_tokens = _required_usage_integer(usage, "completion_tokens") if usage is not None else 0
-    total_tokens = _required_usage_integer(usage, "total_tokens") if usage is not None else 0
-    event = _request_event(
-        handle,
-        status="succeeded",
-        elapsed_seconds=elapsed_seconds,
-        usage_status=usage_status,
-        prompt_tokens=prompt_tokens,
-        completion_tokens=completion_tokens,
-        total_tokens=total_tokens,
-        response=response,
-        request_attempts=response.metadata.request_attempts,
-        transient_failure_count=response.metadata.transient_failure_count,
-        backoff_seconds=response.metadata.backoff_seconds,
-    )
     _append_provider_payload(
         handle,
         response.raw_response,
         elapsed_seconds=elapsed_seconds,
         attempt_failures=response.metadata.attempt_failures,
+        usage=response.usage,
     )
+    usage = response.usage
+    try:
+        event = _request_event(
+            handle,
+            status="succeeded",
+            elapsed_seconds=elapsed_seconds,
+            usage_status="reported" if usage is not None else "not_reported",
+            prompt_tokens=_required_usage_integer(usage, "prompt_tokens") if usage is not None else 0,
+            completion_tokens=_required_usage_integer(usage, "completion_tokens") if usage is not None else 0,
+            total_tokens=_required_usage_integer(usage, "total_tokens") if usage is not None else 0,
+            response=response,
+            request_attempts=response.metadata.request_attempts,
+            transient_failure_count=response.metadata.transient_failure_count,
+            backoff_seconds=response.metadata.backoff_seconds,
+        )
+    except (TypeError, ValueError) as error:
+        if usage is None:
+            raise
+        # Revalidate everything else unchanged: unrelated metadata failures must still
+        # propagate. Never mutate the response delivered to the agent or invent counts.
+        event = _request_event(
+            handle,
+            status="succeeded",
+            elapsed_seconds=elapsed_seconds,
+            usage_status="invalid",
+            usage_error=_error_detail(error),
+            prompt_tokens=0,
+            completion_tokens=0,
+            total_tokens=0,
+            response=replace(response, usage=None),
+            request_attempts=response.metadata.request_attempts,
+            transient_failure_count=response.metadata.transient_failure_count,
+            backoff_seconds=response.metadata.backoff_seconds,
+        )
     append_jsonl_model(handle.path, event)
     return event
 
@@ -293,9 +311,10 @@ def _append_provider_payload(
     *,
     elapsed_seconds: float,
     attempt_failures: tuple[JsonObject, ...] = (),
+    usage: JsonObject | None = None,
 ) -> None:
     """Retain returned JSON and failed attempts for diagnosis, apart from scored telemetry and request headers."""
-    if payload is None and not attempt_failures:
+    if payload is None and not attempt_failures and usage is None:
         return
     stem = handle.path.stem.replace("provider_responses", "provider_payloads")
     append_jsonl(
@@ -306,6 +325,7 @@ def _append_provider_payload(
             "turn_index": handle.turn_index,
             "elapsed_seconds": elapsed_seconds,
             "response": payload,
+            "usage": usage,
             "attempt_failures": list(attempt_failures),
         },
     )
@@ -370,6 +390,7 @@ def summarize_provider_telemetry_v1(
         failed_request_count=len(failed),
         failure_type_counts=_failure_type_counts(failed),
         responses_with_usage=sum(event.usage_status == "reported" for event in succeeded),
+        responses_with_invalid_usage=sum(event.usage_status == "invalid" for event in succeeded),
         responses_with_response_id=sum(event.response_id is not None for event in succeeded),
         responses_with_reported_cost=sum(event.reported_cost_usd is not None for event in succeeded),
         prompt_tokens=sum(event.prompt_tokens for event in succeeded),
@@ -434,7 +455,7 @@ def _request_event(
     *,
     status: Literal["started", "succeeded", "failed"],
     elapsed_seconds: float | None,
-    usage_status: Literal["not_applicable", "reported", "not_reported"],
+    usage_status: Literal["not_applicable", "reported", "not_reported", "invalid"],
     prompt_tokens: int,
     completion_tokens: int,
     total_tokens: int,
@@ -442,6 +463,7 @@ def _request_event(
     transient_failure_count: int,
     backoff_seconds: float,
     response: LLMResponse | None = None,
+    usage_error: str | None = None,
     failure_type: ProviderFailureType | None = None,
     error: BaseException | None = None,
 ) -> ProviderRequestEventV1:
@@ -471,6 +493,7 @@ def _request_event(
         completion_limit_reached=_completion_limit_reached(metadata.finish_reason if metadata is not None else None),
         created_unix=metadata.created_unix if metadata is not None else None,
         usage_status=usage_status,
+        usage_error=usage_error,
         prompt_tokens=prompt_tokens,
         completion_tokens=completion_tokens,
         total_tokens=total_tokens,

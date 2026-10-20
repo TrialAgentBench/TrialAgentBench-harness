@@ -504,7 +504,12 @@ def run_agent(
             )
 
         for turn in range(max_turns):
-            remaining = deadline.remaining()
+            notice = deadline.model_notice()
+            if notice is not None:
+                messages.append({"role": "user", "content": notice})
+                conversation_log.append({"role": "user", "turn": turn + 1, "content": notice})
+                _persist_conversation()
+                _event(event_type="prompt", conversation_message_index=len(conversation_log) - 1)
             submission_only_turn = turn >= max(0, max_turns - 2)
             if submission_only_turn:
                 reminder = FINAL_TURN_SUBMISSION_REMINDER if turn == max_turns - 1 else SUBMISSION_WINDOW_REMINDER
@@ -533,6 +538,9 @@ def run_agent(
 
             request_tools = _get_submission_tools() if submission_only_turn else tools
             request_tool_names = offered_tool_names_v1(request_tools)
+            required: tuple[int, ...] = (len(messages) - 1,) if submission_only_turn else ()
+            if notice is not None:
+                required = (len(messages) - 2, len(messages) - 1) if submission_only_turn else (len(messages) - 1,)
             turn_result = run_agent_turn_v1(
                 provider=provider,
                 messages=messages,
@@ -540,11 +548,11 @@ def run_agent(
                 active_prompt_index=1,
                 max_context_chars=max_context_chars,
                 provider_capability=provider_capability,
-                required_message_indices=(len(messages) - 1,) if submission_only_turn else (),
+                required_message_indices=required,
                 tools=request_tools,
                 temperature=float(temperature),
                 max_tokens=int(max_tokens),
-                timeout_seconds=remaining,
+                timeout_seconds=deadline.remaining(),
                 tool_choice="required" if submission_only_turn else "auto",
                 provider_log_path=provider_log_path,
                 benchmark="trialeval",

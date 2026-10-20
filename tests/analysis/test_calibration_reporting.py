@@ -11,11 +11,18 @@ import pytest
 from trialagentbench.analysis.calibration import (
     CalibrationConditionV1,
     CalibrationPanelV1,
+    CalibrationSummaryV1,
     CalibrationUnitV1,
+    _provider_metrics,
+    _token_accounting_status,
     _trialdev_turns_used,
     calibration_cells_v1,
     validate_calibration_panel_v1,
 )
+from trialagentbench.io import canonical_payload_sha256
+from trialagentbench.ports import LLMResponse, LLMResponseMetadata
+from trialagentbench.tools.analyse_calibration import _write_rows
+from trialagentbench.util.provider_telemetry import start_provider_request_v1, succeed_provider_request_v1
 
 
 def _unit(
@@ -128,6 +135,117 @@ def test_calibration_resource_totals_preserve_small_contributions() -> None:
         (cell,) = calibration_cells_v1(ordered)
         assert cell.observed_cost_usd == 10000000000000002.0
         assert cell.observed_elapsed_seconds == 10000000000000002.0
+
+
+def test_mixed_usage_remains_explicit_in_calibration_rows_cells_and_csv(tmp_path: Path) -> None:
+    """Good estimates of usage must not make partially missing totals appear complete."""
+    usages = (
+        {"prompt_tokens": 20, "completion_tokens": 5, "total_tokens": 25},
+        {"prompt_tokens": 20, "completion_tokens": 5, "total_tokens": 25, "reasoning_tokens": 6},
+        None,
+    )
+    for index, usage in enumerate(usages):
+        handle = start_provider_request_v1(
+            path=tmp_path / "provider_responses.jsonl",
+            benchmark="trialdev",
+            unit_id=f"td-{index:012d}",
+            phase_id="portfolio_management",
+            step_id="decision-001",
+            turn_index=1,
+            requested_model="example/model",
+            provider_route="openrouter",
+        )
+        succeed_provider_request_v1(
+            handle,
+            elapsed_seconds=2,
+            response=LLMResponse(
+                content="Stop.",
+                usage=usage,
+                metadata=LLMResponseMetadata(reported_cost_usd=0.01),
+            ),
+        )
+
+    metrics = _provider_metrics(tmp_path)
+    units = []
+    for unit_id, (responses, failures, prompt, completion, cost, elapsed, invalid, unreported) in metrics.items():
+        units.append(
+            CalibrationUnitV1.model_validate(
+                _unit(unit_id, execution_status="completed").model_dump()
+                | {
+                    "provider_response_count": responses,
+                    "provider_failure_count": failures,
+                    "provider_invalid_usage_count": invalid,
+                    "provider_unreported_usage_count": unreported,
+                    "token_accounting_status": _token_accounting_status(responses, failures, invalid, unreported),
+                    "analysis_prompt_tokens": prompt,
+                    "analysis_completion_tokens": completion,
+                    "analysis_reported_cost_usd": cost,
+                    "analysis_elapsed_seconds": elapsed,
+                }
+            )
+        )
+
+    assert [unit.token_accounting_status for unit in units] == ["complete", "partial", "partial"]
+    assert [unit.provider_invalid_usage_count for unit in units] == [0, 1, 0]
+    assert [unit.provider_unreported_usage_count for unit in units] == [0, 0, 1]
+    (cell,) = calibration_cells_v1(tuple(units))
+    assert cell.analysis_tokens == 25
+    assert cell.observed_cost_usd == pytest.approx(0.03)
+    assert cell.provider_invalid_usage_count == cell.provider_unreported_usage_count == 1
+    assert cell.token_accounting_status == "partial"
+
+    import csv
+
+    table = tmp_path / "cells.csv"
+    _write_rows(table, (cell,))
+    with table.open() as handle:
+        (row,) = csv.DictReader(handle)
+    assert row["analysis_tokens"] == "25"
+    assert row["provider_invalid_usage_count"] == row["provider_unreported_usage_count"] == "1"
+    assert row["token_accounting_status"] == "partial"
+
+
+@pytest.mark.parametrize(
+    ("responses", "failed", "invalid", "unreported", "expected"),
+    [(0, 0, 0, 0, "unknown"), (1, 0, 0, 0, "complete"), (1, 1, 0, 0, "partial")],
+)
+def test_calibration_does_not_claim_complete_usage_for_missing_or_failed_requests(
+    responses: int, failed: int, invalid: int, unreported: int, expected: str
+) -> None:
+    assert _token_accounting_status(responses, failed, invalid, unreported) == expected
+
+
+def test_calibration_rejects_complete_label_when_usage_is_invalid() -> None:
+    payload = _unit("td-000000000001", execution_status="completed").model_dump()
+    payload.update(
+        provider_invalid_usage_count=1, provider_unreported_usage_count=0, token_accounting_status="complete"
+    )
+    with pytest.raises(ValueError, match="Complete token accounting"):
+        CalibrationUnitV1.model_validate(payload)
+
+
+def test_historical_checksums_and_unknown_usage_are_preserved() -> None:
+    unit = _unit("td-000000000001", execution_status="completed")
+    (cell,) = calibration_cells_v1((unit,))
+    legacy_cell = cell.model_dump(mode="json")
+    for field in ("provider_invalid_usage_count", "provider_unreported_usage_count", "token_accounting_status"):
+        legacy_cell.pop(field, None)
+    legacy = {
+        "schema_id": "ariadne.calibration_summary/v2",
+        "units": [unit.model_dump(mode="json")],
+        "cells": [legacy_cell],
+        "run_count": 1,
+        "scheduled_request_count": 1,
+        "independent_unit_count": 1,
+    }
+    legacy["checksum"] = canonical_payload_sha256(legacy)
+    restored = CalibrationSummaryV1.model_validate(legacy)
+    assert restored.model_dump(mode="json") == legacy
+    assert restored.units[0].token_accounting_status is None
+    assert restored.units[0].provider_invalid_usage_count is None
+    (recomputed,) = calibration_cells_v1(restored.units)
+    assert recomputed.token_accounting_status == "unknown"
+    assert recomputed.provider_invalid_usage_count is None
 
 
 def test_model_noncompletion_remains_in_resource_denominators() -> None:

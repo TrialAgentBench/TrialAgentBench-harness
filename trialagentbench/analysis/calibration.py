@@ -55,6 +55,7 @@ ExecutionStatusV1 = Literal[
     "model_noncompletion",
     "evaluator_error",
 ]
+TokenAccountingStatusV1 = Literal["complete", "partial", "unknown"]
 
 
 class CalibrationUnitV1(BaseModel):
@@ -97,6 +98,12 @@ class CalibrationUnitV1(BaseModel):
     primary_failure_origin: str | None = Field(default=None, min_length=1)
     provider_response_count: int = Field(ge=0)
     provider_failure_count: int = Field(ge=0)
+    # Omitted historical fields remain unknown and are not added to historical checksums.
+    provider_invalid_usage_count: int | None = Field(default=None, ge=0, exclude_if=lambda value: value is None)
+    provider_unreported_usage_count: int | None = Field(default=None, ge=0, exclude_if=lambda value: value is None)
+    token_accounting_status: TokenAccountingStatusV1 | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     analysis_prompt_tokens: int = Field(ge=0)
     analysis_completion_tokens: int = Field(ge=0)
     analysis_reported_cost_usd: float = Field(ge=0.0)
@@ -108,6 +115,15 @@ class CalibrationUnitV1(BaseModel):
 
         if self.provider_failure_count > self.provider_response_count:
             raise ValueError("Provider failures cannot exceed terminal provider responses")
+        missing = (self.provider_invalid_usage_count, self.provider_unreported_usage_count)
+        if all(count is not None for count in missing):
+            missing_total = sum(count for count in missing if count is not None)
+            if missing_total > self.provider_response_count - self.provider_failure_count:
+                raise ValueError("Invalid and unreported usage cannot exceed successful responses")
+        if self.token_accounting_status == "complete" and (
+            missing != (0, 0) or self.provider_failure_count or not self.provider_response_count
+        ):
+            raise ValueError("Complete token accounting requires observed responses with valid usage")
         return self
 
 
@@ -148,6 +164,11 @@ class CalibrationCellV1(BaseModel):
     model_noncompletion: int = Field(ge=0)
     evaluator_error: int = Field(ge=0)
     provider_failures: int = Field(ge=0)
+    provider_invalid_usage_count: int | None = Field(default=None, ge=0, exclude_if=lambda value: value is None)
+    provider_unreported_usage_count: int | None = Field(default=None, ge=0, exclude_if=lambda value: value is None)
+    token_accounting_status: TokenAccountingStatusV1 | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     analysis_tokens: int = Field(ge=0)
     observed_cost_usd: float = Field(ge=0.0)
     observed_elapsed_seconds: float = Field(ge=0.0)
@@ -162,6 +183,12 @@ class CalibrationCellV1(BaseModel):
             raise ValueError("Calibration completions cannot exceed scheduled units")
         if self.independent_unit_count > self.scheduled_requests:
             raise ValueError("Independent units cannot outnumber scheduled requests")
+        if self.token_accounting_status == "complete" and (
+            self.provider_invalid_usage_count != 0
+            or self.provider_unreported_usage_count != 0
+            or self.provider_failures
+        ):
+            raise ValueError("Complete token accounting cannot include unknown, invalid or unreported usage")
         return self
 
 
@@ -344,13 +371,13 @@ def _run_roots(sources: tuple[Path, ...]) -> tuple[Path, ...]:
     return tuple(sorted(roots))
 
 
-def _provider_metrics(run_root: Path) -> dict[str, tuple[int, int, int, int, float, float]]:
+def _provider_metrics(run_root: Path) -> dict[str, tuple[int, int, int, int, float, float, int, int]]:
     grouped: dict[str, list[ProviderRequestEventV1]] = defaultdict(list)
     authoritative_paths, _ = provider_log_paths_v1(run_root)
     for path in authoritative_paths:
         for event in read_provider_terminal_events_v1(path):
             grouped[event.unit_id].append(event)
-    metrics: dict[str, tuple[int, int, int, int, float, float]] = {}
+    metrics: dict[str, tuple[int, int, int, int, float, float, int, int]] = {}
     for unit_id, event_rows in grouped.items():
         events = tuple(event_rows)
         metrics[unit_id] = (
@@ -360,8 +387,19 @@ def _provider_metrics(run_root: Path) -> dict[str, tuple[int, int, int, int, flo
             sum(event.completion_tokens for event in events),
             fsum(event.reported_cost_usd or 0.0 for event in events),
             fsum(event.elapsed_seconds or 0.0 for event in events),
+            sum(event.usage_status == "invalid" for event in events),
+            sum(event.usage_status == "not_reported" for event in events),
         )
     return metrics
+
+
+def _token_accounting_status(
+    response_count: int, failed_count: int, invalid_count: int, unreported_count: int
+) -> TokenAccountingStatusV1:
+    """Describe token totals for recorded requests; failed calls have unknown usage too."""
+    if failed_count or invalid_count or unreported_count:
+        return "partial"
+    return "complete" if response_count else "unknown"
 
 
 def _trialdev_turns_used(task_root: Path) -> int | None:
@@ -392,8 +430,8 @@ def _trialeval_units(run_root: Path) -> list[CalibrationUnitV1]:
         scores = None if record is None else record.scores
         failures = () if scores is None else tuple(scores.outcome.failure_origins)
         execution_status: ExecutionStatusV1 = "not_started" if record is None else record.agent_output.status
-        response_count, provider_failures, prompt, completion, cost, elapsed = provider.get(
-            unit_id, (0, 0, 0, 0, 0.0, 0.0)
+        response_count, provider_failures, prompt, completion, cost, elapsed, invalid, unreported = provider.get(
+            unit_id, (0, 0, 0, 0, 0.0, 0.0, 0, 0)
         )
         reasoning = config.experiment_condition.reasoning
         rows.append(
@@ -431,6 +469,11 @@ def _trialeval_units(run_root: Path) -> list[CalibrationUnitV1]:
                 primary_failure_origin=(failures[0] if failures else None),
                 provider_response_count=response_count,
                 provider_failure_count=provider_failures,
+                provider_invalid_usage_count=invalid,
+                provider_unreported_usage_count=unreported,
+                token_accounting_status=_token_accounting_status(
+                    response_count, provider_failures, invalid, unreported
+                ),
                 analysis_prompt_tokens=prompt,
                 analysis_completion_tokens=completion,
                 analysis_reported_cost_usd=cost,
@@ -455,8 +498,8 @@ def _trialdev_units(run_root: Path) -> list[CalibrationUnitV1]:
         execution_status: ExecutionStatusV1 = (
             ("incomplete_run" if task_root.exists() else "not_started") if run is None else run.execution_status
         )
-        response_count, provider_failures, prompt, completion, cost, elapsed = provider.get(
-            unit_id, (0, 0, 0, 0, 0.0, 0.0)
+        response_count, provider_failures, prompt, completion, cost, elapsed, invalid, unreported = provider.get(
+            unit_id, (0, 0, 0, 0, 0.0, 0.0, 0, 0)
         )
         rows.append(
             CalibrationUnitV1(
@@ -497,6 +540,11 @@ def _trialdev_units(run_root: Path) -> list[CalibrationUnitV1]:
                 ),
                 provider_response_count=response_count,
                 provider_failure_count=provider_failures,
+                provider_invalid_usage_count=invalid,
+                provider_unreported_usage_count=unreported,
+                token_accounting_status=_token_accounting_status(
+                    response_count, provider_failures, invalid, unreported
+                ),
                 analysis_prompt_tokens=prompt,
                 analysis_completion_tokens=completion,
                 analysis_reported_cost_usd=cost,
@@ -606,12 +654,26 @@ def calibration_cells_v1(units: tuple[CalibrationUnitV1, ...]) -> tuple[Calibrat
                 ),
                 evaluator_error=sum(row.execution_status == "evaluator_error" for row in rows),
                 provider_failures=sum(row.provider_failure_count for row in rows),
+                provider_invalid_usage_count=_known_count_sum(tuple(row.provider_invalid_usage_count for row in rows)),
+                provider_unreported_usage_count=_known_count_sum(
+                    tuple(row.provider_unreported_usage_count for row in rows)
+                ),
+                token_accounting_status=(
+                    "partial"
+                    if any(row.token_accounting_status == "partial" for row in rows)
+                    else "complete" if all(row.token_accounting_status == "complete" for row in rows) else "unknown"
+                ),
                 analysis_tokens=sum(row.analysis_prompt_tokens + row.analysis_completion_tokens for row in rows),
                 observed_cost_usd=fsum(row.analysis_reported_cost_usd for row in rows),
                 observed_elapsed_seconds=fsum(row.analysis_elapsed_seconds for row in rows),
             )
         )
     return tuple(cells)
+
+
+def _known_count_sum(counts: tuple[int | None, ...]) -> int | None:
+    """An unknown historical count must not become a measured zero in a combined table."""
+    return None if any(count is None for count in counts) else sum(count for count in counts if count is not None)
 
 
 def summarize_calibration_runs_v1(sources: tuple[Path, ...]) -> CalibrationSummaryV1:

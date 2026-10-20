@@ -205,7 +205,8 @@ class ProviderRequestEventV1(BaseModel):
     finish_reason: str | None = None
     completion_limit_reached: bool | None = None
     created_unix: int | None = Field(default=None, ge=0)
-    usage_status: Literal["not_applicable", "reported", "not_reported"]
+    usage_status: Literal["not_applicable", "reported", "not_reported", "invalid"]
+    usage_error: str | None = Field(default=None, min_length=1, max_length=PROVIDER_ERROR_DETAIL_CHARACTERS)
     prompt_tokens: int = Field(..., ge=0)
     completion_tokens: int = Field(..., ge=0)
     total_tokens: int = Field(..., ge=0)
@@ -235,6 +236,24 @@ class ProviderRequestEventV1(BaseModel):
     def validate_lifecycle_state(self) -> ProviderRequestEventV1:
         """Require complete, status-consistent route and usage telemetry."""
 
+        if self.usage_status == "invalid":
+            if self.status != "succeeded" or self.usage_error is None:
+                raise ValueError("Invalid usage requires a successful response and a usage diagnostic.")
+            if any(
+                (
+                    self.prompt_tokens,
+                    self.completion_tokens,
+                    self.total_tokens,
+                    self.compaction_requests,
+                    self.compaction_input_tokens,
+                    self.compaction_output_tokens,
+                    self.cached_tokens,
+                    self.reasoning_tokens,
+                )
+            ):
+                raise ValueError("Invalid usage must use zero placeholders; original counts belong in the raw log.")
+        elif self.usage_error is not None:
+            raise ValueError("Only invalid usage can contain a usage diagnostic.")
         context_counts = (
             self.source_context_messages,
             self.transmitted_context_messages,
@@ -318,7 +337,7 @@ class ProviderRequestEventV1(BaseModel):
         ):
             raise ValueError("Succeeded provider requests cannot contain failure diagnostics.")
         if self.usage_status == "not_applicable":
-            raise ValueError("Succeeded provider requests require reported or not_reported usage status.")
+            raise ValueError("Succeeded provider requests require reported, not_reported or invalid usage status.")
         if self.usage_status == "not_reported" and any(
             (self.prompt_tokens, self.completion_tokens, self.total_tokens)
         ):
@@ -359,6 +378,7 @@ class ProviderTelemetrySummaryV1(BaseModel):
     failed_request_count: int = Field(..., ge=0)
     failure_type_counts: dict[Literal["timeout", "provider_error", "cancelled"], int]
     responses_with_usage: int = Field(..., ge=0)
+    responses_with_invalid_usage: int = Field(default=0, ge=0)
     responses_with_response_id: int = Field(..., ge=0)
     responses_with_reported_cost: int = Field(..., ge=0)
     prompt_tokens: int = Field(..., ge=0)
@@ -396,6 +416,8 @@ class ProviderTelemetrySummaryV1(BaseModel):
             raise ValueError("Provider failure_type_counts do not equal failed_request_count.")
         if sum(self.archived_failure_type_counts.values()) != self.archived_failed_request_count:
             raise ValueError("Archived failure_type_counts do not equal archived_failed_request_count.")
+        if self.responses_with_usage + self.responses_with_invalid_usage > self.response_count:
+            raise ValueError("Reported and invalid usage counts cannot exceed successful responses.")
         return self
 
 

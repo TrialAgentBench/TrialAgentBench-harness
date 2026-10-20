@@ -7,7 +7,8 @@ import json
 import shutil
 import sys
 import time
-from contextlib import nullcontext
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from functools import partial
@@ -183,6 +184,14 @@ def _runtime_failure_type(error: BaseException | None) -> BenchmarkRuntimeFailur
     return common_runtime_failure_type_v1(error)
 
 
+class TrialDevAgentTimeCheckpoint(BaseModel):
+    """Remaining charged time; null means the original task had no time limit."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+    remaining_seconds: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    charged_operation_in_progress: bool = False
+
+
 class TrialDevAgentCheckpoint(BaseModel):
     """Durable conversation and pending-call position for one authored attempt."""
 
@@ -201,6 +210,8 @@ class TrialDevAgentCheckpoint(BaseModel):
     executed_code: list[dict[str, JsonValue]]
     execution_outputs: list[dict[str, JsonValue]]
     reporting_context: NumericalReportingContext | None
+    # Missing on historical checkpoints, which remain readable for offline audit.
+    agent_time: TrialDevAgentTimeCheckpoint | None = None
 
 
 @dataclass(frozen=True)
@@ -241,6 +252,7 @@ class TrialDevTaskAgent:
     executor_image: str | None = None
     executor_limits: CodeExecutionLimitsV1 | None = None
     deadline_monotonic: float | None = None
+    agent_time_budget_seconds: float | None = None
     messages: list[dict[str, Any]] = field(init=False)
     session: CodeExecutionSession | None = field(init=False)
     _executor_image_id: str = field(init=False)
@@ -258,6 +270,7 @@ class TrialDevTaskAgent:
     step_terminal: bool = field(default=True, init=False)
     _programme_state: TrialDevProgrammeStatus | None = field(default=None, init=False)
     deadline: RuntimeDeadline = field(init=False)
+    _charged_operation_in_progress: bool = field(default=False, init=False)
 
     def __post_init__(self) -> None:
         """Validate budgets and open the isolated analysis session."""
@@ -272,7 +285,11 @@ class TrialDevTaskAgent:
                 raise ValueError(f"{field_name} must be positive")
         self.executor_limits = self.executor_limits or TRIALDEV_RELEASE_BUDGET_V1.code_execution
         self.system_prompt += "\n" + analysis_instructions(self.analysis_language, limits=self.executor_limits)
-        self.deadline = RuntimeDeadline(monotonic=self.deadline_monotonic, label="TrialDev task")
+        self.deadline = RuntimeDeadline(
+            monotonic=self.deadline_monotonic,
+            label="TrialDev task",
+            budget_seconds=self.agent_time_budget_seconds,
+        )
         self.workdir.mkdir(parents=True, exist_ok=True)
         self.report_index = len(tuple((self.workdir.parent / "analysis_sources").glob("submission-*")))
         if self.authored_programme is not None:
@@ -311,6 +328,7 @@ class TrialDevTaskAgent:
                 "max_turns": self.max_turns_per_step,
                 "max_tokens": self.max_tokens,
                 "max_context": self.max_context_chars,
+                "agent_time_budget_seconds": self.agent_time_budget_seconds,
                 "data_view": self.data_view,
                 "seed": None if programme is None else programme.recruitment_seed,
                 "pool": None if ledger is None else ledger.pool_manifest_sha256,
@@ -333,12 +351,30 @@ class TrialDevTaskAgent:
     def _persist_checkpoint(self) -> None:
         if (self.authored_programme is None and self.reporting_context is None) or self.active_prompt_index is None:
             return
-        payload = {name: getattr(self, name) for name in TrialDevAgentCheckpoint.model_fields if name != "identity"}
+        payload = {
+            name: getattr(self, name)
+            for name in TrialDevAgentCheckpoint.model_fields
+            if name not in {"identity", "agent_time"}
+        }
+        payload["agent_time"] = TrialDevAgentTimeCheckpoint(
+            remaining_seconds=self.deadline.snapshot_remaining(),
+            charged_operation_in_progress=self._charged_operation_in_progress,
+        )
         checkpoint = TrialDevAgentCheckpoint.model_validate({"identity": self._checkpoint_identity(), **payload})
         write_json_model(self._checkpoint_path(), checkpoint)
 
     def _restore_checkpoint(self) -> None:
         checkpoint = read_json_model(TrialDevAgentCheckpoint, self._checkpoint_path())
+        if checkpoint.agent_time is None:
+            raise ValueError(
+                "Cannot resume this historical checkpoint: it has no saved agent-time budget. "
+                "Elapsed time cannot be preserved; start a separately labelled new attempt instead."
+            )
+        if checkpoint.agent_time.charged_operation_in_progress and checkpoint.agent_time.remaining_seconds is not None:
+            raise ValueError(
+                "Cannot resume after an unclean interruption during a charged operation: its elapsed agent time "
+                "was not saved. Start a separately labelled new attempt instead of resetting the time budget."
+            )
         if checkpoint.identity != self._checkpoint_identity():
             raise ValueError("Agent checkpoint differs from the requested programme or execution limits")
         if (
@@ -348,8 +384,9 @@ class TrialDevTaskAgent:
         ):
             raise ValueError("Agent checkpoint has an invalid conversation position")
         for name in TrialDevAgentCheckpoint.model_fields:
-            if name != "identity":
+            if name not in {"identity", "agent_time"}:
                 setattr(self, name, getattr(checkpoint, name))
+        self.deadline.restore_remaining(checkpoint.agent_time.remaining_seconds)
         if self.event_log_path is not None:
             if self.event_log_path.is_symlink():
                 raise ValueError("Agent event log cannot be a symbolic link")
@@ -369,6 +406,18 @@ class TrialDevTaskAgent:
             if snapshot.exists():
                 self._restore_scratch(snapshot)
         self.step_terminal = False
+
+    @contextmanager
+    def _charged_work(self) -> Iterator[None]:
+        """Save active work before starting, then its consumed time even on a handled failure."""
+
+        self._charged_operation_in_progress = True
+        self._persist_checkpoint()
+        try:
+            yield
+        finally:
+            self._charged_operation_in_progress = False
+            self._persist_checkpoint()
 
     def close(self) -> None:
         """Close the execution session without changing task outcome state."""
@@ -487,7 +536,7 @@ class TrialDevTaskAgent:
             raise RuntimeError("TrialDev trace context is incomplete")
         first_turn = self.turns_used if self.pending_calls else self.turns_used + 1
         for turn in range(first_turn, self.max_turns_per_step + 1):
-            remaining = self.deadline.remaining()
+            self.deadline.remaining()
             request_tools = [*analysis_tools(self.analysis_language), *WORKSPACE_TOOLS]
             request_tools += (
                 [_SUBMIT_REPORT, _SUBMIT_REPORT_FILE]
@@ -503,7 +552,13 @@ class TrialDevTaskAgent:
                     )
                 request_tools = trialdev_terminal_tools() if allow_terminal else [_SUBMIT_REPORT, _SUBMIT_REPORT_FILE]
             if not self.pending_calls:
-                turn_result = self._provider_turn(tools=request_tools, turn=turn, timeout_seconds=remaining)
+                notice = self.deadline.model_notice()
+                if notice is not None:
+                    self.append_user_message(notice)
+                with self._charged_work():
+                    turn_result = self._provider_turn(
+                        tools=request_tools, turn=turn, timeout_seconds=self.deadline.remaining()
+                    )
                 self.turns_used = turn
                 self.messages.append(turn_result.message)
                 self.pending_calls = tuple(turn_result.response.tool_calls)
@@ -534,7 +589,8 @@ class TrialDevTaskAgent:
                     arguments = parse_tool_arguments(call.arguments, tool_name=call.name)
                     file_accessed = self._file_access(arguments=arguments, tool_name=call.name)
                     if call.name in {_REPORT_TOOL, _REPORT_FILE_TOOL}:
-                        report = self._report_text(call=call, arguments=arguments)
+                        with self._charged_work():
+                            report = self._report_text(call=call, arguments=arguments)
                         accept_incomplete = arguments.get("accept_incomplete", False)
                         if not isinstance(accept_incomplete, bool):
                             raise ToolInputError("accept_incomplete must be a boolean")
@@ -559,7 +615,7 @@ class TrialDevTaskAgent:
                             tool_name=call.name,
                             path=path,
                         )
-                    with self.deadline.harness_work() if call.name in _HARNESS_TOOLS else nullcontext():
+                    with self.deadline.harness_work() if call.name in _HARNESS_TOOLS else self._charged_work():
                         execution = self.deadline.run_blocking(
                             partial(self._execute_checkpointed_tool, call),
                             operation_name=f"TrialDev tool {call.name}",
@@ -640,6 +696,13 @@ class TrialDevTaskAgent:
         turn: int,
         timeout_seconds: float | None,
     ) -> AgentTurn:
+        required: tuple[int, ...] = (len(self.messages) - 1,) if turn == self.max_turns_per_step else ()
+        if self.deadline.monotonic is not None:
+            required = (
+                (len(self.messages) - 2, len(self.messages) - 1)
+                if turn == self.max_turns_per_step
+                else (len(self.messages) - 1,)
+            )
         return run_agent_turn_v1(
             provider=self.provider,
             messages=self.messages,
@@ -647,7 +710,7 @@ class TrialDevTaskAgent:
             active_prompt_index=cast(int, self.active_prompt_index),
             max_context_chars=self.max_context_chars,
             provider_capability=self.provider_capability,
-            required_message_indices=(len(self.messages) - 1,) if turn == self.max_turns_per_step else (),
+            required_message_indices=required,
             tools=tools,
             temperature=0.0,
             max_tokens=self.max_tokens,

@@ -226,7 +226,7 @@ These settings enter the run's recorded condition. Compare models only within on
 | `panel.procedure_assistance` | `output_contract_only`, `unordered_checklist` | `output_contract_only` | Adds an unordered checklist to TrialEval instructions; a panel containing TrialDev must use `output_contract_only` |
 | `panel.trialeval_turns` | integer ≥ 1 | 50 | Turn limit per TrialEval task |
 | `panel.trialdev_turns_per_step` | integer ≥ 1 | 100 | Turn limit per TrialDev submission step |
-| `panel.watchdog_seconds` | integer ≥ 1 | 3,600 TrialEval, 1,800 TrialDev | Wall time per task, including model requests and tools; one value applies to both benchmarks |
+| `panel.watchdog_seconds` | integer ≥ 1 | 3,600 TrialEval, 1,800 TrialDev | Agent time per task, including model requests and interactive tools, but excluding harness-owned checks, replay, readout and decision work; an explicit value applies to both benchmarks |
 | `panel.repetitions` | integer ≥ 1 | 1 | Independent runs per task |
 | `panel.condition_id` | label | `primary` | Names the condition; results compare only within one label |
 
@@ -281,6 +281,30 @@ first use. Run starts the models and checkpoints progress; status reports progre
 resume continues after an interruption. Keep the installed packages, executor image and configuration
 fixed from preparation to finish: resume refuses source or setting drift. Use a new campaign to change
 a model, the tasks or any setting.
+
+Before each bounded model request, the conversation records the overall agent-time allowance and
+remaining seconds. This clock is separate from simulated programme days, the turn limit and the
+per-code-execution timeout. A task can exhaust its agent time before using every turn. Do not increase
+one model's allowance after observing its result; choose a common condition for the comparison.
+
+New TrialDev checkpoints retain the remaining agent time across native resume. Time spent waiting
+between processes is not charged, and resuming does not grant a fresh allowance. A handled
+interruption saves consumed time. Historical checkpoints without an agent-time record, or a hard
+process death during an unfinished charged operation, cannot safely establish the remaining
+allowance: resume fails with an explanation. Keep those artifacts for audit and regrading; any fresh
+diagnostic attempt must be separately labelled and must not replace the original scored attempt.
+
+Provider responses are saved before their token accounting is validated. An otherwise usable
+response with inconsistent usage receives `usage_status: "invalid"` and a `usage_error`, while the
+original response and usage remain in the raw payload log. Its token counters are zero placeholders,
+not a measured zero, and are excluded from valid-usage totals; its returned reasoning and reported
+cost are retained. Provider summaries count these responses, and resource-calibration reports flag
+token accounting as complete, partial or unknown. The HTTP spending guard still rejects malformed
+primary usage and preserves its conservative reservations; this logging change does not bypass that
+guard. Use `requests.sqlite` for campaign spending, including failed-but-charged requests.
+
+The updated reader accepts historical telemetry. Older readers do not accept the new diagnostic
+fields/status, so use the updated harness when consuming outputs produced by this revision.
 
 A pause for spending or rate limits exits with code 3. Request and token windows recover with time;
 an exhausted spending budget does not. Once a model's (or the campaign's) limit refuses a request,
