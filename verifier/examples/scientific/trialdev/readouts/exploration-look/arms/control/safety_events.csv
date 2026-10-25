@@ -1,0 +1,3 @@
+participant_id,event_id,occurrence_time,availability_time,medical_code,coding_system,dictionary_term,severity,serious,seriousness_criteria,resolution_time
+exploration:screen-54,respiratory_infection,291.18696246621585,293.23018976125155,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,304.83580947790017
+exploration:screen-78,respiratory_infection,306.9088561516809,310.44396874081804,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,312.24540287759095

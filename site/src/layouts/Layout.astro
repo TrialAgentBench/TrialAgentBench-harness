@@ -1,0 +1,53 @@
+---
+import "../styles/global.css";
+import { hasResults } from "../lib/results";
+import { project } from "../lib/project";
+import { routeHref, siteFileHref } from "../lib/urls";
+
+interface Props {
+  title: string;
+  description: string;
+  current: "home" | "results" | "benchmark" | "run";
+}
+
+const { title, description, current } = Astro.props;
+const links = [
+  ...(hasResults ? [["results", "Results"] as const] : []),
+  ["benchmark", "Methods and evidence"] as const,
+  ["run", "Run it"] as const,
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fafbf9" />
+    <link rel="icon" href={siteFileHref("favicon.svg")} type="image/svg+xml" />
+    <title>{title === project.name ? title : `${title} · ${project.name}`}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href={routeHref()} aria-current={current === "home" ? "page" : undefined}><strong>{project.name}</strong></a>
+      <nav aria-label="Primary navigation">
+        {links.map(([route, label]) => (
+          <a href={routeHref(route)} aria-current={current === route ? "page" : undefined}>{label}</a>
+        ))}
+        <a href={project.datasetUrl}>Dataset</a>
+        <a href={project.repositoryUrl}>Code</a>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="site-footer">
+      <p><strong>{project.name} {project.version}</strong></p>
+      <div class="footer-links">
+        <a href={project.datasetUrl}>Hugging Face dataset</a>
+        <a href={project.repositoryUrl}>GitHub repository</a>
+        <span>{project.licenseLabel}</span>
+      </div>
+    </footer>
+  </body>
+</html>

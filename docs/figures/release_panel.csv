@@ -1,0 +1,81 @@
+split,policy,band,failing_cells,cells,fails_a_cell
+public,always_naive,declared,7,21,
+public,always_robust,declared,5,21,
+public,follow_plan,declared,3,21,
+public,null_point_plan_interval,declared,20,21,
+public,plan_hedged_3x,declared,20,21,
+public,plan_overconfident_0.3x,declared,21,21,
+public,prior_only,declared,20,21,
+public,scripted_reference,declared,0,21,
+public,always_naive,value x0.5,7,21,
+public,always_robust,value x0.5,5,21,
+public,follow_plan,value x0.5,3,21,
+public,null_point_plan_interval,value x0.5,21,21,
+public,plan_hedged_3x,value x0.5,21,21,
+public,plan_overconfident_0.3x,value x0.5,21,21,
+public,prior_only,value x0.5,21,21,
+public,scripted_reference,value x0.5,0,21,
+public,always_naive,value x2,5,21,
+public,always_robust,value x2,5,21,
+public,follow_plan,value x2,3,21,
+public,null_point_plan_interval,value x2,19,21,
+public,plan_hedged_3x,value x2,19,21,
+public,plan_overconfident_0.3x,value x2,21,21,
+public,prior_only,value x2,19,21,
+public,scripted_reference,value x2,0,21,
+public,always_naive,cost x0.5,5,21,
+public,always_robust,cost x0.5,5,21,
+public,follow_plan,cost x0.5,3,21,
+public,null_point_plan_interval,cost x0.5,19,21,
+public,plan_hedged_3x,cost x0.5,19,21,
+public,plan_overconfident_0.3x,cost x0.5,21,21,
+public,prior_only,cost x0.5,19,21,
+public,scripted_reference,cost x0.5,0,21,
+public,always_naive,cost x2,7,21,
+public,always_robust,cost x2,5,21,
+public,follow_plan,cost x2,3,21,
+public,null_point_plan_interval,cost x2,21,21,
+public,plan_hedged_3x,cost x2,21,21,
+public,plan_overconfident_0.3x,cost x2,21,21,
+public,prior_only,cost x2,21,21,
+public,scripted_reference,cost x2,0,21,
+withheld,always_naive,declared,,,True
+withheld,always_robust,declared,,,True
+withheld,follow_plan,declared,,,True
+withheld,null_point_plan_interval,declared,,,True
+withheld,plan_hedged_3x,declared,,,True
+withheld,plan_overconfident_0.3x,declared,,,True
+withheld,prior_only,declared,,,True
+withheld,scripted_reference,declared,,,False
+withheld,always_naive,value x0.5,,,True
+withheld,always_robust,value x0.5,,,True
+withheld,follow_plan,value x0.5,,,True
+withheld,null_point_plan_interval,value x0.5,,,True
+withheld,plan_hedged_3x,value x0.5,,,True
+withheld,plan_overconfident_0.3x,value x0.5,,,True
+withheld,prior_only,value x0.5,,,True
+withheld,scripted_reference,value x0.5,,,False
+withheld,always_naive,value x2,,,True
+withheld,always_robust,value x2,,,True
+withheld,follow_plan,value x2,,,True
+withheld,null_point_plan_interval,value x2,,,True
+withheld,plan_hedged_3x,value x2,,,True
+withheld,plan_overconfident_0.3x,value x2,,,True
+withheld,prior_only,value x2,,,True
+withheld,scripted_reference,value x2,,,False
+withheld,always_naive,cost x0.5,,,True
+withheld,always_robust,cost x0.5,,,True
+withheld,follow_plan,cost x0.5,,,True
+withheld,null_point_plan_interval,cost x0.5,,,True
+withheld,plan_hedged_3x,cost x0.5,,,True
+withheld,plan_overconfident_0.3x,cost x0.5,,,True
+withheld,prior_only,cost x0.5,,,True
+withheld,scripted_reference,cost x0.5,,,False
+withheld,always_naive,cost x2,,,True
+withheld,always_robust,cost x2,,,True
+withheld,follow_plan,cost x2,,,True
+withheld,null_point_plan_interval,cost x2,,,True
+withheld,plan_hedged_3x,cost x2,,,True
+withheld,plan_overconfident_0.3x,cost x2,,,True
+withheld,prior_only,cost x2,,,True
+withheld,scripted_reference,cost x2,,,False

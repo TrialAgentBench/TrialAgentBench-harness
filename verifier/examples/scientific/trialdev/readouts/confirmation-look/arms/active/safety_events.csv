@@ -1,0 +1,14 @@
+participant_id,event_id,occurrence_time,availability_time,medical_code,coding_system,dictionary_term,severity,serious,seriousness_criteria,resolution_time
+confirmation:screen-2,respiratory_infection,526.0605966933334,527.9420568265585,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,564.2766095288373
+confirmation:screen-24,respiratory_infection,586.6495871584442,588.3334902749003,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,600.0513120168905
+confirmation:screen-56,respiratory_infection,650.5365514021389,651.5915849373699,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,NA
+confirmation:screen-208,respiratory_infection,734.9037715132532,736.6468233967129,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,735.0232411505891
+confirmation:screen-227,respiratory_infection,651.8067619483305,653.1564395493424,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,738.3578589641037
+confirmation:screen-359,respiratory_infection,672.4593781407285,676.6448480232477,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,NA
+confirmation:screen-380,respiratory_infection,703.3320291044058,704.5103455148848,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,NA
+confirmation:screen-514,respiratory_infection,638.3391361338106,639.681223120391,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,656.6310493655167
+confirmation:screen-521,respiratory_infection,698.8747055891123,702.8523855808304,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,NA
+confirmation:screen-527,respiratory_infection,626.303691055898,630.2764716075139,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,630.2284922155798
+confirmation:screen-586,respiratory_infection,760.5073153697906,761.5338862952361,Upper respiratory tract infection,Protocol AESI dictionary v1,Upper respiratory tract infection,mild_or_moderate,False,,763.3270962684396
+confirmation:screen-19,urinary_infection,661.7884644597233,662.9734432988146,Urinary tract infection,Protocol AESI dictionary v1,Urinary tract infection,mild_or_moderate,False,,682.1614105765487
+confirmation:screen-29,urinary_infection,641.5167771766426,643.2067953677822,Urinary tract infection,Protocol AESI dictionary v1,Urinary tract infection,mild_or_moderate,False,,675.6078530659273
