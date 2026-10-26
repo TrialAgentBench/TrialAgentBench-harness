@@ -391,6 +391,7 @@ def run_agent(
     max_context_chars: int = TRIALEVAL_RELEASE_BUDGET_V1.maximum_context_characters,
     provider_capability: ProviderModelCapabilityV1 | None = None,
     analysis_language: AnalysisMode = "python_r",
+    provider_unavailability_policy: Literal["charge_all_v1", "defer_unanswered_v1"] = "charge_all_v1",
 ) -> dict[str, object]:
     """
     Run the analysis agent against a benchmark item.
@@ -409,7 +410,9 @@ def run_agent(
     if analysis_specification is None:
         analysis_specification = item.analysis_specification
     executor_limits = executor_limits or TRIALEVAL_RELEASE_BUDGET_V1.code_execution
-    deadline = RuntimeDeadline.after(max_elapsed_seconds, label="TrialEval item")
+    deadline = RuntimeDeadline.after(
+        max_elapsed_seconds, label="TrialEval item", provider_unavailability_policy=provider_unavailability_policy
+    )
 
     system_prompt = _build_system_prompt(
         item,

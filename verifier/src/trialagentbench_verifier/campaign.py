@@ -34,6 +34,7 @@ from trialagentbench_verifier.io import (
 )
 from trialagentbench_verifier.numerical import NumericalReplay
 from trialagentbench_verifier.numerical_scoring import bounded_recovery_summary
+from trialagentbench_verifier.run_contracts import ProviderUnavailabilityReceiptV1
 from trialagentbench_verifier.scorer import (
     CurrentScorer,
     ScorerIdentityV1,
@@ -62,6 +63,7 @@ AttemptOutcome = Literal[
     "completed",
     "not_started",
     "provider_stop",
+    "provider_unavailable",
     "model_noncompletion",
     "malformed_output",
     "replay_failure",
@@ -80,9 +82,10 @@ MetricDomain = Literal[
     "plan_execution",
 ]
 # Infrastructure outcomes are the only ones a primary may be retried after, exactly once. Model
-# noncompletion, malformed output, provider stops and budget exhaustion are scored model outcomes.
+# noncompletion, malformed output, legacy provider stops and budget exhaustion are scored outcomes.
+# Only the new receipt-bound, prospectively declared provider-unavailable outcome is recoverable.
 INFRASTRUCTURE_ATTEMPT_OUTCOMES_V1: frozenset[AttemptOutcome] = frozenset(
-    {"evaluator_error", "pre_run_identity_exclusion"}
+    {"evaluator_error", "pre_run_identity_exclusion", "provider_unavailable"}
 )
 AnalysisStatus = Literal[
     "complete", "unavailable_due_unscored_primary_attempts", "unavailable_due_insufficient_independent_worlds"
@@ -354,6 +357,10 @@ def _attempt_outcome(
     completion: _ComponentV1,
     reproducibility: _ComponentV1,
 ) -> AttemptOutcome:
+    # A partial executable answer cannot erase a proven interruption before the
+    # agent's final submission. Receipt/policy validation occurs at source binding.
+    if failure_type == "provider_unavailable":
+        return "provider_unavailable"
     if completion.status == "satisfied":
         return "completed" if reproducibility.status == "satisfied" else "replay_failure"
     if agent_status == "max_turns_reached" or failure_type == "turn_limit_no_submission":
@@ -568,6 +575,23 @@ def _campaign_row(
     failure = agent.get("failure_type")
     if failure is not None and not isinstance(failure, str):
         raise ValueError("agent failure type must be a string or null")
+    receipt_payload = agent.get("provider_unavailability")
+    if (failure == "provider_unavailable") != (receipt_payload is not None):
+        raise ValueError(
+            "Provider unavailability requires its retained request receipt, and no other outcome may carry one"
+        )
+    if receipt_payload is not None:
+        receipt = ProviderUnavailabilityReceiptV1.model_validate(receipt_payload)
+        receipt.require_run_binding(
+            item_id=item_id,
+            model=model,
+            policy=_string(
+                _object(run.get("retry"), label="run_config.retry").get("unavailability_policy"),
+                label="unavailability_policy",
+            ),
+        )
+        if agent.get("status") != "failed" or agent.get("report") is not None:
+            raise ValueError("Provider unavailability cannot replace a returned model result")
     return TrialEvalGradedItemRowV1(
         scorer=scorer,
         release_id=_string(scores.get("release_id"), label="scores.release_id"),
@@ -1070,6 +1094,7 @@ class TrialEvalAttemptOutcomeCountsV1(_Model):
     completed: int = Field(ge=0)
     not_started: int = Field(ge=0)
     provider_stop: int = Field(ge=0)
+    provider_unavailable: int = Field(default=0, ge=0, exclude_if=lambda value: value == 0)
     model_noncompletion: int = Field(ge=0)
     malformed_output: int = Field(ge=0)
     replay_failure: int = Field(ge=0)
@@ -1200,8 +1225,8 @@ def _validate_retry_ledger(bound: tuple[_BoundAttempt, ...]) -> dict[str, _Bound
 def _recovering_retries(bound: tuple[_BoundAttempt, ...]) -> dict[str, _BoundAttempt]:
     """Map each infrastructure-failed primary to its retry when that retry ran without an infrastructure fault.
 
-    A retry is admitted only after its primary's evaluator error or pre-run
-    identity exclusion. Outcomes are checked once either attempt has a graded
+    A retry is admitted only after its primary's evaluator error, pre-run
+    identity exclusion or receipt-bound prospective provider unavailability. Outcomes are checked once either attempt has a graded
     row, so a prospective plan without outcomes still validates.
     """
     by_id = _validate_retry_ledger(bound)
@@ -1251,6 +1276,7 @@ def summarize_trial_eval_attempt_ledger_v1(bound: tuple[_BoundAttempt, ...]) -> 
             completed=outcomes["completed"],
             not_started=outcomes["not_started"],
             provider_stop=outcomes["provider_stop"],
+            provider_unavailable=outcomes["provider_unavailable"],
             model_noncompletion=outcomes["model_noncompletion"],
             malformed_output=outcomes["malformed_output"],
             replay_failure=outcomes["replay_failure"],
@@ -3304,13 +3330,14 @@ def render_trial_eval_campaign_analysis_v1(report: TrialEvalCampaignAnalysisV1) 
         f"Primary attempts: {report.inventory.primary_attempts}; stochastic duplicates: {report.inventory.stochastic_duplicate_attempts}; retries: {report.ledger.retry_attempts}.",
         (
             f"Outcomes — completed {outcomes.completed}; not started {outcomes.not_started}; provider stops "
-            f"{outcomes.provider_stop}; model noncompletion {outcomes.model_noncompletion}; malformed "
+            f"{outcomes.provider_stop}; provider unavailable {outcomes.provider_unavailable}; model noncompletion {outcomes.model_noncompletion}; malformed "
             f"{outcomes.malformed_output}; replay failures {outcomes.replay_failure}; budget exhaustion "
             f"{outcomes.budget_exhausted}; evaluator errors {outcomes.evaluator_error}; pre-run exclusions "
             f"{outcomes.pre_run_identity_exclusion}."
         ),
         (
-            "Retry policy: a primary that ended in an evaluator error or pre-run identity exclusion is retried once; "
+            "Retry policy: a primary that ended in an evaluator error, pre-run identity exclusion, or receipt-bound "
+            "provider unavailability under the prospective defer_unanswered_v1 condition is retried once; "
             "a retry free of infrastructure faults replaces it. Model outcomes are never retried. "
             f"Recovered primaries: {len(report.ledger.recovered_primary_attempt_ids)}; "
             f"unresolved: {len(report.ledger.primary_scientifically_unscored_attempt_ids)}."

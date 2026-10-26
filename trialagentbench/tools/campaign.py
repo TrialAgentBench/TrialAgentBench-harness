@@ -397,6 +397,8 @@ def _native_arguments(
         str(model.retry.maximum_attempts),
         "--provider-retry-base-delay-seconds",
         str(model.retry.base_delay_seconds),
+        "--provider-unavailability-policy",
+        model.retry.unavailability_policy,
         "--output-dir" if benchmark == "trialeval" else "--output-root",
         str(output),
     ]
@@ -448,9 +450,14 @@ def _native_arguments(
 
 
 def _invoke(benchmark: str, arguments: list[str]) -> None:
-    from trialagentbench.cli import main
+    # Keep typed route-local deferrals visible to the campaign scheduler. The
+    # public CLI renders provider errors safely, but would erase their type here.
+    if benchmark == "trialeval":
+        from trialagentbench.tools.run.trialeval import main
+    else:
+        from trialagentbench.tools.run.canonical_trialdev import main
 
-    if main(["run", benchmark, *arguments]) != 0:
+    if main(arguments) != 0:
         raise RuntimeError(f"Native {benchmark} run stopped; retain its checkpoints and resume the campaign")
 
 
@@ -947,6 +954,20 @@ def run_campaign(root: Path) -> None:
                     )
 
             with executor_session_capacity(configuration.operations.executor_capacity):
+                if configuration.dispatch is not None:
+                    from trialagentbench.util.campaign_dispatch import dispatch_campaign
+
+                    def execute_slice(run: CampaignRunV1, task_ids: tuple[str, ...]) -> None:
+                        flags = [flag for task_id in task_ids for flag in ("--dispatch-task-id", task_id)]
+                        _invoke(
+                            run.benchmark,
+                            [*arguments(run), "--campaign-root", str(root), "--campaign-job", run.job_id, *flags],
+                        )
+
+                    dispatch_campaign(
+                        root=root, plan=plan, execute=execute_slice, cancelled=lambda: control.set_cancelled(True)
+                    )
+                    return
                 run_bounded_tasks(
                     plan.runs,
                     execute,

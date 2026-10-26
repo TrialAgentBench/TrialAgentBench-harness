@@ -977,6 +977,7 @@ def run_trialdev_task(
     analysis_language: AnalysisMode = "python_r",
     resume: bool = False,
     verbose: bool = False,
+    provider_unavailability_policy: Literal["charge_all_v1", "defer_unanswered_v1"] = "charge_all_v1",
 ) -> TrialDevTaskRunV1:
     """Run one evidence or sequential task with raw-report and deterministic grade custody."""
 
@@ -1053,6 +1054,7 @@ def run_trialdev_task(
         analysis_language=analysis_language,
         deadline_monotonic=time.monotonic() + watchdog_seconds,
         agent_time_budget_seconds=watchdog_seconds,
+        provider_unavailability_policy=provider_unavailability_policy,
         max_context_chars=max_context_characters,
         provider_capability=provider_capability,
         authored_programme=programme,

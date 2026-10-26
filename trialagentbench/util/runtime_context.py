@@ -10,7 +10,7 @@ from collections.abc import Callable, Iterator, Sequence
 from concurrent.futures import ThreadPoolExecutor, wait
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from typing import TypeVar
+from typing import Literal, TypeVar
 
 from trialagentbench.ports.code_execution import CodeExecutionSession
 from trialagentbench.ports.llm_provider import (
@@ -55,6 +55,7 @@ class RuntimeDeadline:
     monotonic: float | None
     label: str
     budget_seconds: float | None = None
+    provider_unavailability_policy: Literal["charge_all_v1", "defer_unanswered_v1"] = "charge_all_v1"
     _paused_at: float | None = field(default=None, init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -64,9 +65,17 @@ class RuntimeDeadline:
             raise ValueError("Deadline must be finite when provided.")
         if self.budget_seconds is not None and (not math.isfinite(self.budget_seconds) or self.budget_seconds <= 0.0):
             raise ValueError("Deadline duration must be finite and positive when provided.")
+        if self.provider_unavailability_policy not in {"charge_all_v1", "defer_unanswered_v1"}:
+            raise ValueError("Unknown provider-unavailability clock policy.")
 
     @classmethod
-    def after(cls, seconds: float | None, *, label: str) -> RuntimeDeadline:
+    def after(
+        cls,
+        seconds: float | None,
+        *,
+        label: str,
+        provider_unavailability_policy: Literal["charge_all_v1", "defer_unanswered_v1"] = "charge_all_v1",
+    ) -> RuntimeDeadline:
         """Construct a deadline from a positive duration."""
 
         if seconds is not None and seconds <= 0.0:
@@ -75,7 +84,22 @@ class RuntimeDeadline:
             monotonic=time.monotonic() + seconds if seconds is not None else None,
             label=label,
             budget_seconds=seconds,
+            provider_unavailability_policy=provider_unavailability_policy,
         )
+
+    def exclude_unanswered_transport(self, elapsed_seconds: float) -> None:
+        """Exclude only a recorded opted-in failed request, never refill prior work.
+
+        Called once at the provider boundary before persisting a deferred checkpoint.
+        Successful response latency, interactive tools and task-deadline cutoffs retain
+        their usual charge. The caller records the excluded interval in request telemetry.
+        """
+        if self.provider_unavailability_policy != "defer_unanswered_v1":
+            raise ValueError("The frozen clock policy does not exclude unavailable-provider time.")
+        if not math.isfinite(elapsed_seconds) or elapsed_seconds < 0.0 or self._paused_at is not None:
+            raise ValueError("Provider clock exclusion requires a finite active request interval.")
+        if self.monotonic is not None:
+            self.monotonic += elapsed_seconds
 
     def snapshot_remaining(self) -> float | None:
         """Record the remaining budget, including zero, without failing during cleanup."""
@@ -104,13 +128,19 @@ class RuntimeDeadline:
         if remaining is None:
             return None
         total = "" if self.budget_seconds is None else f"{self.budget_seconds:g} seconds total; "
+        availability = (
+            "Under defer_unanswered_v1, a failed transport request with no returned model response is deferred; "
+            "its recorded waiting time is excluded. Successful response waiting time still counts. "
+            if self.provider_unavailability_policy == "defer_unanswered_v1"
+            else ""
+        )
         return (
             f"[Agent-time budget: {total}{math.floor(remaining)} seconds remaining. "
             "Model requests and analysis/workspace tools consume this time. Harness-owned analysis checks, "
             "saved-script replays, all programme-tool execution (previews, study starts, adaptations, waiting, "
             "readouts and terminal decisions) and local bookkeeping do not. This is separate from simulated programme days "
             "and the turn limit; time can expire before all turns are used. "
-            "Submit your response or terminal development decision before time runs out.]"
+            f"{availability}Submit your response or terminal development decision before time runs out.]"
         )
 
     def remaining(self) -> float | None:

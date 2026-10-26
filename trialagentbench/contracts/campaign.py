@@ -7,6 +7,9 @@ from trialagentbench_verifier.campaign_contracts import (
     CampaignConfigurationV1 as CampaignConfigurationV1,
 )
 from trialagentbench_verifier.campaign_contracts import (
+    CampaignDispatchV1 as CampaignDispatchV1,
+)
+from trialagentbench_verifier.campaign_contracts import (
     CampaignModelV1 as CampaignModelV1,
 )
 from trialagentbench_verifier.campaign_contracts import (
@@ -20,4 +23,7 @@ from trialagentbench_verifier.campaign_contracts import (
 )
 from trialagentbench_verifier.campaign_contracts import (
     CampaignRunV1 as CampaignRunV1,
+)
+from trialagentbench_verifier.campaign_contracts import (
+    CampaignTaskPriorityV1 as CampaignTaskPriorityV1,
 )

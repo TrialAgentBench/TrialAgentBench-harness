@@ -214,12 +214,29 @@ def test_budget_capped_campaign_finishes_with_paired_comparisons(
     assert (comparisons / "trialdev/development-results.json").read_bytes() == retained
 
 
+@pytest.mark.parametrize(
+    "failure_kind",
+    [
+        "executor_loss",
+        "provider_unavailable",
+        "provider_unavailable_after_analysis",
+        "generic_provider_error",
+        "model_contract_error",
+    ],
+)
 def test_infrastructure_failed_primary_is_retried_once_and_recovered(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str], failure_kind: str
 ) -> None:
-    """A lost execution session is retried once in its own hashed run; the retry replaces the primary."""
+    """Typed infrastructure faults retain their primary and recover through native grading/retry once."""
     from trialagentbench_verifier.campaign import TrialEvalCampaignAnalysisV1, TrialEvalCampaignPlanV1
     from trialagentbench_verifier.executor import CodeExecutionSessionTerminated
+
+    from trialagentbench.ports.llm_provider import (
+        LLMResponse,
+        ProviderRequestError,
+        ProviderUnavailableError,
+        RetryTelemetry,
+    )
 
     release = tmp_path / "development"
     manifest_sha256, image_id = _development_inputs(release, trialdev_evaluator=None)
@@ -231,12 +248,25 @@ def test_infrastructure_failed_primary_is_retried_once_and_recovered(
                 "input_mode": "development",
                 "expected_release_manifest_sha256": manifest_sha256,
                 "executor_image_id": image_id,
-                "models": [_model("python", 1000)],
+                "models": [
+                    {
+                        **_model("python", 1000),
+                        "retry": {
+                            "unavailability_policy": "defer_unanswered_v1"
+                            if failure_kind != "executor_loss"
+                            else "charge_all_v1"
+                        },
+                    }
+                ],
                 "panel": {
                     "benchmarks": ["trialeval"],
                     "trialeval_tasks": [TRIALEVAL_TASK],
                     "trialeval_turns": 12,
                     "condition_id": "infrastructure-retry-lifecycle",
+                },
+                "dispatch": {
+                    "task_order": [{"benchmark": "trialeval", "task_id": TRIALEVAL_TASK}],
+                    "defer_seconds": 1,
                 },
                 "operations": {
                     "model_workers": 1,
@@ -255,15 +285,38 @@ def test_infrastructure_failed_primary_is_retried_once_and_recovered(
 
         def __init__(self, provider: object) -> None:
             self._provider = provider
+            self._calls = 0
 
         def __getattr__(self, name: str) -> object:
             return getattr(self._provider, name)
 
         def generate_turn(self, *args: object, **kwargs: object) -> object:
+            self._calls += 1
+            if failure_kind == "model_contract_error":
+                return LLMResponse(model_outcome="malformed_response")
+            if failure_kind == "generic_provider_error":
+                if self._calls == 1:
+                    return self._provider.generate_turn(*args, **kwargs)
+                raise ProviderRequestError(
+                    "generic failure after a received response", retry_telemetry=RetryTelemetry(1, 1, 0)
+                )
+            if failure_kind.startswith("provider_unavailable"):
+                if failure_kind == "provider_unavailable_after_analysis" and self._calls == 1:
+                    return self._provider.generate_turn(*args, **kwargs)
+                control = self._provider._control
+                assert control.try_reserve(model=control.model, now=time.time(), tokens=1, micro_usd=1) is not None
+                raise ProviderUnavailableError(
+                    "controlled unanswered provider outage",
+                    retry_telemetry=RetryTelemetry(1, 1, 0),
+                    failure_kind="connection",
+                    unanswered_transport_seconds=0,
+                )
             raise CodeExecutionSessionTerminated("controlled executor session loss")
 
     def provider(model: str, **kwargs: object) -> object:
         metered = _metered(model, **kwargs)  # type: ignore[arg-type]
+        # The scripted implementation is unchanged; telemetry must identify the declared test route.
+        metered.model = model
         if lost_sessions:
             return metered
         lost_sessions.append(model)
@@ -272,16 +325,65 @@ def test_infrastructure_failed_primary_is_retried_once_and_recovered(
     monkeypatch.setattr(trialeval, "get_provider", provider)
     root = tmp_path / "campaign"
     assert campaign.main(["prepare", "--config", str(config), "--campaign", str(root)]) == 0
-    assert campaign.main(["run", "--campaign", str(root)]) == 0
+    if failure_kind == "generic_provider_error":
+        with pytest.raises(ProviderRequestError):
+            campaign.main(["run", "--campaign", str(root)])
+        assert campaign.main(["resume", "--campaign", str(root)]) == 0
+    else:
+        assert campaign.main(["run", "--campaign", str(root)]) == 0
     assert lost_sessions == ["smoke-zero-python"]
+    primary_run = campaign.load_campaign(root).runs[0]
+    primary_path = root / primary_run.relative_run_root / "items" / f"{TRIALEVAL_TASK}.json"
+    primary_bytes = primary_path.read_bytes()
+    if failure_kind.startswith("provider_unavailable"):
+        saved = json.loads(primary_bytes)["agent_output"]
+        assert saved["failure_type"] == "provider_unavailable"
+        assert saved["provider_unavailability"]["request_event"]["exception_type"] == "ProviderUnavailableError"
+        assert saved["provider_unavailability"]["request_event"]["response_received"] is False
+        time.sleep(1.05)  # New command is eligible after the configured route cooldown.
+    if failure_kind in {"generic_provider_error", "model_contract_error"}:
+        assert json.loads(primary_bytes)["agent_output"]["failure_type"] == (
+            "provider_error" if failure_kind == "generic_provider_error" else "contract_error"
+        )
+        with sqlite3.connect(root / "requests.sqlite") as connection:
+            original_ledger = connection.execute("SELECT COUNT(*), SUM(charge) FROM attempts").fetchone()
+        for _ in range(2):
+            assert campaign.main(["retry", "--campaign", str(root)]) == 0
+            assert len(campaign.load_campaign(root).runs) == 1
+            assert primary_path.read_bytes() == primary_bytes
+            with sqlite3.connect(root / "requests.sqlite") as connection:
+                assert connection.execute("SELECT COUNT(*), SUM(charge) FROM attempts").fetchone() == original_ledger
+        assert campaign.main(["finish", "--campaign", str(root)]) == 0
+        analysis = TrialEvalCampaignAnalysisV1.model_validate_json(
+            (root / "comparisons/trialeval/analysis.json").read_bytes()
+        )
+        assert analysis.ledger.recovered_primary_attempt_ids == ()
+        assert analysis.ledger.primary_scientifically_unscored_attempt_ids == ()
+        # The teaching provider already wrote valid estimates before its generic failure.
+        # Legacy native grading retains those reproduced numbers; the failed primary
+        # remains byte-for-byte and no second conversation is started or retried.
+        assert (
+            getattr(
+                analysis.ledger.outcomes,
+                "completed" if failure_kind == "generic_provider_error" else "malformed_output",
+            )
+            == 1
+        )
+        return
     capsys.readouterr()
     assert campaign.main(["retry", "--campaign", str(root)]) == 0
     assert "python-trialeval-1: retrying 1 infrastructure-failed primaries" in capsys.readouterr().out
     plan = campaign.load_campaign(root)
     assert [run.retry_of_job_id for run in plan.runs] == [None, "python-trialeval-1"]
+    with sqlite3.connect(root / "requests.sqlite") as connection:
+        before_repeat = connection.execute("SELECT COUNT(*), SUM(charge) FROM attempts").fetchone()
+    assert primary_path.read_bytes() == primary_bytes
     # A repeated retry resumes the existing retry run and never schedules a second one.
     assert campaign.main(["retry", "--campaign", str(root)]) == 0
     assert campaign.load_campaign(root) == plan
+    with sqlite3.connect(root / "requests.sqlite") as connection:
+        assert connection.execute("SELECT COUNT(*), SUM(charge) FROM attempts").fetchone() == before_repeat
+    assert primary_path.read_bytes() == primary_bytes
 
     assert campaign.main(["finish", "--campaign", str(root)]) == 0
     combined = TrialEvalCampaignPlanV1.model_validate_json((root / "comparisons/trialeval/plan.json").read_bytes())
@@ -295,7 +397,8 @@ def test_infrastructure_failed_primary_is_retried_once_and_recovered(
     assert analysis.unavailable_reason == "insufficient_independent_worlds"
     assert analysis.ledger.recovered_primary_attempt_ids == (primary.attempt_id,)
     assert analysis.ledger.primary_scientifically_unscored_attempt_ids == ()
-    assert (analysis.ledger.outcomes.evaluator_error, analysis.ledger.outcomes.completed) == (1, 1)
+    expected_fault = "provider_unavailable" if failure_kind.startswith("provider_unavailable") else "evaluator_error"
+    assert (getattr(analysis.ledger.outcomes, expected_fault), analysis.ledger.outcomes.completed) == (1, 1)
     with pytest.raises(ValueError, match="must precede campaign finish"):
         campaign.retry_campaign(root)
 

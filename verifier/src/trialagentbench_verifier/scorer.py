@@ -13,7 +13,7 @@ from pydantic import AfterValidator, BaseModel, ConfigDict, Field
 SCORER_VERSION = "decimal12-half-even-aggregate-recovery-v1"
 # The standalone verifier cannot import the harness. Refresh this declaration
 # with harness_scoring_source_sha256_v1() whenever harness Python sources change.
-SCORER_HARNESS_SOURCE_SHA256 = "79ea69c226670034831e4ffe38de0e049dcd842f36a4f79822dbe94867377d41"
+SCORER_HARNESS_SOURCE_SHA256 = "e479e85f0b1be3da135735e1934e7823c902acd044ec3a965c9d388ddaa7a3a3"
 
 
 class ScorerIdentityV1(BaseModel):

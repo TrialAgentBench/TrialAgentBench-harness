@@ -266,6 +266,23 @@ class LeaderboardRowV1(_Model):
         return self
 
 
+class CampaignTaskPriorityV1(_Model):
+    """One prospective task priority; scheduling never changes the scientific panel."""
+
+    benchmark: Literal["trialeval", "trialdev"]
+    task_id: str = Field(min_length=1)
+
+
+class CampaignDispatchV1(_Model):
+    """Bounded, resumable execution slices within the full frozen native runs."""
+
+    task_order: tuple[CampaignTaskPriorityV1, ...] = Field(min_length=1)
+    tasks_per_slice: int = Field(default=1, ge=1)
+    defer_seconds: float = Field(default=300, gt=0)
+    maximum_provider_deferrals_per_task: int = Field(default=3, ge=1)
+    maximum_consecutive_provider_deferrals: int = Field(default=3, ge=1)
+
+
 class CampaignConfigurationV1(_Model):
     """One public configuration for preparation, execution, recovery and finishing."""
 
@@ -280,6 +297,7 @@ class CampaignConfigurationV1(_Model):
     panel: CampaignPanelV1 = Field(default_factory=CampaignPanelV1)
     operations: CampaignOperationsV1
     analysis: CampaignAnalysisV1 = Field(default_factory=CampaignAnalysisV1)
+    dispatch: CampaignDispatchV1 | None = Field(default=None, exclude_if=lambda value: value is None)
 
     @model_validator(mode="after")
     def validate_models(self) -> Self:
@@ -288,6 +306,22 @@ class CampaignConfigurationV1(_Model):
             raise ValueError("Campaign model names must be unique")
         if len({model.model for model in self.models}) != len(self.models):
             raise ValueError("Declare one route per model per campaign; route ablations use separate conditions")
+        if self.dispatch is not None:
+            priorities = tuple((row.benchmark, row.task_id) for row in self.dispatch.task_order)
+            expected = {
+                (benchmark, task_id)
+                for benchmark in self.panel.benchmarks
+                for task_id in (self.panel.trialeval_tasks if benchmark == "trialeval" else self.panel.trialdev_tasks)
+            }
+            if any(
+                not (self.panel.trialeval_tasks if benchmark == "trialeval" else self.panel.trialdev_tasks)
+                for benchmark in self.panel.benchmarks
+            ):
+                raise ValueError("Dispatch requires explicit full task IDs for every benchmark")
+            if len(set(priorities)) != len(priorities) or set(priorities) != expected:
+                raise ValueError("Dispatch order must cover the complete panel exactly once")
+            if self.dispatch.tasks_per_slice > self.operations.task_workers:
+                raise ValueError("Dispatch tasks_per_slice must fit task_workers")
         if any(model.reservation_micro_usd > self.operations.spend_limit_micro_usd for model in self.models):
             raise ValueError("One request cannot fit the campaign spending limit")
         for route in {model.upstream_provider for model in self.models}:

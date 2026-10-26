@@ -6,6 +6,7 @@ Offline grading and deterministic analysis workflows must not import this module
 
 from __future__ import annotations
 
+import json
 import os
 import re
 import sqlite3
@@ -30,6 +31,7 @@ from trialagentbench.ports import (
     LLMResponse,
     LLMResponseMetadata,
     ProviderRequestError,
+    ProviderUnavailableError,
     RetryTelemetry,
     RuntimeDeadlineExceeded,
     ToolCall,
@@ -197,6 +199,36 @@ def _is_attributed_openrouter_upstream_error(
     return isinstance(metadata, dict) and _same_provider_name(metadata.get("provider_name"), expected_provider)
 
 
+def _has_model_response_evidence(value: object, *, depth: int = 0) -> bool:
+    """Recognize ambiguous model output/usage hidden inside an SDK HTTP error body."""
+    if depth > 12:
+        return True  # An uninspectably nested payload cannot establish an unanswered request.
+    if isinstance(value, dict):
+        if {
+            "choices",
+            "output",
+            "output_text",
+            "usage",
+            "reasoning",
+            "reasoning_details",
+            "prompt_tokens",
+            "completion_tokens",
+            "input_tokens",
+            "output_tokens",
+        }.intersection(value):
+            return True
+        return any(_has_model_response_evidence(child, depth=depth + 1) for child in value.values())
+    if isinstance(value, list):
+        return any(_has_model_response_evidence(child, depth=depth + 1) for child in value)
+    if isinstance(value, str) and value.lstrip().startswith(("{", "[")):
+        try:
+            decoded = json.loads(value)
+        except (ValueError, RecursionError):
+            return True  # Malformed nested JSON is ambiguous, not proof of no returned output.
+        return _has_model_response_evidence(decoded, depth=depth + 1)
+    return False
+
+
 def _retry_after(error: object) -> float:
     """Honor an HTTP Retry-After delay without extending the caller's deadline."""
     response = getattr(error, "response", None)
@@ -221,6 +253,8 @@ def _retry(
     timeout_seconds: float | None = None,
     pause_on_rate_limit: bool = False,
     credentials: tuple[str, ...] = (),
+    unavailability_policy: Literal["charge_all_v1", "defer_unanswered_v1"] = "charge_all_v1",
+    request_timeout_seconds: float | None = None,
 ) -> tuple[R, RetryTelemetry]:
     """Run fn() with exponential backoff on transient HTTP/provider errors."""
     # Keep exception surface explicit: do not swallow unexpected errors.
@@ -238,9 +272,16 @@ def _retry(
         raise ValueError("max_attempts must be at least 1.")
     if base_delay < 0.0:
         raise ValueError("base_delay must be non-negative.")
+    if unavailability_policy not in {"charge_all_v1", "defer_unanswered_v1"}:
+        raise ValueError("Unknown provider-unavailability policy.")
+    if unavailability_policy == "defer_unanswered_v1" and (
+        request_timeout_seconds is None or not isfinite(request_timeout_seconds) or request_timeout_seconds <= 0.0
+    ):
+        raise ValueError("Deferring unanswered requests requires a declared request timeout.")
     if timeout_seconds is not None and timeout_seconds <= 0.0:
         raise RuntimeDeadlineExceeded("Provider request deadline was exhausted before the first attempt.")
-    deadline = time.monotonic() + timeout_seconds if timeout_seconds is not None else None
+    retry_started = time.monotonic()
+    deadline = retry_started + timeout_seconds if timeout_seconds is not None else None
     last_exc: Exception | None = None
     backoff_seconds = 0.0
     attempt_failures: list[JsonObject] = []
@@ -263,13 +304,82 @@ def _retry(
         """Record a failed attempt, then raise its terminal error or wait for the next attempt."""
         nonlocal backoff_seconds, last_exc, response_received, received_payload
         redact_provider_exception(error, credentials=credentials)
+        body = getattr(error, "body", None)
+        if unavailability_policy == "defer_unanswered_v1" and isinstance(error, APIStatusError):
+            # The SDK strips a top-level {"error": ...} envelope from .body.
+            # Inspect only its already-buffered JSON too, so sibling usage or
+            # choices cannot disappear. This never reads a live response stream.
+            http_response = getattr(error, "response", None)
+            if http_response is not None and getattr(http_response, "is_stream_consumed", False):
+                try:
+                    full_body = http_response.json()
+                except (ValueError, RuntimeError):
+                    full_body = None
+                if _has_model_response_evidence(full_body):
+                    body = redact_provider_value(full_body, credentials=credentials)
+        ambiguous_http_body = (
+            unavailability_policy == "defer_unanswered_v1"
+            and isinstance(error, APIStatusError)
+            and _has_model_response_evidence(body)
+        )
+        if ambiguous_http_body:
+            # An HTTP failure is not evidence of an unanswered request when the
+            # provider also returned output or billing evidence. Preserve it and
+            # require review instead of retrying, refunding time or deferring.
+            error.response_received = True  # type: ignore[attr-defined]
+            error.raw_response = body if isinstance(body, dict) else {"ambiguous_http_body": body}  # type: ignore[attr-defined]
         response_received = response_received or getattr(error, "response_received", False) is True
         raw_response = getattr(error, "raw_response", None)
         if isinstance(raw_response, dict):
             received_payload = cast(JsonObject, raw_response)
         attempt_failures.append(_retry_failure(error, attempt=attempt + 1))
+        if ambiguous_http_body:
+            raise _terminal_provider_error(
+                error,
+                detail="Provider HTTP failure included output or usage evidence; operator review required.",
+                request_attempts=attempt + 1,
+                transient_failure_count=attempt,
+                backoff_seconds=backoff_seconds,
+                attempt_failures=tuple(attempt_failures),
+            ) from error
         delay = max(base_delay * (2**attempt), _retry_after(error))
         remaining = None if deadline is None else max(0.0, deadline - time.monotonic())
+        status = getattr(error, "status_code", None)
+        # The opt-in policy defers at the first observable no-output transport
+        # failure. It never buys another response inside this logical request.
+        # A timeout shortened by the task's remaining allowance is its ordinary
+        # scientific time limit, not evidence that provider capacity disappeared.
+        complete_timeout_window = timeout_seconds is None or (
+            request_timeout_seconds is not None and timeout_seconds >= request_timeout_seconds
+        )
+        unavailable = (
+            (isinstance(error, APITimeoutError) and complete_timeout_window)
+            or (isinstance(error, APIConnectionError) and not isinstance(error, APITimeoutError))
+            or (isinstance(error, APIStatusError) and status in {429, 500, 502, 503, 504})
+        )
+        if (
+            unavailability_policy == "defer_unanswered_v1"
+            and unavailable
+            and not response_received
+            and received_payload is None
+        ):
+            deferred = ProviderUnavailableError(
+                "Provider unavailable without a returned model response; preserve and defer this work.",
+                retry_telemetry=RetryTelemetry(
+                    request_attempts=attempt + 1,
+                    transient_failure_count=attempt + 1,
+                    backoff_seconds=backoff_seconds,
+                    attempt_failures=tuple(attempt_failures),
+                ),
+                failure_kind=(
+                    "timeout" if isinstance(error, APITimeoutError) else f"http_{status}" if status else "connection"
+                ),
+                retry_after_seconds=delay,
+                unanswered_transport_seconds=time.monotonic() - retry_started,
+            )
+            if isinstance(status, int):
+                deferred.status_code = status
+            raise deferred from error
         if (
             pause_on_rate_limit
             and getattr(error, "status_code", None) == 429
@@ -618,6 +728,8 @@ class ChatCompletionsProvider:
             timeout_seconds=timeout_seconds,
             pause_on_rate_limit=getattr(self, "_pause_on_rate_limit", False),
             credentials=getattr(self, "_credentials", ()),
+            unavailability_policy=retry_policy.unavailability_policy,
+            request_timeout_seconds=self._request_timeout_s,
         )
         with _retain_received_response(response, credentials=getattr(self, "_credentials", ()), retry=retry):
             return self._parse_response(response, retry=retry)
@@ -1010,6 +1122,8 @@ class ResponsesProvider:
             base_delay=retry_policy.base_delay_seconds,
             timeout_seconds=timeout_seconds,
             credentials=getattr(self, "_credentials", ()),
+            unavailability_policy=retry_policy.unavailability_policy,
+            request_timeout_seconds=self._request_timeout_s,
         )
 
         with _retain_received_response(response, credentials=getattr(self, "_credentials", ()), retry=retry):

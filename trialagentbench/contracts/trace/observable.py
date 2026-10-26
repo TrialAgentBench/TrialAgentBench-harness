@@ -23,6 +23,7 @@ BenchmarkRuntimeFailureTypeV1 = Literal[
     "submission_limit",
     "timeout",
     "provider_error",
+    "provider_unavailable",
     "contract_error",
     "runtime_error",
     "evaluator_error",

@@ -282,6 +282,7 @@ class TrialDevTaskAgent:
     executor_limits: CodeExecutionLimitsV1 | None = None
     deadline_monotonic: float | None = None
     agent_time_budget_seconds: float | None = None
+    provider_unavailability_policy: Literal["charge_all_v1", "defer_unanswered_v1"] = "charge_all_v1"
     messages: list[dict[str, Any]] = field(init=False)
     session: CodeExecutionSession | None = field(init=False)
     _executor_image_id: str = field(init=False)
@@ -321,6 +322,7 @@ class TrialDevTaskAgent:
             monotonic=self.deadline_monotonic,
             label="TrialDev task",
             budget_seconds=self.agent_time_budget_seconds,
+            provider_unavailability_policy=self.provider_unavailability_policy,
         )
         self.workdir.mkdir(parents=True, exist_ok=True)
         self.report_index = len(tuple((self.workdir.parent / "analysis_sources").glob("submission-*")))
@@ -404,6 +406,11 @@ class TrialDevTaskAgent:
                 "max_tokens": self.max_tokens,
                 "max_context": self.max_context_chars,
                 "agent_time_budget_seconds": self.agent_time_budget_seconds,
+                **(
+                    {"provider_unavailability_policy": self.provider_unavailability_policy}
+                    if self.provider_unavailability_policy != "charge_all_v1"
+                    else {}
+                ),
                 "data_view": self.data_view,
                 "seed": None if programme is None else programme.recruitment_seed,
                 "pool": None if ledger is None else ledger.pool_manifest_sha256,
