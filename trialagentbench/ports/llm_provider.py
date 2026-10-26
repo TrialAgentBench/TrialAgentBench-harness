@@ -44,9 +44,41 @@ class RuntimeDeadlineExceeded(TimeoutError):
 class ProviderRequestError(RuntimeError):
     """A provider request failed at the external transport boundary."""
 
+    response_received: bool = False
+    raw_response: JsonObject | None = None
+    status_code: int | None = None
+
     def __init__(self, message: str, *, retry_telemetry: RetryTelemetry) -> None:
         super().__init__(message)
         self.retry_telemetry = retry_telemetry
+
+
+class ProviderUnavailableError(ProviderRequestError):
+    """An opted-in, unanswered transport failure leaves scientific work pending.
+
+    This is not a task deadline or a returned model outcome. Accounting reservations
+    remain untouched; only the explicitly recorded failed-transport clock interval
+    may be excluded by ``defer_unanswered_v1``.
+    """
+
+    policy = "defer_unanswered_v1"
+    response_received = False
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        retry_telemetry: RetryTelemetry,
+        failure_kind: str,
+        retry_after_seconds: float = 0.0,
+        unanswered_transport_seconds: float | None = None,
+    ) -> None:
+        super().__init__(message, retry_telemetry=retry_telemetry)
+        self.failure_kind = failure_kind
+        self.retry_after_seconds = retry_after_seconds
+        self.unanswered_transport_seconds = unanswered_transport_seconds
+        self.elapsed_seconds = 0.0
+        self.scientific_clock_excluded_seconds = 0.0
 
 
 class ProviderAccountingError(ValueError):

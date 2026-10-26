@@ -25,6 +25,7 @@ from trialagentbench.grading.outcome import (
 TrialEvalObservedAttemptOutcomeV1: TypeAlias = Literal[
     "completed",
     "provider_stop",
+    "provider_unavailable",
     "model_noncompletion",
     "malformed_output",
     "replay_failure",
@@ -42,6 +43,10 @@ def trialeval_observed_attempt_outcome_v1(
 ) -> TrialEvalObservedAttemptOutcomeV1:
     """Derive one campaign outcome from canonical terminal and grade records."""
 
+    # A receipt-bound transport outage is unfinished even when a partial script
+    # already left replayable estimates. Its one replacement resolves that primary.
+    if failure_type == "provider_unavailable":
+        return "provider_unavailable"
     if outcome.completion.status == "satisfied":
         if outcome.reproducibility.status != "satisfied":
             return "replay_failure"

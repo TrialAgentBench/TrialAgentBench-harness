@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import sys
 import time
 from collections.abc import Mapping, Sequence
@@ -26,7 +27,7 @@ from trialagentbench.contracts.core.runs import (
 from trialagentbench.io.exclusive_publication import append_jsonl, append_jsonl_model
 from trialagentbench.io.json import loads_json, write_json_model
 from trialagentbench.ports import LLMProvider, LLMResponse, RetryTelemetry
-from trialagentbench.ports.llm_provider import JsonObject
+from trialagentbench.ports.llm_provider import JsonObject, ProviderRequestError, ProviderUnavailableError
 from trialagentbench.util.provider_redaction import (
     redact_provider_exception,
     redact_provider_text,
@@ -151,6 +152,32 @@ def generate_provider_turn_v1(
         if error is not None:
             redact_provider_exception(error)
         elapsed = time.monotonic() - started
+        invalid_deferral: ProviderRequestError | None = None
+        if isinstance(error, ProviderUnavailableError):
+            if (
+                error.response_received
+                or isinstance(getattr(error, "raw_response", None), Mapping)
+                or (deadline is not None and deadline.provider_unavailability_policy != error.policy)
+                or error.unanswered_transport_seconds is None
+                or not math.isfinite(error.unanswered_transport_seconds)
+                or not 0 <= error.unanswered_transport_seconds <= elapsed
+            ):
+                # Fail closed, but still close the append-only request lifecycle
+                # and preserve any received payload. Never refund or expose this
+                # inconsistent error as an automatically recoverable deferral.
+                invalid_deferral = ProviderRequestError(
+                    "Provider deferral evidence or runtime policy is inconsistent; operator review required.",
+                    retry_telemetry=error.retry_telemetry,
+                )
+                invalid_deferral.response_received = error.response_received
+                invalid_deferral.raw_response = getattr(error, "raw_response", None)
+                invalid_deferral.__cause__ = error
+                error = invalid_deferral
+            else:
+                error.elapsed_seconds = elapsed
+                if deadline is not None:
+                    deadline.exclude_unanswered_transport(error.unanswered_transport_seconds)
+                    error.scientific_clock_excluded_seconds = error.unanswered_transport_seconds
         with deadline.harness_work() if deadline is not None else nullcontext():
             if handle is not None:
                 if response is None:
@@ -176,6 +203,8 @@ def generate_provider_turn_v1(
                             error=error,
                         )
                         raise
+        if invalid_deferral is not None:
+            raise invalid_deferral
     if response is None:
         raise RuntimeError("Provider request returned without a response or exception.")
     return ProviderTurnResult(response=response, elapsed_seconds=elapsed)
@@ -591,6 +620,11 @@ def _request_event(
         exception_type=type(error).__name__ if error is not None else None,
         http_status_code=_http_status_code(error),
         error_detail=_error_detail(error),
+        unavailability_policy=error.policy if isinstance(error, ProviderUnavailableError) else None,
+        scientific_clock_excluded_seconds=(
+            error.scientific_clock_excluded_seconds if isinstance(error, ProviderUnavailableError) else 0.0
+        ),
+        retry_after_seconds=error.retry_after_seconds if isinstance(error, ProviderUnavailableError) else None,
     )
 
 

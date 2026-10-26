@@ -12,6 +12,7 @@ from trialagentbench_verifier.execution_contracts import (
 from trialagentbench_verifier.execution_contracts import (
     ExecutorPackageV1 as ExecutorPackageV1,
 )
+from trialagentbench_verifier.run_contracts import ProviderUnavailabilityReceiptV1
 
 from trialagentbench.contracts.core.config import (
     DecodingConfigV1,
@@ -233,10 +234,27 @@ class ProviderRequestEventV1(BaseModel):
     exception_type: str | None = Field(default=None, min_length=1)
     http_status_code: int | None = Field(default=None, ge=100, le=599)
     error_detail: str | None = Field(default=None, min_length=1, max_length=PROVIDER_ERROR_DETAIL_CHARACTERS)
+    unavailability_policy: Literal["defer_unanswered_v1"] | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
+    scientific_clock_excluded_seconds: float = Field(
+        default=0.0, ge=0.0, allow_inf_nan=False, exclude_if=lambda value: value == 0.0
+    )
+    retry_after_seconds: float | None = Field(
+        default=None, ge=0.0, allow_inf_nan=False, exclude_if=lambda value: value is None
+    )
 
     @model_validator(mode="after")
     def validate_lifecycle_state(self) -> ProviderRequestEventV1:
         """Require complete, status-consistent route and usage telemetry."""
+
+        if self.unavailability_policy is not None:
+            if self.status != "failed" or self.response_received or self.model_outcome is not None:
+                raise ValueError("Provider deferral requires a failed request without a received model response.")
+            if self.elapsed_seconds is None or self.scientific_clock_excluded_seconds > self.elapsed_seconds:
+                raise ValueError("Excluded scientific time cannot exceed the observed failed request interval.")
+        elif self.scientific_clock_excluded_seconds or self.retry_after_seconds is not None:
+            raise ValueError("Availability clock accounting requires an explicit unavailability policy.")
 
         if self.usage_status == "invalid":
             if self.status != "succeeded" or self.usage_error is None:
@@ -476,6 +494,9 @@ class TrialEvalAgentOutputV1(BaseModel):
     schema_version: Literal[1] = 1
     status: TrialEvalAgentStatusV1
     failure_type: BenchmarkRuntimeFailureTypeV1 | None = None
+    provider_unavailability: ProviderUnavailabilityReceiptV1 | None = Field(
+        default=None, exclude_if=lambda value: value is None
+    )
     turns_used: int | None = Field(default=None, ge=0)
     report: str | None = None
     condition_provenance: TrialEvalConditionProvenanceV1
@@ -492,6 +513,12 @@ class TrialEvalAgentOutputV1(BaseModel):
             raise ValueError("Successful TrialEval outputs require a non-empty report.")
         if self.status != "success" and self.report is not None:
             raise ValueError("Unsuccessful TrialEval outputs cannot contain a report.")
+        if (self.failure_type == "provider_unavailable") != (self.provider_unavailability is not None):
+            raise ValueError(
+                "Provider unavailability requires its retained typed request receipt, and only that failure may carry one."
+            )
+        if self.provider_unavailability is not None:
+            ProviderRequestEventV1.model_validate(self.provider_unavailability.request_event)
         return self
 
 
@@ -514,6 +541,12 @@ class TrialEvalItemResultV1(BaseModel):
         """Bind the participant-facing condition to the immutable run config."""
 
         provenance = self.agent_output.condition_provenance
+        if self.agent_output.provider_unavailability is not None:
+            self.agent_output.provider_unavailability.require_run_binding(
+                item_id=self.item_id,
+                model=self.run_config.model,
+                policy=self.run_config.retry.unavailability_policy,
+            )
         expected = {
             "procedure_assistance": self.run_config.experiment_condition.procedure_assistance,
             "analysis_specification": self.run_config.task_evidence_factors[self.item_id].analysis_specification,

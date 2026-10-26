@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Literal, Self, TypeAlias
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, JsonValue, model_validator
 
 from trialagentbench_verifier.execution_contracts import AnalysisMode
 from trialagentbench_verifier.io import canonical_sha256 as canonical_payload_sha256
@@ -19,6 +19,71 @@ MemoryStrategyV1: TypeAlias = Literal["bounded", "openai_responses_compaction"] 
 
 ReasoningEffortV1: TypeAlias = Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"]  # noqa: UP040
 TrialEvalAgentStatusV1: TypeAlias = Literal["success", "max_turns_reached", "failed"]  # noqa: UP040
+
+
+class ProviderUnavailabilityReceiptV1(BaseModel):
+    """A retained unanswered request authorizing one prospective infrastructure recovery."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True, allow_inf_nan=False)
+    schema_id: Literal["ariadne.provider_unavailability_receipt/v1"] = "ariadne.provider_unavailability_receipt/v1"
+    request_event: dict[str, JsonValue]
+    request_event_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+
+    @model_validator(mode="after")
+    def validate_unanswered_request(self) -> Self:
+        event = self.request_event
+        if canonical_payload_sha256(event) != self.request_event_sha256:
+            raise ValueError("Provider unavailability receipt differs from its retained request event")
+        required = {
+            "schema_id": "ariadne.provider_request_event/v1",
+            "benchmark": "trialeval",
+            "status": "failed",
+            "exception_type": "ProviderUnavailableError",
+            "unavailability_policy": "defer_unanswered_v1",
+            "response_received": False,
+            "usage_status": "not_applicable",
+            "request_attempts": 1,
+        }
+        if any(event.get(key) != value for key, value in required.items()):
+            raise ValueError("Provider recovery requires a typed, unanswered request under defer_unanswered_v1")
+        if event.get("failure_type") not in {"timeout", "provider_error"}:
+            raise ValueError("Provider recovery requires transport unavailability")
+        for field in ("request_id", "unit_id", "requested_model", "provider_route"):
+            if not isinstance(event.get(field), str) or not event[field]:
+                raise ValueError("Provider recovery is missing request identity")
+        for field in (
+            "response_id",
+            "returned_model",
+            "finish_reason",
+            "model_outcome",
+            "reasoning",
+            "reported_cost_usd",
+        ):
+            if event.get(field) is not None:
+                raise ValueError("A model response or ambiguous usage cannot authorize provider recovery")
+        for field in ("prompt_tokens", "completion_tokens", "total_tokens", "reasoning_tokens", "cached_tokens"):
+            if event.get(field) != 0:
+                raise ValueError("A usage-bearing request cannot authorize provider recovery")
+        elapsed = event.get("elapsed_seconds")
+        excluded = event.get("scientific_clock_excluded_seconds", 0.0)
+        if (
+            isinstance(elapsed, bool)
+            or not isinstance(elapsed, (int, float))
+            or isinstance(excluded, bool)
+            or not isinstance(excluded, (int, float))
+            or not 0 <= excluded <= elapsed < float("inf")
+        ):
+            raise ValueError("Provider recovery has invalid measured clock accounting")
+        return self
+
+    def require_run_binding(self, *, item_id: str, model: str, policy: str) -> None:
+        """Bind this receipt to the task and prospectively frozen provider policy."""
+        if (
+            policy != "defer_unanswered_v1"
+            or self.request_event["unit_id"] != item_id
+            or self.request_event["requested_model"] != model
+        ):
+            raise ValueError("Provider recovery receipt differs from the frozen task, model or policy")
 
 
 class DecodingConfigV1(BaseModel):
@@ -65,6 +130,9 @@ class ProviderRetryPolicyV1(BaseModel):
     schema_id: Literal["ariadne.provider_retry_policy/v1"] = "ariadne.provider_retry_policy/v1"
     maximum_attempts: int = Field(default=5, ge=1, le=20)
     base_delay_seconds: float = Field(default=2.0, ge=0.0, le=60.0)
+    unavailability_policy: Literal["charge_all_v1", "defer_unanswered_v1"] = Field(
+        default="charge_all_v1", exclude_if=lambda value: value == "charge_all_v1"
+    )
 
 
 class ProviderModelCapabilityV1(BaseModel):

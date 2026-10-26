@@ -1252,9 +1252,14 @@ def test_persistent_provider_rate_limit_pauses_only_its_route(
     assert not exhausted_budgets(control.database, config)
 
 
+@pytest.mark.parametrize("stratified_dispatch", [False, True])
 @pytest.mark.parametrize("pause_first_model", [False, True])
 def test_native_campaign_preparation_and_recovery_preserve_primary_custody(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, pause_first_model: bool, capsys: pytest.CaptureFixture[str]
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    pause_first_model: bool,
+    capsys: pytest.CaptureFixture[str],
+    stratified_dispatch: bool,
 ) -> None:
     config = configuration(tmp_path)
     monkeypatch.setenv("OPENROUTER_API_KEY", "nonsecret-test-fixture")
@@ -1306,6 +1311,13 @@ def test_native_campaign_preparation_and_recovery_preserve_primary_custody(
     retained = []
     monkeypatch.setattr(campaign, "_retain_campaign_executor", lambda *args: retained.append(args))
     root = tmp_path / "campaign"
+    if stratified_dispatch:
+        payload = config.model_dump(mode="json")
+        payload["panel"]["trialdev_tasks"] = [task.task_id for task in tasks]
+        payload["dispatch"] = {
+            "task_order": [{"benchmark": "trialdev", "task_id": task.task_id} for task in reversed(tasks)]
+        }
+        config = CampaignConfigurationV1.model_validate(payload)
     plan = campaign.prepare_campaign(config, root)
     assert retained == [(config, root, plan)]
     assert len(plan.runs) == 2 and not provider_calls

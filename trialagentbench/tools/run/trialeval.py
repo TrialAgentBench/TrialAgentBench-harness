@@ -15,6 +15,7 @@ from pydantic.types import JsonValue
 from trialagentbench_verifier.assets import read_asset_catalog
 from trialagentbench_verifier.execution_contracts import AnalysisMode
 from trialagentbench_verifier.executor import resolve_trusted_executor_environment
+from trialagentbench_verifier.run_contracts import ProviderUnavailabilityReceiptV1
 
 from trialagentbench.adapters import ProviderRouting, close_provider, get_provider
 from trialagentbench.contracts.core.config import (
@@ -43,13 +44,16 @@ from trialagentbench.execution_policy import (
 )
 from trialagentbench.grading.outcome import grade_trialeval_outcome_v1
 from trialagentbench.io import read_json_model
+from trialagentbench.io.checksums import canonical_payload_sha256
 from trialagentbench.io.exclusive_publication import atomic_text_writer
 from trialagentbench.io.json import write_json_model
+from trialagentbench.ports.llm_provider import ProviderUnavailableError
 from trialagentbench.release import load_participant_release
 from trialagentbench.trialeval.agent import DEFAULT_MAX_TURNS, condition_provenance_v1, run_agent
 from trialagentbench.trialeval.conditions import prompt_set_sha256_v1
 from trialagentbench.trialeval.data import discover_participant_items, participant_task_factors
 from trialagentbench.trialeval.schema import BenchmarkItem
+from trialagentbench.util.campaign_dispatch import execution_slice
 from trialagentbench.util.experiment_condition import (
     resolve_experiment_condition_v1,
 )
@@ -92,6 +96,7 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--campaign-root", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--campaign-job", help=argparse.SUPPRESS)
+    parser.add_argument("--dispatch-task-id", action="append", help=argparse.SUPPRESS)
     parser.add_argument("--participant-release", type=Path, required=True, help="TrialEval participant release ZIP.")
     parser.add_argument(
         "--expected-sha256",
@@ -220,6 +225,9 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--provider-max-attempts", type=int, default=5)
     parser.add_argument("--provider-retry-base-delay-seconds", type=float, default=2.0)
     parser.add_argument(
+        "--provider-unavailability-policy", choices=("charge_all_v1", "defer_unanswered_v1"), default="charge_all_v1"
+    )
+    parser.add_argument(
         "--omit-temperature",
         action="store_true",
         help="Do not send temperature when the selected endpoint does not support it.",
@@ -238,6 +246,15 @@ def _parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _provider_unavailability_receipt(event: ProviderRequestEventV1) -> ProviderUnavailabilityReceiptV1:
+    """Retain the actual terminal request, never infer an outage from a generic failure."""
+    payload = event.model_dump(mode="json")
+    return ProviderUnavailabilityReceiptV1(
+        request_event=payload,
+        request_event_sha256=canonical_payload_sha256(payload),
+    )
+
+
 def _save_item_result(
     *,
     output_dir: Path,
@@ -252,6 +269,7 @@ def _save_item_result(
     agent = TrialEvalAgentOutputV1(
         status=cast(TrialEvalAgentStatusV1, raw_status),
         failure_type=agent_output.get("failure_type"),
+        provider_unavailability=agent_output.get("provider_unavailability"),
         turns_used=_integer(agent_output.get("turns_used")),
         report=str(agent_output.get("report")) if agent_output.get("report") is not None else None,
         condition_provenance=agent_output.get("condition_provenance"),
@@ -431,6 +449,7 @@ def _execute_materialized(
         "retry": ProviderRetryPolicyV1(
             maximum_attempts=args.provider_max_attempts,
             base_delay_seconds=args.provider_retry_base_delay_seconds,
+            unavailability_policy=args.provider_unavailability_policy,
         ).model_dump(mode="json"),
         "executor": executor.model_dump(mode="json"),
         "participant_archive": Path(args.participant_release).name,
@@ -508,6 +527,14 @@ def _execute_materialized(
     request_control = request_control_for_run(
         campaign_root=args.campaign_root, job_id=args.campaign_job, run_root=output_dir
     )
+    slice_ids = execution_slice(
+        campaign_root=args.campaign_root,
+        job_id=args.campaign_job,
+        run_root=output_dir,
+        full_task_ids=run_config.task_ids,
+        requested_task_ids=args.dispatch_task_id,
+    )
+    items = [item_by_id[task_id] for task_id in slice_ids]
     work: list[tuple[int, BenchmarkItem]] = []
     for item in items:
         if item.item_id not in existing_results:
@@ -526,7 +553,16 @@ def _execute_materialized(
                 )
                 received = any(event.status == "succeeded" or event.response_received for event in events)
                 recovery_failure: BenchmarkRuntimeFailureTypeV1 | None = None
-                if outcomes:
+                unavailable_receipt = None
+                if (
+                    not interrupted
+                    and events
+                    and events[-1].unavailability_policy == "defer_unanswered_v1"
+                    and events[-1].exception_type == "ProviderUnavailableError"
+                ):
+                    unavailable_receipt = _provider_unavailability_receipt(events[-1])
+                    recovery_failure = "provider_unavailable"
+                elif outcomes:
                     recovery_failure = "contract_error"
                 elif interrupted:
                     recovery_failure = "runtime_error"
@@ -547,6 +583,11 @@ def _execute_materialized(
                         agent_output={
                             "status": "failed",
                             "failure_type": recovery_failure,
+                            **(
+                                {"provider_unavailability": unavailable_receipt.model_dump(mode="json")}
+                                if unavailable_receipt is not None
+                                else {}
+                            ),
                             "report": None,
                             "turns_used": max((event.turn_index for event in events), default=0),
                             "condition_provenance": condition_provenance_v1(
@@ -578,6 +619,21 @@ def _execute_materialized(
     lock = threading.Lock()
     completed_indices: set[int] = set()
     completed_item_ids: set[str] = set(existing_results)
+
+    def persist(index: int, item: BenchmarkItem, agent_output: dict[str, JsonValue]) -> None:
+        _save_item_result(
+            output_dir=output_dir,
+            item_id=item.item_id,
+            agent_output=agent_output,
+            run_config=run_config,
+        )
+        with lock:
+            completed_indices.add(index)
+            completed_item_ids.add(item.item_id)
+            completed_in_order = tuple(task_id for task_id in run_config.task_ids if task_id in completed_item_ids)
+            reconcile_run_coverage_v1(coverage_path, coverage, completed_unit_ids=completed_in_order)
+            if not args.quiet:
+                print(f"[DONE {len(completed_item_ids)}/{len(run_config.task_ids)}] {item.item_id}")
 
     def process(index: int, item: BenchmarkItem) -> None:
         provider = get_provider(
@@ -612,6 +668,7 @@ def _execute_materialized(
                     max_elapsed_seconds=float(run_config.item_watchdog_seconds),
                     max_context_chars=run_config.maximum_context_characters,
                     provider_capability=run_config.experiment_condition.provider_capability,
+                    provider_unavailability_policy=run_config.retry.unavailability_policy,
                     analysis_language=run_config.experiment_condition.analysis_language,
                     procedure_assistance=run_config.experiment_condition.procedure_assistance,
                     analysis_specification=cast(
@@ -620,26 +677,37 @@ def _execute_materialized(
                     ),
                 ),
             )
+        except ProviderUnavailableError:
+            # Eval has no mid-task conversation checkpoint. Retain this failed
+            # primary; only the campaign's once-only eligible retry can replace it.
+            log = output_dir / "logs" / f"{item.item_id}_provider_responses.jsonl"
+            events, _ = read_provider_request_log_v1(log) if log.exists() else ([], 0)
+            if not events:
+                raise ValueError("Provider deferral has no retained request evidence") from None
+            unavailable_receipt = _provider_unavailability_receipt(events[-1])
+            persist(
+                index,
+                item,
+                {
+                    "status": "failed",
+                    "failure_type": "provider_unavailable",
+                    "provider_unavailability": unavailable_receipt.model_dump(mode="json"),
+                    "report": None,
+                    "turns_used": max((event.turn_index for event in events), default=0),
+                    "condition_provenance": condition_provenance_v1(
+                        item,
+                        max_turns=run_config.experiment_condition.maximum_turns_per_step,
+                        procedure_assistance=run_config.experiment_condition.procedure_assistance,
+                        analysis_specification=cast(TrialEvalAnalysisSpecificationV1, item.analysis_specification),
+                        analysis_language=run_config.experiment_condition.analysis_language,
+                        executor_limits=run_config.executor.limits,
+                    ),
+                },
+            )
+            raise
         finally:
             close_provider(provider)
-
-        _save_item_result(
-            output_dir=output_dir,
-            item_id=item.item_id,
-            agent_output=agent_output,
-            run_config=run_config,
-        )
-        with lock:
-            completed_indices.add(index)
-            completed_item_ids.add(item.item_id)
-            completed_in_order = tuple(task_id for task_id in run_config.task_ids if task_id in completed_item_ids)
-            reconcile_run_coverage_v1(
-                coverage_path,
-                coverage,
-                completed_unit_ids=completed_in_order,
-            )
-            if not args.quiet:
-                print(f"[DONE {len(completed_item_ids)}/{len(run_config.task_ids)}] {item.item_id}")
+        persist(index, item, agent_output)
 
     run_bounded_tasks(
         work,
@@ -650,6 +718,9 @@ def _execute_materialized(
         request_control=request_control,
     )
 
+    if len(completed_item_ids) != len(run_config.task_ids):
+        print(f"Slice saved; {len(completed_item_ids)}/{len(run_config.task_ids)} full-panel items complete.")
+        return 0
     summarize_provider_telemetry_v1(
         run_root=output_dir,
         coverage=load_or_create_run_coverage_v1(

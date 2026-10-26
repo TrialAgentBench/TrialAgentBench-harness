@@ -361,3 +361,100 @@ def test_resume_accepts_a_response_committed_to_the_conversation_checkpoint(tmp_
     assert resumed.turns_used == 1
     resumed.close()
     assert provider.generate_turn.call_count == 1
+
+
+def test_provider_outage_checkpoint_resumes_same_turn_without_refunding_prior_work(tmp_path, monkeypatch, clock):
+    """A lost transport window is excluded; successful turns and earlier time survive recovery."""
+    import httpx
+    from openai import APITimeoutError
+
+    from trialagentbench.adapters.llm_providers import _retry
+    from trialagentbench.ports import ProviderUnavailableError
+    from trialagentbench.util.provider_telemetry import read_provider_terminal_events_v1
+
+    class Provider:
+        model = "test/model"
+        telemetry_route = "test"
+
+        def __init__(self, succeed_first):
+            self.calls = 0
+            self.succeed_first = succeed_first
+            self.allowances = []
+
+        def generate_turn(self, **kwargs):
+            self.calls += 1
+            self.allowances.append(kwargs["timeout_seconds"])
+            if self.succeed_first and self.calls == 1:
+                clock.advance(5)
+                return LLMResponse(
+                    content="Continue analysing.",
+                    usage={"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
+                )
+
+            def request():
+                clock.advance(20)
+                raise APITimeoutError(request=httpx.Request("POST", "https://example.test/completion"))
+
+            return _retry(
+                request,
+                max_attempts=3,
+                base_delay=0,
+                timeout_seconds=kwargs["timeout_seconds"],
+                unavailability_policy="defer_unanswered_v1",
+                request_timeout_seconds=20,
+            )[0]
+
+    arguments = _arguments(tmp_path, monkeypatch, clock) | {
+        "provider": Provider(succeed_first=True),
+        "provider_log_path": tmp_path / "provider_responses.jsonl",
+        "provider_unavailability_policy": "defer_unanswered_v1",
+    }
+    agent = owner.TrialDevTaskAgent(**arguments)
+    agent.begin_step(phase_id="analysis", step_id="initial")
+    agent.append_user_message("Estimate effect.")
+    with pytest.raises(ProviderUnavailableError):
+        agent.run_until_report()
+    agent.close()
+    checkpoint = read_json_model(owner.TrialDevAgentCheckpoint, agent._checkpoint_path())
+    assert checkpoint.turns_used == 1
+    assert checkpoint.agent_time.remaining_seconds == 95
+    assert checkpoint.agent_time.charged_operation_in_progress is False
+    assert any(message.get("content") == "Continue analysing." for message in checkpoint.messages)
+    events = read_provider_terminal_events_v1(arguments["provider_log_path"])
+    assert [(event.turn_index, event.status) for event in events] == [(1, "succeeded"), (2, "failed")]
+    assert events[-1].scientific_clock_excluded_seconds == 20
+
+    clock.advance(8000)
+    resumed_provider = Provider(succeed_first=False)
+    resumed = owner.TrialDevTaskAgent(
+        **(
+            arguments
+            | {
+                "deadline_monotonic": clock.now + 100,
+                "provider": resumed_provider,
+            }
+        ),
+        resume=True,
+    )
+    assert resumed.deadline.remaining() == 95
+    assert resumed.turns_used == 1
+    with pytest.raises(ProviderUnavailableError):
+        resumed.run_until_report()
+    resumed.close()
+    assert resumed_provider.allowances == [95]
+    assert resumed.turns_used == 1
+    checkpoint = read_json_model(owner.TrialDevAgentCheckpoint, resumed._checkpoint_path())
+    assert checkpoint.agent_time.remaining_seconds == 95
+    events = read_provider_terminal_events_v1(arguments["provider_log_path"])
+    assert [(event.turn_index, event.status) for event in events] == [(1, "succeeded"), (2, "failed"), (2, "failed")]
+    assert len({event.request_id for event in events}) == 3
+
+
+def test_resume_rejects_changed_provider_clock_policy(tmp_path, monkeypatch, clock):
+    arguments = _arguments(tmp_path, monkeypatch, clock)
+    agent = owner.TrialDevTaskAgent(**arguments)
+    agent.begin_step(phase_id="analysis", step_id="initial")
+    agent.append_user_message("Estimate effect.")
+    agent.close()
+    with pytest.raises(ValueError, match="execution limits"):
+        owner.TrialDevTaskAgent(**(arguments | {"provider_unavailability_policy": "defer_unanswered_v1"}), resume=True)

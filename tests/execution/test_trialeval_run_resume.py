@@ -823,3 +823,122 @@ def test_resume_retains_an_interrupted_primary_for_separately_labelled_infrastru
     }.get(observed, "runtime_error")
     summary = json.loads((run_root / "provider_telemetry_summary.json").read_bytes())
     assert summary["interrupted_request_count"] == (1 if observed in {"start_only", "torn_tail"} else 0)
+
+
+def _slice_campaign(tmp_path, run_root):
+    from trialagentbench.contracts.campaign import CampaignConfigurationV1, CampaignPlanV1, CampaignRunV1
+    from trialagentbench.io import write_json_model
+
+    config = CampaignConfigurationV1.model_validate(
+        {
+            "release_directory": str(tmp_path),
+            "expected_release_manifest_sha256": "a" * 64,
+            "executor_image_id": EXECUTOR_ENVIRONMENT.image_id,
+            "models": [
+                {
+                    "name": "fixture",
+                    "model": "fixture/model",
+                    "upstream_provider": "GMICloud",
+                    "spend_limit_micro_usd": 10000,
+                    "reservation_micro_usd": 100,
+                    "reservation_tokens": 40000,
+                    "pricing_premise": "offline fixture",
+                    "requests_per_minute": 100,
+                    "tokens_per_minute": 100000,
+                }
+            ],
+            "panel": {"benchmarks": ["trialeval"], "trialeval_tasks": ["TASK1001", "TASK1002"]},
+            "operations": {"spend_limit_micro_usd": 10000},
+            "dispatch": {"task_order": [{"benchmark": "trialeval", "task_id": t} for t in ["TASK1002", "TASK1001"]]},
+        }
+    )
+    run = CampaignRunV1(
+        job_id="fixture-trialeval-1",
+        benchmark="trialeval",
+        model_name="fixture",
+        repetition=1,
+        relative_run_root=run_root.relative_to(tmp_path).as_posix(),
+        invocation_sha256=hashlib.sha256((run_root / "run_config.json").read_bytes()).hexdigest(),
+        analysis_plan_path="plans/fixture.json",
+        analysis_plan_sha256="a" * 64,
+    )
+    write_json_model(tmp_path / "campaign.json", CampaignPlanV1(configuration=config, runs=(run,)))
+    return ["--campaign-root", str(tmp_path), "--campaign-job", run.job_id]
+
+
+def test_native_eval_slices_keep_full_identity_and_only_finalize_full_coverage(tmp_path, monkeypatch):
+    participant = _participant_release(tmp_path)
+    arguments = _args(participant, tmp_path / "runs")
+    assert trialeval.main([*arguments, "--prepare-only"]) == 0
+    config_path = next((tmp_path / "runs").rglob("run_config.json"))
+    before = config_path.read_bytes()
+    root = config_path.parent
+    flags = _slice_campaign(tmp_path, root)
+    called = []
+    monkeypatch.setattr(trialeval, "get_provider", lambda *a, **k: object())
+
+    def run(item, provider, **kwargs):
+        called.append(item.item_id)
+        return _agent_payload(item, **kwargs)
+
+    monkeypatch.setattr(trialeval, "run_agent", run)
+    resume = [*arguments, "--resume-run-dir", str(root), *flags]
+    assert trialeval.main([*resume, "--dispatch-task-id", "TASK1002"]) == 0
+    assert called == ["TASK1002"]
+    coverage = json.loads((root / "coverage.json").read_text())
+    assert coverage["unit_ids"] == ["TASK1001", "TASK1002"]
+    assert coverage["completed_unit_ids"] == ["TASK1002"]
+    assert not (root / "provider_telemetry_summary.json").exists()
+    assert trialeval.main([*resume, "--dispatch-task-id", "TASK1001"]) == 0
+    assert called == ["TASK1002", "TASK1001"]
+    assert (root / "provider_telemetry_summary.json").exists()
+    assert trialeval.main(resume) == 0
+    assert called == ["TASK1002", "TASK1001"] and config_path.read_bytes() == before
+
+
+def test_eval_provider_deferral_retains_failed_primary_and_never_restarts_it(tmp_path, monkeypatch):
+    from trialagentbench.ports.llm_provider import ProviderUnavailableError, RetryTelemetry
+    from trialagentbench.util.provider_telemetry import fail_provider_request_v1, start_provider_request_v1
+
+    participant = _participant_release(tmp_path)
+    arguments = [*_args(participant, tmp_path / "runs"), "--provider-unavailability-policy", "defer_unanswered_v1"]
+    assert trialeval.main([*arguments, "--prepare-only"]) == 0
+    root = next((tmp_path / "runs").rglob("run_config.json")).parent
+    flags = _slice_campaign(tmp_path, root)
+    called = []
+    monkeypatch.setattr(trialeval, "get_provider", lambda *a, **k: object())
+
+    def run(item, provider, **kwargs):
+        called.append(item.item_id)
+        if item.item_id == "TASK1002":
+            error = ProviderUnavailableError(
+                "offline failure",
+                retry_telemetry=RetryTelemetry(1, 1, 0),
+                failure_kind="connection_error",
+                unanswered_transport_seconds=0,
+            )
+            handle = start_provider_request_v1(
+                path=kwargs["provider_log_path"],
+                benchmark="trialeval",
+                unit_id=item.item_id,
+                phase_id="task",
+                step_id="analysis",
+                turn_index=1,
+                requested_model="fixture/model",
+                provider_route="openrouter:GMICloud",
+            )
+            fail_provider_request_v1(handle, elapsed_seconds=0.1, failure_type="provider_error", error=error)
+            raise error
+        return _agent_payload(item, **kwargs)
+
+    monkeypatch.setattr(trialeval, "run_agent", run)
+    resume = [*arguments, "--resume-run-dir", str(root), *flags]
+    with pytest.raises(ProviderUnavailableError):
+        trialeval.main([*resume, "--dispatch-task-id", "TASK1002"])
+    result = json.loads((root / "items/TASK1002.json").read_text())
+    assert result["agent_output"]["status"] == "failed"
+    assert result["agent_output"]["failure_type"] == "provider_unavailable"
+    assert result["agent_output"]["provider_unavailability"]["request_event"]["unit_id"] == "TASK1002"
+    assert trialeval.main([*resume, "--dispatch-task-id", "TASK1001"]) == 0
+    assert trialeval.main(resume) == 0
+    assert called == ["TASK1002", "TASK1001"]

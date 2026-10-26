@@ -30,10 +30,12 @@ from trialagentbench.contracts.trialdev.run import (
 )
 from trialagentbench.execution_policy import TRIALDEV_RELEASE_BUDGET_V1
 from trialagentbench.io import read_json_model, write_json_model
+from trialagentbench.ports.llm_provider import ProviderUnavailableError
 from trialagentbench.trialdev.release import load_trialdev_evaluator_release
 from trialagentbench.trialdev.run import recover_terminal_trialdev_task, run_trialdev_task
 from trialagentbench.trialdev.task_agent import DEFAULT_MAX_TURNS_PER_STEP
 from trialagentbench.util.campaign_control import request_control_for_run
+from trialagentbench.util.campaign_dispatch import execution_slice
 from trialagentbench.util.experiment_condition import resolve_experiment_condition_v1
 from trialagentbench.util.parallel import run_bounded_tasks
 from trialagentbench.util.provider_environment import load_provider_dotenv
@@ -127,6 +129,9 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--request-replicate-id", default="request-1")
     parser.add_argument("--provider-max-attempts", type=int, default=5)
     parser.add_argument("--provider-retry-base-delay-seconds", type=float, default=2.0)
+    parser.add_argument(
+        "--provider-unavailability-policy", choices=("charge_all_v1", "defer_unanswered_v1"), default="charge_all_v1"
+    )
     parser.add_argument("--decoding-seed", type=int)
     parser.add_argument("--omit-temperature", action="store_true")
     parser.add_argument("--dotenv", action="store_true")
@@ -141,6 +146,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--campaign-root", type=Path, help=argparse.SUPPRESS)
     parser.add_argument("--campaign-job", help=argparse.SUPPRESS)
+    parser.add_argument("--dispatch-task-id", action="append", help=argparse.SUPPRESS)
     parser.add_argument(
         "--prepare-only",
         action="store_true",
@@ -243,6 +249,7 @@ def _run_materialized(
         retry = ProviderRetryPolicyV1(
             maximum_attempts=args.provider_max_attempts,
             base_delay_seconds=args.provider_retry_base_delay_seconds,
+            unavailability_policy=args.provider_unavailability_policy,
         )
         invocation = TrialDevRunInvocationV1(
             release_id=release.manifest.release_id,
@@ -300,6 +307,15 @@ def _run_materialized(
         if args.prepare_only:
             print(f"Prepared {len(tasks)} tasks without provider execution: {run_root}")
             return 0
+        slice_ids = execution_slice(
+            campaign_root=args.campaign_root,
+            job_id=args.campaign_job,
+            run_root=run_root,
+            full_task_ids=invocation.scheduled_task_ids,
+            requested_task_ids=args.dispatch_task_id,
+        )
+        by_id = {task.task_id: task for task in tasks}
+        work_tasks = tuple(by_id[task_id] for task_id in slice_ids)
         completed_task_ids = set(coverage.completed_unit_ids)
         request_control = request_control_for_run(
             campaign_root=args.campaign_root, job_id=args.campaign_job, run_root=run_root
@@ -365,6 +381,7 @@ def _run_materialized(
                         executor_limits=executor.limits,
                         resume=args.resume_run_dir is not None,
                         verbose=args.verbose,
+                        provider_unavailability_policy=retry.unavailability_policy,
                     )
                 finally:
                     close_provider(provider)
@@ -390,8 +407,28 @@ def _run_materialized(
             print(f"[DONE {len(completed_task_ids)}/{len(tasks)}] {result.task_id}", flush=True)
 
         run_bounded_tasks(
-            tasks, execute, workers=args.workers, consume=consume, stop=stop, request_control=request_control
+            work_tasks, execute, workers=args.workers, consume=consume, stop=stop, request_control=request_control
         )
+        if set(completed_task_ids) != set(invocation.scheduled_task_ids):
+            print(f"Slice saved; {len(completed_task_ids)}/{len(tasks)} full-panel tasks complete.", flush=True)
+            return 0
+        # Earlier slices belong to the same native invocation. Reconstruct the
+        # complete index from their immutable terminal checkpoints, never rerun.
+        indexed = {result.task_id: result for result in results}
+        for task in tasks:
+            if task.task_id not in indexed:
+                completed = recover_terminal_trialdev_task(
+                    release=release, task_id=task.task_id, output_root=run_root / "tasks"
+                )
+                if completed is None or completed.checksum is None:
+                    raise ValueError("Complete TrialDev coverage has no terminal task checkpoint")
+                indexed[task.task_id] = TrialDevRunResultV1(
+                    task_id=completed.task_id,
+                    stream=completed.stream,
+                    execution_status=completed.execution_status,
+                    checksum=completed.checksum,
+                )
+        results = list(indexed.values())
         positions = {task.task_id: position for position, task in enumerate(tasks)}
         results.sort(key=lambda result: positions[result.task_id])
         cost = None if budget is None else budget.snapshot()
@@ -421,6 +458,8 @@ def _run_materialized(
                 ),
             ),
         )
+    except ProviderUnavailableError:
+        raise
     except (OSError, RuntimeError, ValueError, ValidationError) as error:
         sys.stderr.write(f"TrialDev run failed: {error}\n")
         return 2
